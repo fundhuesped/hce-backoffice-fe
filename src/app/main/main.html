@@ -1,0 +1,18 @@
+<div class="container-fluid">
+
+  <div>
+    <acme-navbar creation-date="main.creationDate"></acme-navbar>
+  </div>
+
+  <div class="jumbotron text-center">
+    <h1>HCE</h1>
+    <p class="lead">
+      Historia clinica electronica 
+    </p>
+    <div ng-show="!MainController.currentUser">
+	    <a ui-sref="login">
+    		<button type="button" class="btn btn-success btn-raised"> Ingresar</button> 
+		</a>
+	</div>
+  </div>
+</div>

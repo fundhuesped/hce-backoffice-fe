@@ -1,0 +1,176 @@
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+.thumbnail {
+  height: 200px;
+}
+
+.thumbnail img.pull-right {
+  width: 50px;
+}
+
+.hce-form-group{
+	margin-top:5px;
+}
+.form-group label.control-label{
+	font-size: 14px;
+	color:black;
+}
+
+.form-group .checkbox label, .form-group .radio label, .form-group label{
+	color:black;
+}
+
+.lo-section-title{
+  font-size: 18px;
+}
+
+
+/*  NLG-Helpers  */
+
+.no-padding {
+  padding: 0px;
+}
+
+.center-text{
+  text-align: center;
+}
+
+
+.hce-card {
+  padding: 10px;
+}
+
+.hce-card-title {
+  font-size: 16px;
+}
+
+.hce-card-body{
+
+}
+.hce-card-body li{
+  font-size: 14px;
+}
+
+.hce-card-footer{
+  text-align: right;
+}
+
+.hce-360-navbar-btn{
+  font-size: 18px;
+  margin-bottom: 30px;
+  margin-right: 25px;
+  margin-left: 25px;
+  float: left;
+  color: black;
+}
+
+.hce-360-navbar-btn.active{
+  font-weight: bold;
+  border-bottom: 2px solid grey;
+}
+
+.hce-navbar-patient-name{
+  font-size: 35px;
+  padding-top: 10px;
+}
+
+.hce-navbar-patient-age{
+  padding-bottom: 10px;
+}
+
+.hce-brand {
+  height: 46px;
+  border-right: 1px solid;
+  border-color: lightgrey;
+  text-align: center;
+
+}
+
+.hce-brand div {
+  padding-top: 5px;
+  color: white;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+@media (min-width: 1200px){
+  .hce-col-lg-1-5 {
+    width: 12.333333%;
+  } 
+  .hce-col-md-1-5 {
+    width: 12.333333%;
+  } 
+}
+.hce-icon-bar{
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 1px;
+}
+  
+
+.hce-navbar{
+  background-color: #2278CF;
+  color: rgba(255,255,255, 0.84);
+}
+
+
+
+/*  Drawer */
+
+.hce-navdrawer{
+  background-color: #009688;
+  padding-top: 20px;  
+  padding: 0px;
+  position: fixed;
+  height: 100%;
+  overflow-y: auto;
+  z-index: 100;
+  -webkit-transition: .25s ease-in-out;
+  -moz-transition: .25s ease-in-out;
+  -o-transition: .25s ease-in-out;
+  transition: .25s ease-in-out;
+}
+
+.hce-navdrawer li{
+  color: darkgray;
+  margin-top: 0px;
+}
+
+.hce-navdrawer li a.bars{
+  border-color: lightgray;
+  border-right: 1px solid;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.hce-navdrawer li a{
+  color: white;
+  font-size: 16px;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.hce-navdrawer .nav-pills > li > a{
+  border-radius: 0px;
+}
+
+.hce-navdrawer .nav-pills > li > a:active,
+.hce-navdrawer .nav-pills > li > a:hover,
+.hce-navdrawer .nav-pills > li > a:focus{
+  background-color: #016b60;
+}
+
+.hcenavdrawercollapsed{
+  width: 57px !important;
+}
+
+.hcenavtextcollapsed{
+  display: none;
+}

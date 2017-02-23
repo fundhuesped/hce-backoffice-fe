@@ -1,0 +1,87 @@
+<hce-navbar></hce-navbar>     
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="hce-360-navbar-btn" ng-class="{active:PHCECtrl.showingSummary()}">
+            Vista 360
+          </div>
+          <div class="hce-360-navbar-btn" ng-class="{active:PHCECtrl.showingEvolutions()}">Evoluciones</div>
+          <div class="hce-360-navbar-btn" ng-class="{active:PHCECtrl.showingProblems()}">Problemas</div>
+          <div class="hce-360-navbar-btn" ng-class="{active:PHCECtrl.showingTreatments()}">Tratamientos</div>
+          <div class="hce-360-navbar-btn" ng-class="{active:PHCECtrl.showingResults()}">Resultados</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div ui-view="detail">
+          
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+      <div class="well hce-card">
+        <div class="hce-card-title">
+          Problemas activos
+        </div>
+        <div class="hce-card-body">
+            <ul>
+              <li>HIV</li>
+              <li>Fiebre</li>
+              <li>Asma</li>
+            </ul>
+        </div>
+        <div class="hce-card-footer">
+          <a href="#">Ver mas...</a>
+        </div>
+      </div>
+      <div class="well hce-card">
+        <div class="hce-card-title">
+          Alergias
+        </div>
+        <div class="hce-card-body">
+            <ul>
+              <li>Penicilina (Fuerte)</li>
+              <li>Ibuprofeno (Leve)</li>
+            </ul>
+        </div>
+        <div class="hce-card-footer">
+          <a href="#">Ver mas...</a>
+        </div>
+      </div>
+      <div class="well hce-card">
+        <div class="hce-card-title">
+          Notas
+        </div>
+        <div class="hce-card-body">
+            <ul>
+              <li>Nota 1</li>
+              <li>Nota 2</li>
+            </ul>
+        </div>
+        <div class="hce-card-footer">
+          <a href="#">Ver mas...</a>
+        </div>
+      </div>
+      <div class="well hce-card">
+        <div class="hce-card-title">
+          Medicamentos activos
+        </div>
+        <div class="hce-card-body">
+            <ul>
+              <li>Ibuprofeno</li>
+              <li>Amoxidal Duo</li>
+            </ul>
+        </div>
+        <div class="hce-card-footer">
+          <a href="#">Ver mas...</a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
