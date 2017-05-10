@@ -6,39 +6,16 @@
     	.module('hce.patientHCE')
     	.controller('PatientHCELayoutController', patientHCELayoutController);
 
-	patientHCELayoutController.$inject = ['$state', 'SessionService'];
+	patientHCELayoutController.$inject = ['$state', '$stateParams','SessionService', 'HCService'];
 
-    function patientHCELayoutController ($state, SessionService) {
+    function patientHCELayoutController ($state, $stateParams, SessionService, HCService) {
 	    var vm = this;
         vm.currentUserCan = SessionService.currentUserCan;
-        vm.showingSummary = showingSummary;
-        vm.showingEvolutions = showingEvolutions;
-        vm.showingProblems = showingProblems;
-        vm.showingTreatments = showingTreatments;
-        vm.showingResults = showingResults;
         activate();
 
 	    function activate(){
+            // HCService.setPaciente($stateParams.patientId);
 	    }
 
-        function showingSummary() {
-            return $state.is('app.patientHCE.resumen');
-        }
-
-        function showingEvolutions() {
-            return $state.is('app.patientHCE.evolutions');
-        }
-        
-        function showingProblems() {
-            return $state.is('app.patientHCE.problems');
-        }
-        
-        function showingTreatments() {
-            return $state.is('app.patientHCE.treatments');
-        }
-        
-        function showingResults() {
-            return $state.is('app.patientHCE.results');
-        }
     }
 })();

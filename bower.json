@@ -1,5 +1,5 @@
 {
-  "name": "logisticFe",
+  "name": "hceBackofficeFe",
   "version": "0.0.0",
   "dependencies": {
     "angular-animate": "~1.5.3",
@@ -23,7 +23,7 @@
     "components-font-awesome": "^4.6.3",
     "components-bootstrap": "3.3.6",
     "angular-loading-bar": "0.9.0",
-    "angular-loading": "0.1.4",
+    "angular-loading": "^0.1.4",
     "angular-bootstrap-material": "abm#^0.1.4",
     "angular-local-storage": "~0.2.7"
   },
@@ -44,7 +44,7 @@
   },
   "resolutions": {
     "jquery": "~2.1.1",
-    "angular": ">=1.4.0",
+    "angular": "^1.5.3",
     "angular-bootstrap": "^2.1.1",
     "bootstrap-material-design": "0.5.10"
   }

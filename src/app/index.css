@@ -62,25 +62,46 @@
 
 .hce-360-navbar-btn{
   font-size: 18px;
-  margin-bottom: 30px;
-  margin-right: 25px;
-  margin-left: 25px;
+  padding-bottom: 5px;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-top: 10px;
   float: left;
-  color: black;
+  color: white;
+  cursor:pointer; 
+}
+
+.hce-360-navbar-btn:hover{
+  background-color: #00767E;
+  background: #018776; /* Old browsers */
+  background: -moz-linear-gradient(top, #018776 0%, #00767e 40%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #018776 0%,#00767e 40%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #018776 0%,#00767e 40%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#018776', endColorstr='#00767e',GradientType=0 ); /* IE6-9 */
 }
 
 .hce-360-navbar-btn.active{
   font-weight: bold;
-  border-bottom: 2px solid grey;
+  border-bottom: 2px solid black;
 }
 
 .hce-navbar-patient-name{
   font-size: 35px;
   padding-top: 10px;
+  color: white;
+  font-weight: bold
 }
 
 .hce-navbar-patient-age{
   padding-bottom: 10px;
+  color: white;
+}
+
+.hce-navbar-visit-active {
+  margin-left:20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
 }
 
 .hce-brand {
@@ -115,10 +136,13 @@
   
 
 .hce-navbar{
-  background-color: #2278CF;
+  background-color: #018776;
   color: rgba(255,255,255, 0.84);
 }
 
+.hce-navbar.active-evolution{
+
+}
 
 
 /*  Drawer */
@@ -167,10 +191,36 @@
   background-color: #016b60;
 }
 
+.hce-navdrawer .nav-pills > li > a.active{
+    background-color: #016b60;
+}
+
 .hcenavdrawercollapsed{
   width: 57px !important;
 }
 
 .hcenavtextcollapsed{
   display: none;
+}
+
+
+
+
+.row-panel{
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #eaeaea;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.well-row{
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 10px;
+}
+
+.evolution-header{
+  margin-bottom: 25px;
 }

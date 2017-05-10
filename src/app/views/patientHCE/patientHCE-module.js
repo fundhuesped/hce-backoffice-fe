@@ -15,7 +15,10 @@
               controller: 'PatientHCELayoutController',
               controllerAs: 'PHCECtrl'         
             }
-          }
+          },
+        onEnter: function($stateParams, HCService){
+            HCService.setPaciente($stateParams.patientId);
+        }
       })
       .state('app.patientHCE.resumen', {
           url: '/resumen',
@@ -32,6 +35,16 @@
           views: {
             'detail': {
               templateUrl: 'app/views/patientHCE/problems/problems.html',
+            }
+          },
+      })
+      .state('app.patientHCE.evolutions', {
+          url: '/evoluciones',
+          views: {
+            'detail': {
+              templateUrl: 'app/views/patientHCE/evolutions/evolutions.html',
+              controller: 'EvolutionsController',
+              controllerAs: 'EvolutionsController',
             }
           },
       });

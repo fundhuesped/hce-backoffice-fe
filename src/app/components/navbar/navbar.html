@@ -1,4 +1,4 @@
-<div class="navbar hce-navbar">
+<div class="navbar hce-navbar" ng-class="{'active-evolution':NavbarController.currentEvolution}">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -8,18 +8,32 @@
       </button>
     </div>
     <div class="navbar-collapse collapse navbar-responsive-collapse">
-      <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10" style="margin-left: -15px;">
-        <div class="row hce-navbar-patient-name">
-          Martin Lobo
-          
+      <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 no-padding" style="margin-left: -15px;">
+        <div class="row ">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <span class="hce-navbar-patient-name">{{NavbarController.currentPaciente.firstName}} {{NavbarController.currentPaciente.fatherSurname}}</span>
+            <span class="hce-navbar-patient-age">{{NavbarController.years}} años</span>
+            <span class="hce-navbar-patient-age">{{NavbarController.currentPaciente.documentType.name}} {{NavbarController.currentPaciente.documentNumber}}</span>
+            <span class="hce-navbar-patient-age">{{NavbarController.currentPaciente.genderAtBirth.name}}</span>
+            <span ng-show="NavbarController.currentEvolution" class="hce-navbar-visit-active">( Visita abierta )</span>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+          </div>
         </div>
-        <div class="row hce-navbar-patient-age">
-          30 años
+        <div class="row ">
+          <div class="hce-360-navbar-btn" ui-sref-active="active" ui-sref="app.patientHCE.resumen">
+            Vista 360
+          </div>
+          <div class="hce-360-navbar-btn" ui-sref-active="active" ui-sref="app.patientHCE.evolutions">Evoluciones</div>
+          <div class="hce-360-navbar-btn" ui-sref-active="active" ui-sref="app.patientHCE.problems">Problemas</div>
+          <div class="hce-360-navbar-btn" ui-sref-active="active" ui-sref="app.patientHCE.traitments">Tratamientos</div>
+          <div class="hce-360-navbar-btn" ui-sref-active="active" ui-sref="app.patientHCE.results">Resultados</div>
+
         </div>
       </div>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{NavbarController.currentUser?NavbarController.currentUser.companyName:'Anonimo'}} <span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{NavbarController.currentUser.first_name}} {{NavbarController.currentUser.last_name}}<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li ng-show="NavbarController.currentUser"><a ng-click="NavbarController.logout()">Cerrar sesión</a></li>
             <li ng-show="!NavbarController.currentUser"><a ui-sref="login">Iniciar sesión</a></li>

@@ -8,7 +8,7 @@
                     if(config.url.indexOf('login') > -1){
                         return config;
                     }    
-                    config.headers['Authorization'] = SessionSrv.currentToken;
+                    config.headers['Authorization'] = 'Token '+SessionSrv.currentToken;
                 }
                 return config;
             }

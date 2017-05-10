@@ -10,11 +10,12 @@
     var directive = {
       restrict: 'E',
       templateUrl: 'app/components/common-navbar/navbar.html',
-      scope: {
-      },
+      scope: true,
       controller: CommonNavbarController,
       controllerAs: 'CommonNavbarController',
-      bindToController: true
+      bindToController: {
+        hceTitle:"@"
+      }
     };
 
     return directive;

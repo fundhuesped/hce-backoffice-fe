@@ -20,7 +20,7 @@ gulp.task('partials', function () {
       collapseWhitespace: true
     }))
     .pipe($.angularTemplatecache('templateCacheHtml.js', {
-      module: 'logisticFe',
+      module: 'hce.app',
       root: 'app'
     }))
     .pipe(gulp.dest(conf.paths.tmp + '/partials/'));

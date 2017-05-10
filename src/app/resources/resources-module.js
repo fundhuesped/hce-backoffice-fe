@@ -3,6 +3,6 @@
 
 	 angular.module('hce.resources', [])
 
-	.constant('apiBase', 'http://localhost:3000/api/')
+	.constant('apiBase', 'http://localhost:8000/api/')
 
 ;})();

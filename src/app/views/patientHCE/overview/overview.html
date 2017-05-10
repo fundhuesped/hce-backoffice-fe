@@ -1,3 +1,26 @@
-<div class="well">
-  <h1>Hola</h1>
+<div class="container-fluid">
+	<div class="row">
+	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	    	<div class="row well well-row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="row">
+		    			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10"></div>
+		    			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">{{OverviewController.newEvolution.date | date:"dd/MM/yyyy"}}</div>
+					</div>
+					<div class="row">
+						<abm-form-group class="form-group-lg">
+					    	<label data-abm-label type="floating">Nueva Evolución</label>
+					    	<input type="text" abm-form-control ng-model="OverviewController.currentEvolution.notaClinica">
+					  	</abm-form-group>
+					  	<div ng-show="OverviewController.currentEvolution.notaClinica">
+					  		<button class="btn btn-success pull-right" ng-click="OverviewController.saveNewEvolution()">Guardar</button>
+					  	</div>
+					  	<div ng-show="OverviewController.currentEvolution">
+					  		<button class="btn btn-success pull-right" ng-click="OverviewController.closeEvolution()">Cerrar visita</button>
+					  	</div>
+	    			</div>		    					
+				</div>
+	    	</div>
+		</div>
+	</div>
 </div>

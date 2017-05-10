@@ -27,9 +27,9 @@
       })
       .state('home', {
         url: '/',
-        templateUrl: 'app/main/main.html',
-        controller: 'MainController',
-        controllerAs: 'MainController'
+          templateUrl: 'app/views/login/login.html',
+          controller: 'LoginController',
+          controllerAs: 'LoginController',
       });
     $urlRouterProvider.otherwise('/');
   }

@@ -18,6 +18,7 @@
         'LocalStorageModule',
         'angularBootstrapMaterial',
         'hce.resources', 
+        'hce.login', 
         'hce.patientHCE', 
         'hce.patientSearch', 
         'hce.services']);

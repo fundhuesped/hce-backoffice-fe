@@ -1,48 +1,55 @@
-<hce-common-navbar></hce-common-navbar>
+<hce-common-navbar hce-title="Busqueda de pacientes"></hce-common-navbar>
 
+<div class="modal fade" ng-class="{'in':PSCtrl.changePacientModal.style}" ng-style="PSCtrl.changePacientModal.style">
+    <div class="modal-dialog modal-confirmation">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-weight: bold;">¿Cambiar paciente seleccionado?</h4>
+            </div>
+            <div class="modal-body">
+              Tiene cambios no guardados del paciente actual, si cambia de paciente se perderan.
+              ¿Esta seguro que abrir el paciente seleccionado?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="PSCtrl.changePacientModal.cancel()">Cancelar</button>
+                <button type="button" class="btn btn-success" ng-click="PSCtrl.changePacientModal.confirm()"><span class="glyphicon glyphicon-ok"></span> Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container-fluid">
   	<div class="row">
 	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="well">
 				<div style="padding-right: 15px; padding-left: 15px;">
 				  	<div class="row">
-						<legend>Busqueda de pacientes</legend>
 						<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
 				            <abm-form-group>
-				              <label abm-label for="fromprovince">Tipo</label>
-				                <select class="form-control" name="fromprovince" ng-model="PSCtrl.filter.fromProvinceId" ng-options="province.id as province.name for province in PSCtrl.provinces | orderBy: 'name'  track by province.id" abm-form-control>
-				                  <option value="">DNI</option>
+				              <label abm-label for="documentType">Tipo</label>
+				                <select class="form-control" name="documentType" ng-model="PSCtrl.filter.documentType" ng-options="documentType.id as documentType.name for documentType in PSCtrl.documentTypes | orderBy: 'name'  track by documentType.id" abm-form-control>
 				                </select>
 				            </abm-form-group>
 						</div>
 						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 				            <abm-form-group>
-				              <label abm-label for="destinationprovince">Número de documento</label>
-				                <select class="form-control" name="destinationprovince" ng-model="PSCtrl.filter.destinationProvinceId" ng-options="province.id as province.name for province in PSCtrl.provinces | orderBy: 'name'  track by province.id" abm-form-control>
-				                  <option value=""></option>
-				                </select>
+				              <label abm-label for="documentNumber">Número de documento</label>
+				                <input class="form-control" name="documentNumber" ng-model="PSCtrl.filter.documentNumber" abm-form-control/>
 				            </abm-form-group>
 						</div>
 						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 				            <abm-form-group>
-				              <label abm-label for="loadCategory">Nombre</label>
-				                <select class="form-control" name="loadCategory" ng-model="PSCtrl.filter.loadCategoryId" ng-options="loadCategory.id as loadCategory.name for loadCategory in PSCtrl.loadCategories | orderBy: 'name'  track by loadCategory.id" abm-form-control>
-				                  <option value=""></option>
-				                </select>
+				              <label abm-label for="firstName">Nombre</label>
+				                <input class="form-control" name="firstName" ng-model="PSCtrl.filter.firstName" abm-form-control/>
 				            </abm-form-group>
-
 						</div>
 						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 				            <abm-form-group>
-				              <label abm-label for="status">Apellido</label>
-				                <select class="form-control" name="status" ng-model="PSCtrl.filter.status" ng-options="status as status for status in PSCtrl.statuses" abm-form-control>
-				                  <option value=""></option>
-				                </select>
+				              <label abm-label for="fatherSurname">Apellido</label>
+				                <input class="form-control" name="fatherSurname" ng-model="PSCtrl.filter.fatherSurname" abm-form-control/>
 				            </abm-form-group>
-
 						</div>
 						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-							<button ng-click="PSCtrl.search()" class="btn btn-raised btn-info">Buscar</button>
+							<button ng-click="PSCtrl.lookForPacientes()" ng-disabled="!PSCtrl.shouldLookForPacient()" class="btn btn-raised btn-info">Buscar</button>
 						</div>
 					</div>
 				</div>
@@ -71,6 +78,9 @@
     					</tr>
     				</tbody>
     			</table>
+    			<div ng-show="!PSCtrl.patients" class="text-center">Ingrese dos o mas filtros para buscar</div>
+    			<div ng-show="PSCtrl.patients.length==0" class="text-center">No se encontraron pacientes con la busqueda actual</div>
+
 	    	</div>
 	    </div>
 	</div>

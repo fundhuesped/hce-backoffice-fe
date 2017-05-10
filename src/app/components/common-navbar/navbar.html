@@ -8,11 +8,14 @@
       </button>
     </div>
     <div class="navbar-collapse collapse navbar-responsive-collapse">
-      <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10" style="margin-left: -15px;">
+      <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10" style="margin-left: -15px;margin-top:19px;">
+        <div class="row ">
+          <span class="hce-navbar-patient-name">{{CommonNavbarController.hceTitle}}</span>
+        </div>
       </div>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{CommonNavbarController.currentUser?CommonNavbarController.currentUser.companyName:'Anonimo'}} <span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{CommonNavbarController.currentUser.first_name}} {{CommonNavbarController.currentUser.last_name}}<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li ng-show="CommonNavbarController.currentUser"><a ng-click="CommonNavbarController.logout()">Cerrar sesión</a></li>
             <li ng-show="!CommonNavbarController.currentUser"><a ui-sref="login">Iniciar sesión</a></li>

@@ -17,7 +17,7 @@
             if(vm.LoginForm.$valid){
                 SessionService.login(vm.username, vm.password, vm.rememberMe, function(){
                     $loading.finish('app');
-                    $state.transitionTo('home');
+                    $state.transitionTo('app.patientSearch');
                 }, function(errorResponse){
                     $loading.finish('app');
                     if(errorResponse.status === 401){

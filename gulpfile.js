@@ -19,11 +19,17 @@ wrench.readdirSyncRecursive('./gulp').filter(function(file) {
   require('./gulp/' + file);
 });
 
+// Fonts
+gulp.task('font-awesome', function() {
+    return gulp.src([
+                    'bower_components/font-awesome/fonts/fontawesome-webfont.*'])
+            .pipe(gulp.dest('dist/fonts/'));
+});
 
 /**
  *  Default task clean temporaries directories and launch the
  *  main optimization build task
  */
 gulp.task('default', ['clean'], function () {
-  gulp.start('build');
+  gulp.start('build',['font-awesome']);
 });
