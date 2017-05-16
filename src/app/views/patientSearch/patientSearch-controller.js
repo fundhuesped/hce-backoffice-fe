@@ -15,6 +15,7 @@
       vm.shouldLookForPacient = shouldLookForPacient;
       vm.lookForPacientes = lookForPacientes;
       vm.documentTypes = [];
+      vm.clearFilters = clearFilters;
       vm.filter = {};
       vm.profesionales = [];
 
@@ -133,9 +134,13 @@
                 return;
               }
               vm.patients = patients;
-            }, function(){
-                vm.message = 'Ocurrió un error en la comunicación, por favor intente nuevamente.';
-                displayComunicationError('recomendations');
+            }, function(err){
+                if(err.status == 400 && err.data && angular.fromJson(err.data).error){
+                  toastr.error(angular.fromJson(err.data).error);
+                }else{
+                  vm.message = 'Ocurrió un error en la comunicación, por favor intente nuevamente.';
+                  displayComunicationError('recomendations');
+                }
               }
           );
         }
@@ -175,7 +180,9 @@
         return false;
       }
 
-
+      function clearFilters() {
+        vm.filter = {};
+      }
 
       function openPatient(patient) {
           if(HCService.isDirty()){
