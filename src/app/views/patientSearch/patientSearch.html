@@ -23,34 +23,91 @@
 			<div class="well">
 				<div style="padding-right: 15px; padding-left: 15px;">
 				  	<div class="row">
-						<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
-				            <abm-form-group>
-				              <label abm-label for="documentType">Tipo</label>
-				                <select class="form-control" name="documentType" ng-model="PSCtrl.filter.documentType" ng-options="documentType.id as documentType.name for documentType in PSCtrl.documentTypes | orderBy: 'name'  track by documentType.id" abm-form-control>
-				                </select>
-				            </abm-form-group>
-						</div>
-						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-				            <abm-form-group>
-				              <label abm-label for="documentNumber">Número de documento</label>
-				                <input class="form-control" name="documentNumber" ng-model="PSCtrl.filter.documentNumber" abm-form-control/>
-				            </abm-form-group>
-						</div>
-						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-				            <abm-form-group>
-				              <label abm-label for="firstName">Nombre</label>
-				                <input class="form-control" name="firstName" ng-model="PSCtrl.filter.firstName" abm-form-control/>
-				            </abm-form-group>
-						</div>
-						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-				            <abm-form-group>
-				              <label abm-label for="fatherSurname">Apellido</label>
-				                <input class="form-control" name="fatherSurname" ng-model="PSCtrl.filter.fatherSurname" abm-form-control/>
-				            </abm-form-group>
-						</div>
-						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-							<button ng-click="PSCtrl.lookForPacientes()" ng-disabled="!PSCtrl.shouldLookForPacient()" class="btn btn-raised btn-info">Buscar</button>
-						</div>
+				  		<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+					  		<div class="row">
+  								<div class="col-xs-12 col-sm-2 col-md-1 col-lg-1">
+						            <abm-form-group>
+						              <label abm-label for="documentType">Tipo</label>
+						                <select class="form-control" name="documentType" ng-model="PSCtrl.filter.documentType" ng-options="documentType.id as documentType.name for documentType in PSCtrl.documentTypes | orderBy: 'name'  track by documentType.id" abm-form-control>
+						                </select>
+						            </abm-form-group>
+								</div>
+								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+						            <abm-form-group>
+						              <label abm-label for="documentNumber">Número de documento</label>
+						                <input class="form-control" name="documentNumber" ng-model="PSCtrl.filter.documentNumber" abm-form-control/>
+						            </abm-form-group>
+								</div>
+								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+						            <abm-form-group>
+						              <label abm-label for="firstName">Nombre</label>
+						                <input class="form-control" name="firstName" ng-model="PSCtrl.filter.firstName" abm-form-control/>
+						            </abm-form-group>
+								</div>
+								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+						            <abm-form-group>
+						              <label abm-label for="fatherSurname">Apellido</label>
+						                <input class="form-control" name="fatherSurname" ng-model="PSCtrl.filter.fatherSurname" abm-form-control/>
+						            </abm-form-group>
+								</div>
+								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+						            <abm-form-group>
+						            	<label abm-label for="birthDate">Nacimiento</label>
+			                      		<div class="input-group">
+											<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="birthDate" ng-model="PSCtrl.filter.birthDate" is-open="PSCtrl.birthDateCalendarPopup.opened" datepicker-options="PSCtrl.birthDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PSCtrl.birthDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
+					                        <span class="input-group-btn">
+					                          <button type="button" class="btn btn-default" ng-click="PSCtrl.birthDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+					                        </span>
+						            	</div>
+						            </abm-form-group>
+								</div>
+								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+						            <abm-form-group>
+						              <label abm-label for="pnsCode">PNS</label>
+						                <input class="form-control" name="pnsCode" ng-model="PSCtrl.filter.pnsCode" abm-form-control/>
+						            </abm-form-group>
+								</div>
+								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+									<abm-form-group>
+					                  <label abm-label for="profesional">Visto por</label>
+					                  <select class="form-control" name="profesional" ng-model="PSCtrl.filter.seenBy" ng-options="profesional.id as profesional.firstName+' '+profesional.fatherSurname for profesional in PSCtrl.profesionales track by profesional.id" abm-form-control>
+					                    <option value="">Seleccione un profesional</option>
+					                  </select>
+					              </abm-form-group>
+								</div>
+								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+						            <abm-form-group>
+						            	<label abm-label for="visitFromDate">Visto en intervalo desde</label>
+			                      		<div class="input-group">
+											<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="visitFromDate" ng-model="PSCtrl.filter.visitFromDate" is-open="PSCtrl.visitFromDateCalendarPopup.opened" datepicker-options="PSCtrl.visitFromDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PSCtrl.visitFromDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
+					                        <span class="input-group-btn">
+					                          <button type="button" class="btn btn-default" ng-click="PSCtrl.visitFromDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+					                        </span>
+						            	</div>
+						            </abm-form-group>
+								</div>
+								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+						            <abm-form-group>
+						            	<label abm-label for="visitToDate">Visto en intervalo hasta</label>
+			                      		<div class="input-group">
+											<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="visitToDate" ng-model="PSCtrl.filter.visitToDate" is-open="PSCtrl.visitToDateCalendarPopup.opened" datepicker-options="PSCtrl.visitToDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PSCtrl.visitToDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
+					                        <span class="input-group-btn">
+					                          <button type="button" class="btn btn-default" ng-click="PSCtrl.visitToDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+					                        </span>
+						            	</div>
+						            </abm-form-group>
+								</div>
+				  			</div>
+				  		</div>
+				  		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+					  		<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<button ng-click="PSCtrl.lookForPacientes()" ng-disabled="!PSCtrl.shouldLookForPacient()" class="btn btn-raised btn-info">Buscar</button>
+								</div>
+					  		</div>
+				  		</div>
+
+
 					</div>
 				</div>
 			</div>

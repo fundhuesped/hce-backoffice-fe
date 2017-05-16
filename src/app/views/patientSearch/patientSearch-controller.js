@@ -6,9 +6,9 @@
     	.module('hce.patientSearch')
     	.controller('PatientSearchController', patientSearchController);
 
-	patientSearchController.$inject = ['Paciente', 'Document', 'toastr', 'HCService', '$state', '$loading'];
+	patientSearchController.$inject = ['Paciente', 'Document', 'toastr', 'HCService', '$state', 'moment', 'Profesional', '$loading'];
 
-    function patientSearchController (Paciente, Document, toastr, HCService, $state, $loading) {
+    function patientSearchController (Paciente, Document, toastr, HCService, $state, moment,  Profesional, $loading) {
 	    var vm = this;
       vm.openPatient = openPatient;
       vm.patients = null;
@@ -16,7 +16,7 @@
       vm.lookForPacientes = lookForPacientes;
       vm.documentTypes = [];
       vm.filter = {};
-
+      vm.profesionales = [];
 
       vm.changePacientModal = {
           style: {},
@@ -39,12 +39,49 @@
                       }
       };
 
+      vm.birthDateCalendarPopup = {
+        opened: false,
+        options: {
+          maxDate: new Date()
+        },
+        open : function(){
+          this.opened = true;
+        }
+      };
+
+
+      vm.visitFromDateCalendarPopup = {
+        opened: false,
+        options: {
+          maxDate: new Date()
+        },
+        open : function(){
+          this.opened = true;
+        }
+      };
+
+      vm.visitToDateCalendarPopup = {
+        opened: false,
+        options: {
+          maxDate: new Date()
+        },
+        open : function(){
+          this.opened = true;
+        }
+      };
+
       activate();
 
       function activate(){
         Document.getActiveList(function(documentTypes){
           vm.documentTypes = documentTypes;
         }, displayComunicationError);
+
+        Profesional.getActiveList(function(profesionales){
+          vm.profesionales = profesionales;
+        }, displayComunicationError);
+
+
       }
 
       function lookForPacientes() {
@@ -62,8 +99,29 @@
           if(vm.filter.firstName){
             searchObject.firstName = vm.filter.firstName;
           }
+
           if(vm.filter.fatherSurname){
             searchObject.fatherSurname = vm.filter.fatherSurname;
+          }
+
+          if(vm.filter.birthDate){
+            searchObject.birthDate = moment(vm.filter.birthDate).format('YYYY-MM-DD');
+          }
+
+          if(vm.filter.seenBy){
+            searchObject.seenBy = vm.filter.seenBy;
+          }
+
+          if(vm.filter.visitFromDate){
+            searchObject.visitFromDate = moment(vm.filter.visitFromDate).format('YYYY-MM-DD');
+          }
+
+          if(vm.filter.visitToDate){
+            searchObject.visitToDate = moment(vm.filter.visitToDate).format('YYYY-MM-DD');
+          }
+
+          if(vm.filter.pnsCode){
+            searchObject.pnsCode = vm.filter.pnsCode;
           }
 
           Paciente.getActiveList(searchObject,
@@ -76,11 +134,11 @@
               }
               vm.patients = patients;
             }, function(){
-              vm.message = 'Ocurrió un error en la comunicación, por favor intente nuevamente.';
-              displayComunicationError('recomendations');
-            }
+                vm.message = 'Ocurrió un error en la comunicación, por favor intente nuevamente.';
+                displayComunicationError('recomendations');
+              }
           );
-          }
+        }
       }
 
       function shouldLookForPacient() {
@@ -90,11 +148,23 @@
           return true;
         }
 
+        if(vm.filter.seenBy && vm.filter.visitFromDate && vm.filter.visitToDate){
+          return true;
+        }
+
+        if(vm.filter.pnsCode){
+          return true;
+        }
+
         if (vm.filter.firstName && vm.filter.firstName.length >= 3) {
           populatedFields++;
         }
 
         if (vm.filter.fatherSurname && vm.filter.fatherSurname.length >= 3) {
+          populatedFields++;
+        }
+
+        if(vm.filter.birthDate){
           populatedFields++;
         }
 
