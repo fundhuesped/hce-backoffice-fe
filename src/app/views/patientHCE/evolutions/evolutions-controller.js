@@ -19,7 +19,7 @@
       vm.evolutionCanBeCanceled = evolutionCanBeCanceled;
       vm.searchEvolutions = searchEvolutions;
       vm.currentPage = 1;
-      vm.pageSize = 5;
+      vm.pageSize = 10;
       vm.totalItems = null;
       vm.pageChanged = pageChanged;
       vm.evolutionCanBeCanceled = evolutionCanBeCanceled;

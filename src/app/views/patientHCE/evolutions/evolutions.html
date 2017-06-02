@@ -46,52 +46,11 @@
 	    	</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="">
-			<div style="padding-right: 15px; padding-left: 15px;">
-			  	<div class="row" ng-show="false">
-<!-- 					<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
-			            <abm-form-group>
-			              <label abm-label for="documentType">Tipo</label>
-			                <select class="form-control" name="documentType" ng-model="EvolutionsController.filter.documentType" ng-options="documentType.id as documentType.name for documentType in EvolutionsController.documentTypes | orderBy: 'name'  track by documentType.id" abm-form-control>
-			                </select>
-			            </abm-form-group>
-					</div>
- -->					
- 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-			            <abm-form-group>
-			            	<label abm-label for="fromDate">Desde</label>
-                      		<div class="input-group">
-								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="fromDate" ng-model="EvolutionsController.filters.fromDate" is-open="EvolutionsController.fromCalendarPopup.opened" datepicker-options="EvolutionsController.fromCalendarPopup.options" close-text="Cerrar" alt-input-formats="EvolutionsController.fromCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
-		                        <span class="input-group-btn">
-		                          <button type="button" class="btn btn-default" ng-click="EvolutionsController.fromCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
-		                        </span>
-			            	</div>
-			            </abm-form-group>
-					</div>
-					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-			            <abm-form-group>
-			            	<label abm-label for="toDate">Hasta</label>
-                      		<div class="input-group">
-								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="toDate" ng-model="EvolutionsController.filters.toDate" is-open="EvolutionsController.toCalendarPopup.opened" datepicker-options="EvolutionsController.toCalendarPopup.options" close-text="Cerrar" alt-input-formats="EvolutionsController.toCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
-		                        <span class="input-group-btn">
-		                          <button type="button" class="btn btn-default" ng-click="EvolutionsController.toCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
-		                        </span>
-	                        </div>
-			            </abm-form-group>
-					</div>
-					<div class="col-xs-2 col-sm-4 col-md-4 col-lg-4" style="padding-top: 12px;">
-						<button ng-click="EvolutionsController.searchEvolutions()" class="btn btn-raised btn-info">Buscar</button>
-						<button ng-click="EvolutionsController.cleanFilters()" class="btn btn-raised btn-info">Limpiar</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-  	<div class="row">
+  	<div class="row well well-row">
 	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	    	<div class="">
-		    	<div class="row well well-row" ng-repeat="evolution in EvolutionsController.evolutions" ng-click="evolution.selected=!evolution.selected">
+		    	<div class="row " ng-repeat="evolution in EvolutionsController.evolutions" style="    padding-bottom: 10px;
+    padding-top: 10px;border-bottom:1px solid;border-bottom-color:#D2D2D2" ng-click="evolution.selected=!evolution.selected">
 	    			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	    				<div class="row" ng-class="{'evolution-header':evolution.selected}">
 			    			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">{{evolution.date | date:"dd/MM/yyyy"}}</div>
@@ -129,6 +88,6 @@
 	    </div>
 	</div>
 	<div class="row">
-	  <div uib-pagination total-items="EvolutionsController.totalItems" items-per-page="EvolutionsController.pageSize" ng-model="EvolutionsController.currentPage" ng-change="EvolutionsController.pageChanged()"></div>
+	  <div uib-pagination boundary-links="true" first-text="Últimas" last-text="Primeras"  previous-text="Más nuevas" next-text="Más viejas" total-items="EvolutionsController.totalItems" items-per-page="EvolutionsController.pageSize" ng-model="EvolutionsController.currentPage" ng-change="EvolutionsController.pageChanged()"></div>
 	</div>
 </div>
