@@ -163,18 +163,14 @@
         }
 
         if (vm.filter.firstName && vm.filter.firstName.length >= 3) {
-          populatedFields++;
+          return true;
         }
 
         if (vm.filter.fatherSurname && vm.filter.fatherSurname.length >= 3) {
-          populatedFields++;
+          return true;
         }
 
         if(vm.filter.birthDate){
-          populatedFields++;
-        }
-
-        if (populatedFields > 1) {
           return true;
         }
 
