@@ -12,6 +12,8 @@
 	    var vm = this;
         vm.saveNewEvolution = saveNewEvolution;
         vm.closeEvolution = closeEvolution;
+        vm.newEvolutionFocused = false;
+        vm.visitTypes = ['Programada', 'Espontanea', 'Otro'];
 
         activate();
 

@@ -6,21 +6,26 @@
     	.module('hce.patientHCE')
     	.controller('EvolutionsController', evolutionsController);
 
-	evolutionsController.$inject = ['$state', 'HCService', 'toastr'];
+	evolutionsController.$inject = ['$state', 'HCService', 'toastr', 'moment'];
 
-    function evolutionsController ($state, HCService, toastr) {
+    function evolutionsController ($state, HCService, toastr, moment) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.cleanFilters = cleanFilters;
       vm.newEvolution = {};
       vm.saveNewEvolution = saveNewEvolution;
       vm.closeEvolution = closeEvolution;
+      vm.cancelEvolution = cancelEvolution;
+      vm.evolutionCanBeCanceled = evolutionCanBeCanceled;
       vm.searchEvolutions = searchEvolutions;
       vm.currentPage = 1;
       vm.pageSize = 5;
       vm.totalItems = null;
       vm.pageChanged = pageChanged;
+      vm.evolutionCanBeCanceled = evolutionCanBeCanceled;
       vm.filters = {};
+      vm.newEvolutionFocused = false;
+      vm.visitTypes = ['Programada', 'Espontanea', 'Otro'];
       Object.defineProperty(
           vm,
           'currentEvolution', {
@@ -72,6 +77,7 @@
       function saveNewEvolution() {
         HCService.saveNewEvolution().then(function() {
           toastr.success('Visita guardada con exito');
+          vm.newEvolutionFocused = false;
         }, showError);
       }
 
@@ -101,6 +107,16 @@
             vm.totalItems = paginatedResult.count;
           }
         });
+      }
+
+      function cancelEvolution(evolution) {
+        HCService.cancelEvolution(evolution).then(function() {
+          toastr.success('Visita anulada con exito');
+        }, showError);
+      }
+
+      function evolutionCanBeCanceled(evolution) {
+        return moment().diff(moment(evolution.date,'YYYY-MM-DD'), 'days') < 1;
       }
 
       function showError(error) {

@@ -22,6 +22,7 @@
         // Evolutions
         srv.currentEvolution = null;
         srv.closeEvolution = closeEvolution;
+        srv.cancelEvolution = cancelEvolution;
         srv.getEvolutions = getEvolutions;
         srv.saveNewEvolution = saveNewEvolution;
         srv.openNewEvolution = openNewEvolution;
@@ -98,7 +99,6 @@
                 }, function (err) {
                     console.log(err);
                 });
-
             }
         }
 
@@ -110,9 +110,18 @@
                 srv.getEvolutions();
             }, function (err) {
                 console.log(err);
-            });
+            }).$promise;
         }
 
+        function cancelEvolution(evolution) {
+            var evolutionModified = angular.copy(evolution);
+            evolutionModified.status = 'Inactive';
+            return Evolution.update(evolutionModified,function () {
+                srv.getEvolutions();
+            }, function (err) {
+                console.log(err);
+            }).$promise;
+        }
 
         function saveAndClose() {
             return srv.currentEvolution.$save({pacienteId:srv.currentPaciente.id}, function () {
@@ -140,7 +149,7 @@
                      
                 });                
             }else{
-                return Evolution.getPaginatedForPaciente({pacienteId:srv.currentPaciente.id}, function (evolutions) {
+                return Evolution.getPaginatedForPaciente({pacienteId:srv.currentPaciente.id}, function (paginatedResult) {
                     srv.evolutions = paginatedResult.results;
                 }, function (err) {
                      

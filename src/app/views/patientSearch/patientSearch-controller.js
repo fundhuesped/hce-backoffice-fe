@@ -3,12 +3,12 @@
     /* jshint validthis: true */
      /*jshint latedef: nofunc */
     angular
-    	.module('hce.patientSearch')
+    	.module('hce.patient')
     	.controller('PatientSearchController', patientSearchController);
 
-	patientSearchController.$inject = ['Paciente', 'Document', 'toastr', 'HCService', '$state', 'moment', 'Profesional', '$loading'];
+	patientSearchController.$inject = ['Paciente', 'Document', 'toastr', 'HCService', '$state', 'moment', 'Profesional', '$loading', '$uibModal'];
 
-    function patientSearchController (Paciente, Document, toastr, HCService, $state, moment,  Profesional, $loading) {
+    function patientSearchController (Paciente, Document, toastr, HCService, $state, moment,  Profesional, $loading, $uibModal) {
 	    var vm = this;
       vm.openPatient = openPatient;
       vm.patients = null;
@@ -16,6 +16,7 @@
       vm.lookForPacientes = lookForPacientes;
       vm.documentTypes = [];
       vm.clearFilters = clearFilters;
+      vm.openPacientePersonalInfoModal = openPacientePersonalInfoModal;
       vm.filter = {};
       vm.profesionales = [];
 
@@ -183,6 +184,22 @@
       function clearFilters() {
         vm.filter = {};
       }
+
+
+    function openPacientePersonalInfoModal(selectedPaciente) {
+      var modalInstance = $uibModal.open({
+        templateUrl: 'app/views/patient/patientPersonalInfo.html',
+        size: 'lg',
+        controller: 'PatientPersonalInfoCtrl',
+        controllerAs: 'PacienteCtrl',
+        resolve: {
+          paciente: function () {
+            return selectedPaciente;
+          }
+        }
+      });
+    }
+
 
       function openPatient(patient) {
           if(HCService.isDirty()){

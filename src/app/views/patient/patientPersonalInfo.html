@@ -1,0 +1,323 @@
+<div class="modal fade" ng-class="{'in':PacienteCtrl.modalStyle}" ng-style="PacienteCtrl.modalStyle">
+    <div class="modal-dialog modal-confirmation">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">¿{{PacienteCtrl.paciente.status == "Active" ? "Eliminar" : "Reactivar"}}?</h4>
+            </div>
+            <div class="modal-body">
+                <p>¿Esta seguro que desea {{PacienteCtrl.paciente.status == "Active" ? "eliminar" : "reactivar"}} el paciente seleccionado?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-cancel" ng-click="PacienteCtrl.dismissModal()">Cancelar</button>
+                <button type="button" class="btn btn-danger btn-confirm" ng-click="PacienteCtrl.confirmModal()"><span class="glyphicon glyphicon-remove"></span> {{PacienteCtrl.paciente.status == "Active" ? "Eliminar" : "Reactivar"}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Paciente</h3>
+            <button type="button" class="pull-right close" ng-click="PacienteCtrl.cancel();">
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+        </div>
+        <div class="panel-body">
+            <form name="PacienteCtrl.pacienteForm">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="row">
+                        <div class="alert alert-dismissable alert-warning" ng-show="PacienteCtrl.errorMessage">
+                            <button type="button" class="close" ng-click="PacienteCtrl.hideErrorMessage()">×</button>
+                            <p>{{PacienteCtrl.errorMessage}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                            <abm-form-group>
+                                <span><label>Nombre*</label></span>
+                                <input type="text" name="firstName" maxlength="70" class="form-control" ng-model="PacienteCtrl.paciente.firstName" ng-required="true">
+                                <span><label>(máximo 70 caracteres)</label></span>
+                            </abm-form-group>
+                        </div>
+                        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                            <div class="form-group" ng-class="{'has-error':PacienteCtrl.pacienteForm.fatherSurname.$error.required}">
+                                <span><label>Apellido paterno*</label></span>
+                                <input type="text" name="fatherSurname" maxlength="70" class="form-control" ng-model="PacienteCtrl.paciente.fatherSurname" required>
+                                <span><label>(máximo 70 caracteres)</label></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                            <div class="form-group">
+                                <span><label>Otro nombre</label></span>
+                                <input type="text" name="otherNames" maxlength="70" class="form-control" ng-model="PacienteCtrl.paciente.otherNames">
+                                <span><label>(máximo 70 caracteres)</label></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                            <div class="form-group">
+                                <span><label>Apellido materno</label></span>
+                                <input type="text" name="motherSurname" maxlength="70" class="form-control" ng-model="PacienteCtrl.paciente.motherSurname">
+                                <span><label>(máximo 70 caracteres)</label></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="form-group" ng-class="{'has-error':PacienteCtrl.pacienteForm.documentType.$error.required}">
+                                <span><label>Tipo documento*</label></span>
+                                <select class="form-control" name="documentType" ng-model="PacienteCtrl.paciente.documentType" ng-options="document as document.name for document in PacienteCtrl.documents track by document.id" required>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-5" ng-class="{'has-error':PacienteCtrl.pacienteForm.documentNumber.$error.required}">
+                            <span><label>Número*</label></span>
+                            <input class="form-control" maxlength="10" type="text" name="documentNumber" id="documentNumber" ng-model="PacienteCtrl.paciente.documentNumber" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="form-group" ng-class="{'has-error':PacienteCtrl.pacienteForm.socialService.$error.required}">
+                                <span><label>Obra social</label></span>
+                                <select class="form-control" name="socialService" ng-model="PacienteCtrl.paciente.socialService" ng-options="socialService as socialService.name for socialService in PacienteCtrl.socialServices track by socialService.id">
+                                    <option value="" selected="selected">---Seleccione---</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <span><label>Número asociado</label></span>
+                            <input type="text" name="socialServiceNumber" maxlength="20" class="form-control" ng-model="PacienteCtrl.paciente.socialServiceNumber">
+                            <span><label>(máximo 20 caracteres)</label></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <span><label>Fecha nacimiento</label> <small><em>(dd/mm/aaaa o m/d/aaaa)</em></small></span>
+                                <p class="input-group">
+                                    <input type="text" name="birthDate" class="form-control" uib-datepicker-popup="d!/M!/yyyy" ng-model="PacienteCtrl.paciente.birthDate" is-open="PacienteCtrl.birthDateCalendarPopup.opened" datepicker-options="PacienteCtrl.birthDateCalendarPopup.options" alt-input-formats="PacienteCtrl.birthDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" close-text="Cerrar"/>
+                                    <span class="input-group-btn">
+                                      <button type="button" class="btn btn-default" ng-click="PacienteCtrl.openBirthDateCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <br>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <span><label>Sexo al nacer</label></span>
+                                <div class="form-group">
+                                    <select class="form-control" name="genderAtBirth" ng-model="PacienteCtrl.paciente.genderAtBirth" ng-options="genderAtBirth as genderAtBirth.name for genderAtBirth in PacienteCtrl.sexTypes track by genderAtBirth.id" >
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <span><label>Género por elección</label></span>
+                            <div class="form-group">
+                                <select class="form-control" name="genderOfChoice" ng-model="PacienteCtrl.paciente.genderOfChoice" ng-options="genderOfChoice as genderOfChoice.name for genderOfChoice in PacienteCtrl.sexTypes track by genderOfChoice.id">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <span><label>Calle</span>
+                                <input type="text" name="street" maxlength="150" class="form-control" ng-model="PacienteCtrl.paciente.street">
+                                <span><label>(máximo 150 caracteres)</label></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <span><label>Código Postal</label></span>
+                                <input type="text" name="postal" maxlength="10" class="form-control" ng-model="PacienteCtrl.paciente.postal">
+                                <span><label>(máximo 10 caracteres)</label></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <span><label>Provincia</label></span>
+                                <div class="form-group">
+                                    <select name="selectedProvince" class="form-control" ng-model="PacienteCtrl.selectedProvince" ng-options="province as province.name for province in PacienteCtrl.provinces track by province.id" ng-change="PacienteCtrl.searchDistricts()" >
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <span><label>Partido</label></span>
+                                <div class="form-group" ng-class="{'has-error':PacienteCtrl.pacienteForm.selectedDistrict.$error.required}">
+                                    <select name="selectedDistrict" class="form-control" ng-model="PacienteCtrl.selectedDistrict" ng-options="district as district.name for district in PacienteCtrl.districts track by district.id" ng-change="PacienteCtrl.searchLocations()" ng-required="PacienteCtrl.selectedProvince" ng-disabled="!PacienteCtrl.districts">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="form-group" ng-class="{'has-error':PacienteCtrl.pacienteForm.location.$error.required}">
+                                <span><label>Localidad</label></span>
+                                <div class="form-group">
+                                    <select name="location" class="form-control" ng-model="PacienteCtrl.paciente.location" ng-required="PacienteCtrl.selectedProvince" ng-options="location as location.name for location in PacienteCtrl.locations track by location.id" ng-disabled="!PacienteCtrl.locations">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <span><label>Lugar de nacimiento</label></span>
+                                <input type="text" name="bornPlace" maxlength="40" class="form-control" ng-model="PacienteCtrl.paciente.bornPlace">
+                                <span><label>(máximo 40 caracteres)</label></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <span><label>Telefono*</label></span>
+                                <input type="text" name="primaryPhoneNumber" maxlength="20" class="form-control" ng-model="PacienteCtrl.paciente.primaryPhoneNumber" required>
+                                <input type="checkbox" ng-model="PacienteCtrl.paciente.primaryPhoneMessage" ng-true-value="true" ng-false-value="false">
+                                <span><label>Acepta mensajes</label></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <span><label>Contacto</label></span>
+                                <input type="text" name="primaryPhoneContact" maxlength="40" class="form-control" ng-model="PacienteCtrl.paciente.primaryPhoneContact">
+                                <span><label>(máximo 40 caracteres)</label></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <span><label>Telefono Alternativo 1</label></span>
+                                <input type="text" name="secondPhoneNumber" maxlength="20" class="form-control" ng-model="PacienteCtrl.paciente.secondPhoneNumber">
+                                <input type="checkbox" ng-model="PacienteCtrl.paciente.secondPhoneMessage">
+                                <span><label>Acepta mensajes</label></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <span><label>Contacto</label></span>
+                                <input type="text" name="secondPhoneNumber" maxlength="40" class="form-control" ng-model="PacienteCtrl.paciente.secondPhoneContact">
+                                <span><label>(máximo 40 caracteres)</label></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <span><label>Telefono Alternativo 2</label></span>
+                                <input type="text" name="thirdPhoneNumber" maxlength="20" class="form-control" ng-model="PacienteCtrl.paciente.thirdPhoneNumber">
+                                <input type="checkbox" ng-model="PacienteCtrl.paciente.thirdPhoneMessage">
+                                <span><label>Acepta mensajes</label></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <span><label>Contacto</label></span>
+                                <input type="text" name="thirdPhoneNumber" maxlength="40" class="form-control" ng-model="PacienteCtrl.paciente.thirdPhoneContact">
+                                <span><label>(máximo 40 caracteres)</label></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <span><label>Ocupación</label></span>
+                                <input type="text" name="occupation" maxlength="150" class="form-control" ng-model="PacienteCtrl.paciente.occupation">
+                                <span><label>(máximo 150 caracteres)</label></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <span><label>Email</label></span>
+                                <input type="text" name="email" maxlength="70" class="form-control" ng-model="PacienteCtrl.paciente.email">
+                                <span><label>(máximo 70 caracteres)</label></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <span><label>Estado civil</label></span>
+                            <select class="form-control" name="civilStatus" ng-model="PacienteCtrl.paciente.civilStatus" ng-options="civilStatus as civilStatus.name for civilStatus in PacienteCtrl.civilStatusTypes track by civilStatus.id">
+                                <option value="" selected="selected">---Seleccione---</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-5">
+                            <span><label>Estudios</label></span>
+                            <select class="form-control" name="education" ng-model="PacienteCtrl.paciente.education" ng-options="education as education.name for education in PacienteCtrl.educationTypes track by education.id">
+                                <option value="" selected="selected">---Seleccione---</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <span><label>Primera visita</label> <small><em>(dd/mm/aaaa o m/d/aaaa)</em></small></span>
+                                <p class="input-group">
+                                    <input type="text" name="firstVisit" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="PacienteCtrl.paciente.firstVisit" is-open="PacienteCtrl.firstTimeCalendarPopup.opened" datepicker-options="PacienteCtrl.firstTimeCalendarPopup.options" close-text="Cerrar" alt-input-formats="PacienteCtrl.firstTimeCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" />
+                                    <span class="input-group-btn">
+                                      <button type="button" class="btn btn-default" ng-click="PacienteCtrl.openFirstTimeCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <br>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <span><label>Notas</label></span>
+                                <textarea rows="4" cols="50" name="notes" maxlength="150" class="form-control" ng-model="PacienteCtrl.paciente.notes">
+                                </textarea>
+                                <span><label>(máximo 150 caracteres)</label></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <span><label>Acepto consentimiento informado de datos</label></span>
+                            <label class="radio-inline"><input type="radio" name="consent" ng-model="PacienteCtrl.paciente.consent" value="Yes">Si</label>
+                            <label class="radio-inline"><input type="radio" name="consent" ng-model="PacienteCtrl.paciente.consent" value="No">No</label>
+                            <label class="radio-inline"><input type="radio" name="consent" ng-model="PacienteCtrl.paciente.consent" value="Not asked" >No preguntado</label>                   
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="col-xs-6 col-sm-7 col-md-7 col-lg-7">
+                <button ng-click="PacienteCtrl.changeStatus()" class="btn btn-link " >{{PacienteCtrl.paciente.status == "Active" ? "Eliminar" : "Reactivar"}}</button>
+            </div>
+            <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                <button ng-click="PacienteCtrl.cancel()" class="btn btn-default">Cancelar</button>
+            </div>
+            <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                <button ng-click="PacienteCtrl.confirm()" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

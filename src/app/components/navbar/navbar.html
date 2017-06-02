@@ -10,13 +10,18 @@
     <div class="navbar-collapse collapse navbar-responsive-collapse">
       <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 no-padding" style="margin-left: -15px;">
         <div class="row ">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-xs-8 col-sm-10 col-md-10 col-lg-10">
             <span class="hce-navbar-patient-name">{{NavbarController.currentPaciente.firstName}} {{NavbarController.currentPaciente.fatherSurname}}</span>
             <span class="hce-navbar-patient-age">{{NavbarController.years}} años</span>
             <span class="hce-navbar-patient-age">{{NavbarController.currentPaciente.documentType.name}} {{NavbarController.currentPaciente.documentNumber}}</span>
             <span class="hce-navbar-patient-age">{{NavbarController.currentPaciente.genderAtBirth.name}}</span>
-            <span ng-show="NavbarController.currentEvolution" class="hce-navbar-visit-active">( Visita abierta )</span>
+            <span ng-show="NavbarController.currentEvolution && NavbarController.currentEvolution.id" class="hce-navbar-visit-active">( Visita abierta )</span>
+
           </div>
+            <div ng-show="NavbarController.currentEvolution && NavbarController.currentEvolution.id" class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+              <button class="btn btn-default btn-raised pull-right btn-small" ng-click="NavbarController.closeEvolution()">Cerrar visita</button>
+            </div>
+
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
           </div>
         </div>

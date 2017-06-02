@@ -8,19 +8,110 @@
 		    			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">{{OverviewController.newEvolution.date | date:"dd/MM/yyyy"}}</div>
 					</div>
 					<div class="row">
-						<abm-form-group class="form-group-lg">
-					    	<label data-abm-label type="floating">Nueva Evolución</label>
-					    	<input type="text" abm-form-control ng-model="OverviewController.currentEvolution.notaClinica">
-					  	</abm-form-group>
-					  	<div ng-show="OverviewController.currentEvolution.notaClinica">
-					  		<button class="btn btn-success pull-right" ng-click="OverviewController.saveNewEvolution()">Guardar</button>
+	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		    				<div class="row" >
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-padding-left" ng-show="OverviewController.newEvolutionFocused || OverviewController.currentEvolution">
+			    					<abm-form-group class="form-group" >
+								    	<label data-abm-label>Motivo de consulta</label>
+								    	<input type="text" abm-form-control ng-model="OverviewController.currentEvolution.reason" ng-focus="OverviewController.newEvolutionFocused = true">
+								  	</abm-form-group>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-padding-right" ng-show="OverviewController.newEvolutionFocused || OverviewController.currentEvolution">
+									<abm-form-group>
+					                	<label abm-label for="evolutionType">Tipo de consulta</label>
+				                  		<select class="form-control" name="visitType" ng-model="OverviewController.currentEvolution.visitType" ng-options="visitType for visitType in OverviewController.visitTypes" abm-form-control  ng-focus="OverviewController.newEvolutionFocused = true">
+					                    	<option value="">Seleccione un tipo de consulta</option>
+					                	</select>
+					             	</abm-form-group>
+				              	</div>
+							</div>
+	    				</div>
+	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		    				<div class="row" >
+								<abm-form-group class="form-group-lg">
+							    	<label data-abm-label type="floating">Nueva Evolución</label>
+							    	<input type="text" abm-form-control ng-model="OverviewController.currentEvolution.notaClinica" ng-focus="OverviewController.newEvolutionFocused = true" ng-blur="OverviewController.newEvolutionFocused = false">
+							  	</abm-form-group>
+							</div>
 					  	</div>
-					  	<div ng-show="OverviewController.currentEvolution">
-					  		<button class="btn btn-success pull-right" ng-click="OverviewController.closeEvolution()">Cerrar visita</button>
+	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		    				<div class="row" >
+							  	<div ng-show="OverviewController.currentEvolution.notaClinica">
+							  		<button class="btn btn-success pull-right" ng-click="OverviewController.saveNewEvolution()">Guardar y seguir</button>
+							  	</div>
+						  	</div>
 					  	</div>
 	    			</div>		    					
 				</div>
 	    	</div>
+	    	<div class="row">
+			    <div class="well well-row col-md-12" >
+		          	<h2>Medicamentos</h2>
+			        <div class="hce-card-body">
+			        	<h3>Antiretrovirales</h3>
+			        	<table class="table table-striped">
+			        		<thead>
+				        		<th>Inicio</th>
+				        		<th>Fin</th>
+				        		<th>Esquema</th>
+			        		</thead>
+			        		<tbody>
+			        			<tr>
+			        				<td>10/04/2016</td>
+			        				<td>-</td>
+			        				<td>[TDF/3TC][NVP][ATV]</td>
+			        			</tr>
+			        			<tr>
+			        				<td>10/04/2014</td>
+			        				<td>10/04/2016</td>
+			        				<td>[TDF/3TC][NVP2][ATV]</td>
+			        			</tr>
+			        		</tbody>
+			        	</table>
+
+		        		<h3>General</h3>
+			        	<table class="table table-striped">
+			        		<thead>
+				        		<th>Nombre</th>
+				        		<th>Inicio</th>
+				        		<th>Fin</th>
+			        		</thead>
+			        		<tbody>
+			        			<tr>
+			        				<td>Ibuprofeno</td>
+			        				<td>10/04/2016</td>
+			        				<td>-</td>
+			        			</tr>
+			        			<tr>
+			        				<td>Hepatalgina</td>
+			        				<td>10/04/2014</td>
+			        				<td>10/04/2016</td>
+			        			</tr>
+			        		</tbody>
+			        	</table>
+			        </div>
+			        <div class="hce-card-footer">
+			          <a ui-sref="app.patientHCE.treatments">Ver mas...</a>
+			        </div>
+		      </div>
+		      <div class=" well col-md-12" >
+		        <div class="hce-card-title">
+		          Laboratorios
+		        </div>
+		        <div class="hce-card-body">
+		            <ul>
+		              <li>21/02/2017</li>
+		              <li>21/01/2017</li>
+		              <li>21/12/2016</li>
+		            </ul>
+		        </div>
+		        <div class="hce-card-footer">
+		          <a ui-sref="app.patientHCE.treatments">Ver mas...</a>
+		        </div>
+		      </div>
+	    	</div>
+
+		    
 		</div>
 	</div>
 </div>

@@ -1,6 +1,6 @@
 (function(){
 	'use strict';
-	angular.module('hce.patientSearch',[])
+	angular.module('hce.patient',[])
 	.config(routerConfig);
 
 	/** @ngInject */

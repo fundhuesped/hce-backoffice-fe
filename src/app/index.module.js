@@ -20,6 +20,6 @@
         'hce.resources', 
         'hce.login', 
         'hce.patientHCE', 
-        'hce.patientSearch', 
+        'hce.patient', 
         'hce.services']);
 })();

@@ -21,11 +21,12 @@
     return directive;
 
     /** @ngInject */
-    function NavbarController($state, moment, SessionService, HCService) {
+    function NavbarController($state, moment, SessionService, HCService, toastr) {
       var vm = this;
       vm.currentUser = SessionService.currentUser;
       vm.logout = SessionService.logout;
       vm.currentUserCan = SessionService.currentUserCan;
+      vm.closeEvolution = closeEvolution;
       vm.currentPaciente = {};
       vm.years = null;
 
@@ -62,6 +63,13 @@
       activate();
 
       function activate() {
+      }
+
+
+      function closeEvolution() {
+        HCService.closeEvolution().then(function() {
+          toastr.success('Visita cerrada con exito');
+        }, showError);
       }
     }
   }
