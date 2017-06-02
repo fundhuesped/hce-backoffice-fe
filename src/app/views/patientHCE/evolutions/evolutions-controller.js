@@ -11,7 +11,6 @@
     function evolutionsController ($state, HCService, toastr, moment) {
 	    var vm = this;
       vm.hceService = HCService;
-      vm.cleanFilters = cleanFilters;
       vm.newEvolution = {};
       vm.saveNewEvolution = saveNewEvolution;
       vm.closeEvolution = closeEvolution;
