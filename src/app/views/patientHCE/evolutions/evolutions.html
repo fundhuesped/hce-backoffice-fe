@@ -36,11 +36,27 @@
 					  	</div>
 	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		    				<div class="row" >
-							  	<div ng-show="EvolutionsController.currentEvolution.notaClinica">
-							  		<button class="btn btn-success pull-right" ng-click="EvolutionsController.saveNewEvolution()">Guardar evolución</button>
+		    					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+							  		<button class="btn btn-info" ng-click="EvolutionsController.show='problems'">Prob</button>
+							  		<button class="btn btn-info" ng-click="EvolutionsController.show='arvTreatment'">ARV</button>
+							  		<button class="btn btn-info" ng-click="EvolutionsController.show='vaccines'">Vac</button>
+							  		<button class="btn btn-info" ng-click="EvolutionsController.show='studies'">Est</button>
+							  		<button class="btn btn-info" ng-click="EvolutionsController.show='laboratories'">Lab</button>
+							  		<button class="btn btn-info" ng-click="EvolutionsController.show='medicaments'">Med</button>
+		    					</div>
+		    					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
+								  	<div ng-show="EvolutionsController.currentEvolution.notaClinica">
+								  		<button class="btn btn-success pull-right" ng-click="EvolutionsController.saveNewEvolution()">Guardar evolución</button>
+								  	</div>
 							  	</div>
 						  	</div>
 					  	</div>
+	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="EvolutionsController.show=='problems'">
+						    <hce-problem-list></hce-problem-list>
+	    				</div>
+	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="EvolutionsController.show=='vaccines'">
+						    <hce-vaccine-list></hce-vaccine-list>
+	    				</div>
 	    			</div>		    					
     			</div>
 	    	</div>

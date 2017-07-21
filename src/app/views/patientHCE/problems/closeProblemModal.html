@@ -1,0 +1,36 @@
+<div class="container-fluid">
+	<div class="row well">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<span>Esta por cerrar el problema <b style="text-transform: capitalize;">{{CloseProblemModalCtrl.patientProblem.problem.name}}</b></span>
+                </div>
+			</div>
+			<div class="row" >
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				  	<abm-form-group>
+					    <label>1. Fecha de fin </label>
+							<div class="input-group">
+								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="closeDate" ng-model="CloseProblemModalCtrl.patientProblem.closeDate" is-open="CloseProblemModalCtrl.closeDateCalendarPopup.opened" datepicker-options="CloseProblemModalCtrl.closeDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="CloseProblemModalCtrl.closeDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
+		                        <div class="input-group-btn">
+		                          <button type="button" class="btn btn-default" ng-click="CloseProblemModalCtrl.closeDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+		                        </div>
+						      <!-- <div class="input-group-addon">.00</div> -->
+						    </div>
+					    </div>
+				  	</abm-form-group>
+				</div>
+			</div>
+			<div class="row" >
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="row" >
+					  	<div>
+					  		<button class="btn btn-success btn-raised pull-right" ng-click="CloseProblemModalCtrl.closeProblem()">Continuar</button>
+					  		<button class="btn btn-default pull-right" ng-click="CloseProblemModalCtrl.cancel()">Cancelar</button>
+					  	</div>
+				  	</div>
+			  	</div>
+			</div>		    					
+		</div>
+	</div>
+</div>

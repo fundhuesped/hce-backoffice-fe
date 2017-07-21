@@ -13,8 +13,48 @@
         vm.currentUserCan = SessionService.currentUserCan;
         activate();
 
+        Object.defineProperty(
+          vm,
+          'summaryActiveProblems', {
+          enumerable: true,
+          configurable: false,
+          get: function () {
+              return HCService.summaryActiveProblems;
+          }
+        });
+        Object.defineProperty(
+          vm,
+          'activeProblemsCount', {
+          enumerable: true,
+          configurable: false,
+          get: function () {
+              return HCService.activeProblemsCount;
+          }
+        });
+        Object.defineProperty(
+          vm,
+          'summaryPatientVaccines', {
+          enumerable: true,
+          configurable: false,
+          get: function () {
+              return HCService.summaryPatientVaccines;
+          }
+        });
+        Object.defineProperty(
+          vm,
+          'activePatientVaccinesCount', {
+          enumerable: true,
+          configurable: false,
+          get: function () {
+              return HCService.activePatientVaccinesCount;
+          }
+        });
+
 	    function activate(){
-            // HCService.setPaciente($stateParams.patientId);
+        setTimeout(function (argument) {
+         HCService.getActivePatientProblems();
+        }, 1000);
+        
 	    }
 
     }

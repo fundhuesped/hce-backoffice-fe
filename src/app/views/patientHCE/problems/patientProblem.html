@@ -1,0 +1,74 @@
+<div class="container-fluid">
+	<div class="row well well-row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<abm-form-group class="form-group-lg">
+		    			<label data-abm-label type="floating">Escriba el problema</label>
+                		<input type="text" abm-form-control ng-model="PatientProblemController.problem.problem" uib-typeahead="problem as problem.name for problem in PatientProblemController.getProblems($viewValue)" class="form-control" typeahead-min-length="3" disabled="true">
+                	</abm-form-group>
+                </div>
+			</div>
+			<div class="row" >
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				  	<abm-form-group>
+					    <label>Fecha de inicio </label>
+							<div class="input-group">
+								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="PatientProblemController.problem.startDate" is-open="PatientProblemController.startDateCalendarPopup.opened" datepicker-options="PatientProblemController.startDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PatientProblemController.startDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
+		                        <div class="input-group-btn">
+		                          <button type="button" class="btn btn-default" ng-click="PatientProblemController.startDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+		                        </div>
+						    </div>
+				  	</abm-form-group>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-show="PatientProblemController.problem.state=='Closed'">
+				  	<abm-form-group>
+					    <label>Fecha de cierre</label>
+						<div class="input-group">
+							<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="closeDate" ng-model="PatientProblemController.problem.closeDate" is-open="PatientProblemController.closeDateCalendarPopup.opened" datepicker-options="PatientProblemController.closeDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PatientProblemController.closeDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
+	                        <div class="input-group-btn">
+	                          <button type="button" class="btn btn-default" ng-click="PatientProblemController.closeDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+	                        </div>
+					      <!-- <div class="input-group-addon">.00</div> -->
+					    </div>
+				  	</abm-form-group>
+				</div>
+
+			</div>
+			<div class="row" >
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				  	<abm-form-group>
+					    <label>Estado del problema </label>
+					    <div class="radio" abm-radio label="Activo">
+					      <input type="radio" name="activo" value="Active" ng-model="PatientProblemController.problem.state">
+					    </div>
+					    <div class="radio" abm-radio label="Resuelto">
+					      <input type="radio" name="cerrado" value="Closed" ng-model="PatientProblemController.problem.state">
+					    </div>					    
+				  	</abm-form-group>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="row" >
+					<abm-form-group class="form-group-lg">
+				    	<label data-abm-label type="floating">Observaciones</label>
+				    	<input type="text" abm-form-control ng-model="PatientProblemController.problem.observations">
+				  	</abm-form-group>
+		  		</div>
+		  	</div>
+
+			<div class="row" >
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="row" >
+					  	<div>
+					  		<button class="btn btn-danger btn-raised pull-left" ng-click="PatientProblemController.markAsError()">Pasar a error</button>
+
+					  		<button class="btn btn-success btn-raised pull-right" ng-click="PatientProblemController.saveProblem()"  ng-disabled="!PatientProblemController.canSaveNewProblem()">Guardar problema</button>
+					  		<button class="btn btn-default pull-right" ng-click="PatientProblemController.cancel()">Cancelar</button>
+					  	</div>
+				  	</div>
+			  	</div>
+			</div>		    					
+		</div>
+	</div>
+</div>

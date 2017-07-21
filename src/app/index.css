@@ -233,3 +233,11 @@
 .evolution-header{
   margin-bottom: 25px;
 }
+
+.problem-closed{
+  background-color: lightgrey; 
+}
+
+.registry-error{
+  background-color: #F55549;
+}

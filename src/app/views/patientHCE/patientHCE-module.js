@@ -35,6 +35,8 @@
           views: {
             'detail': {
               templateUrl: 'app/views/patientHCE/problems/problems.html',
+              controller: 'PatientProblemsController',
+              controllerAs: 'PatientProblemsController'        
             }
           },
       })
@@ -45,6 +47,16 @@
               templateUrl: 'app/views/patientHCE/evolutions/evolutions.html',
               controller: 'EvolutionsController',
               controllerAs: 'EvolutionsController',
+            }
+          },
+      })
+      .state('app.patientHCE.vaccines', {
+          url: '/vacunas',
+          views: {
+            'detail': {
+              templateUrl: 'app/views/patientHCE/vaccines/vaccines.html',
+              controller: 'PatientVaccinesController',
+              controllerAs: 'PatientVaccinesController'        
             }
           },
       });

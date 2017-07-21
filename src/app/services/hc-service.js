@@ -6,9 +6,9 @@
         .module('hce.services')
         .service('HCService', HCService );
 
-    HCService.$inject = ['Paciente', 'Evolution', 'localStorageService', 'moment'];
+    HCService.$inject = ['Paciente', 'Evolution', 'PatientProblem', 'PatientVaccine', 'localStorageService', 'moment'];
 
-    function HCService(Paciente, Evolution, localStorageService, moment){
+    function HCService(Paciente, Evolution, PatientProblem, PatientVaccine, localStorageService, moment){
         var srv = this;
 
         //Common
@@ -29,6 +29,26 @@
         srv.getCurrentEvolution = getCurrentEvolution;
 
 
+        //Problems
+        srv.getActivePatientProblems = getActivePatientProblems;
+        srv.getPatientProblems = getPatientProblems;
+        srv.getClosedPatientProblems = getClosedPatientProblems;
+        srv.openNewPatientProblem = openNewPatientProblem;
+        srv.newPatientProblem = null;
+        srv.activeProblems = null;
+        srv.closedProblems = null;
+        srv.familyProblems = null;
+        srv.saveNewPatientProblem = saveNewPatientProblem;
+        srv.activeProblemsCount = null;
+        srv.summaryActiveProblems = null;
+        srv.clearNewPatientProblem = clearNewPatientProblem;
+
+
+        //Vaccines
+        srv.getPatientVaccines = getPatientVaccines;
+        srv.patientVaccines = null;
+        srv.summaryPatientVaccines = null;
+        srv.activePatientVaccinesCount = null;
 
         activate();
 
@@ -54,6 +74,7 @@
             Paciente.get({id:pacienteId}, function (paciente) {
                 localStorageService.set('currentPaciente', srv.currentPaciente);
                 setCurrentPaciente(paciente);
+                getActivePatientVaccines();
             }, function (argument) {
                 // body...
             });
@@ -158,9 +179,116 @@
             }
         }
 
+
+        function openNewPatientProblem() {
+            if(!srv.newPatientProblem){
+                srv.newPatientProblem = new PatientProblem();
+            }
+        }
+
+
+        function saveNewPatientProblem() {
+
+            var patientProblem = angular.copy(srv.newPatientProblem);
+            patientProblem.startDate = moment(srv.newPatientProblem.startDate).format('YYYY-MM-DD');
+            if (srv.newPatientProblem.closeDate) {
+                patientProblem.closeDate = moment(srv.newPatientProblem.closeDate).format('YYYY-MM-DD');
+            }
+
+            return patientProblem.$save({pacienteId:srv.currentPaciente.id}, function (patientProblem) {
+                getActivePatientProblems();
+                srv.newPatientProblem = null;
+            }, function (err) {
+                console.log(err);
+            });
+        }
+
+        function getActivePatientProblems() {
+            return PatientProblem.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, page_size:99, state:'Active'}, function (paginatedResult) {
+                srv.activeProblemsCount = paginatedResult.count;
+                srv.summaryActiveProblems = paginatedResult.results;
+            }, function (err) {
+                 
+            });
+        }
+
+        function getPatientProblems(filters) {
+            getActivePatientProblems();
+            if(filters){
+                var localFilters = angular.copy(filters);
+                localFilters.pacienteId = srv.currentPacienteId;
+                return PatientProblem.getPaginatedForPaciente(localFilters, function (paginatedResult) {
+                    srv.activeProblems = paginatedResult.results;
+                }, function (err) {
+                     
+                });                
+            }else{
+                return PatientProblem.getPaginatedForPaciente({pacienteId:srv.currentPaciente.id}, function (paginatedResult) {
+                    srv.activeProblems = paginatedResult.results;
+                }, function (err) {
+                     
+                });
+
+            }
+        }
+
+        function getClosedPatientProblems(filters) {
+            if(filters){
+                var localFilters = angular.copy(filters);
+                localFilters.pacienteId = srv.currentPacienteId;
+                localFilters.state = 'Closed';
+                return PatientProblem.getPaginatedForPaciente(localFilters, function (paginatedResult) {
+                    srv.closedProblems = paginatedResult.results;
+                }, function (err) {
+                     
+                });                
+            }else{
+                return PatientProblem.getPaginatedForPaciente({pacienteId:srv.currentPaciente.id, state:'Closed'}, function (paginatedResult) {
+                    srv.closedProblems = paginatedResult.results;
+                }, function (err) {
+                     
+                });
+
+            }
+        }
+
+        function clearNewPatientProblem() {
+            srv.newPatientProblem = null;
+        }
+
         function clean() {
             srv.currentEvolution = null;
             srv.evolutions = null;
+        }
+
+
+        function getPatientVaccines(filters) {
+            getActivePatientVaccines();
+            if(filters){
+                var localFilters = angular.copy(filters);
+                localFilters.pacienteId = srv.currentPacienteId;
+                return PatientVaccine.getPaginatedForPaciente(localFilters, function (paginatedResult) {
+                    srv.patientVaccines = paginatedResult.results;
+                }, function (err) {
+                     
+                });                
+            }else{
+                return PatientVaccine.getPaginatedForPaciente({pacienteId:srv.currentPaciente.id}, function (paginatedResult) {
+                    srv.patientVaccines = paginatedResult.results;
+                }, function (err) {
+                     
+                });
+
+            }
+        }
+
+        function getActivePatientVaccines() {
+            return PatientVaccine.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, page_size:3, state:'Applied'}, function (paginatedResult) {
+                srv.activePatientVaccinesCount = paginatedResult.count;
+                srv.summaryPatientVaccines = paginatedResult.results;
+            }, function (err) {
+                 
+            });
         }
 
     }
