@@ -69,6 +69,9 @@
         modalInstance.result.then(function (resolution) {
           if(resolution==='markedError' || resolution==='edited'){
             searchPatientVaccines();
+            if(!HCService.currentEvolution){
+              HCService.getCurrentEvolution();
+            }
           }
         });
       }
@@ -83,6 +86,9 @@
         modalInstance.result.then(function (resolution) {
           if(resolution==='created'){
             searchPatientVaccines();
+            if(!HCService.currentEvolution){
+              HCService.getCurrentEvolution();
+            }
           }
         });
 

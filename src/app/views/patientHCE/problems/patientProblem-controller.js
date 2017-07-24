@@ -34,9 +34,14 @@
 
 
       function save() {
-        PatientProblem.update(vm.familyProblem, function (response) {
+        var tmpProblem = angular.copy(vm.problem);
+        tmpProblem.startDate = moment(tmpProblem.startDate).format('YYYY-MM-DD');
+        if (tmpProblem.closeDate) {
+            tmpProblem.closeDate = moment(tmpProblem.closeDate).format('YYYY-MM-DD');
+        }
+        PatientProblem.update(tmpProblem, function (response) {
           toastr.success('Problema editado con éxito');
-          $uibModalInstance.close('problemEdited');
+          $uibModalInstance.close('edited');
         }, function (err) {
           toastr.error('Ocurrio un error');
         });
@@ -55,11 +60,16 @@
 
 
       	function markAsError() {
-      		var tmpProblem = angular.copy(patientProblem);
+      		var tmpProblem = angular.copy(vm.problem);
       		tmpProblem.state = PatientProblem.stateChoices.STATE_ERROR;
+          tmpProblem.startDate = moment(tmpProblem.startDate).format('YYYY-MM-DD');
+          if (tmpProblem.closeDate) {
+              tmpProblem.closeDate = moment(tmpProblem.closeDate).format('YYYY-MM-DD');
+          }
+
       		PatientProblem.update(tmpProblem, function (response) {
-          		toastr.success('Problema marcado como error');
-			    $uibModalInstance.close('markedError');
+          	toastr.success('Problema marcado como error');
+			      $uibModalInstance.close('markedError');
       		}, function (err) {
 		          toastr.error('Ocurrio un error');
       		});

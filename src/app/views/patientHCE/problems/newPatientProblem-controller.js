@@ -68,7 +68,7 @@
         // }
         HCService.saveNewPatientProblem().then(function() {
           toastr.success('Problema guardado con exito');
-          $uibModalInstance.close('familyProblemCreated');
+          $uibModalInstance.close('created');
 
         }, showError);
       }

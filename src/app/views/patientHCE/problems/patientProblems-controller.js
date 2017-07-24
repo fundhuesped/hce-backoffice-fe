@@ -12,7 +12,6 @@
 	    var vm = this;
       vm.hceService = HCService;
       vm.newPatientProblem = {};
-      vm.saveNewPatientProblem = saveNewPatientProblem;
       vm.searchPatientProblems = searchPatientProblems;
       vm.currentPage = 1;
       vm.pageSize = 5;
@@ -23,7 +22,6 @@
       vm.getProblems = getProblems;
       vm.radio = {};
       vm.openNewProblemModal = openNewProblemModal;
-      vm.openCloseProblemModal = openCloseProblemModal;
       vm.cancelNewPatientProblem = cancelNewPatientProblem;
       vm.showNewPatientProblem = false;
       vm.newProblemDateOption = null;
@@ -108,22 +106,6 @@
         }
       };
 
-      function saveNewPatientProblem() {
-
-        // if(vm.newProblemDateOption == 'today'){
-        //   vm.newPatientProblem.startDate = moment().format('YYYY-MM-DD');
-        // }else{
-        //   if(vm.newProblemDateOption == 'otherDate'){
-        //     vm.newPatientProblem.startDate = moment(vm.newProblemDate).format('YYYY-MM-DD');
-        //   }
-        // }
-        HCService.saveNewPatientProblem().then(function() {
-          toastr.success('Problema guardado con exito');
-          vm.showNewPatientProblem = false;
-          searchPatientProblems();
-        }, showError);
-      }
-
       function canSaveNewProblem() {
         if(vm.newPatientProblem && vm.newPatientProblem.startDate&&vm.newPatientProblem.state&&vm.newPatientProblem.state=='Active'&&vm.newPatientProblem.problem){
           return true;
@@ -196,8 +178,11 @@
           }
         });
         modalInstance.result.then(function (resolution) {
-          if(resolution==='markedError' || resolution==='problemEdited'){
+          if(resolution==='markedError' || resolution==='edited'){
             searchPatientProblems();
+            if(!HCService.currentEvolution){
+              HCService.getCurrentEvolution();
+            }
           }
         });
 
@@ -211,33 +196,15 @@
           controllerAs: 'NewPatientProblemController',
         });
         modalInstance.result.then(function (resolution) {
-          if(resolution==='patientProblemCreated'){
+          if(resolution==='created'){
             searchPatientProblems();
-          }
-        });
-
-      }
-
-      function openCloseProblemModal(selectedProblem) {
-        var modalInstance = $uibModal.open({
-          templateUrl: 'app/views/patientHCE/problems/closeProblemModal.html',
-          size: 'md',
-          controller: 'CloseProblemModalCtrl',
-          controllerAs: 'CloseProblemModalCtrl',
-          resolve: {
-            patientProblem: function () {
-              return selectedProblem;
+            if(!HCService.currentEvolution){
+              HCService.getCurrentEvolution();
             }
           }
         });
-        modalInstance.result.then(function (resolution) {
-          if(resolution==='markedError' || resolution==='problemEdited'){
-            searchPatientProblems();
-          }
-        });
 
       }
-
 
 
       function openNewFamilyProblemModal() {
@@ -250,6 +217,9 @@
         modalInstance.result.then(function (resolution) {
           if(resolution==='familyProblemCreated'){
             activate();
+            if(!HCService.currentEvolution){
+              HCService.getCurrentEvolution();
+            }
           }
         });
       }
@@ -269,6 +239,9 @@
         modalInstance.result.then(function (resolution) {
           if(resolution==='familyProblemEdited' || resolution =='markedError'){
             activate();
+            if(!HCService.currentEvolution){
+              HCService.getCurrentEvolution();
+            }
           }
         });
       }
