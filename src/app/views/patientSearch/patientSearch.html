@@ -7,8 +7,8 @@
                 <h4 class="modal-title" style="font-weight: bold;">¿Cambiar paciente seleccionado?</h4>
             </div>
             <div class="modal-body">
-              Tiene cambios no guardados del paciente actual, si cambia de paciente se perderan.
-              ¿Esta seguro que abrir el paciente seleccionado?
+              Tiene cambios no guardados del paciente {{PSCtrl.changePacientModal.currentPaciente.firstName}} {{PSCtrl.changePacientModal.currentPaciente.fatherSurname}}, si cambia de paciente se perderan.
+              ¿Esta seguro que desea abrir el paciente seleccionado?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" ng-click="PSCtrl.changePacientModal.cancel()">Cancelar</button>

@@ -26,6 +26,7 @@
           show :  function showModal(patient){
                       this.patient = patient;
                       this.style = {display:'block'};
+                      this.currentPaciente  = HCService.currentPaciente;
                       this.isShown = true;
                   },
           hide:   function hideModal() {

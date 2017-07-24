@@ -3,6 +3,11 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="hce-form-title">Editar aplicación de vacuna</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<abm-form-group class="form-group-lg">
 		    			<label data-abm-label type="floating">Escriba la vacuna</label>
                 		<input type="text" abm-form-control ng-model="EditPatientVaccineController.patientVaccine.vaccine" uib-typeahead="vaccine as vaccine.name for vaccine in EditPatientVaccineController.getVaccines($viewValue)" class="form-control" typeahead-min-length="3" disabled="true">

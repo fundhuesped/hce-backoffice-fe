@@ -15,7 +15,7 @@
       vm.saveNewFamilyProblem = saveNewFamilyProblem;
       vm.radio = {};
       vm.getProblems = getProblems;
-      vm.cancelNewFamilyProblem = cancelNewFamilyProblem;
+      vm.cancel = cancel;
       vm.newProblemDateOption = null;
       vm.newProblemDate = null;
       vm.canSaveNewProblem = canSaveNewProblem;
@@ -62,7 +62,7 @@
 
       }
 
-      function cancelNewFamilyProblem() {
+      function cancel() {
         $uibModalInstance.dismiss('cancel');
       }
 

@@ -50,6 +50,14 @@
         RELATIONSHIP_OTHER: {label:'Otro',name:'Other'}
       };
 
+      FamilyPatientProblem.translateRelationship = function (name) {
+        for (var i = relationshipChoices.length - 1; i >= 0; i--) {
+          if( relationshipChoices[i].name == name ){
+            return relationshipChoices[i].label;
+          }
+        }
+      };
+
       return FamilyPatientProblem;
     }
 

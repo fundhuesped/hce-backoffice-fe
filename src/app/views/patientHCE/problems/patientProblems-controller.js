@@ -29,6 +29,9 @@
       vm.canSaveNewProblem = canSaveNewProblem;
       vm.canEditProblem = canEditProblem;
 
+      vm.translateRelationship = FamilyPatientProblem.translateRelationship;
+
+
       vm.openNewFamilyProblemModal = openNewFamilyProblemModal;
       vm.openEditFamilyProblemModal = openEditFamilyProblemModal;
       vm.familyPager = {

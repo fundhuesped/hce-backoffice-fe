@@ -21,6 +21,7 @@
         srv.currentPacienteId = null;
         // Evolutions
         srv.currentEvolution = null;
+        srv.canSaveEvolution = canSaveEvolution;
         srv.closeEvolution = closeEvolution;
         srv.cancelEvolution = cancelEvolution;
         srv.getEvolutions = getEvolutions;
@@ -74,6 +75,7 @@
             Paciente.get({id:pacienteId}, function (paciente) {
                 localStorageService.set('currentPaciente', srv.currentPaciente);
                 setCurrentPaciente(paciente);
+                srv.currentEvolution = null;
                 getActivePatientVaccines();
             }, function (argument) {
                 // body...
@@ -88,7 +90,9 @@
         }
 
 
-
+        function canSaveEvolution() {
+            return srv.currentEvolution && srv.currentEvolution.notaClinica && srv.currentEvolution.reason;
+        }
 
         function getCurrentEvolution(){
             return Evolution.getCurrentVisit({pacienteId:srv.currentPacienteId}, function (evolution) {

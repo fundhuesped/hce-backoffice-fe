@@ -1,0 +1,59 @@
+<div class="row well well-row">
+    			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    				<div class="row" ng-show="NewEvolutionController.newEvolutionFocused || NewEvolutionController.currentEvolution">
+		    			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 no-padding-left" ><div class="hce-form-title">Nueva evolución</div></div>
+		    			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">{{NewEvolutionController.newEvolution.date | date:"dd/MM/yyyy"}}</div>
+    				</div>
+    				<div class="row" >
+	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		    				<div class="row" >
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-padding-left" ng-show="NewEvolutionController.newEvolutionFocused || NewEvolutionController.currentEvolution">
+			    					<abm-form-group class="form-group" >
+								    	<label data-abm-label>Motivo de consulta(*)</label>
+								    	<input type="text" abm-form-control ng-model="NewEvolutionController.currentEvolution.reason" ng-focus="NewEvolutionController.newEvolutionFocused = true">
+								  	</abm-form-group>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-padding-right" ng-show="NewEvolutionController.newEvolutionFocused || NewEvolutionController.currentEvolution">
+									<abm-form-group>
+					                	<label abm-label for="evolutionType">Tipo de consulta</label>
+				                  		<select class="form-control" name="visitType" ng-model="NewEvolutionController.currentEvolution.visitType" ng-options="visitType for visitType in NewEvolutionController.visitTypes" abm-form-control  ng-focus="NewEvolutionController.newEvolutionFocused = true">
+					                    	<option value="">Seleccione un tipo de consulta</option>
+					                	</select>
+					             	</abm-form-group>
+				              	</div>
+							</div>
+	    				</div>
+	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		    				<div class="row" >
+		    					<abm-form-group class="form-group-lg">
+							    	<label data-abm-label type="floating">Evolución(*)</label>
+							    	<input type="text" abm-form-control ng-model="NewEvolutionController.currentEvolution.notaClinica" ng-focus="NewEvolutionController.newEvolutionFocused = true" ng-blur="NewEvolutionController.newEvolutionFocused = false">
+							  	</abm-form-group>
+					  		</div>
+					  	</div>
+	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		    				<div class="row" >
+		    					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+							  		<button class="btn btn-info" ng-click="NewEvolutionController.show='problems'">Prob</button>
+							  		<button class="btn btn-info" ng-click="NewEvolutionController.show='arvTreatment'">ARV</button>
+							  		<button class="btn btn-info" ng-click="NewEvolutionController.show='vaccines'">Vac</button>
+							  		<button class="btn btn-info" ng-click="NewEvolutionController.show='studies'">Est</button>
+							  		<button class="btn btn-info" ng-click="NewEvolutionController.show='laboratories'">Lab</button>
+							  		<button class="btn btn-info" ng-click="NewEvolutionController.show='medicaments'">Med</button>
+		    					</div>
+		    					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
+								  	<div ng-show="NewEvolutionController.currentEvolution.notaClinica">
+								  		<button class="btn btn-success pull-right" ng-click="NewEvolutionController.saveNewEvolution()" ng-disabled="!NewEvolutionController.canSaveEvolution()">Guardar evolución</button>
+								  	</div>
+							  	</div>
+						  	</div>
+					  	</div>
+	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="NewEvolutionController.show=='problems'">
+						    <hce-problem-list></hce-problem-list>
+	    				</div>
+	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="NewEvolutionController.show=='vaccines'">
+						    <hce-vaccine-list></hce-vaccine-list>
+	    				</div>
+	    			</div>		    					
+    			</div>
+	    	</div>

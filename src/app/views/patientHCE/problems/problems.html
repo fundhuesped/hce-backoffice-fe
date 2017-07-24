@@ -38,7 +38,7 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	  		<div uib-pagination boundary-link-numbers="true" first-text="Primer" last-text="Ultima"  previous-text="Siguiente" next-text="Anterior" total-items="PatientProblemsController.totalItems" items-per-page="PatientProblemsController.pageSize" ng-model="PatientProblemsController.currentPage" ng-change="PatientProblemsController.pageChanged()"></div>
+	  		<div uib-pagination boundary-link-numbers="true" first-text="Primer" last-text="Ultima"  previous-text="Anterior" next-text="Siguiente" total-items="PatientProblemsController.totalItems" items-per-page="PatientProblemsController.pageSize" ng-model="PatientProblemsController.currentPage" ng-change="PatientProblemsController.pageChanged()"></div>
 	  	</div>
 	</div>
     <div class="row">
@@ -62,7 +62,7 @@
 		    		<tbody>
 		    			<tr ng-repeat="problem in PatientProblemsController.familyProblems" ng-class="{'problem-closed':problem.state=='Closed','registry-error':problem.state=='Error' }">
 	    					<td>{{problem.problem.name}}</td> 
-	    					<td>{{problem.relationship}}</td> 
+	    					<td>{{problem.relationship | translateRelationship}}</td> 
 	    					<td>{{problem.observations}}</td> 
 	    					<td>
 		    					<button class="btn btn-info" type="button" ng-click="PatientProblemsController.openEditFamilyProblemModal(problem)" style="padding: 6px 12px; margin:0px; text-transform: none;"><i class="fa fa-pencil"></i> Editar</button>
@@ -75,7 +75,7 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	  		<div uib-pagination boundary-link-numbers="true" first-text="Primer" last-text="Ultima"  previous-text="Siguiente" next-text="Anterior" total-items="PatientProblemsController.familyPager.totalItems" items-per-page="PatientProblemsController.familyPager.pageSize" ng-model="PatientProblemsController.familyPager.currentPage" ng-change="PatientProblemsController.familyPager.pageChanged()"></div>
+	  		<div uib-pagination boundary-link-numbers="true" first-text="Primer" last-text="Ultima"  previous-text="Anterior" next-text="Siguiente" total-items="PatientProblemsController.familyPager.totalItems" items-per-page="PatientProblemsController.familyPager.pageSize" ng-model="PatientProblemsController.familyPager.currentPage" ng-change="PatientProblemsController.familyPager.pageChanged()"></div>
 	  	</div>
 	</div>
 </div>

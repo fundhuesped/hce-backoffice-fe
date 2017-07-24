@@ -10,6 +10,7 @@
 
     function overviewController (HCService, toastr) {
 	    var vm = this;
+        vm.canSaveEvolution = HCService.canSaveEvolution;
         vm.saveNewEvolution = saveNewEvolution;
         vm.closeEvolution = closeEvolution;
         vm.newEvolutionFocused = false;

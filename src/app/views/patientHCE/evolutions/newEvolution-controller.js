@@ -4,28 +4,19 @@
      /*jshint latedef: nofunc */
     angular
     	.module('hce.patientHCE')
-    	.controller('EvolutionsController', evolutionsController);
+    	.controller('NewEvolutionController', newEvolutionController);
 
-	evolutionsController.$inject = ['$state', 'HCService', 'toastr', 'moment'];
+	newEvolutionController.$inject = ['$state', 'HCService', 'toastr', 'moment'];
 
-    function evolutionsController ($state, HCService, toastr, moment) {
+    function newEvolutionController ($state, HCService, toastr, moment) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newEvolution = {};
       vm.canSaveEvolution = HCService.canSaveEvolution;
       vm.saveNewEvolution = saveNewEvolution;
       vm.closeEvolution = closeEvolution;
-      vm.cancelEvolution = cancelEvolution;
-      vm.evolutionCanBeCanceled = evolutionCanBeCanceled;
-      vm.searchEvolutions = searchEvolutions;
-      vm.currentPage = 1;
-      vm.pageSize = 10;
-      vm.totalItems = null;
-      vm.pageChanged = pageChanged;
-      vm.evolutionCanBeCanceled = evolutionCanBeCanceled;
-      vm.filters = {};
       vm.newEvolutionFocused = false;
-      vm.visitTypes = ['Programada', 'Espontanea', 'Otro'];
+      vm.visitTypes = ['Programada', 'Demanda Espontánea', 'Otro'];
       Object.defineProperty(
           vm,
           'currentEvolution', {
@@ -38,16 +29,6 @@
             if(!HCService.currentEvolution){
               HCService.openNewEvolution();
             }
-          }
-      });
-
-      Object.defineProperty(
-          vm,
-          'evolutions', {
-          enumerable: true,
-          configurable: false,
-          get: function () {
-              return HCService.evolutions;
           }
       });
 
@@ -89,35 +70,7 @@
 
 	    function activate(){
         HCService.getCurrentEvolution();
-        searchEvolutions();
 	    }
-
-      function cleanFilters() {
-        vm.filters = {};
-        searchEvolutions();
-      }
-      function pageChanged() {
-        searchEvolutions();
-      }
-      function searchEvolutions() {
-        vm.filters.page = vm.currentPage;
-        vm.filters.page_size = vm.pageSize;
-        HCService.getEvolutions(vm.filters).$promise.then(function (paginatedResult) {
-          if(vm.currentPage===1){
-            vm.totalItems = paginatedResult.count;
-          }
-        });
-      }
-
-      function cancelEvolution(evolution) {
-        HCService.cancelEvolution(evolution).then(function() {
-          toastr.success('Visita anulada con exito');
-        }, showError);
-      }
-
-      function evolutionCanBeCanceled(evolution) {
-        return moment().diff(moment(evolution.date,'YYYY-MM-DD'), 'days') < 1;
-      }
 
       function showError(error) {
         if(error){
