@@ -241,3 +241,8 @@
 .registry-error{
   background-color: #F55549;
 }
+
+.hce-form-title{
+  font-weight: bold; 
+  font-size: 20px;
+}
