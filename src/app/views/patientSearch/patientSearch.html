@@ -53,7 +53,7 @@
 									</div>
 									<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 							            <abm-form-group>
-							            	<label abm-label for="birthDate">Nacimiento</label>
+							            	<label abm-label for="birthDate">Fecha de nacimiento</label>
 				                      		<div class="input-group">
 												<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="birthDate" ng-model="PSCtrl.filter.birthDate" is-open="PSCtrl.birthDateCalendarPopup.opened" datepicker-options="PSCtrl.birthDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PSCtrl.birthDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
 						                        <span class="input-group-btn">
@@ -98,6 +98,20 @@
 							            	</div>
 							            </abm-form-group>
 									</div>
+	  								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+							            <abm-form-group>
+							              <label abm-label for="socialService">Obra social</label>
+							                <select class="form-control" name="socialService" ng-model="PSCtrl.filter.socialService" ng-options="socialService.id as socialService.name for socialService in PSCtrl.socialServices | orderBy: 'name'  track by socialService.id" abm-form-control>
+							                </select>
+							            </abm-form-group>
+									</div>
+	  								<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
+							            <abm-form-group>
+							              <label abm-label for="status">Estado</label>
+							                <select class="form-control" name="status" ng-model="PSCtrl.filter.status" ng-options="status.id as status.name for status in PSCtrl.statuses | orderBy: 'name'  track by status.id" abm-form-control>
+							                </select>
+							            </abm-form-group>
+									</div>
 					  			</div>
 					  		</div>
 					  		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
@@ -115,7 +129,7 @@
 			  	</form>
 			</div>
 	    	<div class="well">
-		    	<table class="table table-hover"> 
+		    	<table class="table table-hover table-condensed"> 
 		    		<thead> 
 		    			<tr> 
 		    				<th>Nombre y apellido</th>

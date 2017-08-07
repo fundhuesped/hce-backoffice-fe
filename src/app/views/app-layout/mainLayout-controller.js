@@ -11,8 +11,8 @@
     function appLayoutController (SessionService, HCService, $state) {
 	    var vm = this;
         vm.currentUserCan = SessionService.currentUserCan;
-	    vm.changeCollapsed = changedCollapsed;
-        vm.drawerCollapsed = false;
+        vm.changeCollapsed = changedCollapsed;
+        vm.drawerCollapsed = true;
 
         Object.defineProperty(
           vm,

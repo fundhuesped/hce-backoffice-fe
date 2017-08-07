@@ -46,6 +46,12 @@
       "main": [
         "angular-locale_es-ar.js"
       ]
+    },
+    "font-awesome": {
+      "main": [
+        "./scss/font-awesome.scss",
+        "./fonts/*"
+      ]
     }
   },
   "resolutions": {

@@ -15,6 +15,16 @@
               controllerAs: 'PSCtrl'         
             }
           }
+      })
+      .state('app.newPatient', {
+          url: '/newPatient',
+          views: {
+            'content': {
+              templateUrl: 'app/views/patient/newPatient.html',
+              controller: 'NewPatientController',
+              controllerAs: 'NewPatientController'
+            }
+          }
       });
 	}
 })();

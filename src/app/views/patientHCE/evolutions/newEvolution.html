@@ -26,12 +26,13 @@
 	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		    				<div class="row" >
 		    					<abm-form-group class="form-group-lg">
-							    	<label data-abm-label type="floating">Evolución(*)</label>
-							    	<input type="text" abm-form-control ng-model="NewEvolutionController.currentEvolution.notaClinica" ng-focus="NewEvolutionController.newEvolutionFocused = true" ng-blur="NewEvolutionController.newEvolutionFocused = false">
+							    	<label data-abm-label type="floating">{{NewEvolutionController.newEvolutionFocused||NewEvolutionController.currentEvolution?'Evolución(*) (2000 caracteres)':'Ingrese nueva evolución'}}</label>
+							    	<textarea abm-form-control ng-model="NewEvolutionController.currentEvolution.notaClinica" ng-focus="NewEvolutionController.newEvolutionFocused = true" ng-blur="NewEvolutionController.newEvolutionFocused = false" maxlength="2000">
+							    	</textarea>
 							  	</abm-form-group>
 					  		</div>
 					  	</div>
-	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="NewEvolutionController.newEvolutionFocused || NewEvolutionController.currentEvolution">
 		    				<div class="row" >
 		    					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
 							  		<button class="btn btn-info" ng-click="NewEvolutionController.show='problems'">Prob</button>

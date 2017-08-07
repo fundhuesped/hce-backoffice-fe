@@ -1,17 +1,16 @@
 
 
 <div class="container-fluid">
-    <div class="row">
-		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8"><h2>Activos y resueltos</h2></div>
-		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-				<button class="btn btn-success btn-raised pull-right" ng-show="!PatientProblemsController.showNewPatientProblem" ng-click="PatientProblemsController.openNewProblemModal()">Agregar problema</button>
-		</div>
-	</div>
-
   	<div class="row">	
 	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     		<div class="well" style="min-height:350px">
-		    	<table class="table table-hover">
+			    <div class="row">
+					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8"><h2>Problemas activos y resueltos</h2></div>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<button class="btn btn-success btn-raised pull-right" ng-show="!PatientProblemsController.showNewPatientProblem" ng-click="PatientProblemsController.openNewProblemModal()">Agregar problema</button>
+					</div>
+				</div>
+		    	<table class="table table-hover table-condensed">
 		    		<thead> 
 		    			<tr> 
 		    				<th>Nombre</th>
@@ -33,24 +32,22 @@
     					</tr>
     				</tbody>
     			</table>
+		  		<div uib-pagination boundary-link-numbers="true" first-text="Primer" last-text="Ultima"  previous-text="Anterior" next-text="Siguiente" total-items="PatientProblemsController.totalItems" items-per-page="PatientProblemsController.pageSize" ng-model="PatientProblemsController.currentPage" ng-change="PatientProblemsController.pageChanged()" class="pagination-sm">
+		  		</div>
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	  		<div uib-pagination boundary-link-numbers="true" first-text="Primer" last-text="Ultima"  previous-text="Anterior" next-text="Siguiente" total-items="PatientProblemsController.totalItems" items-per-page="PatientProblemsController.pageSize" ng-model="PatientProblemsController.currentPage" ng-change="PatientProblemsController.pageChanged()"></div>
-	  	</div>
-	</div>
-    <div class="row">
-		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8"><h2>Antecedentes familiares</h2></div>
-		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-				<button class="btn btn-success btn-raised pull-right" ng-click="PatientProblemsController.openNewFamilyProblemModal()">Agregar antecedente</button>
-		</div>
-	</div>
+
   	<div class="row">	
 	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     		<div class="well" style="min-height:350px">
-		    	<table class="table table-hover">
+			    <div class="row">
+					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8"><h2>Antecedentes familiares</h2></div>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<button class="btn btn-success btn-raised pull-right" ng-click="PatientProblemsController.openNewFamilyProblemModal()">Agregar antecedente</button>
+					</div>
+				</div>
+		    	<table class="table table-hover table-condensed">
 		    		<thead> 
 		    			<tr> 
 		    				<th>Nombre</th>
@@ -70,12 +67,12 @@
     					</tr>
     				</tbody>
     			</table>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				  		<div uib-pagination boundary-link-numbers="true" previous-text="Anterior" next-text="Siguiente" total-items="PatientProblemsController.familyPager.totalItems" items-per-page="PatientProblemsController.familyPager.pageSize" ng-model="PatientProblemsController.familyPager.currentPage" ng-change="PatientProblemsController.familyPager.pageChanged()" class="pagination-sm"></div>
+				  	</div>
+				</div>
 	    	</div>
 	    </div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	  		<div uib-pagination boundary-link-numbers="true" previous-text="Anterior" next-text="Siguiente" total-items="PatientProblemsController.familyPager.totalItems" items-per-page="PatientProblemsController.familyPager.pageSize" ng-model="PatientProblemsController.familyPager.currentPage" ng-change="PatientProblemsController.familyPager.pageChanged()"></div>
-	  	</div>
 	</div>
 </div>

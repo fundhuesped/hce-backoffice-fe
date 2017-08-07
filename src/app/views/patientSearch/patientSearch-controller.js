@@ -6,19 +6,30 @@
     	.module('hce.patient')
     	.controller('PatientSearchController', patientSearchController);
 
-	patientSearchController.$inject = ['Paciente', 'Document', 'toastr', 'HCService', '$state', 'moment', 'Profesional', '$loading', '$uibModal'];
+	patientSearchController.$inject = ['Paciente', 'Document', 'toastr', 'HCService', '$state', 'moment', 'Profesional', 'SocialService', '$loading', '$uibModal'];
 
-    function patientSearchController (Paciente, Document, toastr, HCService, $state, moment,  Profesional, $loading, $uibModal) {
+    function patientSearchController (Paciente, Document, toastr, HCService, $state, moment,  Profesional, SocialService, $loading, $uibModal) {
 	    var vm = this;
       vm.openPatient = openPatient;
       vm.patients = null;
       vm.shouldLookForPacient = shouldLookForPacient;
       vm.lookForPacientes = lookForPacientes;
       vm.documentTypes = [];
+      vm.socialServices = []; 
       vm.clearFilters = clearFilters;
       vm.openPacientePersonalInfoModal = openPacientePersonalInfoModal;
       vm.filter = {};
       vm.profesionales = [];
+      vm.statuses = [
+      {
+        name: 'Activo',
+        id: 'Active',
+      },
+      {
+        name: 'Inactivo',
+        id: 'Inactive',
+      }];
+
 
       vm.changePacientModal = {
           style: {},
@@ -84,7 +95,10 @@
           vm.profesionales = profesionales;
         }, displayComunicationError);
 
-
+        SocialService.getFullActiveList(function(socialServices){
+            vm.socialServices = socialServices;
+        }, function(){displayComunicationError('app');});
+        
       }
 
       function lookForPacientes() {
@@ -127,6 +141,14 @@
             searchObject.pnsCode = vm.filter.pnsCode;
           }
 
+          if(vm.filter.socialService){
+            searchObject.socialService = vm.filter.socialService;
+          }
+
+          if(vm.filter.status){
+            searchObject.status = vm.filter.status;
+          }
+
           Paciente.getActiveList(searchObject,
             function(patients){
               $loading.finish('app');
@@ -159,7 +181,7 @@
           return true;
         }
 
-        if(vm.filter.pnsCode){
+        if(vm.filter.pnsCode && vm.filter.pnsCode.length == 12){
           return true;
         }
 
@@ -175,6 +197,10 @@
           return true;
         }
 
+        if(vm.filter.socialService){
+          return true;
+        }
+
         return false;
       }
 
@@ -187,6 +213,7 @@
       var modalInstance = $uibModal.open({
         templateUrl: 'app/views/patient/patientPersonalInfo.html',
         size: 'lg',
+        backdrop: 'static',
         controller: 'PatientPersonalInfoCtrl',
         controllerAs: 'PacienteCtrl',
         resolve: {

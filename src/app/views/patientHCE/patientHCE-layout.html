@@ -21,9 +21,12 @@
           Problemas activos ({{PHCECtrl.activeProblemsCount}})
         </div>
         <div class="hce-card-body">
-            <ul>
-              <li ng-repeat="problem in PHCECtrl.summaryActiveProblems | limitTo:5" style="text-transform: capitalize;">{{problem.problem.name}} - {{problem.startDate  | date:"dd/MM/yyyy"}}</li>
-            </ul>
+          <div class="row" ng-repeat="problem in PHCECtrl.summaryActiveProblems | limitTo:5" style="text-transform: capitalize;">
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="white-space: nowrap; overflow: hidden;">
+                • {{problem.problem.name}}
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">{{problem.startDate  | date:"dd/MM/yyyy"}}</div>
+          </div>
         </div>
         <div class="hce-card-footer">
           <a ui-sref="app.patientHCE.problems">Ver mas...</a>
@@ -34,9 +37,12 @@
           Vacunas
         </div>
         <div class="hce-card-body">
-            <ul>
-                <li ng-repeat="vaccine in PHCECtrl.summaryPatientVaccines | limitTo:3" style="text-transform: capitalize;">{{vaccine.vaccine.name}} - {{vaccine.appliedDate  | date:"dd/MM/yyyy"}}</li>
-            </ul>
+          <div class="row" ng-repeat="vaccine in PHCECtrl.summaryPatientVaccines | limitTo:3" style="text-transform: capitalize;">
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="white-space: nowrap; overflow: hidden;">
+              • {{vaccine.vaccine.name}}
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">{{vaccine.appliedDate  | date:"dd/MM/yyyy"}}</div>
+          </div>
         </div>
         <div class="hce-card-footer">
           <a ui-sref="app.patientHCE.vaccines">Ver mas...</a>

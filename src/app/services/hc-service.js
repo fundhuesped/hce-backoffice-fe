@@ -19,6 +19,7 @@
         srv.setCurrentPaciente = setCurrentPaciente;
         srv.setPaciente = setPaciente;
         srv.currentPacienteId = null;
+        
         // Evolutions
         srv.currentEvolution = null;
         srv.canSaveEvolution = canSaveEvolution;

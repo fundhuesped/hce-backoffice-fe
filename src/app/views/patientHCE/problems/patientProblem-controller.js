@@ -48,15 +48,12 @@
       }
 
 
-      function canSaveNewProblem() {
-        if(vm.problem && vm.problem.startDate&&vm.problem.state&&vm.problem.state=='Active'&&vm.problem.problem){
-          return true;
-        }
-        if(vm.problem && vm.problem.startDate&&vm.problem.closeDate&&vm.problem.state&&vm.problem.state=='Closed'&&vm.problem.problem){
+        function canSaveNewProblem() {
+          if(vm.problem && vm.problem.startDate&&vm.problem.state&&(vm.problem.state=='Active'||vm.problem.state=='Closed')&&vm.problem.problem){
             return true;
+          }
+  		    return false;
         }
-		return false;
-      }
 
 
       	function markAsError() {

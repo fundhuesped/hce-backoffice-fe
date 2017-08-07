@@ -61,8 +61,13 @@
 .hce-card-body{
 
 }
+
 .hce-card-body li{
   font-size: 14px;
+}
+
+.hce-card-body ul{
+  padding-left: 20px;
 }
 
 .hce-card-footer{
@@ -231,7 +236,7 @@
 }
 
 .evolution-header{
-  margin-bottom: 25px;
+  /*margin-bottom: 25px;*/
 }
 
 .problem-closed{
@@ -242,7 +247,42 @@
   background-color: #F55549;
 }
 
+.hce-input-observation{
+  font-size: 12px;
+}
+
 .hce-form-title{
   font-weight: bold; 
   font-size: 20px;
+}
+
+
+.form-group {
+  padding-bottom: 0px;
+}
+.form-group .radio label{
+  font-size: 12px;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+
+.well h2{
+  margin-top: 12px;
+}
+
+.well table{
+  margin:0px;
+}
+
+.well .pagination{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.hce-card-body .col-xs-*, .hce-card-body .col-sm-*, .hce-card-body .col-md-*, .hce-card-body .col-lg-*{
+  padding:0px;
 }

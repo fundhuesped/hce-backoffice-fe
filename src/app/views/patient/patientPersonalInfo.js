@@ -9,8 +9,6 @@
         vm.paciente = {};
         vm.editing = true;
         vm.errorMessage = null;
-        vm.estadoTurno = estadoTurno;
-        vm.turnos = [];
         vm.confirm = confirm;
         vm.confirmDelete = confirmDelete;
         vm.confirmReactivate = confirmReactivate;
@@ -97,10 +95,11 @@
             if(vm.pacienteForm.$valid){
                 vm.hideErrorMessage();
                 $loading.start('app');
-                vm.paciente.prospect = false;
-                vm.paciente.birthDate = $filter('date')(vm.paciente.birthDate, 'yyyy-MM-dd');
-                vm.paciente.firstVisit = $filter('date')(vm.paciente.firstVisit, 'yyyy-MM-dd');
-                vm.paciente.$update(function(){
+                var paciente  = angular.copy(vm.paciente);
+                paciente.prospect = false;
+                paciente.birthDate = $filter('date')(paciente.birthDate, 'yyyy-MM-dd');
+                paciente.firstVisit = $filter('date')(paciente.firstVisit, 'yyyy-MM-dd');
+                paciente.$update(function(){
                     $loading.finish('app');
                     $uibModalInstance.close('modified');
                 },function(){
@@ -113,6 +112,7 @@
 
         //Confirm delete modal
         vm.showModal = function showModal(){
+            vm.errorMessage = 'Por favor revise el formulario';
             vm.modalStyle = {display:'block'};
         };
 
@@ -158,18 +158,6 @@
                 if(pacienteInstance.status==='Inactive'){
                     vm.confirmReactivate(pacienteInstance);
                 }
-            }
-        }
-
-        function estadoTurno(estado){
-            if(estado === Turno.state.initial){
-                return 'Reservado';
-            }else if(estado === Turno.state.canceled){
-                return 'Cancelado';
-            }else if(estado === Turno.state.present){
-                return 'Presente';
-            }else if(estado === Turno.state.served){
-                return 'Atendido';
             }
         }
         
