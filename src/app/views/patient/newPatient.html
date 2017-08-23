@@ -2,7 +2,7 @@
 <div class="">
     <div class="panel panel-default">
         <div class="panel-body">
-            <form name="NewPatientController.pacienteForm">
+            <form name="NewPatientController.pacienteForm" class="patient-form">
                 <uib-tabset active="active">
                     <uib-tab index="0" heading="Datos filiatorios" abm-component>
                         <div class="alert alert-dismissable alert-warning" style="margin-bottom: 0px;" ng-show="NewPatientController.errorMessage">
@@ -18,23 +18,23 @@
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group ng-class="{'has-error':NewPatientController.pacienteForm.fatherSurname.$error.required}">
-                                    <label abm-label for="fatherSurname">Apellido paterno* <span class="hce-input-observation">(máximo 70 caracteres)</span></label>
-                                    <input type="text" name="fatherSurname" maxlength="70" class="form-control" ng-model="NewPatientController.paciente.fatherSurname" required>
+                                    <label abm-label for="fatherSurname">Primer apellido* <span class="hce-input-observation">(máximo 70 caracteres)</span></label>
+                                    <input type="text" name="fatherSurname" maxlength="70" class="form-control" ng-model="NewPatientController.paciente.fatherSurname" ng-required="true">
                                 </abm-form-group>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group>
-                                    <label abm-label for="motherSurname">Apellido materno <span class="hce-input-observation">(máximo 70 caracteres)</span></label>
+                                    <label abm-label for="motherSurname">Otros apellidos <span class="hce-input-observation">(máximo 70 caracteres)</span></label>
                                     <input type="text" name="motherSurname" maxlength="70" class="form-control" ng-model="NewPatientController.paciente.motherSurname">
                                 </abm-form-group>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group>
-                                    <label abm-label for="birthDate">Fecha nacimiento <small><em>(dd/mm/aaaa o m/d/aaaa)</em></small></label> 
+                                    <label abm-label for="birthDate">Fecha nacimiento* <small><em>(dd/mm/aaaa o m/d/aaaa)</em></small></label> 
                                     <p class="input-group">
-                                        <input type="text" name="birthDate" class="form-control" uib-datepicker-popup="d!/M!/yyyy" ng-model="NewPatientController.paciente.birthDate" is-open="NewPatientController.birthDateCalendarPopup.opened" datepicker-options="NewPatientController.birthDateCalendarPopup.options" alt-input-formats="NewPatientController.birthDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" close-text="Cerrar"/>
+                                        <input type="text" name="birthDate" class="form-control" uib-datepicker-popup="d!/M!/yyyy" ng-model="NewPatientController.paciente.birthDate" is-open="NewPatientController.birthDateCalendarPopup.opened" datepicker-options="NewPatientController.birthDateCalendarPopup.options" alt-input-formats="NewPatientController.birthDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" close-text="Cerrar" ng-required="true"/>
                                         <span class="input-group-btn">
                                           <button type="button" class="btn btn-default" ng-click="NewPatientController.openBirthDateCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
                                         </span>
@@ -46,7 +46,7 @@
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group ng-class="{'has-error':NewPatientController.pacienteForm.documentType.$error.required}">
                                     <label abm-label for="documentType">Tipo documento*</label>
-                                    <select class="form-control" name="documentType" ng-model="NewPatientController.paciente.documentType" ng-options="document as document.name for document in NewPatientController.documents track by document.id" required>
+                                    <select class="form-control" name="documentType" ng-model="NewPatientController.paciente.documentType" ng-options="document as document.name for document in NewPatientController.documents track by document.id" ng-required="true">
                                         <option value=""></option>
                                     </select>
                                 </abm-form-group>
@@ -54,7 +54,7 @@
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group class="form-group" ng-class="{'has-error':NewPatientController.pacienteForm.documentNumber.$error.required}">
                                         <label abm-label for="documentNumber">Número*</label>
-                                        <input class="form-control" maxlength="10" type="text" name="documentNumber" id="documentNumber" ng-model="NewPatientController.paciente.documentNumber" required>
+                                        <input class="form-control" maxlength="10" type="text" name="documentNumber" id="documentNumber" ng-model="NewPatientController.paciente.documentNumber" ng-required="true">
                                 </abm-form-group>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group ng-class="{'has-error':NewPatientController.pacienteForm.socialService.$error.required}">
                                     <label abm-label for="socialService">Obra social*</label>
-                                    <select class="form-control" name="socialService" ng-model="NewPatientController.paciente.socialService" ng-options="socialService as socialService.name for socialService in NewPatientController.socialServices track by socialService.id">
+                                    <select class="form-control" name="socialService" ng-model="NewPatientController.paciente.socialService" ng-options="socialService as socialService.name for socialService in NewPatientController.socialServices track by socialService.id" ng-required="true">
                                         <option value="" selected="selected">---Seleccione---</option>
                                     </select>
                                 </abm-form-group>

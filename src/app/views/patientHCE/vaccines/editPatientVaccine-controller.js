@@ -31,18 +31,17 @@
       activate();
 
       function save() {
-        var tmpPatientVaccine = angular.copy(vm.newPatientVaccine);
-        tmpPatientVaccine.paciente = HCService.currentPaciente.id;
+        var tmpPatientVaccine = angular.copy(vm.patientVaccine);
         tmpPatientVaccine.appliedDate = moment(tmpPatientVaccine.appliedDate).format('YYYY-MM-DD');
 
-        tmpPatientVaccine.$save({pacienteId:HCService.currentPaciente.id},function() {
+        PatientVaccine.update(tmpPatientVaccine,function() {
           toastr.success('Aplicación guardada con exito');
-          $uibModalInstance.close('created');
+          $uibModalInstance.close('edited');
         }, showError);
       }
 
       function canSave() {
-        if(vm.newPatientVaccine &&vm.newPatientVaccine.vaccine && vm.newPatientVaccine.appliedDate){
+        if(vm.patientVaccine &&vm.patientVaccine.vaccine && vm.patientVaccine.appliedDate){
           return true;
         }
         return false;

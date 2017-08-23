@@ -1,0 +1,51 @@
+<div class="container-fluid hce-container-modal">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="hce-form-title">Editar resultado</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<abm-form-group>
+		    			<label data-abm-label type="static">Escriba el estudio(*)</label>
+                		<input type="text" abm-form-control ng-model="EditPatientClinicalResultController.patientClinicalResult.clinicalStudy" uib-typeahead="clinicalStudy as clinicalStudy.name for clinicalStudy in EditPatientClinicalResultController.getClinicalStudies($viewValue)" class="form-control" typeahead-min-length="3" disabled="true">
+                	</abm-form-group>
+                </div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+				  	<abm-form-group>
+					    <label data-abm-label type="static">Fecha de inicio(*)</label>
+							<div class="input-group">
+								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="studyDate" ng-model="EditPatientClinicalResultController.patientClinicalResult.studyDate" is-open="EditPatientClinicalResultController.studyDateCalendar.opened" datepicker-options="EditPatientClinicalResultController.studyDateCalendar.options" close-text="Cerrar" alt-input-formats="EditPatientClinicalResultController.studyDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
+		                        <div class="input-group-btn">
+		                          <button type="button" class="btn btn-default" ng-click="EditPatientClinicalResultController.studyDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+		                        </div>
+						    </div>
+				  	</abm-form-group>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<abm-form-group>
+				    	<label data-abm-label type="static">Observaciones</label>
+				    	<textarea type="text" abm-form-control ng-model="EditPatientClinicalResultController.patientClinicalResult.observations"></textarea>
+				  	</abm-form-group>
+		  		</div>
+		  	</div>
+			<div class="row" >
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="row" >
+					  	<div>
+					  		<button class="btn btn-danger pull-left" ng-click="EditPatientClinicalResultController.markAsError()">Pasar a error</button>
+					  		<button class="btn btn-success btn-raised pull-right" ng-click="EditPatientClinicalResultController.save()"  ng-disabled="!EditPatientClinicalResultController.canSave()">Guardar</button>
+					  		<button class="btn btn-default pull-right" ng-click="EditPatientClinicalResultController.cancel()">Cancelar</button>
+					  	</div>
+				  	</div>
+			  	</div>
+			</div>		    					
+		</div>
+	</div>
+</div>

@@ -244,7 +244,7 @@
 }
 
 .registry-error{
-  background-color: #F55549;
+  background-color: #f59088;
 }
 
 .hce-input-observation{
@@ -285,4 +285,25 @@
 
 .hce-card-body .col-xs-*, .hce-card-body .col-sm-*, .hce-card-body .col-md-*, .hce-card-body .col-lg-*{
   padding:0px;
+}
+
+.hce-container-modal{
+  padding-top:10px;
+}
+
+.hce-table-row{
+  height: 45px;
+}
+
+
+.patient-form .nav-tabs{
+  background-color: transparent;
+}
+
+.patient-form li.uib-tab.nav-item{
+  background-color: #01564e;
+}
+
+.patient-form li.uib-tab.nav-item.active{
+  background-color: #009688;
 }

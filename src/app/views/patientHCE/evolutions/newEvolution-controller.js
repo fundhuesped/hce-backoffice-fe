@@ -16,6 +16,11 @@
       vm.saveNewEvolution = saveNewEvolution;
       vm.closeEvolution = closeEvolution;
       vm.newEvolutionFocused = false;
+      vm.isOpened = isOpened;
+      vm.show = null;
+      vm.toggleDropdown = toggleDropdown;
+
+
       vm.visitTypes = ['Programada', 'Demanda Espontánea', 'Otro'];
       Object.defineProperty(
           vm,
@@ -68,9 +73,21 @@
         }, showError);
       }
 
+      function toggleDropdown(section) {
+        if(vm.show == section){
+          vm.show = null;
+        }else{
+          vm.show = section;
+        }
+      }
+
 	    function activate(){
         HCService.getCurrentEvolution();
 	    }
+
+      function isOpened() {
+        return vm.newEvolutionFocused || vm.currentEvolution || vm.show;
+      }
 
       function showError(error) {
         if(error){

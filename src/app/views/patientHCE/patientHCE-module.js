@@ -50,6 +50,26 @@
             }
           },
       })
+      .state('app.patientHCE.medications', {
+          url: '/medicacion',
+          views: {
+            'detail': {
+              templateUrl: 'app/views/patientHCE/medications/medications.html',
+              controller: 'PatientMedicationListController',
+              controllerAs: 'PMLController',
+            }
+          },
+      })
+      .state('app.patientHCE.clinicalResults', {
+          url: '/estudios',
+          views: {
+            'detail': {
+              templateUrl: 'app/views/patientHCE/clinicalResults/clinicalResults.html',
+              controller: 'PatientClinicalResultsListController',
+              controllerAs: 'PatientClinicalResultsListController',
+            }
+          },
+      })
       .state('app.patientHCE.vaccines', {
           url: '/vacunas',
           views: {

@@ -1,5 +1,5 @@
-<div class="container-fluid">
-	<div class="row well well-row">
+<div class="container-fluid hce-container-modal">
+	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -9,7 +9,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<abm-form-group class="form-group-lg">
-		    			<label data-abm-label type="floating">Escriba el problema</label>
+		    			<label data-abm-label type="static">Escriba el problema(*)</label>
                 		<input type="text" abm-form-control ng-model="NewPatientProblemController.newPatientProblem.problem" uib-typeahead="problem as problem.name for problem in NewPatientProblemController.getProblems($viewValue)" class="form-control" typeahead-min-length="3">
                 	</abm-form-group>
                 </div>
@@ -17,13 +17,12 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				  	<abm-form-group>
-					    <label>Fecha de inicio </label>
+					    <label>Fecha de inicio(*)</label>
 						<div class="input-group">
 							<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientProblemController.newPatientProblem.startDate" is-open="NewPatientProblemController.startDateCalendarPopup.opened" datepicker-options="NewPatientProblemController.startDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.startDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
 	                        <div class="input-group-btn">
 	                          <button type="button" class="btn btn-default" ng-click="NewPatientProblemController.startDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
 	                        </div>
-					      <!-- <div class="input-group-addon">.00</div> -->
 					    </div>
 				  	</abm-form-group>
 				</div>
@@ -35,7 +34,6 @@
 	                        <div class="input-group-btn">
 	                          <button type="button" class="btn btn-default" ng-click="NewPatientProblemController.closeDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
 	                        </div>
-					      <!-- <div class="input-group-addon">.00</div> -->
 					    </div>
 				  	</abm-form-group>
 				</div>
@@ -57,7 +55,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<abm-form-group class="form-group-lg">
-				    	<label data-abm-label type="floating">Observaciones</label>
+				    	<label data-abm-label type="static">Observaciones</label>
 				    	<textarea type="text" abm-form-control ng-model="NewPatientProblemController.newPatientProblem.observations"></textarea>
 				  	</abm-form-group>
 		  		</div>

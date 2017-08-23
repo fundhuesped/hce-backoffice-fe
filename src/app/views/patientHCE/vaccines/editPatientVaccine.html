@@ -1,5 +1,5 @@
-<div class="container-fluid">
-	<div class="row well well-row">
+<div class="container-fluid hce-container-modal">
+	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -8,8 +8,8 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group class="form-group-lg">
-		    			<label data-abm-label type="floating">Escriba la vacuna</label>
+					<abm-form-group>
+		    			<label data-abm-label type="static">Escriba la vacuna(*)</label>
                 		<input type="text" abm-form-control ng-model="EditPatientVaccineController.patientVaccine.vaccine" uib-typeahead="vaccine as vaccine.name for vaccine in EditPatientVaccineController.getVaccines($viewValue)" class="form-control" typeahead-min-length="3" disabled="true">
                 	</abm-form-group>
                 </div>
@@ -17,7 +17,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				  	<abm-form-group>
-					    <label>Fecha de aplicación </label>
+					    <label data-abm-label type="static">Fecha de aplicación(*)</label>
 							<div class="input-group">
 								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="EditPatientVaccineController.patientVaccine.appliedDate" is-open="EditPatientVaccineController.applicationDateCalendar.opened" datepicker-options="EditPatientVaccineController.applicationDateCalendar.options" close-text="Cerrar" alt-input-formats="EditPatientVaccineController.applicationDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
 		                        <div class="input-group-btn">
@@ -27,11 +27,19 @@
 				  	</abm-form-group>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<abm-form-group>
+				    	<label data-abm-label type="static">Observaciones</label>
+				    	<textarea type="text" abm-form-control ng-model="EditPatientVaccineController.patientVaccine.observations"></textarea>
+				  	</abm-form-group>
+		  		</div>
+		  	</div>
 			<div class="row" >
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="row" >
 					  	<div>
-					  		<button class="btn btn-danger btn-raised pull-left" ng-click="EditPatientVaccineController.markAsError()">Pasar a error</button>
+					  		<button class="btn btn-danger pull-left" ng-click="EditPatientVaccineController.markAsError()">Pasar a error</button>
 
 					  		<button class="btn btn-success btn-raised pull-right" ng-click="EditPatientVaccineController.save()"  ng-disabled="!EditPatientVaccineController.canSave()">Guardar vacuna</button>
 					  		<button class="btn btn-default pull-right" ng-click="EditPatientVaccineController.cancel()">Cancelar</button>

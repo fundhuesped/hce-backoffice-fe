@@ -17,6 +17,7 @@
       vm.documentTypes = [];
       vm.socialServices = []; 
       vm.clearFilters = clearFilters;
+      vm.newPatient = newPatient;
       vm.openPacientePersonalInfoModal = openPacientePersonalInfoModal;
       vm.filter = {};
       vm.profesionales = [];
@@ -108,8 +109,11 @@
 
           var searchObject = {};
 
-          if(vm.filter.documentType && vm.filter.documentNumber){
+          if(vm.filter.documentType){
             searchObject.documentType = vm.filter.documentType;
+          }
+
+          if(vm.filter.documentNumber){
             searchObject.documentNumber = vm.filter.documentNumber;
           }
 
@@ -173,7 +177,7 @@
       function shouldLookForPacient() {
         var populatedFields = 0;
 
-        if (vm.filter.documentType && vm.filter.documentNumber) {
+        if (vm.filter.documentNumber) {
           return true;
         }
 
@@ -224,6 +228,9 @@
       });
     }
 
+    function newPatient() {
+      $state.go('app.newPatient');
+    }
 
       function openPatient(patient) {
           if(HCService.isDirty()){

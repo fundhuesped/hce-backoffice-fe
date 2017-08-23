@@ -10,7 +10,7 @@
 							<button class="btn btn-success btn-raised pull-right" ng-show="!PatientProblemsController.showNewPatientProblem" ng-click="PatientProblemsController.openNewProblemModal()">Agregar problema</button>
 					</div>
 				</div>
-		    	<table class="table table-hover table-condensed">
+		    	<table class="table Medication table-condensed">
 		    		<thead> 
 		    			<tr> 
 		    				<th>Nombre</th>
@@ -21,7 +21,7 @@
 		    			</tr> 
 		    		</thead>
 		    		<tbody>
-		    			<tr ng-repeat="problem in PatientProblemsController.activeProblems" ng-class="{'problem-closed':problem.state=='Closed','registry-error':problem.state=='Error' }">
+		    			<tr ng-repeat="problem in PatientProblemsController.activeProblems" class="hce-table-row" ng-class="{'problem-closed':problem.state=='Closed','registry-error':problem.state=='Error' }">
 	    					<td style="text-transform: capitalize;">{{problem.problem.name}}</td> 
 	    					<td>{{(problem.startDate | date: "dd/MM/yyyy") || 'No informado'}}</td> 
 	    					<td>{{(problem.closeDate | date: "dd/MM/yyyy") || '-'}}</td> 
@@ -47,7 +47,7 @@
 							<button class="btn btn-success btn-raised pull-right" ng-click="PatientProblemsController.openNewFamilyProblemModal()">Agregar antecedente</button>
 					</div>
 				</div>
-		    	<table class="table table-hover table-condensed">
+		    	<table class="table Medication table-condensed">
 		    		<thead> 
 		    			<tr> 
 		    				<th>Nombre</th>

@@ -10,7 +10,7 @@
           url: '/searchpatient',
           views: {
             'content': {
-              templateUrl: 'app/views/patientSearch/patientSearch.html',
+              templateUrl: 'app/views/patient/patientSearch.html',
               controller: 'PatientSearchController',
               controllerAs: 'PSCtrl'         
             }

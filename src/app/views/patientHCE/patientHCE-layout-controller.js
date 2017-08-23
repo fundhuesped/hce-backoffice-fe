@@ -50,6 +50,24 @@
           }
         });
 
+        Object.defineProperty(
+          vm,
+          'summaryPatientMedications', {
+          enumerable: true,
+          configurable: false,
+          get: function () {
+              return HCService.summaryPatientMedications;
+          }
+        });
+        Object.defineProperty(
+          vm,
+          'activePatientMedicationCount', {
+          enumerable: true,
+          configurable: false,
+          get: function () {
+              return HCService.activePatientMedicationCount;
+          }
+        });
 	    function activate(){
         setTimeout(function (argument) {
          HCService.getActivePatientProblems();

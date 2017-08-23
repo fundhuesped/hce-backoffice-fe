@@ -6,9 +6,9 @@
         .module('hce.services')
         .service('HCService', HCService );
 
-    HCService.$inject = ['Paciente', 'Evolution', 'PatientProblem', 'PatientVaccine', 'localStorageService', 'moment'];
+    HCService.$inject = ['Paciente', 'Evolution', 'PatientProblem', 'PatientVaccine', 'PatientMedication', 'localStorageService', 'moment'];
 
-    function HCService(Paciente, Evolution, PatientProblem, PatientVaccine, localStorageService, moment){
+    function HCService(Paciente, Evolution, PatientProblem, PatientVaccine, PatientMedication, localStorageService, moment){
         var srv = this;
 
         //Common
@@ -52,6 +52,13 @@
         srv.summaryPatientVaccines = null;
         srv.activePatientVaccinesCount = null;
 
+
+        //Vaccines
+        srv.getPatientMedications = getPatientMedications;
+        srv.patientMedications = null;
+        srv.summaryPatientMedications = null;
+        srv.activePatientMedicationsCount = null;
+
         activate();
 
 
@@ -78,6 +85,7 @@
                 setCurrentPaciente(paciente);
                 srv.currentEvolution = null;
                 getActivePatientVaccines();
+                getActivePatientMedications();
             }, function (argument) {
                 // body...
             });
@@ -291,6 +299,35 @@
             return PatientVaccine.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, page_size:3, state:'Applied'}, function (paginatedResult) {
                 srv.activePatientVaccinesCount = paginatedResult.count;
                 srv.summaryPatientVaccines = paginatedResult.results;
+            }, function (err) {
+                 
+            });
+        }
+
+        function getPatientMedications(filters) {
+            getActivePatientMedications();
+            if(filters){
+                var localFilters = angular.copy(filters);
+                localFilters.pacienteId = srv.currentPacienteId;
+                return PatientMedication.getPaginatedForPaciente(localFilters, function (paginatedResult) {
+                    srv.patientMedications = paginatedResult.results;
+                }, function (err) {
+                     
+                });                
+            }else{
+                return PatientMedication.getPaginatedForPaciente({pacienteId:srv.currentPaciente.id}, function (paginatedResult) {
+                    srv.patientMedications = paginatedResult.results;
+                }, function (err) {
+                     
+                });
+
+            }
+        }
+
+        function getActivePatientMedications() {
+            return PatientMedication.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, page_size:3, state:'Active'}, function (paginatedResult) {
+                srv.activePatientMedicationCount = paginatedResult.count;
+                srv.summaryPatientMedications = paginatedResult.results;
             }, function (err) {
                  
             });
