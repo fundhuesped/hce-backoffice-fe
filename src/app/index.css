@@ -307,3 +307,113 @@
 .patient-form li.uib-tab.nav-item.active{
   background-color: #009688;
 }
+
+
+/*ARV  Treatment*/
+
+.list-container{
+  border: 1px solid #f3f3f3;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #f3f3f3; 
+}
+
+
+
+.arv-treatment-selection-row {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+
+
+
+.table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  height: 200px;
+  overflow-y: auto;
+  width: 100%;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
+}
+
+.table-fixed label{
+  font-size: 14px;
+  color: black;
+}
+
+.col-xs-1-5{
+  width: 12.5;
+}
+.col-sm-1-5{
+  width: 12.5;
+}
+.col-md-1-5{
+  width: 12.5;
+}
+
+.col-lg-1-5{
+  width: 12.5;
+}
+
+.col-xs-offset-1-5{
+  margin-left: 12.5%;
+}
+
+.col-sm-offset-1-5{
+  margin-left: 12.5%;
+}
+
+.col-md-offset-1-5{
+  margin-left: 12.5%;
+}
+
+.col-lg-offset-1-5{
+  margin-left: 12.5%;
+}
+
+
+
+
+/* Bootstrap rewrite */
+
+.form-group-lg select.form-control{
+    height: 50px!important;
+    line-height: 44px;
+}
+
+
+
+
+
+/*  Prescriptions  */
+
+
+.prescriptionPatientName{
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.prescriptionPatientSocialService{
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.prescriptionMedicationsList{
+  margin-top: 40px;
+}
+.prescriptionMedication{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+ @media print
+ {
+    body {background-color: white}
+ }
+   

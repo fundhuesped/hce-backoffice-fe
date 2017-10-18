@@ -60,6 +60,16 @@
             }
           },
       })
+      .state('app.patientHCE.arvTreatments', {
+          url: '/arvTreatments',
+          views: {
+            'detail': {
+              templateUrl: 'app/views/patientHCE/medications/patientARVTreatmentList.html',
+              controller: 'PatientARVTreatmentListController',
+              controllerAs: 'PMLController',
+            }
+          },
+      })
       .state('app.patientHCE.clinicalResults', {
           url: '/estudios',
           views: {

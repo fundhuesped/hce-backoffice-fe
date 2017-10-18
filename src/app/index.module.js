@@ -10,7 +10,7 @@
     	'ngAria', 
     	'ngResource', 
     	'ui.router', 
-    	'ui.bootstrap', 
+        'scrollable-table',
     	'toastr',
         'ui.bootstrap',
         'angular-loading-bar',

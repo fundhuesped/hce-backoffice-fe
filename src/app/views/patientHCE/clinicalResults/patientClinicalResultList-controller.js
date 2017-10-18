@@ -79,7 +79,7 @@
         });
         modalInstance.result.then(function (resolution) {
           if(resolution==='created'){
-            searchPatientMedications();
+            searchPatientClinicalResults();
             if(!HCService.currentEvolution){
               HCService.getCurrentEvolution();
             }

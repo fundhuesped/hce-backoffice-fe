@@ -1,0 +1,52 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="pull-right" style="padding: 10px">{{Ctrl.prescription.id}}</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="row prescriptionPatientName">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="hce-form-title center-text">
+						{{Ctrl.prescription.paciente.firstName}} {{Ctrl.prescription.paciente.fatherSurname}}
+					</div>
+				</div>
+			</div>
+			<div class="row prescriptionPatientSocialService" ng-if="Ctrl.prescription.paciente.socialService && Ctrl.prescription.paciente.socialService.name !='No tiene'">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-text">
+					<div class="">
+						{{Ctrl.prescription.paciente.socialService.name}} 
+					</div>
+					<div class="">
+						{{Ctrl.prescription.paciente.socialServiceNumber}}
+					</div>
+				</div>
+			</div>
+			<div class="prescriptionMedicationsList">
+				<div class="row prescriptionMedication" ng-repeat="prescriptedMedication in Ctrl.prescription.prescriptedMedications">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  center-text">
+						<div class="hce-form-title">
+							{{prescriptedMedication.medication.name}} 
+						</div>
+						<div class="block-center">
+							Presentacion
+						</div>
+					</div>
+				</div>
+			</div>	    					
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			{{Ctrl.prescription.observations}}
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+		</div>
+	</div>
+	<div class="row" style="margin-top: 100px">
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 hce-form-title">
+			<div>{{Ctrl.prescription.issuedDate| date:"M/d/yy"}}
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+		</div>
+	</div>
+</div>

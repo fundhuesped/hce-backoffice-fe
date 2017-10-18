@@ -6,9 +6,9 @@
         .module('hce.services')
         .service('HCService', HCService );
 
-    HCService.$inject = ['Paciente', 'Evolution', 'PatientProblem', 'PatientVaccine', 'PatientMedication', 'localStorageService', 'moment'];
+    HCService.$inject = ['Paciente', 'Evolution', 'PatientProblem', 'PatientVaccine', 'PatientMedication', 'PatientArvTreatment', 'localStorageService', 'moment'];
 
-    function HCService(Paciente, Evolution, PatientProblem, PatientVaccine, PatientMedication, localStorageService, moment){
+    function HCService(Paciente, Evolution, PatientProblem, PatientVaccine, PatientMedication, PatientArvTreatment, localStorageService, moment){
         var srv = this;
 
         //Common
@@ -58,6 +58,11 @@
         srv.patientMedications = null;
         srv.summaryPatientMedications = null;
         srv.activePatientMedicationsCount = null;
+
+        //ARV Treatments
+        srv.currentARVTreatment = null;
+        srv.getCurrentARVTreatment = getCurrentARVTreatment;
+
 
         activate();
 
@@ -315,7 +320,7 @@
                      
                 });                
             }else{
-                return PatientMedication.getPaginatedForPaciente({pacienteId:srv.currentPaciente.id}, function (paginatedResult) {
+                return PatientMedication.getPaginatedForPaciente({pacienteId:srv.currentPacienteId}, function (paginatedResult) {
                     srv.patientMedications = paginatedResult.results;
                 }, function (err) {
                      
@@ -328,6 +333,18 @@
             return PatientMedication.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, page_size:3, state:'Active'}, function (paginatedResult) {
                 srv.activePatientMedicationCount = paginatedResult.count;
                 srv.summaryPatientMedications = paginatedResult.results;
+            }, function (err) {
+                 
+            });
+        }
+
+        function getCurrentARVTreatment() {
+            return PatientArvTreatment.getForPaciente({pacienteId:srv.currentPacienteId, state: 'Active'}, function (result) {
+                if(result.length>0){
+                    srv.currentARVTreatment = result[0];
+                }else{
+                    srv.currentARVTreatment = null;
+                }
             }, function (err) {
                  
             });

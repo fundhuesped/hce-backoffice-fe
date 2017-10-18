@@ -29,7 +29,7 @@
     					</tr>
     				</tbody>
     			</table>
-				<div class="row">
+				<div class="row" ng-show="PatientClinicalResultsListController.totalItems">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				  		<div uib-pagination previous-text="Anterior" next-text="Siguiente" total-items="PatientClinicalResultsListController.totalItems" items-per-page="PatientClinicalResultsListController.pageSize" ng-model="PatientClinicalResultsListController.currentPage" ng-change="PatientClinicalResultsListController.pageChanged()" class="pagination-sm"></div>
 				  	</div>

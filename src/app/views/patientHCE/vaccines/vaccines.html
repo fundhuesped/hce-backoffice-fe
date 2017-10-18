@@ -4,9 +4,10 @@
 	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     		<div class="well" style="min-height:350px">
 			    <div class="row">
-					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8"><h2>Vacunas</h2></div>
-					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><h2>Vacunas</h2></div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 							<button class="btn btn-success btn-raised pull-right" ng-click="PatientVaccinesController.openNewPatientVaccineModal()">Agregar vacuna</button>
+							<button class="btn btn-success btn-raised pull-right" ng-click="">Imprimir receta</button>
 					</div>
 				</div>
 		    	<table class="table Medication table-condensed">
@@ -29,7 +30,7 @@
     					</tr>
     				</tbody>
     			</table>
-				<div class="row">
+				<div class="row" ng-show="PatientVaccinesController.totalItems">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				  		<div uib-pagination previous-text="Anterior" next-text="Siguiente" total-items="PatientVaccinesController.totalItems" items-per-page="PatientVaccinesController.pageSize" ng-model="PatientVaccinesController.currentPage" ng-change="PatientVaccinesController.pageChanged()" class="pagination-sm"></div>
 				  	</div>

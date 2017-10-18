@@ -1,16 +1,10 @@
-<div ng-if="PMLController.showArv()">
-	<hce-arv-treatment-list ></hce-arv-treatment-list>
-	
-</div>
-<hce-prof-medication-list></hce-prof-medication-list>
-
 <div class="container-fluid">
 
   	<div class="row">	
 	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     		<div class="well" style="min-height:350px">
 			    <div class="row">
-					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><h2>General</h2></div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><h2>Profilaxis</h2></div>
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 							<button class="btn btn-success btn-raised pull-right" ng-click="PMLController.openNewPatientMedicationModal()">Agregar medicamento</button>
 							<button class="btn btn-info btn-raised pull-right" ng-click="PMLController.openNewRecetaModal()" ng-disabled="!PMLController.patientMedications">Generar receta</button>
@@ -27,8 +21,8 @@
 		    			</tr> 
 		    		</thead>
 		    		<tbody>
-		    			<tr ng-repeat="medication in PMLController.patientMedications | filter:{medication:{medicationType:{code:'!PROF'}}}" ng-class="{'problem-closed':medication.state=='Closed','registry-error':medication.state=='Error' }">
-	    					<td style="text-transform: capitalize;">{{medication.medication.name}}</td>
+		    			<tr ng-repeat="medication in PMLController.patientMedications" ng-class="{'problem-closed':medication.state=='Closed','registry-error':medication.state=='Error' }">
+	    					<td style="text-transform: capitalize;">{{medication.medication.name}}</td> 
 	    					<td>{{medication.startDate | date:"dd/MM/yyyy"}}</td> 
 	    					<td>{{medication.endDate | date:"dd/MM/yyyy"}}</td> 
 	    					<td>{{medication.patientProblem.problem.name}}</td> 

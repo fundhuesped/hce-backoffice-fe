@@ -32,7 +32,7 @@
     					</tr>
     				</tbody>
     			</table>
-		  		<div uib-pagination boundary-link-numbers="true" first-text="Primer" last-text="Ultima"  previous-text="Anterior" next-text="Siguiente" total-items="PatientProblemsController.totalItems" items-per-page="PatientProblemsController.pageSize" ng-model="PatientProblemsController.currentPage" ng-change="PatientProblemsController.pageChanged()" class="pagination-sm">
+		  		<div uib-pagination boundary-link-numbers="true" first-text="Primer" last-text="Ultima"  previous-text="Anterior" next-text="Siguiente" total-items="PatientProblemsController.totalItems" items-per-page="PatientProblemsController.pageSize" ng-model="PatientProblemsController.currentPage" ng-change="PatientProblemsController.pageChanged()" class="pagination-sm" ng-show="PatientProblemsController.totalItems">
 		  		</div>
 			</div>
 		</div>
@@ -67,7 +67,7 @@
     					</tr>
     				</tbody>
     			</table>
-				<div class="row">
+				<div class="row" ng-show="PatientProblemsController.familyPager.totalItems">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				  		<div uib-pagination boundary-link-numbers="true" previous-text="Anterior" next-text="Siguiente" total-items="PatientProblemsController.familyPager.totalItems" items-per-page="PatientProblemsController.familyPager.pageSize" ng-model="PatientProblemsController.familyPager.currentPage" ng-change="PatientProblemsController.familyPager.pageChanged()" class="pagination-sm"></div>
 				  	</div>

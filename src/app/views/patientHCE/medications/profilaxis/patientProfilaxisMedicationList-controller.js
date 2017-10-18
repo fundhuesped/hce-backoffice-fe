@@ -4,54 +4,46 @@
      /*jshint latedef: nofunc */
     angular
     	.module('hce.patientHCE')
-    	.controller('PatientMedicationListController', patientMedicationListController);
+    	.controller('PatientProfilaxisMedicationListController', patientProfilaxisMedicationListController);
 
-	   patientMedicationListController.$inject = ['$state', 'HCService', 'PatientMedication', 'Medication', 'toastr', 'moment', '$uibModal'];
+	   patientProfilaxisMedicationListController.$inject = ['$state', 'HCService', 'PatientMedication', 'Medication', 'toastr', 'moment', '$uibModal'];
 
-    function patientMedicationListController ($state, HCService, PatientMedication, Medication, toastr, moment, $uibModal) {
+    function patientProfilaxisMedicationListController ($state, HCService, PatientMedication, Medication, toastr, moment, $uibModal) {
 	    var vm = this;
       vm.hceService = HCService;
-      vm.searchPatientMedications = searchPatientMedications;
+      vm.searchPatientProfilaxisMedications = searchPatientProfilaxisMedications;
       vm.currentPage = 1;
       vm.pageSize = 5;
       vm.totalItems = null;
       vm.problems = [];
       vm.filters = {};
+      vm.medications = [];
       vm.pageChanged = pageChanged;
-      vm.showArv = showArv;
       vm.openNewPatientMedicationModal = openNewPatientMedicationModal;
       vm.openEditPatientMedicationModal = openEditPatientMedicationModal;
+      vm.patientProxilaxisMedications = [];
       vm.openNewRecetaModal = openNewRecetaModal;
-
-
-
-      Object.defineProperty(
-          vm,
-          'patientMedications', {
-          enumerable: true,
-          configurable: false,
-          get: function () {
-              return HCService.patientMedications;
-          }
-      });
 
       activate();
 
 	    function activate(){
-        searchPatientMedications();
+        searchPatientProfilaxisMedications();
 	    }
 
       function pageChanged() {
-        searchPatientVaccines();
+        searchPatientProfilaxisMedications();
       }
 
-      function searchPatientMedications() {
+      function searchPatientProfilaxisMedications() {
         vm.filters.page = vm.currentPage;
         vm.filters.page_size = vm.pageSize;
-        HCService.getPatientMedications(vm.filters).$promise.then(function (paginatedResult) {
-          if(vm.currentPage===1){
-            vm.totalItems = paginatedResult.count;
-          }
+        vm.filters.medicationTypeCode = 'PROF';
+        vm.filters.pacienteId = HCService.currentPacienteId;
+        PatientMedication.getPaginatedForPaciente(vm.filters, function (paginatedResult) {
+          vm.patientMedications = paginatedResult.results;
+          vm.totalItems = paginatedResult.count;
+        }, function(argument) {
+          // body...
         });
       }
 
@@ -69,7 +61,7 @@
         });
         modalInstance.result.then(function (resolution) {
           if(resolution==='markedError' || resolution==='edited'){
-            searchPatientMedications();
+            searchPatientProfilaxisMedications();
             if(!HCService.currentEvolution){
               HCService.getCurrentEvolution();
             }
@@ -79,14 +71,14 @@
 
       function openNewPatientMedicationModal() {
         var modalInstance = $uibModal.open({
-          templateUrl: 'app/views/patientHCE/medications/newPatientMedication.html',
+          templateUrl: 'app/views/patientHCE/medications/profilaxis/newPatientProfilaxisMedication.html',
           size: 'md',
-          controller: 'NewPatientMedicationController',
-          controllerAs: 'NewPatientMedicationController',
+          controller: 'NewPatientProfilaxisMedicationController',
+          controllerAs: 'NewPatientProfilaxisMedicationController',
         });
         modalInstance.result.then(function (resolution) {
           if(resolution==='created'){
-            searchPatientMedications();
+            searchPatientProfilaxisMedications();
             if(!HCService.currentEvolution){
               HCService.getCurrentEvolution();
             }
@@ -97,9 +89,9 @@
 
       function openNewRecetaModal(){
         var modalInstance = $uibModal.open({
-          templateUrl: 'app/views/patientHCE/medications/newMedicationReceta.html',
+          templateUrl: 'app/views/patientHCE/medications/profilaxis/newProfilaxisMedicationReceta.html',
           size: 'md',
-          controller: 'NewMedicationRecetaController',
+          controller: 'NewProfilaxisMedicationRecetaController',
           controllerAs: 'Ctrl'
         });
         modalInstance.result.then(function (resolution) {
@@ -118,10 +110,6 @@
         }
         if(loading){
         }
-      }
-
-      function showArv() {
-        return $state.current.name == 'app.patientHCE.medications';
       }
 
 
