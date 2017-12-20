@@ -4,11 +4,11 @@
      /*jshint latedef: nofunc */
     angular
     	.module('hce.patientHCE')
-    	.controller('EditPatientMedicationController', editPatientMedicationController);
+    	.controller('EditPatientProfilaxisMedicationController', editPatientProfilaxisMedicationController);
 
-	  editPatientMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication', '$uibModalInstance', 'patientMedication'];
+	  editPatientProfilaxisMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication', '$uibModalInstance', 'patientMedication'];
 
-    function editPatientMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication, $uibModalInstance, patientMedication) {
+    function editPatientProfilaxisMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication, $uibModalInstance, patientMedication) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.save = save;
@@ -68,6 +68,9 @@
         if(tmpPatientMedication.endDate && tmpPatientMedication.state == 'Closed'){
           tmpPatientMedication.endDate = moment(tmpPatientMedication.endDate).format('YYYY-MM-DD');
         }
+        if(tmpPatientMedication.endDate && tmpPatientMedication.state == 'Active'){
+         tmpPatientMedication.endDate = null; 
+        }
         PatientMedication.update(tmpPatientMedication, function (response) {
           toastr.success('Medicación guardada con exito');
           $uibModalInstance.close('edited');
@@ -89,8 +92,10 @@
         vm.patientMedication = angular.copy(patientMedication);
         vm.patientMedication.startDate = new Date(vm.patientMedication.startDate + 'T03:00:00');
 
-        if(vm.patientMedication.endDate && vm.patientMedication.state == 'Closed'){
+        if(vm.patientMedication.endDate && vm.patientMedication.state == 'Closed' || vm.patientMedication.state == 'Error' ){
           vm.patientMedication.endDate = new Date(vm.patientMedication.endDate + 'T03:00:00');
+        }else{
+          vm.patientMedication.endDate = null;
         }
 
 	    }
@@ -120,17 +125,16 @@
         var tmpPatientMedication = angular.copy(vm.patientMedication);
         tmpPatientMedication.state = PatientMedication.stateChoices.STATE_ERROR;
         tmpPatientMedication.startDate = moment(tmpPatientMedication.startDate).format('YYYY-MM-DD');
-        if(tmpPatientMedication.endDate && tmpPatientMedication.state == 'Closed' || tmpPatientMedication.state ==  PatientMedication.stateChoices.STATE_ERROR ){
+        if(tmpPatientMedication.endDate){
           tmpPatientMedication.endDate = moment(tmpPatientMedication.endDate).format('YYYY-MM-DD');
         }
         PatientMedication.update(tmpPatientMedication, function (response) {
-            toastr.success('Aplicación marcada como error');
+            toastr.success('Medicación marcada como error');
           $uibModalInstance.close('markedError');
         }, function (err) {
             toastr.error('Ocurrio un error');
         });
       }
-
 
       function cancel() {
         $uibModalInstance.dismiss('cancel');

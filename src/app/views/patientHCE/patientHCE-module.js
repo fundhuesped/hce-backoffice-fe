@@ -80,6 +80,16 @@
             }
           },
       })
+      .state('app.patientHCE.laboratoryResults', {
+          url: '/laboratorios',
+          views: {
+            'detail': {
+              templateUrl: 'app/views/patientHCE/laboratoriesResults/laboratoriesResults.html',
+              controller: 'PatientLaboratoryResultsListController',
+              controllerAs: 'Ctrl',
+            }
+          },
+      })
       .state('app.patientHCE.vaccines', {
           url: '/vacunas',
           views: {

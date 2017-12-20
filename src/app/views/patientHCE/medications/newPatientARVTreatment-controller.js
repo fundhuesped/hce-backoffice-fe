@@ -88,7 +88,7 @@
       }
 
       function canSave() {
-        if(vm.newPatientArvTreatment &&vm.newPatientArvTreatment.medications && vm.newPatientArvTreatment.patientProblem &&vm.newPatientArvTreatment.medications.length > 0 && vm.newPatientArvTreatment.startDate){
+        if(vm.newPatientArvTreatment &&vm.newPatientArvTreatment.patientARVTreatmentMedications && vm.newPatientArvTreatment.patientProblem &&vm.newPatientArvTreatment.patientARVTreatmentMedications.length > 0 && vm.newPatientArvTreatment.startDate){
           return true;
         }
         return false;
@@ -116,7 +116,7 @@
           vm.ipMedications = medications;
         }, displayComunicationError);
 
-        Medication.getActiveList({medicationTypeCode:'II'},function(medications){
+        Medication.getActiveList({medicationTypeCode:'INI'},function(medications){
           vm.iiMedications = medications;
         }, displayComunicationError);
         
@@ -137,20 +137,20 @@
 
 
 	    function toggleMedicationSelection(medication) {
-	    	if(vm.newPatientArvTreatment.medications){
-	    		if(vm.newPatientArvTreatment.medications.length==0){
-	    			vm.newPatientArvTreatment.medications.push(medication);
+	    	if(vm.newPatientArvTreatment.patientARVTreatmentMedications){
+	    		if(vm.newPatientArvTreatment.patientARVTreatmentMedications.length==0){
+	    			vm.newPatientArvTreatment.patientARVTreatmentMedications.push({medication:medication});
 	    			return;
 	    		}
-		    	for (var i = vm.newPatientArvTreatment.medications.length - 1; i >= 0; i--) {
-		    		if(vm.newPatientArvTreatment.medications[i].id == medication.id){
-	    			    vm.newPatientArvTreatment.medications.splice(i, 1);
+		    	for (var i = vm.newPatientArvTreatment.patientARVTreatmentMedications.length - 1; i >= 0; i--) {
+		    		if(vm.newPatientArvTreatment.patientARVTreatmentMedications[i].medication.id == medication.id){
+	    			    vm.newPatientArvTreatment.patientARVTreatmentMedications.splice(i, 1);
 		    			return;
 		    		}
 		    	}
-    			vm.newPatientArvTreatment.medications.push(medication);
+    			vm.newPatientArvTreatment.patientARVTreatmentMedications.push({medication:medication});
 	    	}else{
-	    		vm.newPatientArvTreatment.medications = [medication];
+	    		vm.newPatientArvTreatment.patientARVTreatmentMedications = [{medication:medication}];
 	    	}
 	    }
 

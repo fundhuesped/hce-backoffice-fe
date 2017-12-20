@@ -17,17 +17,17 @@
 			    			</tr> 
 			    		</thead>
 			    		<tbody>
-			    			<tr ng-repeat="patientMedication in Ctrl.arvTreatment.medications | orderBy:selected" ng-class="{success:patientMedication.selected}">
+			    			<tr ng-repeat="patientMedication in Ctrl.arvTreatment.patientARVTreatmentMedications | orderBy:selected" ng-class="{success:patientMedication.selected}">
 		    					<td style="text-transform: capitalize;" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">    
-		    						<div class="checkbox" abm-checkbox label="{{patientMedication.name}}">
+		    						<div class="checkbox" abm-checkbox label="{{patientMedication.medication.name}}">
 								      <input type="checkbox" ng-model="patientMedication.selected" ng-change="Ctrl.toggleMedicationSelection(patientMedication)">
 								    </div>
 								</td> 
 								<td class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-									<input type="number" ng-model="patientMedication.quantityPerDay" style="margin-top: 10px;margin-bottom: 9px;" />
+									<input type="number" ng-model="patientMedication.quantityPerDay" style="margin-top: 10px;margin-bottom: 9px;"  disabled="disabled" />
 								</td>
 								<td class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-									<input type="number" ng-model="patientMedication.dayCount" style="margin-top: 10px;margin-bottom: 9px;" />
+									<input type="number" ng-model="patientMedication.quantityPerMonth" style="margin-top: 10px;margin-bottom: 9px;" disabled="disabled"/>
 								</td>
 		    				</tr>
 		    			</tbody>
@@ -48,7 +48,7 @@
 				</div>
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <abm-form-group>
-                        <label abm-label for="cantRecetas">Cantidad de meses <span class="hce-input-observation"></span></label>
+                        <label abm-label for="cantRecetas">Cantidad de recetas <span class="hce-input-observation"></span></label>
                         <input type="number" name="cantRecetas" class="form-control" ng-model="Ctrl.cantRecetas">
                     </abm-form-group>
                 </div>
@@ -56,7 +56,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="checkbox" abm-checkbox label="Requiere duplicado">
-				      	<input type="checkbox" ng-model="Ctrl.requiresDuplicate">
+				      	<input type="checkbox" ng-model="Ctrl.newReceta.duplicateRequired">
 				    </div>
 				</div>
 			</div>

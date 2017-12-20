@@ -36,7 +36,7 @@
         tmpNewReceta.prescriptedMedications = [];
 
         for (var i = vm.selectedMedications.length - 1; i >= 0; i--) {
-          tmpNewReceta.prescriptedMedications.push({medication:vm.selectedMedications[i], quantityPerDay:vm.selectedMedications[i].quantityPerDay, dayCount:vm.selectedMedications[i].dayCount});
+          tmpNewReceta.prescriptedMedications.push({medication:vm.selectedMedications[i], quantityPerDay:vm.selectedMedications[i].quantityPerDay, quantityPerMonth:vm.selectedMedications[i].quantityPerMonth});
         }
         tmpNewReceta.prescripctionType = 'Prophylaxis';
         tmpNewReceta.$save({pacienteId:HCService.currentPaciente.id},function(prescription) {

@@ -16,7 +16,7 @@
 								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-padding-right" ng-show="NewEvolutionController.isOpened()">
 									<abm-form-group>
 					                	<label abm-label for="evolutionType">Tipo de consulta</label>
-				                  		<select class="form-control" name="visitType" ng-model="NewEvolutionController.currentEvolution.visitType" ng-options="visitType for visitType in NewEvolutionController.visitTypes" abm-form-control  ng-focus="NewEvolutionController.newEvolutionFocused = true">
+				                  		<select class="form-control" name="visitType" ng-model="NewEvolutionController.currentEvolution.visitType" ng-options="visitType for visitType in NewEvolutionController.visitTypes | orderBy" abm-form-control  ng-focus="NewEvolutionController.newEvolutionFocused = true">
 					                    	<option value="">Seleccione un tipo de consulta</option>
 					                	</select>
 					             	</abm-form-group>
@@ -34,15 +34,15 @@
 					  	</div>
 	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="NewEvolutionController.isOpened()">
 		    				<div class="row" >
-		    					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
-							  		<button class="btn btn-info" ng-click="NewEvolutionController.toggleDropdown('problems')">Prob</button>
-							  		<button class="btn btn-info" ng-click="NewEvolutionController.toggleDropdown('arvTreatment')">ARV</button>
-							  		<button class="btn btn-info" ng-click="NewEvolutionController.toggleDropdown('vaccines')">Vac</button>
-							  		<button class="btn btn-info" ng-click="NewEvolutionController.toggleDropdown('studies')">Est</button>
-							  		<button class="btn btn-info" ng-click="NewEvolutionController.toggleDropdown('laboratories')">Lab</button>
-							  		<button class="btn btn-info" ng-click="NewEvolutionController.toggleDropdown('medicaments')">Med</button>
+		    					<div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+							  		<button class="btn btn-info btn-sm" ng-click="NewEvolutionController.toggleDropdown('problems')">Problemas</button>
+							  		<button class="btn btn-info btn-sm" ng-click="NewEvolutionController.toggleDropdown('arvTreatment')">Tratamientos</button>
+							  		<button class="btn btn-info btn-sm" ng-click="NewEvolutionController.toggleDropdown('vaccines')">Vacunas</button>
+							  		<button class="btn btn-info btn-sm" ng-click="NewEvolutionController.toggleDropdown('laboratories')">Laboratorios</button>
+							  		<button class="btn btn-info btn-sm" ng-click="NewEvolutionController.toggleDropdown('studies')">Estudios</button>
+							  		<button class="btn btn-info btn-sm" ng-click="NewEvolutionController.toggleDropdown('medicaments')">Medicamentos</button>
 		    					</div>
-		    					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
+		    					<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
 								  	<div ng-show="NewEvolutionController.currentEvolution.notaClinica">
 								  		<button class="btn btn-success pull-right" ng-click="NewEvolutionController.saveNewEvolution()" ng-disabled="!NewEvolutionController.canSaveEvolution()">Guardar evolución</button>
 								  	</div>
@@ -56,7 +56,10 @@
 	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="NewEvolutionController.show=='problems'">
 						    <hce-problem-list></hce-problem-list>
 	    				</div>
-	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="NewEvolutionController.show=='vaccines'">
+	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="NewEvolutionController.show=='laboratories'">
+						    <hce-patient-laboratory-results-grid></hce-patient-laboratory-results-grid>
+	    				</div>
+    					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="NewEvolutionController.show=='vaccines'">
 						    <hce-vaccine-list></hce-vaccine-list>
 	    				</div>
 	    				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="NewEvolutionController.show=='studies'">

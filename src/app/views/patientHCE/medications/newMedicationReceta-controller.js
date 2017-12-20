@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewMedicationRecetaController', newMedicationRecetaController);
 
-	  newMedicationRecetaController.$inject = ['$state', 'HCService', 'PatientMedication', 'Receta', 'toastr', 'moment', 'Medication', '$uibModalInstance', '$window'];
+	  newMedicationRecetaController.$inject = ['$state', 'HCService', 'PatientMedication', 'Receta', 'toastr', 'moment', 'Medication', '$uibModalInstance', '$uibModal', '$window'];
 
-    function newMedicationRecetaController ($state, HCService, PatientMedication, Receta, toastr, moment, Medication, $uibModalInstance, $window) {
+    function newMedicationRecetaController ($state, HCService, PatientMedication, Receta, toastr, moment, Medication, $uibModalInstance, $uibModal, $window) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.patientMedications = [];
@@ -35,16 +35,34 @@
         tmpNewReceta.prescriptedMedications = [];
 
         for (var i = vm.selectedMedications.length - 1; i >= 0; i--) {
-          tmpNewReceta.prescriptedMedications.push({medication:vm.selectedMedications[i]});
+          tmpNewReceta.prescriptedMedications.push({medication:vm.selectedMedications[i], quantityPerMonth:vm.selectedMedications[i].quantityPerMonth});
         }
         tmpNewReceta.prescripctionType = 'General';
         tmpNewReceta.$save({pacienteId:HCService.currentPaciente.id},function(prescription) {
           toastr.success('Receta generada con éxito');
           var url = $state.href('generalPrescription', {prescriptionId: prescription.id});
           $window.open(url,'_blank');
+          openRecetaModal(prescription.id);
           $uibModalInstance.close('created');
+
+
         }, showError);
       }
+
+      function openRecetaModal(prescriptionId) {
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/views/patientHCE/prescriptions/generalPrescription.html',
+            size: 'md',
+            controller: 'MedicationRecetaController',
+            controllerAs: 'Ctrl',
+            resolve: {
+              prescriptionId: function () {
+                return prescriptionId;
+              }
+            }
+          });
+      }
+
 
       function canSave() {
         if(vm.newReceta && vm.newReceta.issuedDate && vm.selectedMedications.length > 0 && hasSelectedMedicationQuantity){
@@ -67,14 +85,21 @@
 	    function toggleMedicationSelection(medication) {
 	    	if(vm.selectedMedications.length>0){
 		    	for (var i = vm.selectedMedications.length - 1; i >= 0; i--) {
-		    		if(vm.selectedMedications.id == medication.id){
+		    		if(vm.selectedMedications[i].id == medication.id){
 	    			    vm.selectedMedications.splice(i, 1);
+                medication.quantityPerMonth = null;
 		    			return;
 		    		}
 		    	}
-    			vm.selectedMedications.push(medication);
+          if(vm.selectedMedications.length<2){
+            medication.quantityPerMonth = 1;
+            vm.selectedMedications.push(medication);          
+          }
 	    	}else{
-	    		vm.selectedMedications.push(medication);
+          if(vm.selectedMedications.length<2){
+            medication.quantityPerMonth = 1;
+            vm.selectedMedications.push(medication);          
+          }
 	    	}
 	    }
 

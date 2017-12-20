@@ -1,0 +1,60 @@
+  	<div class="row">	
+	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    		<div class="well" style="min-height:350px">
+			    <div class="row">
+					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8"><h2>Laboratorios</h2></div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+						<div class="row hce-labResult-row hce-labResult-header">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								Determinación
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="input-group">
+									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="newLabDate" ng-model="Ctrl.newLab.date" is-open="Ctrl.newLabDateCalendar.opened" datepicker-options="Ctrl.newLabDateCalendar.options" close-text="Cerrar" alt-input-formats="Ctrl.newLabDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" />
+			                        <div class="input-group-btn input-group-small">
+			                          <button type="button" class="btn btn-default btn-xs" style="margin: 0px;" ng-click="Ctrl.newLabDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+			                        </div>									
+								</div>
+							</div>
+						</div>
+						<div class="row hce-labResult-row" ng-repeat="determinacion in Ctrl.determinaciones">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
+								{{determinacion.label}}
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
+								<input type="text" ng-model="Ctrl.newLabValues[determinacion.code]">
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+						<div class="row">
+							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" ng-repeat="labResult in Ctrl.labResults">
+								<div class="row hce-labResult-row hce-labResult-header" ng-class="{'registry-error':labResult.status=='Error' }">
+									<div class="">
+										{{labResult.date|date:'dd/MM/yyyy'}}
+									</div>
+								</div>
+								<div class="row hce-labResult-row" ng-repeat="determinacion in Ctrl.determinaciones">
+									<div class="hce-labResult-cell" ng-class="{'registry-error':labResult.status=='Error' }">
+										{{Ctrl.getValueForDeterminacion(determinacion.code,labResult)}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				  		<div uib-pagination previous-text="Anterior" next-text="Siguiente" total-items="Ctrl.totalItems" items-per-page="Ctrl.pageSize" ng-model="Ctrl.currentPage" ng-change="Ctrl.pageChanged()" class="pagination-sm" ng-show="Ctrl.totalItems"></div>
+				  	</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<button ng-click="Ctrl.save()" ng-disabled="!Ctrl.canSave();" class="btn btn-success btn-raised pull-right">Guardar nuevo</button>
+						<button ng-click="Ctrl.clear()" ng-disabled="!Ctrl.canClear();" class="btn btn-warning pull-right">Limpiar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

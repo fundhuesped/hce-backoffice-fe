@@ -26,7 +26,7 @@
 						    </div>
 				  	</abm-form-group>
 				</div>
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="EditPatientMedicationController.patientMedication.state=='Closed'">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="EditPatientMedicationController.patientMedication.state=='Closed' ||(EditPatientMedicationController.patientMedication.state=='Error' && EditPatientMedicationController.patientMedication.endDate)">
 				  	<abm-form-group>
 					    <label data-abm-label type="static">Fecha de fin(*)</label>
 							<div class="input-group">

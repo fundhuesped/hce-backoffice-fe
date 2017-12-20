@@ -102,12 +102,15 @@
 .hce-navbar-patient-name{
   font-size: 35px;
   padding-top: 10px;
+  padding-right: 20px;
   color: white;
   font-weight: bold
 }
 
 .hce-navbar-patient-age{
   padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   color: white;
 }
 
@@ -115,6 +118,7 @@
   margin-left:20px;
   font-size: 20px;
   font-weight: bold;
+  line-height: 56px;
   color: white;
 }
 
@@ -415,5 +419,49 @@
  @media print
  {
     body {background-color: white}
+    .modal-dialog{
+      /*width: 100%;*/
+/*      position: absolute;
+      top: 0px;
+*/    }
  }
-   
+
+@media print
+{
+  body *{
+      visibility:hidden;
+  }
+
+  .do-print *{
+    visibility:visible;
+  }
+}
+
+
+.hce-labResult-row{
+  margin-bottom: 3px;
+  margin-top: 3px;
+}
+
+.hce-labResult-header{
+  height: 45px;
+  text-align: center;
+  border-bottom: 2px solid #ddd;
+  line-height: 38px;
+  font-weight: bold;
+  font-size: 16px;
+}
+.hce-labResult-cell{
+  text-align: center;
+  height: 30px;
+  line-height: 28px;
+  border-bottom: solid 1px #ddd;
+}
+
+.hce-labResult-cell input{
+  width: 100%;
+  line-height: 20px;
+}
+.input-group-small{
+  padding: 0px!important;
+}

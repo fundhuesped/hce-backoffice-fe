@@ -49,9 +49,9 @@
 
       function openEditPatientMedicationModal(selectedMedication) {
         var modalInstance = $uibModal.open({
-          templateUrl: 'app/views/patientHCE/medications/editPatientMedication.html',
+          templateUrl: 'app/views/patientHCE/medications/profilaxis/editPatientProfilaxisMedication.html',
           size: 'md',
-          controller: 'EditPatientMedicationController',
+          controller: 'EditPatientProfilaxisMedicationController',
           controllerAs: 'EditPatientMedicationController',
           resolve: {
             patientMedication: function () {

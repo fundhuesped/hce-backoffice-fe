@@ -21,7 +21,7 @@
 		    		</thead>
 		    		<tbody>
 		    			<tr ng-repeat="treatment in PMLController.patientTreatments" ng-class="{'problem-closed':treatment.state=='Closed','registry-error':treatment.state=='Error' }">
-	    					<td style="text-transform: capitalize;">{{PMLController.getSchema(treatment.medications)}}</td> 
+	    					<td style="text-transform: capitalize;">{{PMLController.getSchema(treatment.patientARVTreatmentMedications)}}</td> 
 	    					<td>{{treatment.startDate | date:"dd/MM/yyyy"}}</td> 
 	    					<td>{{treatment.endDate | date:"dd/MM/yyyy"}}</td> 
 	    					<td>{{treatment.changeReason}}</td>

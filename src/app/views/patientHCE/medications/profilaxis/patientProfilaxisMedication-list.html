@@ -27,7 +27,7 @@
 	    					<td>{{medication.endDate | date:"dd/MM/yyyy"}}</td> 
 	    					<td>{{medication.patientProblem.problem.name}}</td> 
 	    					<td>
-		    					<button class="btn btn-info" type="button" ng-click="PMLController.openEditPatientMedicationModal(medication)" style="padding: 6px 12px; margin:0px; text-transform: none;"><i class="fa fa-pencil"></i> Ver y editar</button>
+		    					<button class="btn btn-info" type="button" ng-click="PMLController.openEditPatientMedicationModal(medication)" style="padding: 6px 12px; margin:0px; text-transform: none;"><i class="fa fa-pencil"></i> {{medication.state=='Error'?'Ver':'Ver y editar'}}</button>
 	    					</td> 
     					</tr>
     				</tbody>

@@ -28,7 +28,7 @@
       .state('generalPrescription', {
           url: '/generalPrescription?prescriptionId',
           templateUrl: 'app/views/patientHCE/prescriptions/generalPrescription.html',
-          controller: 'MedicationRecetaController',
+          controller: 'MedicationRecetaNuevaController',
           controllerAs: 'Ctrl',        
           params: {
               prescription: null
@@ -37,7 +37,7 @@
       .state('profilaxisPrescription', {
           url: '/profilaxisPrescription?prescriptionId',
           templateUrl: 'app/views/patientHCE/prescriptions/profilaxisPrescription.html',
-          controller: 'MedicationRecetaController',
+          controller: 'MedicationRecetaNuevaController',
           controllerAs: 'Ctrl',        
           params: {
               prescription: null
@@ -46,7 +46,7 @@
       .state('arvPrescription', {
           url: '/arvPrescription?prescriptionId',
           templateUrl: 'app/views/patientHCE/prescriptions/arvPrescription.html',
-          controller: 'MedicationRecetaController',
+          controller: 'MedicationRecetaNuevaController',
           controllerAs: 'Ctrl',        
           params: {
               prescription: null

@@ -4,11 +4,11 @@
      /*jshint latedef: nofunc */
     angular
     	.module('hce.patientHCE')
-    	.controller('MedicationRecetaController', medicationRecetaController);
+    	.controller('MedicationRecetaNuevaController', medicationRecetaNuevaController);
 
-	  medicationRecetaController.$inject = ['$state', '$stateParams', 'Receta', 'prescriptionId', '$uibModalInstance'];
+	  medicationRecetaNuevaController.$inject = ['$state', '$stateParams', 'Receta'];
 
-    function medicationRecetaController ($state, $stateParams, Receta, prescriptionId, $uibModalInstance) {
+    function medicationRecetaNuevaController ($state, $stateParams, Receta) {
 	    var vm = this;
       vm.prescription = $stateParams.prescription;
       vm.numberToText = numberToText;
@@ -17,16 +17,9 @@
 
 	    function activate(){
         if(!vm.prescriptions){
-          var id;
-          if(prescriptionId){
-            id = prescriptionId;
-          }else{
-            id = $stateParams.prescriptionId;
-          }
-          vm.prescription = Receta.get({id:id}, function (argument) {
+          vm.prescription = Receta.get({id:$stateParams.prescriptionId}, function (argument) {
             setTimeout(function(){
               window.print();
-              $uibModalInstance.close('created');
             },2); 
 
           });

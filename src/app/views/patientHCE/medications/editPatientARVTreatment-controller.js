@@ -12,9 +12,7 @@
 	    var vm = this;
       vm.hceService = HCService;
       vm.patientArvTreatment = patientArvTreatment;
-      vm.save = save;
       vm.cancel = cancel;
-      vm.canSave = canSave;
 
 
       vm.nrtiMedications = [];
@@ -61,50 +59,77 @@
       };
       activate();
 
-      function save() {
-        var tmpPatientArvTreatment = angular.copy(vm.patientArvTreatment);
-        tmpPatientArvTreatment.paciente = HCService.currentPaciente.id;
-        tmpPatientArvTreatment.startDate = moment(tmpPatientArvTreatment.startDate).format('YYYY-MM-DD');
-        if(tmpPatientArvTreatment.endDate && tmpPatientArvTreatment.state == 'Closed'){
-          tmpPatientArvTreatment.endDate = moment(tmpPatientArvTreatment.endDate).format('YYYY-MM-DD');
-        }
-
-        PatientArvTreatment.update(vm.patientArvTreatment,function() {
-          toastr.success('Tratamiento editado con exito');
-          $uibModalInstance.close('edited');
-        }, showError);
-      }
-
-      function canSave() {
-        if(vm.patientArvTreatment && vm.newPatientArvTreatment.startDate){
-          return true;
-        }
-        return false;
-      }
-
 	    function activate(){
         Medication.getActiveList({medicationTypeCode:'NRTI'},function(medications){
+          for (var i = patientArvTreatment.patientARVTreatmentMedications.length - 1; i >= 0; i--) {
+            for (var j = medications.length - 1; j >= 0; j--) {
+              if(medications[j].id == patientArvTreatment.patientARVTreatmentMedications[i].medication.id){
+                medications[j].selected = true;
+                break;
+              }
+            }
+          }
           vm.nrtiMedications = medications;
         }, displayComunicationError);
         
         Medication.getActiveList({medicationTypeCode:'NNRTI'},function(medications){
+          for (var i = patientArvTreatment.patientARVTreatmentMedications.length - 1; i >= 0; i--) {
+            for (var j = medications.length - 1; j >= 0; j--) {
+              if(medications[j].id == patientArvTreatment.patientARVTreatmentMedications[i].medication.id){
+                medications[j].selected = true;
+                break;
+              }
+            }
+          }
           vm.nnrtiMedications = medications;
         }, displayComunicationError);
 
         Medication.getActiveList({medicationTypeCode:'IP'},function(medications){
+          for (var i = patientArvTreatment.patientARVTreatmentMedications.length - 1; i >= 0; i--) {
+            for (var j = medications.length - 1; j >= 0; j--) {
+              if(medications[j].id == patientArvTreatment.patientARVTreatmentMedications[i].medication.id){
+                medications[j].selected = true;
+                break;
+              }
+            }
+          }
           vm.ipMedications = medications;
         }, displayComunicationError);
 
-        Medication.getActiveList({medicationTypeCode:'II'},function(medications){
+        Medication.getActiveList({medicationTypeCode:'INI'},function(medications){
+          for (var i = patientArvTreatment.patientARVTreatmentMedications.length - 1; i >= 0; i--) {
+            for (var j = medications.length - 1; j >= 0; j--) {
+              if(medications[j].id == patientArvTreatment.patientARVTreatmentMedications[i].medication.id){
+                medications[j].selected = true;
+                break;
+              }
+            }
+          }
           vm.iiMedications = medications;
         }, displayComunicationError);
         
         Medication.getActiveList({medicationTypeCode:'COMBO'},function(medications){
+          for (var i = patientArvTreatment.patientARVTreatmentMedications.length - 1; i >= 0; i--) {
+            for (var j = medications.length - 1; j >= 0; j--) {
+              if(medications[j].id == patientArvTreatment.patientARVTreatmentMedications[i].medication.id){
+                medications[j].selected = true;
+                break;
+              }
+            }
+          }
           vm.comboMedications = medications;
         }, displayComunicationError);
 
 
         Medication.getActiveList({medicationGroup:'ARV', medicationTypeCode: 'OTROS'},function(medications){
+          for (var i = patientArvTreatment.patientARVTreatmentMedications.length - 1; i >= 0; i--) {
+            for (var j = medications.length - 1; j >= 0; j--) {
+              if(medications[j].id == patientArvTreatment.patientARVTreatmentMedications[i].medication.id){
+                medications[j].selected = true;
+                break;
+              }
+            }
+          }
           vm.otherMedications = medications;
         }, displayComunicationError);
         	HCService.getPatientProblems();

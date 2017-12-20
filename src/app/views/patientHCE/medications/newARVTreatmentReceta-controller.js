@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewARVTreatmentRecetaController', newARVTreatmentRecetaController);
 
-	  newARVTreatmentRecetaController.$inject = ['$state', 'HCService', 'PatientArvTreatment', 'Receta', 'toastr', 'moment', 'Medication', '$uibModalInstance', '$window'];
+	  newARVTreatmentRecetaController.$inject = ['$state', 'HCService', 'PatientArvTreatment', 'Receta', 'toastr', 'moment', 'Medication', '$uibModalInstance', '$uibModal', '$window'];
 
-    function newARVTreatmentRecetaController ($state, HCService, PatientArvTreatment, Receta, toastr, moment, Medication, $uibModalInstance, $window) {
+    function newARVTreatmentRecetaController ($state, HCService, PatientArvTreatment, Receta, toastr, moment, Medication, $uibModalInstance, $uibModal, $window) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.arvTreatment = {};
@@ -36,35 +36,32 @@
         tmpNewReceta.prescriptedMedications = [];
 
         for (var i = vm.selectedMedications.length - 1; i >= 0; i--) {
-          tmpNewReceta.prescriptedMedications.push({medication:vm.selectedMedications[i], quantityPerDay:vm.selectedMedications[i].quantityPerDay, dayCount:vm.selectedMedications[i].dayCount});
+          tmpNewReceta.prescriptedMedications.push({medication:vm.selectedMedications[i].medication, quantityPerDay:vm.selectedMedications[i].quantityPerDay, quantityPerMonth:vm.selectedMedications[i].quantityPerMonth});
         }
         tmpNewReceta.prescripctionType = 'Arv';
         tmpNewReceta.$save({pacienteId:HCService.currentPaciente.id},function(prescription) {
           toastr.success('Receta generada con éxito');
           var url = $state.href('arvPrescription', {prescriptionId: prescription.id});
           $window.open(url,'_blank');
+          openRecetaModal(prescription.id);
           $uibModalInstance.close('created');
         }, showError);
       }
 
       function canSave() {
-        if(vm.newReceta && vm.cantRecetas > 0 && vm.newReceta.issuedDate && vm.selectedMedications.length > 0 && hasSelectedMedicationQuantity){
+        if(vm.newReceta && vm.cantRecetas > 0 && vm.newReceta.issuedDate && vm.selectedMedications.length > 0){
           return true;
         }
         return false;
-      }
-
-      function hasSelectedMedicationQuantity() {
-        return true;
       }
 
 	    function activate(){
         PatientArvTreatment.getForPaciente({pacienteId:HCService.currentPacienteId, state: 'Active'}, function (result) {
           if(result.length>0){
               vm.arvTreatment = result[0];
-              vm.selectedMedications = vm.arvTreatment.medications; 
-              for (var i = vm.arvTreatment.medications.length - 1; i >= 0; i--) {
-                vm.arvTreatment.medications[i].selected = true;
+              vm.selectedMedications = vm.arvTreatment.patientARVTreatmentMedications; 
+              for (var i = vm.arvTreatment.patientARVTreatmentMedications.length - 1; i >= 0; i--) {
+                vm.arvTreatment.patientARVTreatmentMedications[i].selected = true;
               }
           }else{
               vm.arvTreatment = null;
@@ -72,12 +69,24 @@
         });
 
 	    }
-
+      function openRecetaModal(prescriptionId) {
+        var modalInstance = $uibModal.open({
+            templateUrl: 'app/views/patientHCE/prescriptions/arvPrescription.html',
+            size: 'md',
+            controller: 'MedicationRecetaController',
+            controllerAs: 'Ctrl',
+            resolve: {
+              prescriptionId: function () {
+                return prescriptionId;
+              }
+            }
+          });
+      }
 
 	    function toggleMedicationSelection(medication) {
 	    	if(vm.selectedMedications.length>0){
 		    	for (var i = vm.selectedMedications.length - 1; i >= 0; i--) {
-		    		if(vm.selectedMedications.id == medication.id){
+		    		if(vm.selectedMedications.medication.id == medication.id){
 	    			    vm.selectedMedications.splice(i, 1);
 		    			return;
 		    		}

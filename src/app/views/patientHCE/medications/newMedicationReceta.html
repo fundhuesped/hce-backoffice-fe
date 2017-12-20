@@ -8,24 +8,25 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					Hasta dos medicamentos por receta
 					<table class="table table-condensed table-fixed">
 			    		<thead> 
 			    			<tr> 
 	    						<th class="col-xs-8 col-sm-8 col-md-8 col-lg-8">Medicamento</th>
-<!-- 	    						<th class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Cantidad por mes</th>
- -->			    			</tr> 
+	    						<th class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Cantidad de envases</th>
+			    			</tr> 
 			    		</thead>
 			    		<tbody>
 			    			<tr ng-repeat="patientMedication in Ctrl.patientMedications | filter:{medication:{medicationType:{code:'!PROF'}}}" ng-class="{success:patientMedication.medication.selected}">
 		    					<td style="text-transform: capitalize;" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">    
 		    						<div class="checkbox" abm-checkbox label="{{patientMedication.medication.name}}">
-								      <input type="checkbox" ng-model="patientMedication.medication.selected" ng-change="Ctrl.toggleMedicationSelection(patientMedication.medication)">
+								      <input type="checkbox" ng-disabled="!patientMedication.medication.selected &&Ctrl.selectedMedications.length>1" ng-model="patientMedication.medication.selected" ng-change="Ctrl.toggleMedicationSelection(patientMedication.medication)">
 								    </div>
 								</td> 
-<!-- 								<td class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-									<input type="number" ng-model="medication.quantity" style="margin-top: 10px;margin-bottom: 9px;" />
+								<td class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+									<input type="number" ng-model="patientMedication.medication.quantityPerMonth" style="margin-top: 10px;margin-bottom: 9px;" />
 								</td>
- -->		    				
+		    				
 							</tr>
 		    			</tbody>
 		    		</table>
@@ -47,7 +48,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="checkbox" abm-checkbox label="Requiere duplicado">
-				      	<input type="checkbox" ng-model="Ctrl.requiresDuplicate">
+				      	<input type="checkbox" ng-model="Ctrl.newReceta.duplicateRequired">
 				    </div>
 				</div>
 			</div>

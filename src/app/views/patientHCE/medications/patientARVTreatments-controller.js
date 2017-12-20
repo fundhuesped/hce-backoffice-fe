@@ -70,23 +70,23 @@
           return;
         }
         for (var i = medications.length - 1; i >= 0; i--) {
-          if(medications[i].medicationType.code == 'NRTI'){
-            nrti.push(medications[i].abbreviation);
+          if(medications[i].medication.medicationType.code == 'NRTI'){
+            nrti.push(medications[i].medication.abbreviation);
           }
-          if(medications[i].medicationType.code == 'NNRTI'){
-            nnrti.push(medications[i].abbreviation);
+          if(medications[i].medication.medicationType.code == 'NNRTI'){
+            nnrti.push(medications[i].medication.abbreviation);
           }
-          if(medications[i].medicationType.code == 'IP'){
-            ip.push(medications[i].abbreviation);
+          if(medications[i].medication.medicationType.code == 'IP'){
+            ip.push(medications[i].medication.abbreviation);
           }
-          if(medications[i].medicationType.code == 'II'){
-            ii.push(medications[i].abbreviation);
+          if(medications[i].medication.medicationType.code == 'II'){
+            ii.push(medications[i].medication.abbreviation);
           }
-          if(medications[i].medicationType.code == 'COMBO'){
-            combo.push(medications[i].abbreviation);
+          if(medications[i].medication.medicationType.code == 'COMBO'){
+            combo.push(medications[i].medication.abbreviation);
           }
-          if(medications[i].medicationType.code == 'OTROS'){
-            other.push(medications[i].abbreviation);
+          if(medications[i].medication.medicationType.code == 'OTROS'){
+            other.push(medications[i].medication.abbreviation);
           }
         }
         if(nrti.length>0){
@@ -178,7 +178,7 @@
       function openNewRecetaModal(){
         var modalInstance = $uibModal.open({
           templateUrl: 'app/views/patientHCE/medications/newARVReceta.html',
-          size: 'md',
+          size: 'lg',
           controller: 'NewARVTreatmentRecetaController',
           controllerAs: 'Ctrl'
         });

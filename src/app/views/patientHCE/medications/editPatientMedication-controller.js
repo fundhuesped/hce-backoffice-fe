@@ -89,7 +89,7 @@
         vm.patientMedication = angular.copy(patientMedication);
         vm.patientMedication.startDate = new Date(vm.patientMedication.startDate + 'T03:00:00');
 
-        if(vm.patientMedication.endDate && vm.patientMedication.state == 'Closed'){
+        if(vm.patientMedication.endDate && (vm.patientMedication.state == 'Closed' || vm.patientMedication.state == 'Error') ){
           vm.patientMedication.endDate = new Date(vm.patientMedication.endDate + 'T03:00:00');
         }
 
@@ -120,11 +120,11 @@
         var tmpPatientMedication = angular.copy(vm.patientMedication);
         tmpPatientMedication.state = PatientMedication.stateChoices.STATE_ERROR;
         tmpPatientMedication.startDate = moment(tmpPatientMedication.startDate).format('YYYY-MM-DD');
-        if(tmpPatientMedication.endDate && tmpPatientMedication.state == 'Closed' || tmpPatientMedication.state ==  PatientMedication.stateChoices.STATE_ERROR ){
+        if(tmpPatientMedication.endDate){
           tmpPatientMedication.endDate = moment(tmpPatientMedication.endDate).format('YYYY-MM-DD');
         }
         PatientMedication.update(tmpPatientMedication, function (response) {
-            toastr.success('Aplicación marcada como error');
+            toastr.success('Medicación marcada como error');
           $uibModalInstance.close('markedError');
         }, function (err) {
             toastr.error('Ocurrio un error');
