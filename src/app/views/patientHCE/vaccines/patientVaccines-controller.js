@@ -56,6 +56,7 @@
 
       function openEditPatientVaccineModal(selectedVaccine) {
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
           templateUrl: 'app/views/patientHCE/vaccines/editPatientVaccine.html',
           size: 'md',
           controller: 'EditPatientVaccineController',
@@ -78,6 +79,7 @@
 
       function openNewPatientVaccineModal() {
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
           templateUrl: 'app/views/patientHCE/vaccines/newPatientVaccine.html',
           size: 'md',
           controller: 'NewPatientVaccineController',

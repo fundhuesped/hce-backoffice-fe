@@ -155,6 +155,7 @@
 
       function openEditPatientMedicationModal(selectedTreatment) {
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
           templateUrl: 'app/views/patientHCE/medications/editPatientARVTreatment.html',
           size: 'lg',
           controller: 'EditPatientARVTreatmentController',
@@ -177,6 +178,7 @@
 
       function openNewRecetaModal(){
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
           templateUrl: 'app/views/patientHCE/medications/newARVReceta.html',
           size: 'lg',
           controller: 'NewARVTreatmentRecetaController',
@@ -194,6 +196,7 @@
 
       function openChangePatientArvTreatmentModal(selectedTreatment) {
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
           templateUrl: 'app/views/patientHCE/medications/changePatientARVTreatment.html',
           size: 'md',
           controller: 'ChangePatientArvTreatmentController',
@@ -216,6 +219,7 @@
 
       function openNewPatientARVTreatmentModal() {
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
           templateUrl: 'app/views/patientHCE/medications/newPatientArvTreatment.html',
           size: 'lg',
           controller: 'NewPatientArvTreatmentController',

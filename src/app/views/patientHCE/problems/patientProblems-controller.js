@@ -170,6 +170,7 @@
 
       function openEditProblemModal(selectedProblem) {
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
           templateUrl: 'app/views/patientHCE/problems/patientProblem.html',
           size: 'md',
           controller: 'PatientProblemController',
@@ -193,6 +194,7 @@
 
       function openNewProblemModal() {
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
           templateUrl: 'app/views/patientHCE/problems/newPatientProblem.html',
           size: 'md',
           controller: 'NewPatientProblemController',
@@ -212,6 +214,7 @@
 
       function openNewFamilyProblemModal() {
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
           templateUrl: 'app/views/patientHCE/problems/newFamilyProblem.html',
           size: 'md',
           controller: 'NewFamilyProblemController',
@@ -229,6 +232,7 @@
 
       function openEditFamilyProblemModal(selectedFamilyProblem) {
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
           templateUrl: 'app/views/patientHCE/problems/editFamilyProblem.html',
           size: 'md',
           controller: 'EditFamilyProblemController',

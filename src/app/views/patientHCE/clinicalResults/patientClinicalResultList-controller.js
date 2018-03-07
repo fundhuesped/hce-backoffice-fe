@@ -50,6 +50,7 @@
 
       function openEditPatientClinicalResultModal(selection) {
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
           templateUrl: 'app/views/patientHCE/clinicalResults/editPatientClinicalResult.html',
           size: 'md',
           controller: 'EditPatientClinicalResultController',
@@ -72,6 +73,7 @@
 
       function openNewPatientClinicalResultModal() {
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
           templateUrl: 'app/views/patientHCE/clinicalResults/newPatientClinicalResult.html',
           size: 'md',
           controller: 'NewPatientClinicalResultsController',

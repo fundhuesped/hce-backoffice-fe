@@ -215,6 +215,7 @@
 
     function openPacientePersonalInfoModal(selectedPaciente) {
       var modalInstance = $uibModal.open({
+          backdrop: 'static',
         templateUrl: 'app/views/patient/patientPersonalInfo.html',
         size: 'lg',
         backdrop: 'static',

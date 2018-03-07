@@ -51,6 +51,7 @@
 
       function openRecetaModal(prescriptionId) {
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
             templateUrl: 'app/views/patientHCE/prescriptions/generalPrescription.html',
             size: 'md',
             controller: 'MedicationRecetaController',

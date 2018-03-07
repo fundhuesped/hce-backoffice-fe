@@ -49,6 +49,7 @@
 
       function openEditPatientMedicationModal(selectedMedication) {
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
           templateUrl: 'app/views/patientHCE/medications/profilaxis/editPatientProfilaxisMedication.html',
           size: 'md',
           controller: 'EditPatientProfilaxisMedicationController',
@@ -71,6 +72,7 @@
 
       function openNewPatientMedicationModal() {
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
           templateUrl: 'app/views/patientHCE/medications/profilaxis/newPatientProfilaxisMedication.html',
           size: 'md',
           controller: 'NewPatientProfilaxisMedicationController',
@@ -89,6 +91,7 @@
 
       function openNewRecetaModal(){
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
           templateUrl: 'app/views/patientHCE/medications/profilaxis/newProfilaxisMedicationReceta.html',
           size: 'md',
           controller: 'NewProfilaxisMedicationRecetaController',
