@@ -78,15 +78,15 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group>
-                                    <label abm-label for="genderAtBirth">Sexo al nacer</label>
-                                    <select class="form-control" name="genderAtBirth" ng-model="PacienteCtrl.paciente.genderAtBirth" ng-options="genderAtBirth as genderAtBirth.name for genderAtBirth in PacienteCtrl.sexTypes track by genderAtBirth.id">
+                                    <label abm-label for="genderAtBirth">Sexo al nacer*</label>
+                                    <select class="form-control" name="genderAtBirth" ng-model="PacienteCtrl.paciente.genderAtBirth" ng-options="genderAtBirth as genderAtBirth.name for genderAtBirth in PacienteCtrl.sexTypes track by genderAtBirth.id" ng-required="true">
                                     </select>
                                 </abm-form-group>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group>
-                                    <label abm-label for="genderOfChoice">Género por elección</label>
-                                    <select class="form-control" name="genderOfChoice" ng-model="PacienteCtrl.paciente.genderOfChoice" ng-options="genderOfChoice as genderOfChoice.name for genderOfChoice in PacienteCtrl.sexTypes track by genderOfChoice.id">
+                                    <label abm-label for="genderOfChoice">Género por elección*</label>
+                                    <select class="form-control" name="genderOfChoice" ng-model="PacienteCtrl.paciente.genderOfChoice" ng-options="genderOfChoice as genderOfChoice.name for genderOfChoice in PacienteCtrl.sexTypes track by genderOfChoice.id" ng-required="true">
                                     </select>
                                 </abm-form-group>
                             </div>
@@ -94,7 +94,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group ng-class="{'has-error':PacienteCtrl.pacienteForm.socialService.$error.required}">
-                                    <label abm-label for="socialService">Obra social</label>
+                                    <label abm-label for="socialService">Cobertura</label>
                                     <select class="form-control" name="socialService" ng-model="PacienteCtrl.paciente.socialService" ng-options="socialService as socialService.name for socialService in PacienteCtrl.socialServices track by socialService.id" ng-required="true">
                                         <option value="" selected="selected">---Seleccione---</option>
                                     </select>

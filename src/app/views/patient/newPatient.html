@@ -3,7 +3,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <form name="NewPatientController.pacienteForm" class="patient-form">
-                <uib-tabset active="active">
+                <uib-tabset active="NewPatientController.activeTab">
                     <uib-tab index="0" heading="Datos filiatorios" abm-component>
                         <div class="alert alert-dismissable alert-warning" style="margin-bottom: 0px;" ng-show="NewPatientController.errorMessage">
                             <button type="button" class="close" ng-click="NewPatientController.hideErrorMessage()">×</button>
@@ -61,15 +61,15 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group>
-                                    <label abm-label for="genderAtBirth">Sexo al nacer</label>
-                                    <select class="form-control" name="genderAtBirth" ng-model="NewPatientController.paciente.genderAtBirth" ng-options="genderAtBirth as genderAtBirth.name for genderAtBirth in NewPatientController.sexTypes track by genderAtBirth.id">
+                                    <label abm-label for="genderAtBirth">Sexo al nacer*</label>
+                                    <select class="form-control" name="genderAtBirth" ng-model="NewPatientController.paciente.genderAtBirth" ng-options="genderAtBirth as genderAtBirth.name for genderAtBirth in NewPatientController.sexTypes track by genderAtBirth.id" ng-required="true">
                                     </select>
                                 </abm-form-group>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group>
-                                    <label abm-label for="genderOfChoice">Género por elección</label>
-                                    <select class="form-control" name="genderOfChoice" ng-model="NewPatientController.paciente.genderOfChoice" ng-options="genderOfChoice as genderOfChoice.name for genderOfChoice in NewPatientController.sexTypes track by genderOfChoice.id">
+                                    <label abm-label for="genderOfChoice">Género por elección*</label>
+                                    <select class="form-control" name="genderOfChoice" ng-model="NewPatientController.paciente.genderOfChoice" ng-options="genderOfChoice as genderOfChoice.name for genderOfChoice in NewPatientController.sexTypes track by genderOfChoice.id" ng-required="true">
                                     </select>
                                 </abm-form-group>
                             </div>
@@ -77,7 +77,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group ng-class="{'has-error':NewPatientController.pacienteForm.socialService.$error.required}">
-                                    <label abm-label for="socialService">Obra social*</label>
+                                    <label abm-label for="socialService">Cobertura*</label>
                                     <select class="form-control" name="socialService" ng-model="NewPatientController.paciente.socialService" ng-options="socialService as socialService.name for socialService in NewPatientController.socialServices track by socialService.id" ng-required="true">
                                         <option value="" selected="selected">---Seleccione---</option>
                                     </select>
@@ -105,8 +105,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12">
-                                <abm-form-group style="margin-top: 10px;">
+                            <div class="col-xs-6">
+                                <abm-form-group style="margin-top: 10px; line-height: 54px;">
                                     <label for="consent" style="font-size: 12px;">Acepto consentimiento informado de datos</label>
                                     <div class="radio" abm-radio label="Si" style="display:inline; font-size: 12px;">
                                       <input type="radio" name="consent" ng-model="NewPatientController.paciente.consent" value="Yes" >
@@ -118,6 +118,22 @@
                                       <input type="radio" name="consent" ng-model="NewPatientController.paciente.consent" value="Not asked">
                                     </div>
                                 </abm-form-group>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <abm-form-group>
+                                    <label abm-label for="hceNumber">Número de historia clínica de papel</label>
+                                    <input type="text" name="hceNumber" maxlength="70" class="form-control" ng-model="NewPatientController.paciente.hceNumber">
+                                </abm-form-group>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-7 col-md-7 col-lg-7">
+                            </div>
+                            <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                                <button ng-click="NewPatientController.clean()" type="button" class="btn btn-default">Limpiar</button>
+                            </div>
+                            <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                                <button ng-click="NewPatientController.nextPage()" class="btn btn-primary btn-raised" type="button"><span class="glyphicon glyphicon-ok"></span> Siguiente</button>
                             </div>
                         </div>
                     </uib-tab>
@@ -240,18 +256,20 @@
                                 </abm-form-group>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-7 col-md-7 col-lg-7">
+                            </div>
+                            <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                                <button ng-click="NewPatientController.clean()"  type="button" class="btn btn-default">Limpiar</button>
+                            </div>
+                            <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                                <button ng-click="NewPatientController.confirm()" class="btn btn-primary btn-raised"><span class="glyphicon glyphicon-ok"></span> Guardar</button>
+                            </div>
+                        </div>
                     </uib-tab>
                 </uib-tabset>
             </form>
 
-            <div class="col-xs-6 col-sm-7 col-md-7 col-lg-7">
-            </div>
-            <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
-                <button ng-click="NewPatientController.clean()" class="btn btn-default">Limpiar</button>
-            </div>
-            <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                <button ng-click="NewPatientController.confirm()" class="btn btn-primary btn-raised"><span class="glyphicon glyphicon-ok"></span> Guardar</button>
-            </div>
         </div>
     </div>
 </div>

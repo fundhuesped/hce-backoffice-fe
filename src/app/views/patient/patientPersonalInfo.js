@@ -44,7 +44,7 @@
                 vm.originalPaciente = angular.copy(returnedObject);
                 vm.paciente = returnedObject;
                 vm.paciente.birthDate = (vm.paciente.birthDate?new Date(vm.paciente.birthDate + 'T03:00:00'):null);
-                vm.paciente.firstVisit = (vm.paciente.firstVisit?new Date(vm.paciente.firstVisit):null);
+                vm.paciente.firstVisit = (vm.paciente.firstVisit?new Date(vm.paciente.firstVisit + 'T03:00:00'):null);
 
 
                 Document.getFullActiveList(function(documents){

@@ -15,9 +15,11 @@
         vm.errorMessage = null;
         vm.confirm = confirm;
         vm.clean = clean;
+        vm.nextPage = nextPage;
         vm.searchLocations = searchLocations;
         vm.searchDistricts = searchDistricts;
         vm.hideErrorMessage = hideErrorMessage;
+        vm.activeTab = 0;
         vm.birthDateCalendarPopup = {
           opened: false,
           options: {
@@ -83,6 +85,10 @@
             }else{
                 vm.errorMessage = 'Por favor revise el formulario';
             }
+        }
+
+        function nextPage() {
+            vm.activeTab = 1;
         }
 
         function clean (){
