@@ -18,6 +18,7 @@
       vm.newProblemDateOption = null;
       vm.newProblemDate = null;
       vm.canSave = canSave;
+      vm.error = null;
 
       vm.applicationDateCalendar = {
         opened: false,
@@ -32,9 +33,14 @@
       activate();
 
       function save() {
+        vm.error = null;
         var tmpPatientVaccine = angular.copy(vm.newPatientVaccine);
         tmpPatientVaccine.paciente = HCService.currentPaciente.id;
         tmpPatientVaccine.appliedDate = moment(tmpPatientVaccine.appliedDate).format('YYYY-MM-DD');
+        if(moment(tmpPatientVaccine.appliedDate).diff(moment())>0){
+          vm.error = 'La fecha de aplicación no puede ser mayor a hoy';
+          return;
+        }
 
         tmpPatientVaccine.$save({pacienteId:HCService.currentPaciente.id},function() {
           toastr.success('Aplicación guardada con exito');

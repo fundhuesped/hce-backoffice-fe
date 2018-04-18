@@ -8,16 +8,16 @@
 				<div class="row prescriptionPatientName">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="hce-form-title">
-							{{Ctrl.prescription.paciente.pns}}
+							{{Ctrl.prescription.paciente.genderAtBirth==1?'M':'F'}}{{Ctrl.prescription.paciente.pns}}
 						</div>
 					</div>
 				</div>
 				<div class="row prescriptionPatientSocialService" ng-if="Ctrl.prescription.paciente.socialService && Ctrl.prescription.paciente.socialService.name !='No tiene'">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<div class="">
+						<div class="hce-form-title">
 							{{Ctrl.prescription.paciente.socialService.name}} 
 						</div>
-						<div class="">
+						<div class="hce-form-title">
 							{{Ctrl.prescription.paciente.socialServiceNumber}}
 						</div>
 					</div>
@@ -35,15 +35,12 @@
 							<tbody>
 								<tr ng-repeat="prescriptedMedication in Ctrl.prescription.prescriptedMedications">
 									<td>
-										<div class="hce-form-title">
-											{{prescriptedMedication.medication.name}}
-										</div>
 										<div class="">
-											Presentacion
+											{{prescriptedMedication.medication.name + ' ' + (prescriptedMedication.medication.composition? prescriptedMedication.medication.composition:'')}}
 										</div>
 									</td>
-									<td>{{prescriptedMedication.quantityPerDay}}</td>
-									<td>{{prescriptedMedication.quantityPerMonth}}</td>
+									<td>{{Ctrl.removeDecimals(prescriptedMedication.quantityPerDay)}}</td>
+									<td>{{Ctrl.removeDecimals(prescriptedMedication.quantityPerMonth)}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -66,10 +63,10 @@
 			</div>
 		</div>
 		<div class="row" style="margin-top: 100px">
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 hce-form-title">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				{{Ctrl.prescription.issuedDate| date:"d/M/yy"}}
 			</div>
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 hce-form-title">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				Firma y sello
 			</div>
 		</div>
@@ -85,16 +82,16 @@
 					<div class="row prescriptionPatientName">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="hce-form-title">
-								{{Ctrl.prescription.paciente.pns}}
+								{{Ctrl.prescription.paciente.genderAtBirth==1?'M':'F'}}{{Ctrl.prescription.paciente.pns}}
 							</div>
 						</div>
 					</div>
 					<div class="row prescriptionPatientSocialService" ng-if="Ctrl.prescription.paciente.socialService && Ctrl.prescription.paciente.socialService.name !='No tiene'">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div class="">
+							<div class="hce-form-title">
 								{{Ctrl.prescription.paciente.socialService.name}} 
 							</div>
-							<div class="">
+							<div class="hce-form-title">
 								{{Ctrl.prescription.paciente.socialServiceNumber}}
 							</div>
 						</div>
@@ -112,15 +109,12 @@
 								<tbody>
 									<tr ng-repeat="prescriptedMedication in Ctrl.prescription.prescriptedMedications">
 										<td>
-											<div class="hce-form-title">
-												{{prescriptedMedication.medication.name}}
-											</div>
 											<div class="">
-												Presentacion
+												{{prescriptedMedication.medication.name + ' ' + (prescriptedMedication.medication.composition? prescriptedMedication.medication.composition:'')}}
 											</div>
 										</td>
-										<td>{{prescriptedMedication.quantityPerDay}}</td>
-										<td>{{prescriptedMedication.quantityPerMonth}}</td>
+										<td>{{Ctrl.removeDecimals(prescriptedMedication.quantityPerDay)}}</td>
+										<td>{{Ctrl.removeDecimals(prescriptedMedication.quantityPerMonth)}}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -148,10 +142,10 @@
 				</div>
 			</div>
 			<div class="row" style="margin-top: 100px">
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 hce-form-title">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 					{{Ctrl.prescription.issuedDate| date:"d/M/yy"}}
 				</div>
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 hce-form-title">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 					Firma y sello
 				</div>
 			</div>

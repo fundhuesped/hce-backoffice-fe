@@ -71,6 +71,7 @@
         if(tmpPatientMedication.endDate && tmpPatientMedication.state == 'Active'){
          tmpPatientMedication.endDate = null; 
         }
+        delete tmpPatientMedication.medicationPresentation;
         PatientMedication.update(tmpPatientMedication, function (response) {
           toastr.success('Medicación guardada con exito');
           $uibModalInstance.close('edited');
@@ -125,6 +126,7 @@
         var tmpPatientMedication = angular.copy(vm.patientMedication);
         tmpPatientMedication.state = PatientMedication.stateChoices.STATE_ERROR;
         tmpPatientMedication.startDate = moment(tmpPatientMedication.startDate).format('YYYY-MM-DD');
+        delete tmpPatientMedication.medicationPresentation;
         if(tmpPatientMedication.endDate){
           tmpPatientMedication.endDate = moment(tmpPatientMedication.endDate).format('YYYY-MM-DD');
         }

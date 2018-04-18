@@ -33,11 +33,14 @@
       function save() {
         var tmpNewReceta = angular.copy(vm.newReceta);
         tmpNewReceta.prescriptedMedications = [];
+        tmpNewReceta.cantRecetas = 1;
 
         for (var i = vm.selectedMedications.length - 1; i >= 0; i--) {
-          tmpNewReceta.prescriptedMedications.push({medication:vm.selectedMedications[i], quantityPerMonth:vm.selectedMedications[i].quantityPerMonth});
+          tmpNewReceta.prescriptedMedications.push({patientMedication:vm.selectedMedications[i].id, quantityPerMonth:vm.selectedMedications[i].quantityPerMonth});
         }
         tmpNewReceta.prescripctionType = 'General';
+        tmpNewReceta.issuedDate = moment(tmpNewReceta.issuedDate).format('YYYY-MM-DD');
+
         tmpNewReceta.$save({pacienteId:HCService.currentPaciente.id},function(prescription) {
           toastr.success('Receta generada con éxito');
           var url = $state.href('generalPrescription', {prescriptionId: prescription.id});
@@ -83,23 +86,27 @@
 	    }
 
 
-	    function toggleMedicationSelection(medication) {
+	    function toggleMedicationSelection(patientMedication) {
 	    	if(vm.selectedMedications.length>0){
 		    	for (var i = vm.selectedMedications.length - 1; i >= 0; i--) {
-		    		if(vm.selectedMedications[i].id == medication.id){
+		    		if(vm.selectedMedications[i].medication.id == patientMedication.medication.id){
 	    			    vm.selectedMedications.splice(i, 1);
-                medication.quantityPerMonth = null;
+                patientMedication.quantityPerMonth = null;
 		    			return;
 		    		}
 		    	}
           if(vm.selectedMedications.length<2){
-            medication.quantityPerMonth = 1;
-            vm.selectedMedications.push(medication);          
+            if(!patientMedication.quantityPerMonth){
+              patientMedication.quantityPerMonth = 1;
+            }
+            vm.selectedMedications.push(patientMedication);          
           }
 	    	}else{
           if(vm.selectedMedications.length<2){
-            medication.quantityPerMonth = 1;
-            vm.selectedMedications.push(medication);          
+            if(!patientMedication.quantityPerMonth){
+              patientMedication.quantityPerMonth = 1;
+            }
+            vm.selectedMedications.push(patientMedication);          
           }
 	    	}
 	    }

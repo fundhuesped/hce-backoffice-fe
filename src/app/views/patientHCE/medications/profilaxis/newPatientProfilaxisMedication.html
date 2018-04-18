@@ -40,6 +40,28 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			    	<table class="table table-condensed">
+			    		<thead> 
+			    			<tr> 
+			    				<th>Cantidad por día</th>
+			    				<th>Cantidad por mes</th>
+			    			</tr> 
+			    		</thead>
+			    		<tbody>
+			    			<tr>
+		    					<td>
+		    						<input type="number" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerDay" ng-change="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerMonth=NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerDay*30"/>
+		    					</td> 
+		    					<td>
+		    						<input type="number" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerMonth"/>
+		    					</td> 
+	    					</tr>
+	    				</tbody>
+	    			</table>
+    			</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				  	<abm-form-group>
 				    	<label abm-label type="static">Estado del medicamento</label>
 					    <div class="radio" abm-radio label="Activo">

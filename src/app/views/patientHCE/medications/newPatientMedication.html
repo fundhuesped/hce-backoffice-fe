@@ -40,6 +40,25 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<abm-form-group class="form-group-lg">
+				    	<label abm-label for="presentationType" type="static">Forma de presentación</label>
+				    	<select class="form-control" name="presentationType" ng-options="presentationType.administrationType for presentationType in NewPatientMedicationController.newPatientMedication.medication.presentations | unique:'administrationType'" ng-model="NewPatientMedicationController.newPatientMedication.presentationType" abm-form-control >
+				    	</select>
+				  	</abm-form-group>
+		  		</div>
+		  	</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<abm-form-group class="form-group-lg">
+				    	<label abm-label for="presentation" type="static">Presentacion</label>
+				    	<select class="form-control" name="presentation" ng-options="presentation.name for presentation in NewPatientMedicationController.newPatientMedication.medication.presentations | filter:{administrationType:NewPatientMedicationController.newPatientMedication.presentationType.administrationType}" ng-model="NewPatientMedicationController.newPatientMedication.medicationPresentation" abm-form-control >
+				    	</select>
+				  	</abm-form-group>
+		  		</div>
+		  	</div>
+
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				  	<abm-form-group>
 				    	<label abm-label type="static">Estado del medicamento</label>
 					    <div class="radio" abm-radio label="Activo">

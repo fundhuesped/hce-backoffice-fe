@@ -19,6 +19,8 @@
       vm.newProblemDateOption = null;
       vm.newProblemDate = null;
       vm.canSaveNewProblem = canSaveNewProblem;
+      vm.error = null;
+
 
       Object.defineProperty(
           vm,
@@ -44,6 +46,9 @@
         },
         open : function(){
           this.opened = true;
+        },
+        updateMaxDate: function () {
+          this.options.maxDate = (vm.newPatientProblem.closeDate?vm.newPatientProblem.closeDate:new Date());
         }
       };
 
@@ -54,7 +59,11 @@
         },
         open : function(){
           this.opened = true;
+        },
+        updateMinDate: function () {
+          this.options.minDate = (vm.newPatientProblem.startDate?vm.newPatientProblem.startDate:new Date());
         }
+
       };
 
       function saveNewPatientProblem() {
@@ -66,6 +75,19 @@
         //     vm.newPatientProblem.startDate = moment(vm.newProblemDate).format('YYYY-MM-DD');
         //   }
         // }
+        vm.error = null;
+        if(moment(vm.newPatientProblem.startDate).diff(moment())>0){
+          vm.error = 'La fecha de inicio no puede ser mayor a hoy';
+          return;
+        }
+        if(moment(vm.newPatientProblem.closeDate).diff(moment())>0){
+          vm.error = 'La fecha de fin no puede ser mayor a hoy';
+          return;
+        }
+        if(vm.newPatientProblem.closeDate && moment(vm.newPatientProblem.startDate).diff(vm.newPatientProblem.closeDate)>0){
+          vm.error = 'La fecha de fin no puede ser mayor a la fecha de inicio';
+          return;
+        }
         HCService.saveNewPatientProblem().then(function() {
           toastr.success('Problema guardado con exito');
           $uibModalInstance.close('created');

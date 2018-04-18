@@ -3,7 +3,7 @@
     /* jshint validthis: true */
     /*jshint latedef: nofunc */
 
-    function patientPersonalInfoCtrl ($loading, $uibModalInstance, $filter, $uibModal, moment, paciente, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Paciente, toastr) {
+    function patientPersonalInfoCtrl ($loading, $uibModalInstance, $filter, $uibModal, moment, paciente, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Paciente, Country, toastr) {
         var vm = this;
 
         vm.paciente = {};
@@ -45,7 +45,9 @@
                 vm.paciente = returnedObject;
                 vm.paciente.birthDate = (vm.paciente.birthDate?new Date(vm.paciente.birthDate + 'T03:00:00'):null);
                 vm.paciente.firstVisit = (vm.paciente.firstVisit?new Date(vm.paciente.firstVisit + 'T03:00:00'):null);
-
+                vm.paciente.primaryPhoneNumber = parseInt(vm.paciente.primaryPhoneNumber);
+                vm.paciente.secondPhoneNumber = parseInt(vm.paciente.secondPhoneNumber);
+                vm.paciente.thirdPhoneNumber = parseInt(vm.paciente.thirdPhoneNumber);
 
                 Document.getFullActiveList(function(documents){
                     vm.documents = documents;
@@ -55,6 +57,10 @@
                     vm.sexTypes = sexTypes;
                 }, function(){displayComunicationError('app');});
                 
+                Country.getFullActiveList(function(countries){
+                    vm.countries = countries;
+                }, function(){displayComunicationError('app');});
+
                 Province.getFullActiveList(function(provinces){
                     vm.provinces = provinces;
                 }, function(){displayComunicationError('app');});
@@ -203,5 +209,5 @@
             }
         }
     }
-    angular.module('hce.patient').controller('PatientPersonalInfoCtrl',['$loading','$uibModalInstance','$filter', '$uibModal', 'moment', 'paciente','Document', 'Sex', 'Province', 'District', 'Location', 'SocialService', 'CivilStatus', 'Education', 'Paciente', 'toastr', patientPersonalInfoCtrl]);
+    angular.module('hce.patient').controller('PatientPersonalInfoCtrl',['$loading','$uibModalInstance','$filter', '$uibModal', 'moment', 'paciente','Document', 'Sex', 'Province', 'District', 'Location', 'SocialService', 'CivilStatus', 'Education', 'Paciente', 'Country', 'toastr', patientPersonalInfoCtrl]);
 })();

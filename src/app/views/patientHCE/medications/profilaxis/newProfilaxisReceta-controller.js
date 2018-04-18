@@ -34,11 +34,14 @@
       function save() {
         var tmpNewReceta = angular.copy(vm.newReceta);
         tmpNewReceta.prescriptedMedications = [];
+        tmpNewReceta.cantRecetas = 1;
 
         for (var i = vm.selectedMedications.length - 1; i >= 0; i--) {
-          tmpNewReceta.prescriptedMedications.push({medication:vm.selectedMedications[i], quantityPerDay:vm.selectedMedications[i].quantityPerDay, quantityPerMonth:vm.selectedMedications[i].quantityPerMonth});
+          tmpNewReceta.prescriptedMedications.push({patientMedication:vm.selectedMedications[i], quantityPerDay:vm.selectedMedications[i].quantityPerDay, quantityPerMonth:vm.selectedMedications[i].quantityPerMonth});
         }
         tmpNewReceta.prescripctionType = 'Prophylaxis';
+        tmpNewReceta.issuedDate = moment(tmpNewReceta.issuedDate).format('YYYY-MM-DD');
+
         tmpNewReceta.$save({pacienteId:HCService.currentPaciente.id},function(prescription) {
           toastr.success('Receta generada con éxito');
           var url = $state.href('profilaxisPrescription', {prescriptionId: prescription.id});

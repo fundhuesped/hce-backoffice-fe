@@ -7,15 +7,16 @@
         .module('hce.patient')
         .controller('NewPatientController',newPatientController);
 
-    newPatientController.$inject = ['$loading', '$filter', 'moment', 'Document', 'Sex', 'Province', 'District', 'Location', 'SocialService', 'CivilStatus', 'Education', 'Paciente', 'toastr', '$state'];
+    newPatientController.$inject = ['$loading', '$filter', 'moment', 'Document', 'Sex', 'Province', 'District', 'Location', 'SocialService', 'CivilStatus', 'Education', 'Paciente', 'Country', 'toastr', '$state'];
 
-    function newPatientController ($loading, $filter, moment, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Paciente, toastr, $state) {
+    function newPatientController ($loading, $filter, moment, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Paciente, Country, toastr, $state) {
         var vm = this;
         vm.paciente = new Paciente();
         vm.errorMessage = null;
         vm.confirm = confirm;
         vm.clean = clean;
         vm.nextPage = nextPage;
+        vm.previousPage = previousPage;
         vm.searchLocations = searchLocations;
         vm.searchDistricts = searchDistricts;
         vm.hideErrorMessage = hideErrorMessage;
@@ -48,6 +49,10 @@
                 vm.sexTypes = sexTypes;
             }, function(){displayComunicationError('app');});
             
+            Country.getFullActiveList(function(countries){
+                vm.countries = countries;
+            }, function(){displayComunicationError('app');});
+
             Province.getFullActiveList(function(provinces){
                 vm.provinces = provinces;
             }, function(){displayComunicationError('app');});
@@ -89,6 +94,9 @@
 
         function nextPage() {
             vm.activeTab = 1;
+        }
+        function previousPage() {
+            vm.activeTab = 0;
         }
 
         function clean (){

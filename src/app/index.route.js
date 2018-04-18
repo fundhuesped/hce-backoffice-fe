@@ -46,7 +46,7 @@
       .state('arvPrescription', {
           url: '/arvPrescription?prescriptionId',
           templateUrl: 'app/views/patientHCE/prescriptions/arvPrescription.html',
-          controller: 'MedicationRecetaNuevaController',
+          controller: 'ArvMedicationRecetaController',
           controllerAs: 'Ctrl',        
           params: {
               prescription: null

@@ -7,6 +7,11 @@
 				</div>
 			</div>
 			<div class="row">
+				<div ng-show="NewPatientProblemController.error" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning">
+					{{NewPatientProblemController.error}}
+				</div>
+			</div>
+			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<abm-form-group class="form-group-lg">
 		    			<label data-abm-label type="static">Escriba el problema(*)</label>
@@ -19,7 +24,7 @@
 				  	<abm-form-group>
 					    <label>Fecha de inicio(*)</label>
 						<div class="input-group">
-							<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientProblemController.newPatientProblem.startDate" is-open="NewPatientProblemController.startDateCalendarPopup.opened" datepicker-options="NewPatientProblemController.startDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.startDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
+							<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientProblemController.newPatientProblem.startDate" is-open="NewPatientProblemController.startDateCalendarPopup.opened" datepicker-options="NewPatientProblemController.startDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.startDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-change="NewPatientProblemController.closeDateCalendarPopup.updateMinDate()"/>
 	                        <div class="input-group-btn">
 	                          <button type="button" class="btn btn-default" ng-click="NewPatientProblemController.startDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
 	                        </div>
@@ -30,7 +35,7 @@
 				  	<abm-form-group>
 					    <label>Fecha de cierre</label>
 						<div class="input-group">
-							<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="closeDate" ng-model="NewPatientProblemController.newPatientProblem.closeDate" is-open="NewPatientProblemController.closeDateCalendarPopup.opened" datepicker-options="NewPatientProblemController.closeDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.closeDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
+							<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="closeDate" ng-model="NewPatientProblemController.newPatientProblem.closeDate" is-open="NewPatientProblemController.closeDateCalendarPopup.opened" datepicker-options="NewPatientProblemController.closeDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.closeDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-change="NewPatientProblemController.startDateCalendarPopup.updateMaxDate()"/>
 	                        <div class="input-group-btn">
 	                          <button type="button" class="btn btn-default" ng-click="NewPatientProblemController.closeDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
 	                        </div>

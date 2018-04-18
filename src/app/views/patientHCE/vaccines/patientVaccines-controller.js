@@ -19,6 +19,7 @@
       vm.filters = {};
       vm.pageChanged = pageChanged;
       vm.getVaccines = getVaccines;
+      vm.openNewRecetaModal = openNewRecetaModal;
 
       vm.openNewPatientVaccineModal = openNewPatientVaccineModal;
       vm.openEditPatientVaccineModal = openEditPatientVaccineModal;
@@ -95,6 +96,17 @@
         });
 
       }
+
+      function openNewRecetaModal(){
+        var modalInstance = $uibModal.open({
+          backdrop: 'static',
+          templateUrl: 'app/views/patientHCE/vaccines/newVaccinePrescription.html',
+          size: 'md',
+          controller: 'NewVaccinePrescriptionController',
+          controllerAs: 'Ctrl'
+        });
+      }
+
 
       function displayComunicationError(loading){
         if(!toastr.active()){

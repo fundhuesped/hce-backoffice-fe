@@ -14,6 +14,25 @@
                 	</abm-form-group>
                 </div>
 			</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group class="form-group-lg">
+					    	<label abm-label for="presentationType" type="static">Tipo de presentación</label>
+                			<input type="text" abm-form-control ng-model="EditPatientMedicationController.patientMedication.medicationPresentation.administrationType" class="form-control" disabled="true">
+					    	</select>
+					  	</abm-form-group>
+			  		</div>
+			  	</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group class="form-group-lg">
+					    	<label abm-label for="presentation" type="static">Presentacion</label>
+                			<input type="text" abm-form-control ng-model="EditPatientMedicationController.patientMedication.medicationPresentation.name" class="form-control" disabled="true">
+
+					    	</select>
+					  	</abm-form-group>
+			  		</div>
+			  	</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				  	<abm-form-group>
@@ -26,6 +45,7 @@
 						    </div>
 				  	</abm-form-group>
 				</div>
+
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="EditPatientMedicationController.patientMedication.state=='Closed' ||(EditPatientMedicationController.patientMedication.state=='Error' && EditPatientMedicationController.patientMedication.endDate)">
 				  	<abm-form-group>
 					    <label data-abm-label type="static">Fecha de fin(*)</label>

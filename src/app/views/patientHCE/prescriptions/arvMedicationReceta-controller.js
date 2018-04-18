@@ -3,21 +3,22 @@
     /* jshint validthis: true */
      /*jshint latedef: nofunc */
     angular
-    	.module('hce.patientHCE')
-    	.controller('MedicationRecetaNuevaController', medicationRecetaNuevaController);
+      .module('hce.patientHCE')
+      .controller('ArvMedicationRecetaController', arvMedicationRecetaController);
 
-	  medicationRecetaNuevaController.$inject = ['$state', '$stateParams', 'Receta'];
+    arvMedicationRecetaController.$inject = ['$state', '$stateParams', 'ARVReceta'];
 
-    function medicationRecetaNuevaController ($state, $stateParams, Receta) {
-	    var vm = this;
+    function arvMedicationRecetaController ($state, $stateParams, ARVReceta) {
+      var vm = this;
       vm.prescription = $stateParams.prescription;
       vm.numberToText = numberToText;
+      vm.removeDecimals = removeDecimals;
 
       activate();
 
-	    function activate(){
+      function activate(){
         if(!vm.prescriptions){
-          vm.prescription = Receta.get({id:$stateParams.prescriptionId}, function (argument) {
+          vm.prescription = ARVReceta.get({id:$stateParams.prescriptionId}, function (argument) {
             setTimeout(function(){
               // window.print();
             },2); 
@@ -26,8 +27,19 @@
 
         }
 
-	    }
+      }
 
+
+      function removeDecimals(number) {
+        var splitted = number.split('.');
+        if(splitted.length == 1){
+          return number;
+        }
+        if(parseInt(splitted[1])>0){
+          return number;          
+        }
+        return splitted[0];
+      }
       function numberToText(number) {
         switch(number) {
             case 1:

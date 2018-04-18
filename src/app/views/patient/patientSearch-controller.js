@@ -218,7 +218,6 @@
           backdrop: 'static',
         templateUrl: 'app/views/patient/patientPersonalInfo.html',
         size: 'lg',
-        backdrop: 'static',
         controller: 'PatientPersonalInfoCtrl',
         controllerAs: 'PacienteCtrl',
         resolve: {

@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('PatientLaboratoryResultsListController', patientLaboratoryResultsListController);
 
-	   patientLaboratoryResultsListController.$inject = ['$state', 'HCService', 'PatientLaboratoryResult', 'Determinacion', 'toastr', 'moment', '$uibModal'];
+	   patientLaboratoryResultsListController.$inject = ['$state', 'HCService', 'PatientLaboratoryResult', 'Determinacion', 'toastr', 'moment', '$uibModal', 'lodash'];
 
-    function patientLaboratoryResultsListController ($state, HCService, PatientLaboratoryResult, Determinacion, toastr, moment, $uibModal) {
+    function patientLaboratoryResultsListController ($state, HCService, PatientLaboratoryResult, Determinacion, toastr, moment, $uibModal, lodash) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.searchPatientLaboratoryResults = searchPatientLaboratoryResults;
@@ -27,6 +27,12 @@
       vm.canSave = canSave;
       vm.clear = clear;
       vm.canClear = canClear;
+      vm.categoriasDeterminaciones = [];
+      vm.toggleCategoria = toggleCategoria;
+
+
+      vm.isLowerThanLimit = isLowerThanLimit;
+      vm.isBiggerThanLimit = isBiggerThanLimit;
 
       vm.newLabDateCalendar = {
         opened: false,
@@ -43,6 +49,28 @@
 
 	    function activate(){
         Determinacion.getFullActiveList(function(determinaciones){
+          for (var i = vm.categoriasDeterminaciones.length - 1; i >= 0; i--) {
+            vm.categoriasDeterminaciones[i].determinaciones = [];
+          }
+          var found = false;
+          for (var i = 0; i < determinaciones.length; i++) {
+            found = false;
+            for (var j = vm.categoriasDeterminaciones.length - 1; j >= 0; j--) {
+              if( vm.categoriasDeterminaciones[j].id == determinaciones[i].category.id){
+                vm.categoriasDeterminaciones[j].determinaciones.push(determinaciones[i]);
+                found = true;
+                break;
+              }
+            }
+            if(!found){
+              var tmpCategory = angular.copy(determinaciones[i].category);
+              tmpCategory.determinaciones = [determinaciones[i]];
+              tmpCategory.show = false;
+              vm.categoriasDeterminaciones.push(tmpCategory);
+            }
+          }
+          vm.categoriasDeterminaciones = lodash.orderBy(vm.categoriasDeterminaciones, 'order');
+
           vm.determinaciones = determinaciones;
         }, displayComunicationError);
         vm.newLabValues = [];
@@ -123,6 +151,10 @@
         return vm.newLab.date || hasValues;
       }
 
+      function toggleCategoria(category) {
+        category.show = !category.show;
+      }
+
       function getValueForDeterminacion(code, result) {
         for (var i = result.values.length - 1; i >= 0; i--) {
           if(result.values[i].determinacion.code == code){
@@ -130,6 +162,15 @@
           }
         }
       }
+
+      function isLowerThanLimit(determinacion, result) {
+        return determinacion.lowerLimit&&parseFloat(determinacion.lowerLimit)>parseFloat(getValueForDeterminacion(determinacion.code,result));
+      }
+
+      function isBiggerThanLimit(determinacion, result) {
+        return determinacion.upperLimit&&parseFloat(determinacion.upperLimit)<parseFloat(getValueForDeterminacion(determinacion.code,result));
+      }
+
 
       function displayComunicationError(loading){
         if(!toastr.active()){

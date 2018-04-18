@@ -39,7 +39,7 @@
         <div class="hce-card-body">
           <div class="row" ng-repeat="vaccine in PHCECtrl.summaryPatientVaccines | limitTo:3" style="text-transform: capitalize;">
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="white-space: nowrap; overflow: hidden;">
-              • {{vaccine.vaccine.name}}
+              • {{vaccine.vaccine.synonym}}
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">{{vaccine.appliedDate  | date:"dd/MM/yyyy"}}</div>
           </div>

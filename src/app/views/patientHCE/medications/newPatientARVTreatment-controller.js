@@ -17,6 +17,7 @@
       vm.canSave = canSave;
       vm.toggleMedicationSelection = toggleMedicationSelection;
       vm.showInfo = showInfo;
+      vm.goToProblems = goToProblems;
 
 
       vm.nrtiMedications = [];
@@ -154,6 +155,11 @@
 	    	}
 	    }
 
+
+      function goToProblems() {      
+        $state.go('app.patientHCE.problems');
+        $uibModalInstance.dismiss('cancel');
+      }
 
       function displayComunicationError(loading){
         if(!toastr.active()){

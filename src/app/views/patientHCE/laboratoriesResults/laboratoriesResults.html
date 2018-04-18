@@ -20,14 +20,21 @@
 								</div>
 							</div>
 						</div>
-						<div class="row hce-labResult-row" ng-repeat="determinacion in Ctrl.determinaciones">
+						<div class="row hce-labResult-row" ng-repeat-start="categoriaDeterminacion in Ctrl.categoriasDeterminaciones">
+							<div ng-click="Ctrl.toggleCategoria(categoriaDeterminacion);" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell" style="text-align: left;">
+								<b>{{categoriaDeterminacion.name}}</b>
+							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
+							</div>
+						</div>
+						<div ng-repeat-end class="row hce-labResult-row" ng-repeat="determinacion in categoriaDeterminacion.determinaciones" ng-show="categoriaDeterminacion.show">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell" style="text-align: left;padding-left: 30px">
 								{{determinacion.label}}
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
 								<input type="text" ng-model="Ctrl.newLabValues[determinacion.code]">
 							</div>
-						</div>
+						</div >
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<div class="row">
@@ -37,8 +44,14 @@
 										{{labResult.date|date:'dd/MM/yyyy'}}
 									</div>
 								</div>
-								<div class="row hce-labResult-row" ng-repeat="determinacion in Ctrl.determinaciones">
-									<div class="hce-labResult-cell" ng-class="{'registry-error':labResult.status=='Error' }">
+								<div class="row hce-labResult-row" ng-repeat-start="categoriaDeterminacion in Ctrl.categoriasDeterminaciones">
+									<div ng-click="Ctrl.toggleCategoria(categoriaDeterminacion);" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell" style="text-align: left;">
+									</div>
+									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
+									</div>
+								</div>
+								<div ng-repeat-end class="row hce-labResult-row" ng-repeat="determinacion in categoriaDeterminacion.determinaciones" ng-show="categoriaDeterminacion.show">
+									<div class="hce-labResult-cell" ng-class="{'registry-error':labResult.status=='Error', 'result-ltlimit': Ctrl.isLowerThanLimit(determinacion,labResult),'result-btlimit': Ctrl.isBiggerThanLimit(determinacion,labResult)}">
 										{{Ctrl.getValueForDeterminacion(determinacion.code,labResult)}}
 									</div>
 								</div>

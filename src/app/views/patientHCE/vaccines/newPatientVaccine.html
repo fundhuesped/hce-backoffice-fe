@@ -7,10 +7,15 @@
 				</div>
 			</div>
 			<div class="row">
+				<div ng-show="NewPatientVaccineController.error" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning">
+					{{NewPatientVaccineController.error}}
+				</div>
+			</div>
+			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<abm-form-group>
-		    			<label data-abm-label type="static">Escriba la vacuna(*)</label>
-                		<input type="text" abm-form-control ng-model="NewPatientVaccineController.newPatientVaccine.vaccine" uib-typeahead="vaccine as vaccine.name for vaccine in NewPatientVaccineController.getVaccines($viewValue)" class="form-control" typeahead-min-length="3">
+		    			<label data-abm-label type="static">Seleccione la vacuna(*)</label>
+                		<input type="text" abm-form-control ng-model="NewPatientVaccineController.newPatientVaccine.vaccine" uib-typeahead="vaccine as vaccine.name for vaccine in NewPatientVaccineController.getVaccines($viewValue)" class="form-control" typeahead-min-length="3" placeholder="Escriba tres o mas letras para buscar">
                 	</abm-form-group>
                 </div>
 			</div>

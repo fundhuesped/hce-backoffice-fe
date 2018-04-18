@@ -28,7 +28,7 @@
 		    		</thead>
 		    		<tbody>
 		    			<tr ng-repeat="medication in PMLController.patientMedications | filter:{medication:{medicationType:{code:'!PROF'}}}" ng-class="{'problem-closed':medication.state=='Closed','registry-error':medication.state=='Error' }">
-	    					<td style="text-transform: capitalize;">{{medication.medication.name}}</td>
+	    					<td style="text-transform: capitalize;">{{medication.medication.name}}{{medication.medicationPresentation?' ('+medication.medicationPresentation.name+')':''}}</td>
 	    					<td>{{medication.startDate | date:"dd/MM/yyyy"}}</td> 
 	    					<td>{{medication.endDate | date:"dd/MM/yyyy"}}</td> 
 	    					<td>{{medication.patientProblem.problem.name}}</td> 

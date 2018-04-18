@@ -36,15 +36,27 @@
         tmpNewReceta.prescriptedMedications = [];
 
         for (var i = vm.selectedMedications.length - 1; i >= 0; i--) {
-          tmpNewReceta.prescriptedMedications.push({medication:vm.selectedMedications[i].medication, quantityPerDay:vm.selectedMedications[i].quantityPerDay, quantityPerMonth:vm.selectedMedications[i].quantityPerMonth});
+          if(vm.selectedMedications[i].selected){
+            tmpNewReceta.prescriptedMedications.push({medication:vm.selectedMedications[i].id, quantityPerDay:vm.selectedMedications[i].quantityPerDay, quantityPerMonth:vm.selectedMedications[i].quantityPerMonth});
+          }
         }
         tmpNewReceta.prescripctionType = 'Arv';
+        tmpNewReceta.cantRecetas = vm.cantRecetas;
+        tmpNewReceta.issuedDate = moment(tmpNewReceta.issuedDate).format('YYYY-MM-DD');
+
         tmpNewReceta.$save({pacienteId:HCService.currentPaciente.id},function(prescription) {
           toastr.success('Receta generada con éxito');
-          var url = $state.href('arvPrescription', {prescriptionId: prescription.id});
-          $window.open(url,'_blank');
-          openRecetaModal(prescription.id);
-          $uibModalInstance.close('created');
+          if(prescription.prescriptionsIds){
+            for (var i = prescription.prescriptionsIds.length - 1; i >= 0; i--) {
+              var url = $state.href('arvPrescription', {prescriptionId: prescription.prescriptionsIds[i]});
+              $window.open(url,'_blank');                          
+            }
+          }else{
+            var url = $state.href('arvPrescription', {prescriptionId: prescription.id});
+            $window.open(url,'_blank');
+            openRecetaModal(prescription.id);
+            $uibModalInstance.close('created');            
+          }
         }, showError);
       }
 
@@ -62,6 +74,8 @@
               vm.selectedMedications = vm.arvTreatment.patientARVTreatmentMedications; 
               for (var i = vm.arvTreatment.patientARVTreatmentMedications.length - 1; i >= 0; i--) {
                 vm.arvTreatment.patientARVTreatmentMedications[i].selected = true;
+                vm.arvTreatment.patientARVTreatmentMedications[i].quantityPerMonth = parseFloat(vm.arvTreatment.patientARVTreatmentMedications[i].quantityPerMonth);
+                vm.arvTreatment.patientARVTreatmentMedications[i].quantityPerDay = parseFloat(vm.arvTreatment.patientARVTreatmentMedications[i].quantityPerDay);
               }
           }else{
               vm.arvTreatment = null;
@@ -69,34 +83,33 @@
         });
 
 	    }
-      function openRecetaModal(prescriptionId) {
+      function openRecetaModal(prescriptionsIds) {
         var modalInstance = $uibModal.open({
+          backdrop: 'static',
             templateUrl: 'app/views/patientHCE/prescriptions/arvPrescription.html',
             size: 'md',
             controller: 'MedicationRecetaController',
             controllerAs: 'Ctrl',
             resolve: {
-              prescriptionId: function () {
-                return prescriptionId;
+              prescriptionsIds: function () {
+                return prescriptionsIds;
               }
             }
           });
       }
 
 	    function toggleMedicationSelection(medication) {
-	    	if(vm.selectedMedications.length>0){
-		    	for (var i = vm.selectedMedications.length - 1; i >= 0; i--) {
-		    		if(vm.selectedMedications.medication.id == medication.id){
-	    			    vm.selectedMedications.splice(i, 1);
-		    			return;
-		    		}
-		    	}
-    			vm.selectedMedications.push(medication);
-	    	}else{
-	    		vm.selectedMedications.push(medication);
+	    	for (var i = vm.selectedMedications.length - 1; i >= 0; i--) {
+	    		if(vm.selectedMedications[i].id == medication.id){
+    			    if(vm.selectedMedications[i].selected){
+                vm.selectedMedications.selected = false;
+              }else{
+                vm.selectedMedications.selected = true;
+              }
+	    			return;
+	    		}
 	    	}
 	    }
-
 
       function displayComunicationError(loading){
         if(!toastr.active()){

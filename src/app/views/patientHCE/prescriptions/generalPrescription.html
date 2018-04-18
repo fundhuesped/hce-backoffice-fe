@@ -15,10 +15,10 @@
 				</div>
 				<div class="row prescriptionPatientSocialService" ng-if="Ctrl.prescription.paciente.socialService && Ctrl.prescription.paciente.socialService.name !='No tiene'">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<div class="">
+						<div class="hce-form-title">
 							{{Ctrl.prescription.paciente.socialService.name}} 
 						</div>
-						<div class="">
+						<div class="hce-form-title">
 							{{Ctrl.prescription.paciente.socialServiceNumber}}
 						</div>
 					</div>
@@ -26,11 +26,13 @@
 				<div class="prescriptionMedicationsList">
 					<div class="row prescriptionMedication" ng-repeat="prescriptedMedication in Ctrl.prescription.prescriptedMedications">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div class="hce-form-title">
-								{{prescriptedMedication.medication.name}}     {{prescriptedMedication.dayCount?prescriptedMedication.dayCount+'('+Ctrl.numberToText(prescriptedMedication.dayCount)+')':'1(uno)'}}
-							</div>
 							<div class="">
-								Presentacion
+								{{prescriptedMedication.patientMedication.medication.name + ' ' + (prescriptedMedication.patientMedication.medicationPresentation?prescriptedMedication.patientMedication.medicationPresentation.name:'')}}
+							</div>
+
+							<div class="">
+							{{prescriptedMedication.dayCount?prescriptedMedication.dayCount+'('+Ctrl.numberToText(prescriptedMedication.dayCount)+')':'1(uno)'}}
+
 							</div>
 						</div>
 					</div>
@@ -45,15 +47,15 @@
 			</div>
 		</div>
 		<div class="row" style="margin-top: 100px">
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 hce-form-title">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				{{Ctrl.prescription.issuedDate| date:"d/M/yy"}}
 			</div>
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 hce-form-title">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				Firma y sello
 			</div>
 		</div>
 	</div>
-	<div style="break-after: always;" ng-if="Ctrl.prescription.duplicateRequired==true"></div>
+	<div style="page-break-after: always;" ng-if="Ctrl.prescription.duplicateRequired==true"></div>
 	<div ng-if="Ctrl.prescription.duplicateRequired==true">
 		<div class="container-fluid">
 			<div class="row">
@@ -82,10 +84,10 @@
 						<div class="row prescriptionMedication" ng-repeat="prescriptedMedication in Ctrl.prescription.prescriptedMedications">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<div class="hce-form-title">
-									{{prescriptedMedication.medication.name}}     {{prescriptedMedication.dayCount?prescriptedMedication.dayCount+'('+Ctrl.numberToText(prescriptedMedication.dayCount)+')':'1(uno)'}}
+									{{prescriptedMedication.patientMedication.medication.name + ' ' + (prescriptedMedication.patientMedication.medicationPresentation?prescriptedMedication.patientMedication.medicationPresentation.name:'')}}
 								</div>
 								<div class="">
-									Presentación
+									{{prescriptedMedication.dayCount?prescriptedMedication.dayCount+'('+Ctrl.numberToText(prescriptedMedication.dayCount)+')':'1(uno)'}}
 								</div>
 							</div>
 						</div>
@@ -105,10 +107,10 @@
 				</div>
 			</div>
 			<div class="row" style="margin-top: 100px">
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 hce-form-title">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 					{{Ctrl.prescription.issuedDate| date:"d/M/yy"}}
 				</div>
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 hce-form-title">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 					Firma y sello
 				</div>
 			</div>

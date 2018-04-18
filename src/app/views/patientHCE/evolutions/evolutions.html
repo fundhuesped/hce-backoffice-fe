@@ -10,9 +10,9 @@
 		</div>
 
 	    <div class="row" style="font-weight: bold; text-align: center; font-size: 15px;">
-			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Fecha</div>
-			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Profesional</div>
-			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Motivo de consulta</div>
+			<div class="col-xs-1-5 col-sm-1-5 col-md-1-5 col-lg-1-5">Fecha</div>
+			<div class="col-xs-1-5 col-sm-1-5 col-md-1-5 col-lg-1-5">Profesional</div>
+			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Motivo de consulta</div>
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Evolución</div>
 		</div>
 		<div class="row" ng-show="!EvolutionsController.evolutions || EvolutionsController.evolutions.length == 0">
@@ -20,17 +20,19 @@
 		</div>
 
 	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	    	<div class="row " ng-repeat="evolution in EvolutionsController.evolutions" style="    padding-bottom: 10px;
+	    	<div class="row " ng-repeat="evolution in EvolutionsController.evolutions" ng-class="{'row-epicrisis':evolution.isEpicrisis}" style="    padding-bottom: 10px;
 padding-top: 10px;border-bottom:1px solid;border-bottom-color:#D2D2D2" ng-click="evolution.selected=!evolution.selected">
     			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     				<div class="row" ng-class="{'evolution-header':evolution.selected}">
-		    			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">{{evolution.date | date:"dd/MM/yyyy"}}</div>
-		    			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">{{evolution.profesional.first_name}} {{evolution.profesional.last_name}}</div>
-		    			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">{{evolution.reason}}</div>
-		    			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="!evolution.selected" style="overflow: hidden;white-space: nowrap;">{{evolution.notaClinica}}</div>
+		    			<div class="col-xs-1-5 col-sm-1-5 col-md-1-5 col-lg-1-5">
+		    				<span class="glyphicon" ng-class="{'glyphicon-triangle-top':evolution.selected,'glyphicon-triangle-bottom':!evolution.selected}"></span>
+							{{evolution.date | date:"dd/MM/yyyy"}}</div>
+		    			<div class="col-md-1-5 col-md-1-5 col-md-1-5 col-md-1-5">{{evolution.profesional.first_name}} {{evolution.profesional.last_name}}</div>
+		    			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">{{evolution.reason}}</div>
+		    			<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-show="!evolution.selected" style="overflow: hidden;white-space: nowrap;">{{evolution.notaClinica}}</div>
     				</div>
     				<div class="row">
-		    			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="evolution.selected" style="white-space: pre-line;">
+		    			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="evolution.selected" style="white-space: pre-line;word-wrap:break-word;">
 							{{evolution.notaClinica}}
 		    			</div>
     				</div>
