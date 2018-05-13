@@ -50,7 +50,7 @@
       </div>
       <div class="well hce-card">
         <div class="hce-card-title">
-          Medicamentos activos ({{PHCECtrl.activePatientMedicationCount>0?PHCECtrl.activePatientMedicationCount:'0'}})
+          Medicamentos activos ({{PHCECtrl.activePatientMedicationsCount>0?PHCECtrl.activePatientMedicationsCount:'0'}})
         </div>
         <div class="hce-card-body">
           <div class="row" ng-repeat="medication in PHCECtrl.summaryPatientMedications | limitTo:5" style="text-transform: capitalize;">

@@ -61,11 +61,11 @@
         });
         Object.defineProperty(
           vm,
-          'activePatientMedicationCount', {
+          'activePatientMedicationsCount', {
           enumerable: true,
           configurable: false,
           get: function () {
-              return HCService.activePatientMedicationCount;
+              return HCService.activePatientMedicationsCount;
           }
         });
 	    function activate(){

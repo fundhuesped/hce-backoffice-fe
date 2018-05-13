@@ -6,9 +6,21 @@
     	.module('hce.patientHCE')
     	.controller('PatientProfilaxisMedicationListController', patientProfilaxisMedicationListController);
 
-	   patientProfilaxisMedicationListController.$inject = ['$state', 'HCService', 'PatientMedication', 'Medication', 'toastr', 'moment', '$uibModal'];
+	   patientProfilaxisMedicationListController.$inject = ['$state',
+                                                          'HCService',
+                                                          'PatientMedication',
+                                                          'Medication',
+                                                          'toastr',
+                                                          'moment',
+                                                          '$uibModal'];
 
-    function patientProfilaxisMedicationListController ($state, HCService, PatientMedication, Medication, toastr, moment, $uibModal) {
+    function patientProfilaxisMedicationListController ($state,
+                                                        HCService,
+                                                        PatientMedication,
+                                                        Medication,
+                                                        toastr,
+                                                        moment,
+                                                        $uibModal) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.searchPatientProfilaxisMedications = searchPatientProfilaxisMedications;
@@ -23,8 +35,20 @@
       vm.openEditPatientMedicationModal = openEditPatientMedicationModal;
       vm.patientProxilaxisMedications = [];
       vm.openNewRecetaModal = openNewRecetaModal;
-
+      vm.hasActiveMedications = hasActiveMedications;
       activate();
+
+
+      Object.defineProperty(
+          vm,
+          'activePatientProfilaxisMedicationsCount', {
+          enumerable: true,
+          configurable: false,
+          get: function () {
+              return HCService.activePatientProfilaxisMedicationsCount;
+          }
+      });
+
 
 	    function activate(){
         searchPatientProfilaxisMedications();
@@ -105,6 +129,10 @@
             }
           }
         });
+      }
+
+      function hasActiveMedications() {
+        return activePatientProfilaxisMedicationsCount.length > 0;
       }
 
       function displayComunicationError(loading){

@@ -53,11 +53,14 @@
         srv.activePatientVaccinesCount = null;
 
 
-        //Vaccines
+        //General Medications
         srv.getPatientMedications = getPatientMedications;
         srv.patientMedications = null;
         srv.summaryPatientMedications = null;
         srv.activePatientMedicationsCount = null;
+
+        //Profilaxis Medications
+        srv.activePatientProfilaxisMedicationsCount = null;
 
         //ARV Treatments
         srv.currentARVTreatment = null;
@@ -330,9 +333,19 @@
         }
 
         function getActivePatientMedications() {
-            return PatientMedication.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, page_size:3, state:'Active'}, function (paginatedResult) {
-                srv.activePatientMedicationCount = paginatedResult.count;
+            return PatientMedication.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, page_size:3, state:'Active',  notMedicationTypeCode : 'PROF'}, function (paginatedResult) {
+                srv.activePatientMedicationsCount = paginatedResult.count;
                 srv.summaryPatientMedications = paginatedResult.results;
+            }, function (err) {
+                 
+            });
+        }
+
+
+        function getActivePatientProfilaxisMedications() {
+            return PatientMedication.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, page_size:3, state:'Active', medicationTypeCode : 'PROF'}, function (paginatedResult) {
+                srv.activePatientProfilaxisMedicationsCount = paginatedResult.count;
+                srv.summaryPatientProfilaxisMedications = paginatedResult.results;
             }, function (err) {
                  
             });

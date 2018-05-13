@@ -6,9 +6,23 @@
     	.module('hce.patientHCE')
     	.controller('PatientMedicationListController', patientMedicationListController);
 
-	   patientMedicationListController.$inject = ['$state', 'HCService', 'PatientMedication', 'Medication', 'toastr', 'moment', '$uibModal'];
+	   patientMedicationListController.$inject = ['$state',
+                                                'HCService',
+                                                'PatientMedication',
+                                                'Medication',
+                                                'toastr',
+                                                'moment',
+                                                '$uibModal',
+                                                'lodash'];
 
-    function patientMedicationListController ($state, HCService, PatientMedication, Medication, toastr, moment, $uibModal) {
+    function patientMedicationListController ($state,
+                                              HCService,
+                                              PatientMedication,
+                                              Medication,
+                                              toastr,
+                                              moment,
+                                              $uibModal,
+                                              lodash) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.searchPatientMedications = searchPatientMedications;
@@ -22,7 +36,7 @@
       vm.openNewPatientMedicationModal = openNewPatientMedicationModal;
       vm.openEditPatientMedicationModal = openEditPatientMedicationModal;
       vm.openNewRecetaModal = openNewRecetaModal;
-
+      vm.hasActiveMedications = hasActiveMedications;
 
 
       Object.defineProperty(
@@ -34,6 +48,15 @@
               return HCService.patientMedications;
           }
       });
+      Object.defineProperty(
+          vm,
+          'activePatientMedicationsCount', {
+          enumerable: true,
+          configurable: false,
+          get: function () {
+              return HCService.activePatientMedicationsCount;
+          }
+      });
 
       activate();
 
@@ -42,12 +65,13 @@
 	    }
 
       function pageChanged() {
-        searchPatientVaccines();
+        searchPatientMedications();
       }
 
       function searchPatientMedications() {
         vm.filters.page = vm.currentPage;
         vm.filters.page_size = vm.pageSize;
+        vm.filters.notMedicationTypeCode = 'PROF';
         HCService.getPatientMedications(vm.filters).$promise.then(function (paginatedResult) {
           if(vm.currentPage===1){
             vm.totalItems = paginatedResult.count;
@@ -113,6 +137,10 @@
             }
           }
         });
+      }
+
+      function hasActiveMedications() {
+        return vm.activePatientMedicationsCount > 0;
       }
 
       function displayComunicationError(loading){
