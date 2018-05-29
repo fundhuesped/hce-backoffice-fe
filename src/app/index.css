@@ -488,3 +488,9 @@
 .row-epicrisis{
   background-color: #1acc96;
 }
+
+
+.form-group select{
+  -moz-appearance: menulist;
+  -webkit-appearance: menulist;
+}
