@@ -22,7 +22,6 @@
       vm.pageSize = 10;
       vm.totalItems = null;
       vm.pageChanged = pageChanged;
-      vm.evolutionCanBeCanceled = evolutionCanBeCanceled;
       vm.filters = {};
       vm.newEvolutionFocused = false;
       vm.visitTypes = ['Programada', 'Espontanea', 'Otro'];
@@ -116,7 +115,7 @@
       }
 
       function evolutionCanBeCanceled(evolution) {
-        return moment().diff(moment(evolution.date,'YYYY-MM-DD'), 'days') < 1;
+        return moment().diff(moment(evolution.date), 'hours') <= 12;
       }
 
       function showError(error) {
