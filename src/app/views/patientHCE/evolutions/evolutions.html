@@ -20,7 +20,7 @@
 		</div>
 
 	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	    	<div class="row " ng-repeat="evolution in EvolutionsController.evolutions" ng-class="{'row-epicrisis':evolution.isEpicrisis}" style="    padding-bottom: 10px;
+	    	<div class="row " ng-repeat="evolution in EvolutionsController.evolutions" ng-class="{'row-epicrisis':evolution.visitType == 'Epicrisis'}" style="    padding-bottom: 10px;
 padding-top: 10px;border-bottom:1px solid;border-bottom-color:#D2D2D2" ng-click="evolution.selected=!evolution.selected">
     			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     				<div class="row" ng-class="{'evolution-header':evolution.selected}">
