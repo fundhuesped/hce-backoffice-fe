@@ -36,7 +36,8 @@
 								<tr ng-repeat="prescriptedMedication in Ctrl.prescription.prescriptedMedications">
 									<td>
 										<div class="">
-											{{prescriptedMedication.medication.name + ' ' + (prescriptedMedication.medication.composition? prescriptedMedication.medication.composition:'')}}
+											{{prescriptedMedication.medication.recipeName + ' ' + (prescriptedMedication.medication.composition? prescriptedMedication.medication.composition:'') + 
+											(prescriptedMedication.medication.presentation?' ' +prescriptedMedication.medication.presentation:'' )}}
 										</div>
 									</td>
 									<td>{{Ctrl.removeDecimals(prescriptedMedication.quantityPerDay)}}</td>

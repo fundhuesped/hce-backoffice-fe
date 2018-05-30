@@ -19,7 +19,7 @@
 			    		<tbody>
 			    			<tr ng-repeat="patientMedication in Ctrl.arvTreatment.patientARVTreatmentMedications | orderBy:selected" ng-class="{success:patientMedication.selected}">
 		    					<td style="text-transform: capitalize;" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">    
-		    						<div class="checkbox" abm-checkbox label="{{patientMedication.medication.name+(patientMedication.medication.composition?' '+patientMedication.medication.composition:'')}}">
+		    						<div class="checkbox" abm-checkbox label="{{patientMedication.medication.abbreviation + (patientMedication.medication.composition?' ' +patientMedication.medication.composition:'' ) + (patientMedication.medication.presentation?' ' +patientMedication.medication.presentation:'' )}}">
 								      <input type="checkbox" ng-model="patientMedication.selected" ng-change="Ctrl.toggleMedicationSelection(patientMedication)">
 								    </div>
 								</td> 

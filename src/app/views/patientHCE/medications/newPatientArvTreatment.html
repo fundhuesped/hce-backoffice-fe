@@ -30,7 +30,7 @@
 				    		<tbody>
 				    			<tr ng-repeat="medication in NewPatientArvTreatmentController.nrtiMedications | orderBy:'selected'" ng-class="{success:medication.selected}" title="{{medication.name}}">
 			    					<td style="text-transform: capitalize;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'')}}">
+			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
 									      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
 									    </div>
 									</td> 
@@ -51,7 +51,7 @@
 				    			<tr ng-repeat="medication in NewPatientArvTreatmentController.nnrtiMedications | orderBy:'selected'"
 				    			ng-class="{success:medication.selected}" title="{{medication.name}}">
 			    					<td style="text-transform: capitalize;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
-			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'')}}">
+			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
 									      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
 									    </div>
 									</td> 
@@ -71,7 +71,7 @@
 				    		<tbody>
 				    			<tr ng-repeat="medication in NewPatientArvTreatmentController.ipMedications | orderBy:'selected'" ng-class="{success:medication.selected}" title="{{medication.name}}">
 			    					<td style="text-transform: capitalize;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'')}}">
+			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
 									      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
 									    </div>
 									</td> 
@@ -92,7 +92,7 @@
 				    			<tr ng-repeat="medication in NewPatientArvTreatmentController.iiMedications | orderBy:'selected'"
 				    			ng-class="{success:medication.selected}" title="{{medication.name}}">
 			    					<td style="text-transform: capitalize;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
-			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'')}}">
+			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
 									      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
 									    </div>
 									</td> 
@@ -115,7 +115,7 @@
 				    			<tr ng-repeat="medication in NewPatientArvTreatmentController.comboMedications | orderBy:'selected'"
 				    			ng-class="{success:medication.selected}" title="{{medication.name}}">
 			    					<td style="text-transform: capitalize;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
-			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'')}}">
+			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
 									      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
 									    </div>
 									</td> 
@@ -136,7 +136,7 @@
 				    			<tr ng-repeat="medication in NewPatientArvTreatmentController.otherMedications | orderBy:'selected'"
 				    			ng-class="{success:medication.selected}" title="{{medication.name}}">
 			    					<td style="text-transform: capitalize;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
-			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'')}}">
+			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
 									      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
 									    </div>
 									</td> 
@@ -158,7 +158,7 @@
 			    		</thead>
 			    		<tbody>
 			    			<tr ng-repeat="medication in NewPatientArvTreatmentController.newPatientArvTreatment.patientARVTreatmentMedications">
-		    					<td><div style="margin-top: 10px;margin-bottom: 9px;">{{medication.medication.name+(medication.medication.composition?' '+ medication.medication.composition:'')}}</div></td> 
+		    					<td><div style="margin-top: 10px;margin-bottom: 9px;">{{medication.medication.abbreviation + (medication.medication.composition?' ' +medication.medication.composition:'' ) + (medication.medication.presentation?' ' +medication.medication.presentation:'' )}}</div></td> 
 		    					<td>
 		    						<input type="number" ng-model="medication.quantityPerDay" ng-change="medication.quantityPerMonth=medication.quantityPerDay*30"/>
 		    					</td> 
