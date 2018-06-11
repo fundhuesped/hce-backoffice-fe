@@ -21,7 +21,7 @@
       vm.toggleDropdown = toggleDropdown;
 
 
-      vm.visitTypes = ['Programada', 'Demanda Espontánea', 'Otro', 'Ingreso de datos no presencial', 'Epicrisis'];
+      vm.visitTypes = ['Programada', 'Demanda Espontánea', 'Ingreso de datos no presencial', 'Epicrisis', 'Otro'];
       Object.defineProperty(
           vm,
           'currentEvolution', {
