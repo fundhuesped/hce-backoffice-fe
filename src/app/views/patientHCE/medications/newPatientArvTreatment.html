@@ -9,15 +9,7 @@
 			<div class="row" ng-show="NewPatientArvTreatmentController.showInfo()">
 				<button ng-click="NewPatientArvTreatmentController.goToProblems()" class="alert alert-info col-xs-12 col-sm-12 col-md-12 col-lg-12" role="alert">Recuerde primero dar de alta el problema HIV correspondiente desde aquí</button>
 			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group class="form-group-lg">
-				    	<label abm-label for="problem" type="static">Problema del paciente(*)</label>
-				    	<select class="form-control" name="problem" ng-options="problem as problem.problem.name for problem in NewPatientArvTreatmentController.patientProblems | filter:{problem:{problemType:'HIV'}}" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.patientProblem" abm-form-control >
-				    	</select>
-				  	</abm-form-group>
-		  		</div>
-		  	</div>
+			<br>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 					<div class="list-container">
@@ -146,6 +138,16 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<abm-form-group class="form-group-lg">
+						<label abm-label for="problem" type="static">Problema del paciente(*)</label>
+						<select class="form-control" name="problem" ng-options="problem as problem.problem.name for problem in NewPatientArvTreatmentController.patientProblems | filter:{problem:{problemType:'HIV'}}" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.patientProblem" abm-form-control >
+						</select>
+					</abm-form-group>
+				</div>
+			</div>
+			<br>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			    	<table class="table table-condensed">

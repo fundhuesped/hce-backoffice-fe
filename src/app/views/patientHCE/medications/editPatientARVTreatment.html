@@ -6,15 +6,7 @@
 					<div class="hce-form-title">Modificar tratamiento ARV</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group class="form-group-lg">
-				    	<label abm-label for="problem" type="static">Problema del paciente(*)</label>
-				    	<select class="form-control" name="problem" ng-options="problem as problem.problem.name for problem in Ctrl.patientProblems | filter:{problem:{problemType:'HIV'}}" ng-model="Ctrl.patientArvTreatment.patientProblem" abm-form-control disabled="disabled">
-				    	</select>
-				  	</abm-form-group>
-		  		</div>
-		  	</div>
+			<br>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 					<div class="list-container">
@@ -51,7 +43,7 @@
 			    						<div class="checkbox" abm-checkbox label="{{medication.name}}">
 									      <input type="checkbox" ng-model="medication.selected" ng-change="Ctrl.toggleMedicationSelection(medication)" disabled="disabled">
 									    </div>
-									</td> 
+									</td>
 								</tr>
 			    			</tbody>
 			    		</table>
@@ -143,6 +135,16 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<abm-form-group class="form-group-lg">
+						<label abm-label for="problem" type="static">Problema del paciente(*)</label>
+						<select class="form-control" name="problem" ng-options="problem as problem.problem.name for problem in Ctrl.patientProblems | filter:{problem:{problemType:'HIV'}}" ng-model="Ctrl.patientArvTreatment.patientProblem" abm-form-control disabled="disabled">
+						</select>
+					</abm-form-group>
+				</div>
+			</div>
+			<br>
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				  	<abm-form-group>
