@@ -28,7 +28,7 @@
 				    			</tr> 
 				    		</thead>
 				    		<tbody>
-				    			<tr ng-repeat="medication in NewPatientArvTreatmentController.nrtiMedications | orderBy:'selected'" ng-class="{success:medication.selected}" title="{{medication.name}}">
+				    			<tr ng-repeat="medication in NewPatientArvTreatmentController.nrtiMedications | orderBy:'selected'" ng-class="{success:medication.selected}" title="{{medication.recipeName}}">
 			    					<td style="text-transform: capitalize;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
 									      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
