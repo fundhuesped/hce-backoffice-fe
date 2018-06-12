@@ -100,7 +100,8 @@
         }
 
         function clean (){
-            vm.patient = new Patient();
+            vm.paciente = new Paciente();
+            vm.paciente.consent = 'Not asked';
         }
 
         function openFirstTimeCalendar() {
