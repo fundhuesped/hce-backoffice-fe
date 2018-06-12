@@ -132,7 +132,7 @@
       }
 
       function hasActiveMedications() {
-        return activePatientProfilaxisMedicationsCount.length > 0;
+        return vm.activePatientProfilaxisMedicationsCount > 0;
       }
 
       function displayComunicationError(loading){
