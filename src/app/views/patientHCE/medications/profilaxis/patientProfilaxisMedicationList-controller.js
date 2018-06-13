@@ -87,6 +87,7 @@
         modalInstance.result.then(function (resolution) {
           if(resolution==='markedError' || resolution==='edited'){
             searchPatientProfilaxisMedications();
+            HCService.getActivePatientProfilaxisMedications();
             if(!HCService.currentEvolution){
               HCService.getCurrentEvolution();
             }
@@ -105,6 +106,7 @@
         modalInstance.result.then(function (resolution) {
           if(resolution==='created'){
             searchPatientProfilaxisMedications();
+            HCService.getActivePatientProfilaxisMedications();
             if(!HCService.currentEvolution){
               HCService.getCurrentEvolution();
             }
