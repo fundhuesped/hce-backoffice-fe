@@ -7,6 +7,11 @@
 				</div>
 			</div>
 			<div class="row">
+				<div ng-show="NewPatientMedicationController.error" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning">
+					{{NewPatientMedicationController.error}}
+				</div>
+			</div>
+			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<abm-form-group>
 		    			<label data-abm-label type="static">Escriba el medicamento(*)</label>

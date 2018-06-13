@@ -16,6 +16,7 @@
       vm.getMedications = getMedications;
       vm.cancel = cancel;
       vm.canSave = canSave;
+      vm.error = null;
 
       Object.defineProperty(
           vm,
@@ -50,6 +51,22 @@
       activate();
 
       function save() {
+        vm.error = null;
+        if(moment(vm.newPatientMedication.startDate).diff(moment())>0){
+          vm.error = 'La fecha de inicio no puede ser mayor a hoy';
+          return;
+        }
+        if(moment(vm.newPatientMedication.endDate).diff(moment())>0){
+          vm.error = 'La fecha de fin no puede ser mayor a hoy';
+          return;
+        }
+        if(vm.newPatientMedication.endDate && moment(vm.newPatientMedication.startDate).diff(vm.newPatientMedication.endDate)>0){
+          vm.error = 'La fecha de fin no puede ser menor a la fecha de inicio';
+          return;
+        }
+
+
+
         var tmpPatientMedication = angular.copy(vm.newPatientMedication);
         tmpPatientMedication.paciente = HCService.currentPaciente.id;
         tmpPatientMedication.startDate = moment(tmpPatientMedication.startDate).format('YYYY-MM-DD');
