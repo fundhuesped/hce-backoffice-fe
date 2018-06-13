@@ -21,7 +21,7 @@
     return directive;
 
     /** @ngInject */
-    function NavbarController($state, moment, SessionService, HCService, toastr) {
+    function NavbarController($state, moment, SessionService, HCService, toastr, $uibModal) {
       var vm = this;
       vm.currentUser = SessionService.currentUser;
       vm.logout = SessionService.logout;
@@ -29,6 +29,8 @@
       vm.closeEvolution = closeEvolution;
       vm.currentPaciente = {};
       vm.years = null;
+      vm.formatedBirthDate = formatedBirthDate;
+      vm.openPacientePersonalInfoModal = openPacientePersonalInfoModal;
 
       Object.defineProperty(
           vm,
@@ -65,7 +67,31 @@
       function activate() {
       }
 
+      function openPacientePersonalInfoModal() {
+        var modalInstance = $uibModal.open({
+            backdrop: 'static',
+          templateUrl: 'app/views/patient/patientPersonalInfo.html',
+          size: 'lg',
+          controller: 'PatientPersonalInfoCtrl',
+          controllerAs: 'PacienteCtrl',
+          resolve: {
+            paciente: function () {
+              return vm.currentPaciente;
+            }
+          }
+        });
+        modalInstance.result.then(function (resolution) {
+          if(resolution==='modified' || resolution==='deleted' || resolution==='reactivated'){
+            toastr.success('Paciente modificado con éxito');
+            HCService.refreshPacienteInformation();
+          }
+        });
 
+      }
+
+      function formatedBirthDate() {
+        return (vm.currentPaciente?moment(vm.currentPaciente.birthDate, "YYYY-MM-DD").format('DDMMYYYY'):"");
+      }
       function closeEvolution() {
         HCService.closeEvolution().then(function() {
           toastr.success('Visita cerrada con exito');

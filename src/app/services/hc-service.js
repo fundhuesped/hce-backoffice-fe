@@ -1,3 +1,4 @@
+
 (function(){
     'use strict';
     /* jshint validthis: true */
@@ -18,6 +19,7 @@
         srv.currentPaciente = null;
         srv.setCurrentPaciente = setCurrentPaciente;
         srv.setPaciente = setPaciente;
+        srv.refreshPacienteInformation = refreshPacienteInformation; 
         srv.currentPacienteId = null;
         
         // Evolutions
@@ -65,7 +67,7 @@
         //ARV Treatments
         srv.currentARVTreatment = null;
         srv.getCurrentARVTreatment = getCurrentARVTreatment;
-
+        srv.getActivePatientProfilaxisMedications = getActivePatientProfilaxisMedications;
 
         activate();
 
@@ -94,6 +96,15 @@
                 srv.currentEvolution = null;
                 getActivePatientVaccines();
                 getActivePatientMedications();
+                getActivePatientProfilaxisMedications();
+            }, function (argument) {
+                // body...
+            });
+        }
+        function refreshPacienteInformation() {
+            Paciente.get({id:srv.currentPacienteId}, function (paciente) {
+                localStorageService.set('currentPaciente', srv.currentPaciente);
+                setCurrentPaciente(paciente);
             }, function (argument) {
                 // body...
             });
