@@ -9,15 +9,20 @@
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<div class="row hce-labResult-row hce-labResult-header">
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-								Determinación
+								Fecha
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<div class="input-group">
 									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="newLabDate" ng-model="Ctrl.newLab.date" is-open="Ctrl.newLabDateCalendar.opened" datepicker-options="Ctrl.newLabDateCalendar.options" close-text="Cerrar" alt-input-formats="Ctrl.newLabDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" />
-			                        <div class="input-group-btn input-group-small">
-			                          <button type="button" class="btn btn-default btn-xs" style="margin: 0px;" ng-click="Ctrl.newLabDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
-			                        </div>									
+									<div class="input-group-btn input-group-small">
+										<button type="button" class="btn btn-default btn-xs" style="margin: 0px;" ng-click="Ctrl.newLabDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+									</div>
 								</div>
+							</div>
+						</div>
+						<div class="row hce-labResult-header">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								Determinacion
 							</div>
 						</div>
 						<div class="row hce-labResult-row" ng-repeat-start="categoriaDeterminacion in Ctrl.categoriasDeterminaciones">
@@ -34,7 +39,7 @@
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
 								<input type="text" ng-model="Ctrl.newLabValues[determinacion.code]">
 							</div>
-						</div >
+						</div>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<div class="row">
@@ -43,6 +48,9 @@
 									<div class="">
 										{{labResult.date|date:'dd/MM/yyyy'}}
 									</div>
+								</div>
+								<div class="row hce-labResult-header">
+									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"></div>
 								</div>
 								<div class="row hce-labResult-row" ng-repeat-start="categoriaDeterminacion in Ctrl.categoriasDeterminaciones">
 									<div ng-click="Ctrl.toggleCategoria(categoriaDeterminacion);" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell" style="text-align: left;">
