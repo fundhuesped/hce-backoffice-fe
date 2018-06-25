@@ -2,14 +2,14 @@
     <div class="modal-dialog modal-confirmation">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">¿{{PacienteCtrl.paciente.status == "Active" ? "Eliminar" : "Reactivar"}}?</h4>
+                <h4 class="modal-title">¿{{PacienteCtrl.paciente.status == "Active" ? "Desactivar" : "Reactivar"}}?</h4>
             </div>
             <div class="modal-body">
-                <p>¿Esta seguro que desea {{PacienteCtrl.paciente.status == "Active" ? "eliminar" : "reactivar"}} el paciente seleccionado?</p>
+                <p>¿Esta seguro que desea {{PacienteCtrl.paciente.status == "Active" ? "desactivar" : "reactivar"}} el paciente seleccionado?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default btn-cancel" ng-click="PacienteCtrl.dismissModal()">Cancelar</button>
-                <button type="button" class="btn btn-danger btn-confirm" ng-click="PacienteCtrl.confirmModal()"><span class="glyphicon glyphicon-remove"></span> {{PacienteCtrl.paciente.status == "Active" ? "Eliminar" : "Reactivar"}}</button>
+                    <button type="button" class="btn btn-danger btn-confirm" ng-click="PacienteCtrl.confirmModal()"><span class="glyphicon glyphicon-remove"></span> {{PacienteCtrl.paciente.status == "Active" ? "Desactivar" : "Reactivar"}}</button>
             </div>
         </div>
     </div>
@@ -303,7 +303,7 @@
             </form>
 
             <div class="col-xs-6 col-sm-7 col-md-7 col-lg-7">
-                <button ng-click="PacienteCtrl.changeStatus()" class="btn btn-link " >{{PacienteCtrl.paciente.status == "Active" ? "Eliminar" : "Reactivar"}}</button>
+                <button ng-click="PacienteCtrl.changeStatus()" class="btn btn-link " >{{PacienteCtrl.paciente.status == "Active" ? "Desactivar" : "Reactivar"}}</button>
             </div>
             <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
                 <button ng-click="PacienteCtrl.cancel()" class="btn btn-default">Cancelar</button>
