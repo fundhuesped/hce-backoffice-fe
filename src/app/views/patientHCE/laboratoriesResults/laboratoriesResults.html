@@ -29,7 +29,7 @@
 							<div ng-click="Ctrl.toggleCategoria(categoriaDeterminacion);" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell" style="text-align: left;">
 								<b>{{categoriaDeterminacion.name}}</b>
 							</div>
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
+							<div ng-click="Ctrl.toggleCategoria(categoriaDeterminacion);" 	class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
 							</div>
 						</div>
 						<div ng-repeat-end class="row hce-labResult-row" ng-repeat="determinacion in categoriaDeterminacion.determinaciones" ng-show="categoriaDeterminacion.show">
@@ -55,7 +55,7 @@
 								<div class="row hce-labResult-row" ng-repeat-start="categoriaDeterminacion in Ctrl.categoriasDeterminaciones">
 									<div ng-click="Ctrl.toggleCategoria(categoriaDeterminacion);" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell" style="text-align: left;">
 									</div>
-									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
+									<div ng-click="Ctrl.toggleCategoria(categoriaDeterminacion);" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
 									</div>
 								</div>
 								<div ng-repeat-end class="row hce-labResult-row" ng-repeat="determinacion in categoriaDeterminacion.determinaciones" ng-show="categoriaDeterminacion.show">
