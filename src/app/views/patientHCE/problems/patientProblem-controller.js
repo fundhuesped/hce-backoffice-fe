@@ -16,6 +16,7 @@
     	vm.canEdit = canEdit;
     	vm.markAsError = markAsError;
       vm.save = save;
+      vm.originalProblem = patientProblem;
 
     	activate();
 

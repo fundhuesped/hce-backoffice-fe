@@ -45,11 +45,11 @@
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				  	<abm-form-group>
 					    <label>Estado del problema </label>
-					    <div class="radio" abm-radio label="Activo">
-					      <input type="radio" name="activo" value="Active" ng-model="PatientProblemController.problem.state">
+					    <div class="radio" abm-radio label="Activo" >
+					      <input type="radio" name="activo" value="Active" ng-model="PatientProblemController.problem.state" ng-disabled="PatientProblemController.originalProblem.state == 'Closed'">
 					    </div>
 					    <div class="radio" abm-radio label="Resuelto">
-					      <input type="radio" name="cerrado" value="Closed" ng-model="PatientProblemController.problem.state">
+					      <input type="radio" name="cerrado" value="Closed" ng-model="PatientProblemController.problem.state" ng-disabled="PatientProblemController.originalProblem.state == 'Closed'">
 					    </div>					    
 				  	</abm-form-group>
 				</div>
