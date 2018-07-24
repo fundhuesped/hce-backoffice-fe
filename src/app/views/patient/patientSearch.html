@@ -51,23 +51,18 @@
 							                <input class="form-control" name="fatherSurname" ng-model="PSCtrl.filter.fatherSurname" abm-form-control/>
 							            </abm-form-group>
 									</div>
-									<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 							            <abm-form-group>
-							            	<label abm-label for="birthDate">Fecha de nacimiento</label>
+							            	<label abm-label for="birthDate">Fecha de nacimiento <small><em>(dd/mm/aaaa o mm-dd-aaaa)</em></small> </label>
 				                      		<div class="input-group">
-												<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="birthDate" ng-model="PSCtrl.filter.birthDate" is-open="PSCtrl.birthDateCalendarPopup.opened" datepicker-options="PSCtrl.birthDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PSCtrl.birthDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" placeholder="DD/MM/AAAAA"/>
+												<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="birthDate" ng-model="PSCtrl.filter.birthDate" is-open="PSCtrl.birthDateCalendarPopup.opened" datepicker-options="PSCtrl.birthDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PSCtrl.birthDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
 						                        <span class="input-group-btn">
 						                          <button type="button" class="btn btn-default" ng-click="PSCtrl.birthDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
 						                        </span>
 							            	</div>
 							            </abm-form-group>
 									</div>
-									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-							            <abm-form-group>
-							              <label abm-label for="pnsCode">Código PNS</label>
-							                <input class="form-control" name="pnsCode" ng-model="PSCtrl.filter.pnsCode" abm-form-control placeholder="NNAADDMMAAAA" />
-							            </abm-form-group>
-									</div>
+
 									<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 										<abm-form-group>
 						                  <label abm-label for="profesional">Atendido por</label>
@@ -76,33 +71,33 @@
 						                  </select>
 						              </abm-form-group>
 									</div>
-									<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 							            <abm-form-group>
-							            	<label abm-label for="visitFromDate">Atendido en intervalo desde</label>
+							            	<label abm-label for="visitFromDate">Atendido en intervalo desde <small><em>(dd/mm/aaaa o mm-dd-aaaa)</em></small></label>
 				                      		<div class="input-group">
-												<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="visitFromDate" ng-model="PSCtrl.filter.visitFromDate" is-open="PSCtrl.visitFromDateCalendarPopup.opened" datepicker-options="PSCtrl.visitFromDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PSCtrl.visitFromDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" placeholder="DD/MM/AAAAA" />
+												<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="visitFromDate" ng-model="PSCtrl.filter.visitFromDate" is-open="PSCtrl.visitFromDateCalendarPopup.opened" datepicker-options="PSCtrl.visitFromDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PSCtrl.visitFromDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
 						                        <span class="input-group-btn">
 						                          <button type="button" class="btn btn-default" ng-click="PSCtrl.visitFromDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
 						                        </span>
 							            	</div>
 							            </abm-form-group>
 									</div>
-									<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 							            <abm-form-group>
-							            	<label abm-label for="visitToDate">Atendido en intervalo hasta</label>
+							            	<label abm-label for="visitToDate">Atendido en intervalo hasta <small><em>(dd/mm/aaaa o mm-dd-aaaa)</em></small></label>
 				                      		<div class="input-group">
-												<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="visitToDate" ng-model="PSCtrl.filter.visitToDate" is-open="PSCtrl.visitToDateCalendarPopup.opened" datepicker-options="PSCtrl.visitToDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PSCtrl.visitToDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" placeholder="DD/MM/AAAAA"/>
+												<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="visitToDate" ng-model="PSCtrl.filter.visitToDate" is-open="PSCtrl.visitToDateCalendarPopup.opened" datepicker-options="PSCtrl.visitToDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PSCtrl.visitToDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
 						                        <span class="input-group-btn">
 						                          <button type="button" class="btn btn-default" ng-click="PSCtrl.visitToDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
 						                        </span>
 							            	</div>
 							            </abm-form-group>
 									</div>
-	  								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-	  									<span><b>Código PNS formado por:</b></span></br>
-	  									<b>NN</b>: Dos primeras letras del nombre</br>
-	  									<b>AA</b>: Dos primeras letras del apellido</br>
-	  									<b>DDMMAAAA</b>: Fecha de nacimiento
+									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+										<abm-form-group>
+											<label abm-label for="pnsCode">Código PNS</label>
+											<input class="form-control" name="pnsCode" ng-model="PSCtrl.filter.pnsCode" abm-form-control placeholder="NNAADDMMAAAA" />
+										</abm-form-group>
 									</div>
 	  								<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
 							            <abm-form-group>
@@ -117,6 +112,12 @@
 							                <select class="form-control" name="status" ng-model="PSCtrl.filter.status" ng-options="status.id as status.name for status in PSCtrl.statuses | orderBy: 'name'  track by status.id" abm-form-control>
 							                </select>
 							            </abm-form-group>
+									</div>
+									<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+										<span><b>Código PNS formado por:</b></span></br>
+										<b>NN</b>: Dos primeras letras del nombre</br>
+										<b>AA</b>: Dos primeras letras del apellido</br>
+										<b>DDMMAAAA</b>: Fecha de nacimiento
 									</div>
 					  			</div>
 					  		</div>

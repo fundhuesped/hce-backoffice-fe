@@ -16,9 +16,9 @@
                 </div>
 			</div>
 			<div class="row" >
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
 				  	<abm-form-group>
-					    <label>Fecha de inicio </label>
+					    <label>Fecha de inicio <small><em>(dd/mm/aaaa o mm-dd-aaaa)</em> </label>
 							<div class="input-group">
 								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="PatientProblemController.problem.startDate" is-open="PatientProblemController.startDateCalendarPopup.opened" datepicker-options="PatientProblemController.startDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PatientProblemController.startDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
 		                        <div class="input-group-btn">
