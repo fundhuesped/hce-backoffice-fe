@@ -162,10 +162,10 @@
 			    			<tr ng-repeat="medication in NewPatientArvTreatmentController.newPatientArvTreatment.patientARVTreatmentMedications">
 		    					<td><div style="margin-top: 10px;margin-bottom: 9px;">{{medication.medication.abbreviation + (medication.medication.composition?' ' +medication.medication.composition:'' ) + (medication.medication.presentation?' ' +medication.medication.presentation:'' )}}</div></td> 
 		    					<td>
-		    						<input type="number" ng-model="medication.quantityPerDay" min="0" ng-change="medication.quantityPerMonth=medication.quantityPerDay*30"/>
+		    						<input type="number" ng-model="medication.quantityPerDay" onkeypress="return event.charCode >= 48" min="0" ng-change="medication.quantityPerMonth=medication.quantityPerDay*30"/>
 		    					</td> 
 		    					<td>
-		    						<input type="number" ng-model="medication.quantityPerMonth" min="0"/>
+		    						<input type="number" ng-model="medication.quantityPerMonth" onkeypress="return event.charCode >= 48" min="0"/>
 		    					</td> 
 	    					</tr>
 	    				</tbody>

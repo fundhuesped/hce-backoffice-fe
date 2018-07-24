@@ -55,10 +55,10 @@
 			    		<tbody>
 			    			<tr>
 		    					<td>
-		    						<input type="number" min="0" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerDay" ng-change="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerMonth=NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerDay*30"/>
+		    						<input type="number" min="0" onkeypress="return event.charCode >= 48" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerDay" ng-change="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerMonth=NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerDay*30"/>
 		    					</td> 
 		    					<td>
-		    						<input type="number" min="0" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerMonth"/>
+		    						<input type="number" min="0" onkeypress="return event.charCode >= 48" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerMonth"/>
 		    					</td> 
 	    					</tr>
 	    				</tbody>

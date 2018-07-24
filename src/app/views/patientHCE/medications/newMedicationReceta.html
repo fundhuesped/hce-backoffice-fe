@@ -24,9 +24,8 @@
 								    </div>
 								</td> 
 								<td class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-									<input type="number" ng-model="patientMedication.quantityPerMonth"/>
+									<input type="number" onkeypress="return event.charCode >= 48" min="0" ng-model="patientMedication.quantityPerMonth"/>
 								</td>
-		    				
 							</tr>
 		    			</tbody>
 		    		</table>
