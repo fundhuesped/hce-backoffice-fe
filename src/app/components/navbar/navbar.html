@@ -53,6 +53,7 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{NavbarController.currentUser.first_name}} {{NavbarController.currentUser.last_name}}<span class="caret"></span></a>
           <ul class="dropdown-menu">
+            <li ng-show="NavbarController.currentUser"><a ui-sref="changePassword">Cambiar contraseña</a></li>
             <li ng-show="NavbarController.currentUser"><a ng-click="NavbarController.logout()">Cerrar sesión</a></li>
             <li ng-show="!NavbarController.currentUser"><a ui-sref="login">Iniciar sesión</a></li>
           </ul>
