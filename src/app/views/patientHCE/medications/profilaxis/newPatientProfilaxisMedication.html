@@ -15,7 +15,7 @@
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<abm-form-group>
 		    			<label data-abm-label type="static">Escriba el medicamento(*)</label>
-                		<input type="text" abm-form-control ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.medication" uib-typeahead="medication as medication.name for medication in NewPatientProfilaxisMedicationController.getMedications($viewValue)" class="form-control" typeahead-min-length="3">
+                		<input type="text" abm-form-control ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.medication" uib-typeahead="medication as (medication.abbreviation?medication.abbreviation:medication.name) + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'') for medication in NewPatientProfilaxisMedicationController.getMedications($viewValue)" class="form-control" typeahead-min-length="3">
                 	</abm-form-group>
                 </div>
 			</div>

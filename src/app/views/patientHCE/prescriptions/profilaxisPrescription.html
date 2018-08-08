@@ -35,11 +35,12 @@
 							<tr ng-repeat="prescriptedMedication in Ctrl.prescription.prescriptedMedications">
 								<td>
 									<div class="">
-										{{prescriptedMedication.patientMedication.medication.name + ' ' + (prescriptedMedication.patientMedication.medicationPresentation?prescriptedMedication.patientMedication.medicationPresentation.name:'')}}
+										{{prescriptedMedication.patientMedication.medication.recipeName + ' ' + (prescriptedMedication.patientMedication.medication.composition? prescriptedMedication.patientMedication.medication.composition:'') + 
+											(prescriptedMedication.patientMedication.medication.presentation?' ' +prescriptedMedication.patientMedication.medication.presentation:'' )}}
 									</div>
 								</td>
-								<td>{{prescriptedMedication.quantityPerDay}}
-								<td>{{prescriptedMedication.dayCount}}
+								<td>{{prescriptedMedication.quantityPerDay}}</td>
+								<td>{{prescriptedMedication.quantityPerMonth}}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -109,7 +110,8 @@
 								<tr ng-repeat="prescriptedMedication in Ctrl.prescription.prescriptedMedications">
 									<td>
 										<div class="">
-											{{prescriptedMedication.patientMedication.medication.name + ' ' + (prescriptedMedication.patientMedication.medicationPresentation?prescriptedMedication.patientMedication.medicationPresentation.name:'')}}
+										{{prescriptedMedication.patientMedication.medication.recipeName + ' ' + (prescriptedMedication.patientMedication.medication.composition? prescriptedMedication.patientMedication.medication.composition:'') + 
+											(prescriptedMedication.patientMedication.medication.presentation?' ' +prescriptedMedication.patientMedication.medication.presentation:'' )}}
 										</div>
 									</td>
 									<td>{{prescriptedMedication.quantityPerDay}}</td>

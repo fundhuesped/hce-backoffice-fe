@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewVaccinePrescriptionController', newVaccinePrescriptionController);
 
-	  newVaccinePrescriptionController.$inject = ['$state', 'HCService', 'PatientVaccine', 'toastr', 'moment', 'Vaccine', 'Receta', '$uibModalInstance'];
+	  newVaccinePrescriptionController.$inject = ['$state', 'HCService', 'PatientVaccine', 'toastr', 'moment', 'Vaccine', 'Receta', '$uibModalInstance', '$window'];
 
-    function newVaccinePrescriptionController ($state, HCService, PatientVaccine, toastr, moment, Vaccine, Receta, $uibModalInstance) {
+    function newVaccinePrescriptionController ($state, HCService, PatientVaccine, toastr, moment, Vaccine, Receta, $uibModalInstance, $window) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newReceta = new Receta();
@@ -35,9 +35,9 @@
 
       function save() {
         var tmpNewReceta = angular.copy(vm.newReceta);
-        tmpNewReceta.vaccines = [];
+        tmpNewReceta.prescriptedVaccines = [];
         for (var i = vm.selectedVaccines.length - 1; i >= 0; i--) {
-            tmpNewReceta.vaccines.push(vm.selectedVaccines[i]);
+            tmpNewReceta.prescriptedVaccines.push(vm.selectedVaccines[i]);
         }
         tmpNewReceta.prescripctionType = 'Vaccine';
         tmpNewReceta.issuedDate = moment(tmpNewReceta.issuedDate).format('YYYY-MM-DD');

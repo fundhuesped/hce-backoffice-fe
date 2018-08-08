@@ -37,7 +37,7 @@
 
         for (var i = vm.selectedMedications.length - 1; i >= 0; i--) {
           if(vm.selectedMedications[i].selected){
-            tmpNewReceta.prescriptedMedications.push({medication:vm.selectedMedications[i].id, quantityPerDay:vm.selectedMedications[i].quantityPerDay, quantityPerMonth:vm.selectedMedications[i].quantityPerMonth});
+            tmpNewReceta.prescriptedMedications.push({medication:vm.selectedMedications[i].medication.id, quantityPerDay:vm.selectedMedications[i].quantityPerDay, quantityPerMonth:vm.selectedMedications[i].quantityPerMonth});
           }
         }
         tmpNewReceta.prescripctionType = 'Arv';

@@ -52,6 +52,15 @@
               prescription: null
           }
       })
+      .state('vaccinePrescription', {
+          url: '/vaccinePrescription?prescriptionId',
+          templateUrl: 'app/views/patientHCE/prescriptions/vaccinePrescription.html',
+          controller: 'VaccinePrescriptionController',
+          controllerAs: 'Ctrl',        
+          params: {
+              prescription: null
+          }
+      })
       .state('home', {
         url: '/',
           templateUrl: 'app/views/login/login.html',

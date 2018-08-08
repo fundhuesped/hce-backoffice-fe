@@ -119,7 +119,7 @@
         var modalInstance = $uibModal.open({
           backdrop: 'static',
           templateUrl: 'app/views/patientHCE/medications/profilaxis/newProfilaxisMedicationReceta.html',
-          size: 'md',
+          size: 'lg',
           controller: 'NewProfilaxisMedicationRecetaController',
           controllerAs: 'Ctrl'
         });
