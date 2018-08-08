@@ -162,10 +162,10 @@
 			    			<tr ng-repeat="medication in NewPatientArvTreatmentController.newPatientArvTreatment.patientARVTreatmentMedications">
 		    					<td><div style="margin-top: 10px;margin-bottom: 9px;">{{medication.medication.abbreviation + (medication.medication.composition?' ' +medication.medication.composition:'' ) + (medication.medication.presentation?' ' +medication.medication.presentation:'' )}}</div></td> 
 		    					<td>
-		    						<input type="number" ng-model="medication.quantityPerDay" ng-change="medication.quantityPerMonth=medication.quantityPerDay*30"/>
+		    						<input type="number" ng-model="medication.quantityPerDay" onkeypress="return event.charCode >= 48" min="0" ng-change="medication.quantityPerMonth=medication.quantityPerDay*30"/>
 		    					</td> 
 		    					<td>
-		    						<input type="number" ng-model="medication.quantityPerMonth"/>
+		    						<input type="number" ng-model="medication.quantityPerMonth" onkeypress="return event.charCode >= 48" min="0"/>
 		    					</td> 
 	    					</tr>
 	    				</tbody>
@@ -175,7 +175,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				  	<abm-form-group>
-					    <label data-abm-label type="static">Fecha de inicio(*)</label>
+					    <label data-abm-label type="static">Fecha de inicio(*) <small><em>(dd/mm/aaaa o mm-dd-aaaa)</em></small></label>
 							<div class="input-group">
 								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.startDate" is-open="NewPatientArvTreatmentController.startDateCalendar.opened" datepicker-options="NewPatientArvTreatmentController.startDateCalendar.options" close-text="Cerrar" alt-input-formats="NewPatientArvTreatmentController.startDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
 		                        <div class="input-group-btn">
@@ -186,7 +186,7 @@
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="NewPatientArvTreatmentController.newPatientArvTreatment.state=='Closed'">
 				  	<abm-form-group>
-					    <label data-abm-label type="static">Fecha de fin(*)</label>
+					    <label data-abm-label type="static">Fecha de fin(*) <small><em>(dd/mm/aaaa o mm-dd-aaaa)</em></small></label>
 							<div class="input-group">
 								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.endDate" is-open="NewPatientArvTreatmentController.endDateCalendar.opened" datepicker-options="NewPatientArvTreatmentController.endDateCalendar.options" close-text="Cerrar" alt-input-formats="NewPatientArvTreatmentController.endDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
 		                        <div class="input-group-btn">

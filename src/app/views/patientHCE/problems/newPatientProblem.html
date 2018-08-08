@@ -20,9 +20,9 @@
                 </div>
 			</div>
 			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 				  	<abm-form-group>
-					    <label>Fecha de inicio(*)</label>
+					    <label>Fecha de inicio(*) <small><em>(dd/mm/aaaa o mm-dd-aaaa)</em></small></label>
 						<div class="input-group">
 							<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientProblemController.newPatientProblem.startDate" is-open="NewPatientProblemController.startDateCalendarPopup.opened" datepicker-options="NewPatientProblemController.startDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.startDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-change="NewPatientProblemController.closeDateCalendarPopup.updateMinDate()"/>
 	                        <div class="input-group-btn">
@@ -33,7 +33,7 @@
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-show="NewPatientProblemController.newPatientProblem.state=='Closed'">
 				  	<abm-form-group>
-					    <label>Fecha de cierre</label>
+					    <label>Fecha de cierre <small><em>(dd/mm/aaaa o mm-dd-aaaa)</em></small></label>
 						<div class="input-group">
 							<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="closeDate" ng-model="NewPatientProblemController.newPatientProblem.closeDate" is-open="NewPatientProblemController.closeDateCalendarPopup.opened" datepicker-options="NewPatientProblemController.closeDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.closeDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-change="NewPatientProblemController.startDateCalendarPopup.updateMaxDate()"/>
 	                        <div class="input-group-btn">
@@ -65,6 +65,113 @@
 				  	</abm-form-group>
 		  		</div>
 		  	</div>
+			<div ng-show="NewPatientProblemController.newPatientProblem.problem.name=='Infección por HIV' || NewPatientProblemController.newPatientProblem.problem=='Infección por HIV'">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group>
+							<label type="static" style="font-weight:bold">Información adicional del virus HIV</label>
+						</abm-form-group>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						<abm-form-group>
+							<label>Fecha de diagnostico</label>
+							<div class="input-group">
+								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="diagnosticDate"  ng-model="NewPatientProblemController.newPatientProblem.diagnosticDate" is-open="NewPatientProblemController.dateDiagnosticPopup.opened" datepicker-options="NewPatientProblemController.dateDiagnosticPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.dateDiagnosticPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="NewPatientProblemController.dateDiagnosticPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+								</div>
+							</div>
+						</abm-form-group>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group>
+							<label type="static" style="font-weight:bold">Vias de transmisión más probable</label>
+							<div class="checkbox" abm-checkbox label="Transmisión vertical">
+								<input type="checkbox" name="vertical" ng-model="NewPatientProblemController.newPatientProblem.vertical">
+							</div>
+							<div class="checkbox" abm-checkbox label="Relaciones sexuales con mujeres">
+								<input type="checkbox" name="mujeres" ng-model="NewPatientProblemController.newPatientProblem.mujeres">
+							</div>
+							<div class="checkbox" abm-checkbox label="Relaciones sexuales con hombres">
+								<input type="checkbox" name="hombres" ng-model="NewPatientProblemController.newPatientProblem.hombres">
+							</div>
+							<div class="checkbox" abm-checkbox label="Relaciones sexuales con trans">
+								<input type="checkbox" name="trans" ng-model="NewPatientProblemController.newPatientProblem.trans">
+							</div>
+							<div class="checkbox" abm-checkbox label="Uso compartido de equipo de inyección en los últimos 10 años">
+								<input type="checkbox" name="inyeccion" ng-model="NewPatientProblemController.newPatientProblem.inyeccion">
+							</div>
+							<div class="checkbox" abm-checkbox label="Accidente laboral">
+								<input type="checkbox" name="accidente" ng-model="NewPatientProblemController.newPatientProblem.accidente">
+							</div>
+							<div class="checkbox" abm-checkbox label="Transfusión sanguínea o derivados">
+								<input type="checkbox" name="transfusion" ng-model="NewPatientProblemController.newPatientProblem.transfusion">
+							</div>
+							<abm-form-group>
+								<label abm-label>Institución</label>
+								<input type="text" name="institution" maxlength="70" class="form-control" ng-model="NewPatientProblemController.newPatientProblem.institution">
+							</abm-form-group>
+							<abm-form-group>
+								<label abm-label>Ciudad</label>
+								<input type="text" name="city" maxlength="70" class="form-control" ng-model="NewPatientProblemController.newPatientProblem.city">
+							</abm-form-group>
+							<abm-form-group>
+								<label abm-label>Fecha</label>
+								<div class="input-group">
+									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="date" ng-model="NewPatientProblemController.newPatientProblem.date" is-open="NewPatientProblemController.dateCalendarPopup.opened" datepicker-options="NewPatientProblemController.dateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.dateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="NewPatientProblemController.dateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+									</div>
+								</div>
+							</abm-form-group>
+							<abm-form-group>
+								<div class="checkbox" abm-checkbox label="Otras">
+									<input type="checkbox" name="otraCheck" ng-model="NewPatientProblemController.newPatientProblem.otraCheck">
+								</div>
+								<input type="text" name="otras" maxlength="70" class="form-control" placeholder="¿Cual?" ng-model="NewPatientProblemController.newPatientProblem.otras">
+							<abm-form-group>
+							<div class="checkbox" abm-checkbox label="Desconocida">
+								<input type="checkbox" name="desconocida" ng-model="NewPatientProblemController.newPatientProblem.desconocida">
+							</div>
+							<abm-form-group>
+								<label type="static" style="font-weight:bold">Si es mujer, ¿el diagnóstico se realizó durante un embarazo, parto o puerperio?</label>
+								<div class="radio" abm-radio label="Si">
+									<input type="radio" name="Si" value="Si" ng-model="NewPatientProblemController.newPatientProblem.state">
+								</div>
+								<div class="radio" abm-radio label="No">
+									<input type="radio" name="No" value="No" ng-model="NewPatientProblemController.newPatientProblem.state">
+								</div>
+								<div class="radio" abm-radio label="Desconocido">
+									<input type="radio" name="Desconocido" value="Desconocido" ng-model="NewPatientProblemController.newPatientProblem.state">
+								</div>
+							</abm-form-group>
+							<abm-form-group>
+								<label type="static" style="font-weight:bold">Estadio clínico al momento del diagnóstico serológico confirmado</label>
+								<div class="checkbox" abm-checkbox label="Síndrome retroviral agudo">
+									<input type="checkbox" name="vertical" ng-model="NewPatientProblemController.newPatientProblem.retrovialAgudo">
+								</div>
+								<div class="checkbox" abm-checkbox label="Infección asintomática">
+									<input type="checkbox" name="mujeres" ng-model="NewPatientProblemController.newPatientProblem.asintomatica">
+								</div>
+								<div class="checkbox" abm-checkbox label="Infección sintomática sin criterio de sida">
+									<input type="checkbox" name="hombres" ng-model="NewPatientProblemController.newPatientProblem.sintomatica">
+								</div>
+								<div class="checkbox" abm-checkbox label="Enfermedad marcadora de sida">
+									<input type="checkbox" name="trans" ng-model="NewPatientProblemController.newPatientProblem.enfMarcadoraSida">
+								</div>
+								<div class="checkbox" abm-checkbox label="Desconocido">
+									<input type="checkbox" name="inyeccion" ng-model="NewPatientProblemController.newPatientProblem.desconocido">
+								</div>
+							</abm-form-group>
+						</abm-form-group>
+					</div>
+				</div>
+			</div>
+
 
 			<div class="row" >
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -75,7 +182,7 @@
 					  	</div>
 				  	</div>
 			  	</div>
-			</div>		    					
+			</div>
 		</div>
 	</div>
 </div>

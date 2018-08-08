@@ -66,6 +66,26 @@
 
       };
 
+      vm.dateDiagnosticPopup = {
+        opened: false,
+        options: {
+          maxDate: new Date()
+        },
+        open : function(){
+          this.opened = true;
+        }
+      };
+
+      vm.dateCalendarPopup = {
+        opened: false,
+        options: {
+          maxDate: new Date()
+        },
+        open : function(){
+          this.opened = true;
+        }
+      };
+
       function saveNewPatientProblem() {
 
         // if(vm.newProblemDateOption == 'today'){
