@@ -7,7 +7,6 @@
         var vm = this;
         vm.errorMessage = null;
         vm.login = login;
-        vm.rememberMe = true;
         vm.hideErrorMessage = hideErrorMessage;
 
         function login(){
@@ -15,7 +14,7 @@
             hideErrorMessage();
 
             if(vm.LoginForm.$valid){
-                SessionService.login(vm.username, vm.password, vm.rememberMe, function(){
+                SessionService.login(vm.username, vm.password, false, function(){
                     $loading.finish('app');
                     $state.transitionTo('app.patientSearch');
                 }, function(errorResponse){
