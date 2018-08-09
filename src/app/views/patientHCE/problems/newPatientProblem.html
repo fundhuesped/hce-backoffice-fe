@@ -111,15 +111,15 @@
 							<div class="checkbox" abm-checkbox label="Transfusión sanguínea o derivados">
 								<input type="checkbox" name="transfusion" ng-model="NewPatientProblemController.newPatientProblem.transfusion">
 							</div>
-							<abm-form-group>
+							<abm-form-group ng-if="NewPatientProblemController.newPatientProblem.transfusion">
 								<label abm-label>Institución</label>
 								<input type="text" name="institution" maxlength="70" class="form-control" ng-model="NewPatientProblemController.newPatientProblem.institution">
 							</abm-form-group>
-							<abm-form-group>
+							<abm-form-group ng-if="NewPatientProblemController.newPatientProblem.transfusion">
 								<label abm-label>Ciudad</label>
 								<input type="text" name="city" maxlength="70" class="form-control" ng-model="NewPatientProblemController.newPatientProblem.city">
 							</abm-form-group>
-							<abm-form-group>
+							<abm-form-group ng-if="NewPatientProblemController.newPatientProblem.transfusion">
 								<label abm-label>Fecha</label>
 								<div class="input-group">
 									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="date" ng-model="NewPatientProblemController.newPatientProblem.date" is-open="NewPatientProblemController.dateCalendarPopup.opened" datepicker-options="NewPatientProblemController.dateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.dateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
@@ -128,12 +128,10 @@
 									</div>
 								</div>
 							</abm-form-group>
-							<abm-form-group>
-								<div class="checkbox" abm-checkbox label="Otras">
-									<input type="checkbox" name="otraCheck" ng-model="NewPatientProblemController.newPatientProblem.otraCheck">
-								</div>
-								<input type="text" name="otras" maxlength="70" class="form-control" placeholder="¿Cual?" ng-model="NewPatientProblemController.newPatientProblem.otras">
-							<abm-form-group>
+							<div class="checkbox" abm-checkbox label="Otras">
+								<input type="checkbox" name="otraCheck" ng-model="NewPatientProblemController.newPatientProblem.otraCheck">
+							</div>
+							<input ng-if="NewPatientProblemController.newPatientProblem.otraCheck" type="text" name="otras" maxlength="70" class="form-control" placeholder="¿Cual?" ng-model="NewPatientProblemController.newPatientProblem.otras">
 							<div class="checkbox" abm-checkbox label="Desconocida">
 								<input type="checkbox" name="desconocida" ng-model="NewPatientProblemController.newPatientProblem.desconocida">
 							</div>
@@ -151,20 +149,20 @@
 							</abm-form-group>
 							<abm-form-group>
 								<label type="static" style="font-weight:bold">Estadio clínico al momento del diagnóstico serológico confirmado</label>
-								<div class="checkbox" abm-checkbox label="Síndrome retroviral agudo">
-									<input type="checkbox" name="vertical" ng-model="NewPatientProblemController.newPatientProblem.retrovialAgudo">
+								<div class="radio" abm-radio label="Síndrome retroviral agudo">
+									<input type="radio" name="radio_agudo" value="agudo" ng-model="NewPatientProblemController.newPatientProblem.clinicalState">
 								</div>
-								<div class="checkbox" abm-checkbox label="Infección asintomática">
-									<input type="checkbox" name="mujeres" ng-model="NewPatientProblemController.newPatientProblem.asintomatica">
+								<div class="radio" abm-radio label="Infección asintomática">
+									<input type="radio" name="radio_asintomatica" value="asintomatica" ng-model="NewPatientProblemController.newPatientProblem.clinicalState">
 								</div>
-								<div class="checkbox" abm-checkbox label="Infección sintomática sin criterio de sida">
-									<input type="checkbox" name="hombres" ng-model="NewPatientProblemController.newPatientProblem.sintomatica">
+								<div class="radio" abm-radio label="Infección sintomática sin criterio de sida">
+									<input type="radio" name="radio_sintomatica" value="sintomatica" ng-model="NewPatientProblemController.newPatientProblem.clinicalState">
 								</div>
-								<div class="checkbox" abm-checkbox label="Enfermedad marcadora de sida">
-									<input type="checkbox" name="trans" ng-model="NewPatientProblemController.newPatientProblem.enfMarcadoraSida">
+								<div class="radio" abm-radio label="Enfermedad marcadora de sida">
+									<input type="radio" name="radio_marcadora" value="enfMarcadoraSida" ng-model="NewPatientProblemController.newPatientProblem.clinicalState">
 								</div>
-								<div class="checkbox" abm-checkbox label="Desconocido">
-									<input type="checkbox" name="inyeccion" ng-model="NewPatientProblemController.newPatientProblem.desconocido">
+								<div class="radio" abm-radio label="Desconocido">
+									<input type="radio" name="radio_desconocido" value="desconocido" ng-model="NewPatientProblemController.newPatientProblem.clinicalState">
 								</div>
 							</abm-form-group>
 						</abm-form-group>

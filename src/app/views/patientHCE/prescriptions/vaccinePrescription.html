@@ -24,10 +24,10 @@
 					</div>
 				</div>
 				<div class="prescriptionMedicationsList">
-					<div class="row prescriptionMedication" ng-repeat="prescriptedVaccine in Ctrl.prescription.prescriptedVaccine">
+					<div class="row prescriptionMedication" ng-repeat="prescriptedVaccine in Ctrl.prescription.prescriptedVaccines">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="">
-								{{prescriptedVaccine.vaccine.name)}}
+								{{prescriptedVaccine.name}}
 							</div>
 						</div>
 					</div>
@@ -79,7 +79,7 @@
 						<div class="row prescriptionMedication" ng-repeat="prescriptedVaccine in Ctrl.prescription.prescriptedVaccines">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<div class="hce-form-title">
-									{{prescriptedVaccine.vaccine.name}}
+									{{prescriptedVaccine.name}}
 								</div>
 							</div>
 						</div>
