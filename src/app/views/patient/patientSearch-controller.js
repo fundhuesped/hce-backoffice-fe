@@ -59,6 +59,7 @@
         options: {
           maxDate: new Date()
         },
+        altInputFormats: ['d!-M!-yyyy'],
         open : function(){
           this.opened = true;
         }
@@ -70,6 +71,7 @@
         options: {
           maxDate: new Date()
         },
+        altInputFormats: ['d!-M!-yyyy'],
         open : function(){
           this.opened = true;
         }
@@ -80,6 +82,7 @@
         options: {
           maxDate: new Date()
         },
+        altInputFormats: ['d!-M!-yyyy'],
         open : function(){
           this.opened = true;
         }
@@ -233,7 +236,7 @@
     }
 
       function openPatient(patient) {
-          if(HCService.isDirty()){
+          if(HCService.canOpenPatient()){
             vm.changePacientModal.show(patient);
           }else{
             $state.go('app.patientHCE.resumen',{patientId: patient.id});

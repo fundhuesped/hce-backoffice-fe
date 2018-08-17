@@ -45,10 +45,7 @@
           toastr.success('Receta generada con éxito');
           var url = $state.href('generalPrescription', {prescriptionId: prescription.id});
           $window.open(url,'_blank');
-          openRecetaModal(prescription.id);
           $uibModalInstance.close('created');
-
-
         }, showError);
       }
 

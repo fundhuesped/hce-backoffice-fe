@@ -22,13 +22,16 @@
         vm.hideErrorMessage = hideErrorMessage;
         vm.activeTab = 0;
         vm.birthDateCalendarPopup = {
-          opened: false,
-          options: {
-            maxDate: new Date(),
-          }
+            opened: false,
+            altInputFormats: ['d!-M!-yyyy'],
+
+            options: {
+                maxDate: new Date(),
+            }
         };
         vm.firstTimeCalendarPopup = {
-          opened: false,
+            opened: false,
+            altInputFormats: ['d!-M!-yyyy'],
           options: {
             maxDate: new Date(),
           }

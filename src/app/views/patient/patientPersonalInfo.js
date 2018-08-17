@@ -19,16 +19,18 @@
         vm.originalPaciente = {};
         vm.confirmStatusChange = confirmStatusChange;
         vm.birthDateCalendarPopup = {
-          opened: false,
-          options: {
-            maxDate: new Date(),
-          }
+            opened: false,
+            altInputFormats: ['d!-M!-yyyy'],
+            options: {
+                maxDate: new Date(),
+            }
         };
         vm.firstTimeCalendarPopup = {
-          opened: false,
-          options: {
-            maxDate: new Date(),
-          }
+            opened: false,
+            altInputFormats: ['d!-M!-yyyy'],
+            options: {
+                maxDate: new Date(),
+            }
         };
 
         vm.openBirthDateCalendar = openBirthDateCalendar;

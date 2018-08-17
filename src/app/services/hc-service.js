@@ -14,7 +14,7 @@
 
         //Common
         srv.isDirty = isDirty;
-
+        srv.canOpenPatient = canOpenPatient;
         //Paciente
         srv.currentPaciente = null;
         srv.setCurrentPaciente = setCurrentPaciente;
@@ -83,6 +83,17 @@
                 return true;
             }
             if(srv.currentEvolution && srv.currentEvolution.notaClinica != srv.currentEvolutionCopy.notaClinica){
+                return true;
+            }
+            if(srv.currentPaciente.id == )
+            return false;
+        }
+
+        function canOpenPatient(patient) {
+            if(!isDirty){
+                return true;
+            }
+            if(srv.currentPaciente.id == patient.id){
                 return true;
             }
             return false;
