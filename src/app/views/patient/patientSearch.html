@@ -36,7 +36,7 @@
 									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
 							            <abm-form-group>
 							              <label abm-label for="documentNumber">Número de documento</label>
-							                <input class="form-control" name="documentNumber" ng-model="PSCtrl.filter.documentNumber" abm-form-control/>
+							                <input class="form-control" name="documentNumber" ng-model="PSCtrl.filter.documentNumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' abm-form-control/>
 							            </abm-form-group>
 									</div>
 									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">

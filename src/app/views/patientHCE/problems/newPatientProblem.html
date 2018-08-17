@@ -73,19 +73,7 @@
 						</abm-form-group>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-						<abm-form-group>
-							<label>Fecha de diagnostico</label>
-							<div class="input-group">
-								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="diagnosticDate"  ng-model="NewPatientProblemController.newPatientProblem.diagnosticDate" is-open="NewPatientProblemController.dateDiagnosticPopup.opened" datepicker-options="NewPatientProblemController.dateDiagnosticPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.dateDiagnosticPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
-								<div class="input-group-btn">
-									<button type="button" class="btn btn-default" ng-click="NewPatientProblemController.dateDiagnosticPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
-								</div>
-							</div>
-						</abm-form-group>
-					</div>
-				</div>
+
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<abm-form-group>
@@ -138,13 +126,13 @@
 							<abm-form-group>
 								<label type="static" style="font-weight:bold">Si es mujer, ¿el diagnóstico se realizó durante un embarazo, parto o puerperio?</label>
 								<div class="radio" abm-radio label="Si">
-									<input type="radio" name="Si" value="Si" ng-model="NewPatientProblemController.newPatientProblem.state">
+									<input type="radio" name="Si" value="Si" ng-model="NewPatientProblemController.newPatientProblem.woman">
 								</div>
 								<div class="radio" abm-radio label="No">
-									<input type="radio" name="No" value="No" ng-model="NewPatientProblemController.newPatientProblem.state">
+									<input type="radio" name="No" value="No" ng-model="NewPatientProblemController.newPatientProblem.woman">
 								</div>
 								<div class="radio" abm-radio label="Desconocido">
-									<input type="radio" name="Desconocido" value="Desconocido" ng-model="NewPatientProblemController.newPatientProblem.state">
+									<input type="radio" name="Desconocido" value="Desconocido" ng-model="NewPatientProblemController.newPatientProblem.woman">
 								</div>
 							</abm-form-group>
 							<abm-form-group>
