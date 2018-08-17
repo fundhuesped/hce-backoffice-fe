@@ -86,7 +86,7 @@
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group class="form-group" ng-class="{'has-error':PacienteCtrl.pacienteForm.documentNumber.$error.required}">
                                         <label abm-label for="documentNumber">Número*</label>
-                                        <input class="form-control" maxlength="10" type="text" name="documentNumber" id="documentNumber" ng-model="PacienteCtrl.paciente.documentNumber" ng-required="true">
+                                        <input class="form-control" maxlength="10" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="documentNumber" id="documentNumber" ng-model="PacienteCtrl.paciente.documentNumber" ng-required="true">
                                 </abm-form-group>
                             </div>
                         </div>
@@ -118,7 +118,7 @@
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group>
                                     <label abm-label for="socialServiceNumber">Número asociado <span class="hce-input-observation">(máximo 20 caracteres)</span></label>
-                                    <input type="text" name="socialServiceNumber" maxlength="20" class="form-control" ng-model="PacienteCtrl.paciente.socialServiceNumber">
+                                    <input type="text" name="socialServiceNumber" maxlength="20" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control" ng-model="PacienteCtrl.paciente.socialServiceNumber">
                                 </abm-form-group>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group>
                                     <label abm-label for="primaryPhoneNumber">Teléfono*</label>
-                                    <input type="number" name="primaryPhoneNumber" maxlength="20" class="form-control" ng-model="PacienteCtrl.paciente.primaryPhoneNumber" required>
+                                    <input type="number" name="primaryPhoneNumber" maxlength="20" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control" ng-model="PacienteCtrl.paciente.primaryPhoneNumber" required>
                                 </abm-form-group>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -140,7 +140,7 @@
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group>
                                     <label abm-label for="primaryPhoneNumber">Teléfono 2</label>
-                                    <input type="number" name="primaryPhoneNumber" maxlength="20" class="form-control" ng-model="PacienteCtrl.paciente.secondPhoneNumber" >
+                                    <input type="number" name="primaryPhoneNumber" maxlength="20" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control" ng-model="PacienteCtrl.paciente.secondPhoneNumber" >
                                 </abm-form-group>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -154,7 +154,7 @@
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group>
                                     <label abm-label for="primaryPhoneNumber">Teléfono 3</label>
-                                    <input type="number" name="primaryPhoneNumber" maxlength="20" class="form-control" ng-model="PacienteCtrl.paciente.thirdPhoneNumber">
+                                    <input type="number" name="primaryPhoneNumber" maxlength="20" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control" ng-model="PacienteCtrl.paciente.thirdPhoneNumber">
                                 </abm-form-group>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
