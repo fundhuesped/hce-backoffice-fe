@@ -79,7 +79,7 @@
           if(medications[i].medication.medicationType.code == 'IP'){
             ip.push(medications[i].medication.abbreviation);
           }
-          if(medications[i].medication.medicationType.code == 'II'){
+          if(medications[i].medication.medicationType.code == 'INI'){
             ii.push(medications[i].medication.abbreviation);
           }
           if(medications[i].medication.medicationType.code == 'COMBO'){

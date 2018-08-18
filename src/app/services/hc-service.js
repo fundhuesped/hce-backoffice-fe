@@ -85,15 +85,14 @@
             if(srv.currentEvolution && srv.currentEvolution.notaClinica != srv.currentEvolutionCopy.notaClinica){
                 return true;
             }
-            if(srv.currentPaciente.id == )
             return false;
         }
 
         function canOpenPatient(patient) {
-            if(!isDirty){
+            if(!isDirty()){
                 return true;
             }
-            if(srv.currentPaciente.id == patient.id){
+            if(srv.currentPaciente && srv.currentPaciente.id == patient.id){
                 return true;
             }
             return false;

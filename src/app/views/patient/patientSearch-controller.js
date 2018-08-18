@@ -236,10 +236,10 @@
     }
 
       function openPatient(patient) {
-          if(HCService.canOpenPatient()){
-            vm.changePacientModal.show(patient);
-          }else{
+          if(HCService.canOpenPatient(patient)){
             $state.go('app.patientHCE.resumen',{patientId: patient.id});
+          }else{
+            vm.changePacientModal.show(patient);
           }
       }
 

@@ -42,6 +42,7 @@
 
       vm.fromCalendarPopup = {
         opened: false,
+        altInputFormats: ['d!-M!-yyyy'],
         options: {
           maxDate: new Date()
         },
@@ -52,6 +53,7 @@
 
       vm.toCalendarPopup = {
         opened: false,
+        altInputFormats: ['d!-M!-yyyy'],
         options: {
           maxDate: new Date()
         },

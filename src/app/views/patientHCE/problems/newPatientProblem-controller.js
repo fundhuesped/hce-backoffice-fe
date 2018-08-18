@@ -41,6 +41,7 @@
 
       vm.startDateCalendarPopup = {
         opened: false,
+        altInputFormats: ['d!-M!-yyyy'],
         options: {
           maxDate: new Date()
         },
@@ -54,6 +55,7 @@
 
       vm.closeDateCalendarPopup = {
         opened: false,
+        altInputFormats: ['d!-M!-yyyy'],
         options: {
           maxDate: new Date()
         },
@@ -67,6 +69,7 @@
       };
 
       vm.dateDiagnosticPopup = {
+        altInputFormats: ['d!-M!-yyyy'],
         opened: false,
         options: {
           maxDate: new Date()
@@ -78,6 +81,7 @@
 
       vm.dateCalendarPopup = {
         opened: false,
+        altInputFormats: ['d!-M!-yyyy'],
         options: {
           maxDate: new Date()
         },

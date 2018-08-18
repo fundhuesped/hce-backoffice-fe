@@ -90,6 +90,7 @@
       activate();
 
       vm.startDateCalendarPopup = {
+        altInputFormats: ['d!-M!-yyyy'],
         opened: false,
         options: {
           maxDate: new Date()
@@ -100,6 +101,7 @@
       };
 
       vm.closeDateCalendarPopup = {
+        altInputFormats: ['d!-M!-yyyy'],
         opened: false,
         options: {
           maxDate: new Date()

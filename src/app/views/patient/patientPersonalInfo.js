@@ -3,7 +3,7 @@
     /* jshint validthis: true */
     /*jshint latedef: nofunc */
 
-    function patientPersonalInfoCtrl ($loading, $uibModalInstance, $filter, $uibModal, moment, paciente, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Paciente, Country, toastr) {
+    function patientPersonalInfoCtrl ($loading, $uibModalInstance, $filter, $uibModal, $location, moment, paciente, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Paciente, Country, toastr) {
         var vm = this;
 
         vm.paciente = {};
@@ -120,7 +120,7 @@
 
         //Confirm delete modal
         vm.showModal = function showModal(){
-            vm.errorMessage = 'Por favor revise el formulario';
+            $location.hash('modal');
             vm.modalStyle = {display:'block'};
         };
 
@@ -211,5 +211,5 @@
             }
         }
     }
-    angular.module('hce.patient').controller('PatientPersonalInfoCtrl',['$loading','$uibModalInstance','$filter', '$uibModal', 'moment', 'paciente','Document', 'Sex', 'Province', 'District', 'Location', 'SocialService', 'CivilStatus', 'Education', 'Paciente', 'Country', 'toastr', patientPersonalInfoCtrl]);
+    angular.module('hce.patient').controller('PatientPersonalInfoCtrl',['$loading','$uibModalInstance','$filter', '$uibModal', '$location', 'moment', 'paciente','Document', 'Sex', 'Province', 'District', 'Location', 'SocialService', 'CivilStatus', 'Education', 'Paciente', 'Country', 'toastr', patientPersonalInfoCtrl]);
 })();

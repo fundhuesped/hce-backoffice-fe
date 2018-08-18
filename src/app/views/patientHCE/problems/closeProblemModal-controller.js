@@ -17,6 +17,7 @@
 
       vm.closeDateCalendarPopup = {
         opened: false,
+        altInputFormats: ['d!-M!-yyyy'],
         options: {
           minDate: patientProblem.startDate
         },
