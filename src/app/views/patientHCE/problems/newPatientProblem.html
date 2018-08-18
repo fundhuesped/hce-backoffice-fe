@@ -22,7 +22,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 				  	<abm-form-group>
-					    <label>Fecha de inicio(*) <small><em>(dd/mm/aaaa o dd-mm-AAAA)</em></small></label>
+					    <label>Fecha de inicio(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
 						<div class="input-group">
 							<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientProblemController.newPatientProblem.startDate" is-open="NewPatientProblemController.startDateCalendarPopup.opened" datepicker-options="NewPatientProblemController.startDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.startDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-change="NewPatientProblemController.closeDateCalendarPopup.updateMinDate()"/>
 	                        <div class="input-group-btn">
@@ -33,7 +33,7 @@
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-show="NewPatientProblemController.newPatientProblem.state=='Closed'">
 				  	<abm-form-group>
-					    <label>Fecha de cierre(*) <small><em>(dd/mm/aaaa o dd-mm-AAAA)</em></small></label>
+					    <label>Fecha de cierre(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
 						<div class="input-group">
 							<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="closeDate" ng-model="NewPatientProblemController.newPatientProblem.closeDate" is-open="NewPatientProblemController.closeDateCalendarPopup.opened" datepicker-options="NewPatientProblemController.closeDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.closeDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-change="NewPatientProblemController.startDateCalendarPopup.updateMaxDate()"/>
 	                        <div class="input-group-btn">
