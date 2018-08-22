@@ -82,7 +82,7 @@
   margin-top: 10px;
   float: left;
   color: black;
-  height: 41px;
+  height: 42px;
   cursor: pointer;
   background-color: #E1D2DE;
   margin-left: 1px;
@@ -126,9 +126,7 @@
 }
 
 .hce-brand {
-  height: 46px;
-  border-right: 1px solid;
-  border-color: lightgrey;
+  height: 71px;
   text-align: center;
 
 }
@@ -188,10 +186,6 @@
 }
 
 .hce-navdrawer li a.bars{
-  border-color: lightgray;
-  border-right: 1px solid;
-  border-top: 1px solid;
-  border-bottom: 1px solid;
 }
 
 .hce-navdrawer li a{
