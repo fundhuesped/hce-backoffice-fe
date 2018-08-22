@@ -54,10 +54,13 @@ angular.module('hce.app').filter('unique', function () {
   };
 });
   /** @ngInject */
-  function config($logProvider, toastrConfig, $resourceProvider) {
+  function config($logProvider, toastrConfig, $resourceProvider, localStorageServiceProvider) {
     // Enable log
     $logProvider.debugEnabled(true);
     $resourceProvider.defaults.stripTrailingSlashes = false;
+
+    localStorageServiceProvider.setStorageType('sessionStorage');
+
 
     // Set options third-party lib
     toastrConfig.allowHtml = true;

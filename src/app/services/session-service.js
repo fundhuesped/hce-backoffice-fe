@@ -56,11 +56,9 @@
                     srv.currentUserPermissions = srv.currentUserPermissions.concat(groupPermissions);
                 }
 
-                if(rememberMe){
-                    localStorageService.set('currentUser', srv.currentUser);
-                    localStorageService.set('currentToken', srv.currentToken);
-                    localStorageService.set('currentUserPermissions', srv.currentUserPermissions);
-                }
+                localStorageService.set('currentUser', srv.currentUser);
+                localStorageService.set('currentToken', srv.currentToken);
+                localStorageService.set('currentUserPermissions', srv.currentUserPermissions);
                 callOK(response.data);   
             },function(error){
                 callNOK(error);
