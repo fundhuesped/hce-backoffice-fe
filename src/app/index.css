@@ -520,9 +520,6 @@
 .form-group.is-focused label, .form-group.is-focused label.control-label {
   color: #66325F;
 }
-.btn:not(.btn-raised).btn-success, .input-group-btn .btn:not(.btn-raised).btn-success{  
-  color: #af56a2;  
-}
 .form-group.is-focused .form-control{
     outline: none;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#66325F), to(#66325F)), -webkit-gradient(linear, left top, left bottom, from(#D2D2D2), to(#D2D2D2));
