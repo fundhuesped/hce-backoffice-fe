@@ -48,7 +48,7 @@
                                 <abm-form-group>
                                     <label abm-label for="birthDate">Fecha nacimiento(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
                                     <p class="input-group">
-                                        <input type="text" name="birthDate" class="form-control" uib-datepicker-popup="d!/M!/yyyy" ng-model="NewPatientController.paciente.birthDate" is-open="NewPatientController.birthDateCalendarPopup.opened" datepicker-options="NewPatientController.birthDateCalendarPopup.options" alt-input-formats="NewPatientController.birthDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" close-text="Cerrar" ng-required="true" abm-form-control/>
+                                        <input type="text" name="birthDate" class="form-control" uib-datepicker-popup="d!/M!/yyyy" ng-model="NewPatientController.paciente.birthDate" is-open="NewPatientController.birthDateCalendarPopup.opened" datepicker-options="NewPatientController.birthDateCalendarPopup.options" alt-input-formats="NewPatientController.birthDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" close-text="Cerrar" ng-required="true"/>
                                         <span class="input-group-btn">
                                           <button type="button" class="btn btn-default" ng-click="NewPatientController.openBirthDateCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
                                         </span>
@@ -256,7 +256,7 @@
                                 <abm-form-group>
                                     <label abm-label for="firstVisit">Primera visita en este centro  <small><em>(dd/mm/aaaa o dd/mm/aaaa)</em></small></label>
                                     <p class="input-group">
-                                        <input type="text" name="firstVisit" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="NewPatientController.paciente.firstVisit" is-open="NewPatientController.firstTimeCalendarPopup.opened" datepicker-options="NewPatientController.firstTimeCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientController.firstTimeCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" abm-form-control/>
+                                        <input type="text" name="firstVisit" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="NewPatientController.paciente.firstVisit" is-open="NewPatientController.firstTimeCalendarPopup.opened" datepicker-options="NewPatientController.firstTimeCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientController.firstTimeCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
                                         <span class="input-group-btn">
                                           <button type="button" class="btn btn-default" ng-click="NewPatientController.openFirstTimeCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
                                         </span>

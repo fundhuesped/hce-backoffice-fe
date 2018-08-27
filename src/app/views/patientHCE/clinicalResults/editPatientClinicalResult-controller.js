@@ -20,6 +20,7 @@
       vm.markAsError = markAsError;
       vm.studyDateCalendar = {
         opened: false,
+        altInputFormats: ['d!-M!-yyyy'],
         options: {
           maxDate: new Date()
         },

@@ -63,10 +63,10 @@
                                 </abm-form-group>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <abm-form-group>
-                                    <label abm-label for="birthDate">Fecha nacimiento(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
+                                <abm-form-group ng-class="{'is-focused':PacienteCtrl.birthDateCalendarPopup.opened, 'has-error': PacienteCtrl.pacienteForm}">
+                                    <label abm-label for="birthDate">Fecha nacimiento* <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label> 
                                     <p class="input-group">
-                                        <input type="text" name="birthDate" class="form-control" uib-datepicker-popup="d!/M!/yyyy" ng-model="PacienteCtrl.paciente.birthDate" is-open="PacienteCtrl.birthDateCalendarPopup.opened" datepicker-options="PacienteCtrl.birthDateCalendarPopup.options" alt-input-formats="PacienteCtrl.birthDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" close-text="Cerrar" ng-required="true"/>
+                                        <input type="text" name="birthDate" class="form-control" uib-datepicker-popup="d!/M!/yyyy"  ng-model="PacienteCtrl.paciente.birthDate" is-open="PacienteCtrl.birthDateCalendarPopup.opened" datepicker-options="PacienteCtrl.birthDateCalendarPopup.options" alt-input-formats="PacienteCtrl.birthDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" close-text="Cerrar" ng-required="true" />
                                         <span class="input-group-btn">
                                           <button type="button" class="btn btn-default" ng-click="PacienteCtrl.openBirthDateCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
                                         </span>

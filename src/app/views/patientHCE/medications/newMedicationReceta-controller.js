@@ -20,6 +20,7 @@
       vm.selectedMedications = [];
       vm.startDateCalendar = {
         opened: false,
+        altInputFormats: ['d!-M!-yyyy'],
         options: {
           minDate: new Date()
         },

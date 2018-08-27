@@ -36,6 +36,7 @@
 
       vm.newLabDateCalendar = {
         opened: false,
+        altInputFormats: ['d!-M!-yyyy'],
         options: {
           maxDate: new Date()
         },

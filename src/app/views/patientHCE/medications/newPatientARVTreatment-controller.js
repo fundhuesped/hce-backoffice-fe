@@ -55,6 +55,7 @@
 
       vm.startDateCalendar = {
         opened: false,
+        altInputFormats: ['d!-M!-yyyy'],
         options: {
           maxDate: new Date()
         },
@@ -65,6 +66,7 @@
 
       vm.endDateCalendar = {
         opened: false,
+        altInputFormats: ['d!-M!-yyyy'],
         options: {
           maxDate: new Date()
         },

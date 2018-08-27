@@ -22,6 +22,7 @@
       vm.selectedVaccines = [];
       vm.toggleVaccineSelection = toggleVaccineSelection;
       vm.startDateCalendar = {
+        altInputFormats: ['d!-M!-yyyy'],
         opened: false,
         options: {
           minDate: new Date()

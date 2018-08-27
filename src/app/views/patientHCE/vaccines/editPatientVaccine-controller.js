@@ -20,6 +20,7 @@
       vm.error = null;
 
       vm.applicationDateCalendar = {
+        altInputFormats: ['d!-M!-yyyy'],
         opened: false,
         options: {
           maxDate: new Date()
