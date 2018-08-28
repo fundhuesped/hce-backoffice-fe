@@ -6,17 +6,21 @@
       .module('hce.patientHCE')
       .controller('ArvMedicationRecetaController', arvMedicationRecetaController);
 
-    arvMedicationRecetaController.$inject = ['$state', '$stateParams', 'ARVReceta'];
+    arvMedicationRecetaController.$inject = ['$state', '$stateParams', 'ARVReceta', 'Preference'];
 
-    function arvMedicationRecetaController ($state, $stateParams, ARVReceta) {
+    function arvMedicationRecetaController ($state, $stateParams, ARVReceta, Preference) {
       var vm = this;
       vm.prescription = $stateParams.prescription;
       vm.numberToText = numberToText;
       vm.removeDecimals = removeDecimals;
+      vm.headerImage = '';
 
       activate();
 
       function activate(){
+        Preference.get({section:'global', name: 'general__prescription_header_image'}, function (response) {
+          vm.headerImage = response.value;
+        })
         if(!vm.prescriptions){
           vm.prescription = ARVReceta.get({id:$stateParams.prescriptionId}, function (argument) {
             setTimeout(function(){

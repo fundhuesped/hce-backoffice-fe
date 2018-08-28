@@ -6,16 +6,19 @@
     	.module('hce.patientHCE')
     	.controller('MedicationRecetaController', medicationRecetaController);
 
-	  medicationRecetaController.$inject = ['$state', '$stateParams', 'Receta', 'prescriptionId', '$uibModalInstance'];
+	  medicationRecetaController.$inject = ['$state', '$stateParams', 'Receta', 'Preference', 'prescriptionId', '$uibModalInstance'];
 
-    function medicationRecetaController ($state, $stateParams, Receta, prescriptionId, $uibModalInstance) {
+    function medicationRecetaController ($state, $stateParams, Receta, Preference, prescriptionId, $uibModalInstance) {
 	    var vm = this;
       vm.prescription = $stateParams.prescription;
       vm.numberToText = numberToText;
-
+      vm.headerImage = '';
       activate();
 
 	    function activate(){
+        Preference.get({section:'global', name: 'general__prescription_header_image'}, function (response) {
+          vm.headerImage = response.value;
+        })
         if(!vm.prescriptions){
           var id;
           if(prescriptionId){
@@ -28,9 +31,7 @@
               window.print();
               $uibModalInstance.close('created');
             },2); 
-
           });
-
         }
 
 	    }

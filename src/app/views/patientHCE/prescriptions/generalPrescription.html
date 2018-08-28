@@ -1,24 +1,26 @@
 <div class="do-print">
-	
 	<div class="container-fluid">
 		<div class="row">
-			<div class="pull-right" style="padding: 10px">{{Ctrl.prescription.id}}</div>
+			<img src="http://localhost:8000{{Ctrl.headerImage}}" class="center-block">	
+		</div>
+		<div class="row">
+			<div class="pull-right" style="padding: 10px">Nro de receta: {{Ctrl.prescription.id}}</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="row prescriptionPatientName">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="hce-form-title">
-							{{Ctrl.prescription.paciente.firstName}} {{Ctrl.prescription.paciente.fatherSurname}}
+							{{Ctrl.prescription.paciente.firstName}} {{Ctrl.prescription.paciente.otherNames}} {{Ctrl.prescription.paciente.fatherSurname}} {{Ctrl.prescription.paciente.motherSurname}}
 						</div>
 					</div>
 				</div>
 				<div class="row prescriptionPatientSocialService" ng-if="Ctrl.prescription.paciente.socialService && Ctrl.prescription.paciente.socialService.name !='No tiene'">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<div class="hce-form-title">
+							<div class="">
 							{{Ctrl.prescription.paciente.socialService.name}} 
 						</div>
-						<div class="hce-form-title">
+							<div class="">
 							{{Ctrl.prescription.paciente.socialServiceNumber}}
 						</div>
 					</div>
@@ -46,7 +48,7 @@
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 			</div>
 		</div>
-		<div class="row" style="margin-top: 100px">
+		<div class="row" style="margin-top: 300px">
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				{{Ctrl.prescription.issuedDate| date:"d/M/yy"}}
 			</div>
@@ -59,14 +61,17 @@
 	<div ng-if="Ctrl.prescription.duplicateRequired==true">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="pull-right" style="padding-right: 10px">{{Ctrl.prescription.id}}</div>
+				<img src="http://localhost:8000{{Ctrl.headerImage}}" class="center-block">	
+			</div>
+			<div class="row">
+			<div class="pull-right" style="padding: 10px">Nro de receta: {{Ctrl.prescription.id}}</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="row prescriptionPatientName">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="hce-form-title">
-								{{Ctrl.prescription.paciente.firstName}} {{Ctrl.prescription.paciente.fatherSurname}}
+								{{Ctrl.prescription.paciente.firstName}} {{Ctrl.prescription.paciente.otherNames}} {{Ctrl.prescription.paciente.fatherSurname}} {{Ctrl.prescription.paciente.motherSurname}}
 							</div>
 						</div>
 					</div>
@@ -83,7 +88,7 @@
 					<div class="prescriptionMedicationsList">
 						<div class="row prescriptionMedication" ng-repeat="prescriptedMedication in Ctrl.prescription.prescriptedMedications">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<div class="hce-form-title">
+								<div class="">
 									{{prescriptedMedication.patientMedication.medication.name + ' ' + (prescriptedMedication.patientMedication.medicationPresentation?prescriptedMedication.patientMedication.medicationPresentation.name:'')}}
 								</div>
 								<div class="">
@@ -106,7 +111,7 @@
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				</div>
 			</div>
-			<div class="row" style="margin-top: 100px">
+			<div class="row" style="margin-top: 300px">
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 					{{Ctrl.prescription.issuedDate| date:"d/M/yy"}}
 				</div>

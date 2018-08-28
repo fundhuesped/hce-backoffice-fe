@@ -6,17 +6,22 @@
     	.module('hce.patientHCE')
     	.controller('MedicationRecetaNuevaController', medicationRecetaNuevaController);
 
-	  medicationRecetaNuevaController.$inject = ['$state', '$stateParams', 'Receta'];
+	  medicationRecetaNuevaController.$inject = ['$state', '$stateParams', 'Preference', 'Receta'];
 
-    function medicationRecetaNuevaController ($state, $stateParams, Receta) {
+    function medicationRecetaNuevaController ($state, $stateParams, Preference, Receta) {
 	    var vm = this;
       vm.prescription = $stateParams.prescription;
       vm.numberToText = numberToText;
+      vm.headerImage = '';
 
       activate();
 
 	    function activate(){
         if(!vm.prescriptions){
+          Preference.get({section:'global', name: 'general__prescription_header_image'}, function (response) {
+            vm.headerImage = response.value;
+          })
+
           vm.prescription = Receta.get({id:$stateParams.prescriptionId}, function (argument) {
             setTimeout(function(){
               // window.print();

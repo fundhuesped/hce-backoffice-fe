@@ -6,17 +6,21 @@
       .module('hce.patientHCE')
       .controller('VaccinePrescriptionController', vaccinePrescriptionController);
 
-    vaccinePrescriptionController.$inject = ['$state', '$stateParams', 'VaccinePrescription'];
+    vaccinePrescriptionController.$inject = ['$state', '$stateParams', 'VaccinePrescription', 'Preference'];
 
-    function vaccinePrescriptionController ($state, $stateParams, VaccinePrescription) {
+    function vaccinePrescriptionController ($state, $stateParams, VaccinePrescription, Preference) {
       var vm = this;
       vm.prescription = $stateParams.prescription;
       vm.numberToText = numberToText;
       vm.removeDecimals = removeDecimals;
-
+      vm.headerImage = '';
+      
       activate();
 
       function activate(){
+        Preference.get({section:'global', name: 'general__prescription_header_image'}, function (response) {
+          vm.headerImage = response.value;
+        })
         if(!vm.prescriptions){
           vm.prescription = VaccinePrescription.get({id:$stateParams.prescriptionId}, function (argument) {
             setTimeout(function(){
