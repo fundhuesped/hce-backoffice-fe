@@ -27,7 +27,7 @@
 		    				<div class="row" >
 		    					<abm-form-group class="form-group-lg">
 							    	<label data-abm-label type="static">{{NewEvolutionController.newEvolutionFocused||NewEvolutionController.currentEvolution?'Evolución(*) (2000 caracteres)':'Ingrese nueva evolución'}}</label>
-							    	<textarea abm-form-control ng-model="NewEvolutionController.currentEvolution.notaClinica" ng-focus="NewEvolutionController.newEvolutionFocused = true" maxlength="2000" ng-required="true">
+							    	<textarea abm-form-control ng-model="NewEvolutionController.currentEvolution.notaClinica" ng-focus="NewEvolutionController.newEvolutionFocused = true" maxlength="2000" ng-required="NewEvolutionController.newEvolutionFocused||NewEvolutionController.currentEvolution">
 							    	</textarea>
 							  	</abm-form-group>
 					  		</div>
