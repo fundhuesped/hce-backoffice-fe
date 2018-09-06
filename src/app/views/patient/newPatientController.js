@@ -20,6 +20,7 @@
         vm.searchLocations = searchLocations;
         vm.searchDistricts = searchDistricts;
         vm.hideErrorMessage = hideErrorMessage;
+        vm.showAllowDuplicate = false;
         vm.activeTab = 0;
         vm.birthDateCalendarPopup = {
             opened: false,
@@ -83,13 +84,21 @@
                 paciente.prospect = false;
                 paciente.birthDate = $filter('date')(paciente.birthDate, 'yyyy-MM-dd');
                 paciente.firstVisit = $filter('date')(paciente.firstVisit, 'yyyy-MM-dd');
-                paciente.$save(function(){
+                paciente.$save({allowDuplicate:vm.allowDuplicate},function(){
                     $loading.finish('app');
                     toastr.success('Paciente creado con éxito');
                     $state.go('app.patientSearch');
-                },function(){
-                    displayComunicationError('app');
-                });
+                },
+                function(error){
+                        if(error.status==400 && error.data == 'Duplicate paciente exists'){
+                          toastr.warning('Por favor revise que ya existe un paciente con estos datos');
+                          $loading.finish('app');
+                          vm.showAllowDuplicate = true;
+                        }else{
+                            displayComunicationError('app');
+                        }
+                    }
+                );
             }else{
                 vm.errorMessage = 'Por favor revise el formulario';
             }
