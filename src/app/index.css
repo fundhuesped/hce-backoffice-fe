@@ -303,13 +303,22 @@
 }
 
 .patient-form li.uib-tab.nav-item{
-  background-color: #66325F;
-}
-
-.patient-form li.uib-tab.nav-item.active{
   background-color: #EAEAEA;
 }
 
+.patient-form li.uib-tab.nav-item.active{
+  background-color: #66325F;
+}
+
+.patient-form .nav-tabs > li.active > a{
+  color: white!important;
+  text-decoration: none!important;
+}
+
+.patient-form .nav-tabs > li > a{
+  color: black!important;
+  text-decoration: none!important;
+}
 
 .nav-tabs > li.active > a{
   color: black!important;

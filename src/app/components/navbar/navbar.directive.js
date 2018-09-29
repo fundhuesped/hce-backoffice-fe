@@ -97,6 +97,15 @@
           toastr.success('Visita cerrada con exito');
         }, showError);
       }
+      function showError(error) {
+        if(error){
+          toastr.error(error);
+        }else{
+          toastr.error('Ocurrio un error');
+        }
+      }
+
+
     }
   }
 

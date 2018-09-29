@@ -7,9 +7,9 @@
         .module('hce.services')
         .service('HCService', HCService );
 
-    HCService.$inject = ['Paciente', 'Evolution', 'PatientProblem', 'PatientVaccine', 'PatientMedication', 'PatientArvTreatment', 'localStorageService', 'moment'];
+    HCService.$inject = ['$q', 'Paciente', 'Evolution', 'PatientProblem', 'PatientVaccine', 'PatientMedication', 'PatientArvTreatment', 'localStorageService', 'moment'];
 
-    function HCService(Paciente, Evolution, PatientProblem, PatientVaccine, PatientMedication, PatientArvTreatment, localStorageService, moment){
+    function HCService($q, Paciente, Evolution, PatientProblem, PatientVaccine, PatientMedication, PatientArvTreatment, localStorageService, moment){
         var srv = this;
 
         //Common
@@ -89,13 +89,13 @@
         }
 
         function canOpenPatient(patient) {
-            if(!isDirty()){
-                return true;
+            if(isDirty()){
+                return false;
             }
-            if(srv.currentPaciente && srv.currentPaciente.id == patient.id){
-                return true;
+            if(srv.currentEvolution && srv.currentPaciente && srv.currentPaciente.id != patient.id){
+                return false;
             }
-            return false;
+            return true;
         }
 
         function setPaciente(pacienteId) {
@@ -168,10 +168,30 @@
         function closeEvolution() {
             var evolution = angular.copy(srv.currentEvolution);
             evolution.state = Evolution.stateChoices.STATE_CLOSED;
+            if(!evolution.reason && !evolution.notaClinica){
+                return $q(function(resolve, reject) {
+                    reject('Por favor ingrese motivo de consulta y texto de la evolución');
+                }); 
+            }
+            if(evolution.reason && !evolution.notaClinica){
+                return $q(function(resolve, reject) {
+                    reject('Por favor ingrese texto de la evolución');
+                }); 
+            }
+            if(!evolution.reason && evolution.notaClinica){
+                return $q(function(resolve, reject) {
+                    reject('Por favor ingrese motivo de consulta');
+                }); 
+            }
             return evolution.$update(function () {
                 srv.currentEvolution = null;
+
                 srv.getEvolutions();
             }, function (err) {
+                if(err.status == 400 && err.data == 'Solo se pueden modificar dentro de las 8 horas'){
+                    srv.currentEvolution = null;
+                    srv.getEvolutions();
+                }
                 console.log(err);
             }).$promise;
         }

@@ -44,11 +44,11 @@
       }
 
       function showError(error) {
-          if(error){
-        toastr.error(error.data.detail);
-          }else{
+        if(error){
+          toastr.error(error.data.detail);
+        }else{
             toastr.error('Ocurrio un error');
-          }
+        }
       }
 
 

@@ -11,7 +11,7 @@
 				<div class="row prescriptionPatientName">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="hce-form-title">
-							{{Ctrl.prescription.paciente.genderAtBirth==1?'M':'F'}}{{Ctrl.prescription.paciente.pns}}
+							{{Ctrl.prescription.paciente.pns}}
 						</div>
 					</div>
 				</div>
@@ -79,7 +79,7 @@
 	<div ng-if="Ctrl.prescription.duplicateRequired==true">
 		<div class="container-fluid">
 			<div class="row">
-				<img src="http://localhost:8000{{Ctrl.headerImage}}" class="center-block">	
+				<img src="{{Ctrl.headerImage}}" class="center-block">	
 			</div>
 			<div class="row">
 				<div class="pull-right" style="padding: 10px">Nro de receta: {{Ctrl.prescription.id}}</div>
@@ -89,7 +89,7 @@
 					<div class="row prescriptionPatientName">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="hce-form-title">
-								{{Ctrl.prescription.paciente.genderAtBirth==1?'M':'F'}}{{Ctrl.prescription.paciente.pns}}
+								{{Ctrl.prescription.paciente.pns}}
 							</div>
 						</div>
 					</div>

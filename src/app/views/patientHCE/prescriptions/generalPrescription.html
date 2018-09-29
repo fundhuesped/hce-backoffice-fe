@@ -33,7 +33,7 @@
 							</div>
 
 							<div class="">
-							{{prescriptedMedication.dayCount?prescriptedMedication.dayCount+'('+Ctrl.numberToText(prescriptedMedication.dayCount)+')':'1(uno)'}}
+							{{prescriptedMedication.quantityPerMonth?prescriptedMedication.quantityPerMonth+'('+Ctrl.numberToText(prescriptedMedication.quantityPerMonth)+')':'1(uno)'}}
 
 							</div>
 						</div>
@@ -61,7 +61,7 @@
 	<div ng-if="Ctrl.prescription.duplicateRequired==true">
 		<div class="container-fluid">
 			<div class="row">
-				<img src="http://localhost:8000{{Ctrl.headerImage}}" class="center-block">	
+				<img src="{{Ctrl.headerImage}}" class="center-block">	
 			</div>
 			<div class="row">
 			<div class="pull-right" style="padding: 10px">Nro de receta: {{Ctrl.prescription.id}}</div>
@@ -92,7 +92,7 @@
 									{{prescriptedMedication.patientMedication.medication.name + ' ' + (prescriptedMedication.patientMedication.medicationPresentation?prescriptedMedication.patientMedication.medicationPresentation.name:'')}}
 								</div>
 								<div class="">
-									{{prescriptedMedication.dayCount?prescriptedMedication.dayCount+'('+Ctrl.numberToText(prescriptedMedication.dayCount)+')':'1(uno)'}}
+									{{prescriptedMedication.quantityPerMonth?prescriptedMedication.quantityPerMonth+'('+Ctrl.numberToText(prescriptedMedication.quantityPerMonth)+')':'1(uno)'}}
 								</div>
 							</div>
 						</div>
