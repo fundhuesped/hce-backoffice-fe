@@ -23,6 +23,7 @@
         altInputFormats: ['d!-M!-yyyy'],
         opened: false,
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){

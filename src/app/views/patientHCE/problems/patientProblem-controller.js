@@ -6,26 +6,61 @@
     	.module('hce.patientHCE')
     	.controller('PatientProblemController', patientProblemController);
 
-	patientProblemController.$inject = ['$state', 'HCService', 'toastr', 'moment', 'Problem', '$uibModal', '$uibModalInstance', 'PatientProblem','patientProblem'];
+	patientProblemController.$inject = ['$state', 'HCService', 'toastr', 'moment', 'Problem', '$uibModal', '$uibModalInstance', 'PatientProblem', 'SessionService','patientProblem'];
 
-    function patientProblemController ($state, HCService, toastr, moment, Problem, $uibModal, $uibModalInstance, PatientProblem, patientProblem) {
+    function patientProblemController ($state, HCService, toastr, moment, Problem, $uibModal, $uibModalInstance, PatientProblem, SessionService, patientProblem) {
     	var vm = this;
     	vm.cancel = cancel;
     	vm.problem = null;
     	vm.canSaveNewProblem = canSaveNewProblem;
-    	vm.canEdit = canEdit;
     	vm.markAsError = markAsError;
       vm.save = save;
       vm.originalProblem = patientProblem;
+      vm.changeStatus = changeStatus;
+      vm.canEdit = canEdit;
+      vm.canBeClosed = canBeClosed;
+      vm.canBeMarkedAsError = canBeMarkedAsError;
+
+      vm.startDateCalendarPopup = {
+        opened: false,
+        altInputFormats: ['d!-M!-yyyy'],
+        updateMaxVal: function (value) {
+          this.options.maxDate = (vm.problem.closeDate?vm.problem.closeDate:new Date());
+        },
+        options: {
+          showWeeks: false,
+          maxDate: new Date()
+        },
+        open : function(){
+          this.opened = true;
+        }
+      };
+
+        vm.closeDateCalendarPopup = {
+        opened: false,
+        updateMinVal: function () {
+          this.options.minDate = (vm.problem.startDate?vm.problem.startDate:new Date());
+        },
+        altInputFormats: ['d!-M!-yyyy'],
+        options: {
+          showWeeks: false,
+          maxDate: new Date()
+        },
+        open : function(){
+          this.opened = true;
+        }
+      };
 
     	activate();
 
     	function activate() {
     		vm.problem = angular.copy(patientProblem);
-            vm.problem.startDate = new Date(vm.problem.startDate + 'T03:00:00');
-            if (vm.problem.closeDate) {
-                vm.problem.closeDate = new Date(vm.problem.closeDate + 'T03:00:00');;
-            }
+
+        vm.closeDateCalendarPopup.options.minDate = vm.problem.startDate;
+        vm.problem.startDate = new Date(vm.problem.startDate + 'T03:00:00');
+        if (vm.problem.closeDate) {
+          vm.problem.closeDate = new Date(vm.problem.closeDate + 'T03:00:00');;
+        }
     	}
 
 
@@ -50,11 +85,12 @@
 
 
         function canSaveNewProblem() {
-          if(vm.problem && vm.problem.startDate&&vm.problem.state&&(vm.problem.state=='Active'||vm.problem.state=='Closed')&&vm.problem.problem){
+          if(vm.controllerForm.$valid){
             return true;
           }
   		    return false;
         }
+
 
 
       	function markAsError() {
@@ -63,6 +99,7 @@
           tmpProblem.startDate = moment(tmpProblem.startDate).format('YYYY-MM-DD');
           if (tmpProblem.closeDate) {
               tmpProblem.closeDate = moment(tmpProblem.closeDate).format('YYYY-MM-DD');
+
           }
 
       		PatientProblem.update(tmpProblem, function (response) {
@@ -73,35 +110,28 @@
       		});
       	}
 
-      	function canEdit() {
-      		var timeAgo = moment.duration(moment().diff(moment(vm.problem.createdOn)));
-      		if(timeAgo.hours()<10){
-      		// if(timeAgo.hours()<3){
-      			return false;
-      		}
-      		return true;
-      	}
+      function canEdit() {
+        return vm.problem.profesional.id == SessionService.currentUser.id && moment().diff(moment(vm.problem.createdOn), 'hours') <= 8;
+      }
 
-    	vm.startDateCalendarPopup = {
-        opened: false,
-        altInputFormats: ['d!-M!-yyyy'],
-        options: {
-          maxDate: new Date()
-        },
-        open : function(){
-          this.opened = true;
+      function canBeClosed() {
+        if(patientProblem.state == 'Closed'){
+          return false;
         }
-      	};
+        return true;
+      }
 
-      	vm.closeDateCalendarPopup = {
-        opened: false,
-        altInputFormats: ['d!-M!-yyyy'],
-        options: {
-          maxDate: new Date()
-        },
-        open : function(){
-          this.opened = true;
+      function canBeMarkedAsError(argument) {
+        return patientProblem.state !== 'Error';
+      }
+
+      function changeStatus() {
+        if(vm.problem.state == 'Active'){
+          vm.problem.endDate = null;
+          vm.startDateCalendarPopup.options.maxDate = new Date();
         }
-      	};
+      }
+
+
     }
 })();

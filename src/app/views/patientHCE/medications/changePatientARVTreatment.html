@@ -26,7 +26,7 @@
 					  	</abm-form-group>
 					</div>
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-					  	<abm-form-group>
+					  	<abm-form-group  ng-class="{'has-error':ChangePatientArvTreatmentController.finalizeTreatmentForm.endDate.$invalid}" name="endDate">
 						    <label data-abm-label type="static">Fecha de fin(*)</label>
 								<div class="input-group">
 									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="ChangePatientArvTreatmentController.patientArvTreatment.endDate" is-open="ChangePatientArvTreatmentController.endDateCalendar.opened" datepicker-options="ChangePatientArvTreatmentController.endDateCalendar.options" close-text="Cerrar" alt-input-formats="ChangePatientArvTreatmentController.endDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="true"/>

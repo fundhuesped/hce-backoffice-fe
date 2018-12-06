@@ -15,7 +15,8 @@
 	    vm.cancel = cancel;
       vm.relationshipChoices = FamilyPatientProblem.relationshipChoices;
       vm.markAsError = markAsError;
-
+      vm.canEdit = canEdit;
+      vm.canSave = canSave;
       activate();
 
       function activate(){
@@ -39,6 +40,10 @@
         });
       }
 
+      function canSave() {
+        return vm.controllerForm.$valid;
+      }
+
       function save() {
         FamilyPatientProblem.update(vm.familyProblem, function (response) {
           toastr.success('Problema editado con éxito');
@@ -47,6 +52,11 @@
           toastr.error('Ocurrio un error');
         });
       }
+
+      function canEdit() {
+        return moment().diff(moment(vm.familyProblem.createdOn), 'hours') <= 8;
+      }
+
 
       function showError(error) {
           if(error){

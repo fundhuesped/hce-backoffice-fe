@@ -1,164 +1,177 @@
 <div class="container-fluid hce-container-modal">
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="hce-form-title">Nuevo problema</div>
-				</div>
-			</div>
-			<div class="row">
-				<div ng-show="NewPatientProblemController.error" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning">
-					{{NewPatientProblemController.error}}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group class="form-group-lg">
-		    			<label data-abm-label type="static">Escriba el problema(*)</label>
-                		<input type="text" abm-form-control ng-model="NewPatientProblemController.newPatientProblem.problem" uib-typeahead="problem as problem.name for problem in NewPatientProblemController.getProblems($viewValue)" class="form-control" typeahead-min-length="3">
-                	</abm-form-group>
-                </div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-				  	<abm-form-group>
-					    <label>Fecha de inicio(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
-						<div class="input-group">
-							<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientProblemController.newPatientProblem.startDate" is-open="NewPatientProblemController.startDateCalendarPopup.opened" datepicker-options="NewPatientProblemController.startDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.startDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-change="NewPatientProblemController.closeDateCalendarPopup.updateMinDate()"/>
-	                        <div class="input-group-btn">
-	                          <button type="button" class="btn btn-default" ng-click="NewPatientProblemController.startDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
-	                        </div>
-					    </div>
-				  	</abm-form-group>
-				</div>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-show="NewPatientProblemController.newPatientProblem.state=='Closed'">
-				  	<abm-form-group>
-					    <label>Fecha de cierre(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
-						<div class="input-group">
-							<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="closeDate" ng-model="NewPatientProblemController.newPatientProblem.closeDate" is-open="NewPatientProblemController.closeDateCalendarPopup.opened" datepicker-options="NewPatientProblemController.closeDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.closeDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-change="NewPatientProblemController.startDateCalendarPopup.updateMaxDate()"/>
-	                        <div class="input-group-btn">
-	                          <button type="button" class="btn btn-default" ng-click="NewPatientProblemController.closeDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
-	                        </div>
-					    </div>
-				  	</abm-form-group>
-				</div>
-
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				  	<abm-form-group>
-					    <label>Estado del problema </label>
-					    <div class="radio" abm-radio label="Activo">
-					      <input type="radio" name="activo" value="Active" ng-model="NewPatientProblemController.newPatientProblem.state">
-					    </div>
-					    <div class="radio" abm-radio label="Resuelto">
-					      <input type="radio" name="cerrado" value="Closed" ng-model="NewPatientProblemController.newPatientProblem.state">
-					    </div>					    
-				  	</abm-form-group>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group class="form-group-lg">
-				    	<label data-abm-label type="static">Observaciones</label>
-				    	<textarea type="text" abm-form-control ng-model="NewPatientProblemController.newPatientProblem.observations"></textarea>
-				  	</abm-form-group>
-		  		</div>
-		  	</div>
-			<div ng-show="NewPatientProblemController.newPatientProblem.problem.name=='Infección por HIV' || NewPatientProblemController.newPatientProblem.problem=='Infección por HIV'">
+	<form name="NewPatientProblemController.controllerForm">	
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<abm-form-group>
-							<label type="static" style="font-weight:bold">Información adicional del virus HIV</label>
-						</abm-form-group>
+						<div class="hce-form-title">Nuevo problema</div>
 					</div>
 				</div>
-
+				<div class="row">
+					<div ng-show="NewPatientProblemController.error" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning">
+						{{NewPatientProblemController.error}}
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<abm-form-group>
-							<label type="static" style="font-weight:bold">Vias de transmisión más probable</label>
-							<div class="checkbox" abm-checkbox label="Transmisión vertical">
-								<input type="checkbox" name="vertical" ng-model="NewPatientProblemController.newPatientProblem.vertical">
-							</div>
-							<div class="checkbox" abm-checkbox label="Relaciones sexuales con mujeres">
-								<input type="checkbox" name="mujeres" ng-model="NewPatientProblemController.newPatientProblem.mujeres">
-							</div>
-							<div class="checkbox" abm-checkbox label="Relaciones sexuales con hombres">
-								<input type="checkbox" name="hombres" ng-model="NewPatientProblemController.newPatientProblem.hombres">
-							</div>
-							<div class="checkbox" abm-checkbox label="Relaciones sexuales con trans">
-								<input type="checkbox" name="trans" ng-model="NewPatientProblemController.newPatientProblem.trans">
-							</div>
-							<div class="checkbox" abm-checkbox label="Uso compartido de equipo de inyección en los últimos 10 años">
-								<input type="checkbox" name="inyeccion" ng-model="NewPatientProblemController.newPatientProblem.inyeccion">
-							</div>
-							<div class="checkbox" abm-checkbox label="Accidente laboral">
-								<input type="checkbox" name="accidente" ng-model="NewPatientProblemController.newPatientProblem.accidente">
-							</div>
-							<div class="checkbox" abm-checkbox label="Transfusión sanguínea o derivados">
-								<input type="checkbox" name="transfusion" ng-model="NewPatientProblemController.newPatientProblem.transfusion">
-							</div>
-							<abm-form-group ng-if="NewPatientProblemController.newPatientProblem.transfusion">
-								<label abm-label>Institución</label>
-								<input type="text" name="institution" maxlength="70" class="form-control" ng-model="NewPatientProblemController.newPatientProblem.institution">
+						<abm-form-group class="form-group-lg">
+			    			<label data-abm-label type="static">Escriba el problema(*)</label>
+	                		<input type="text" abm-form-control ng-model="NewPatientProblemController.newPatientProblem.problem" uib-typeahead="problem as problem.name for problem in NewPatientProblemController.getProblems($viewValue)" class="form-control" ng-required="true" typeahead-min-length="3">
+	                	</abm-form-group>
+	                </div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-6">
+					  	<abm-form-group ng-class="{'has-error':NewPatientProblemController.controllerForm.startDate.$invalid}" name="startDate">
+						    <label data-abm-label type="static">Fecha de inicio(*) <br><small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></br></label>
+							<div class="input-group">
+								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientProblemController.newPatientProblem.startDate" is-open="NewPatientProblemController.startDateCalendarPopup.opened" datepicker-options="NewPatientProblemController.startDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.startDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-change="NewPatientProblemController.closeDateCalendarPopup.updateMinDate()" ng-required="true"/>
+		                        <div class="input-group-btn">
+		                          <button type="button" class="btn btn-default" ng-click="NewPatientProblemController.startDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+		                        </div>
+						    </div>
+					  	</abm-form-group>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-show="NewPatientProblemController.newPatientProblem.state=='Closed'">
+					  	<abm-form-group ng-class="{'has-error':NewPatientProblemController.controllerForm.closeDate.$invalid}" name="closeDate">
+						    <label data-abm-label type="static">Fecha de cierre(*) <br><small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></br></label>
+							<div class="input-group">
+								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="closeDate" ng-model="NewPatientProblemController.newPatientProblem.closeDate" is-open="NewPatientProblemController.closeDateCalendarPopup.opened" datepicker-options="NewPatientProblemController.closeDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.closeDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="NewPatientProblemController.newPatientProblem.state=='Closed'"  ng-change="NewPatientProblemController.startDateCalendarPopup.updateMaxDate()"/>
+		                        <div class="input-group-btn">
+		                          <button type="button" class="btn btn-default" ng-click="NewPatientProblemController.closeDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+		                        </div>
+						    </div>
+					  	</abm-form-group>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					  	<abm-form-group name="state">
+						    <label abm-label type="static">Estado del problema (*) </label>
+						    <div class="radio" abm-radio label="Activo">
+						      <input type="radio" id="state" name="state" value="Active" ng-model="NewPatientProblemController.newPatientProblem.state" ng-required="true" ng-change="NewPatientProblemController.changeStatus()"/>
+						    </div>
+						    <div class="radio" abm-radio label="Resuelto">
+						      <input type="radio" id="state" name="state" value="Closed" ng-model="NewPatientProblemController.newPatientProblem.state" ng-required="true"/>
+						    </div>					    
+					  	</abm-form-group>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group class="form-group-lg">
+					    	<label data-abm-label type="static">Observaciones</label>
+					    	<textarea type="text" abm-form-control ng-model="NewPatientProblemController.newPatientProblem.observations"></textarea>
+					  	</abm-form-group>
+			  		</div>
+			  	</div>
+			</div>
+		</div>
+	</form>
+	<form name="NewPatientProblemController.HIVForm">	
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div ng-show="NewPatientProblemController.isHIV()">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<abm-form-group>
+								<label type="static" style="font-weight:bold">Información adicional del virus HIV</label>
 							</abm-form-group>
-							<abm-form-group ng-if="NewPatientProblemController.newPatientProblem.transfusion">
-								<label abm-label>Ciudad</label>
-								<input type="text" name="city" maxlength="70" class="form-control" ng-model="NewPatientProblemController.newPatientProblem.city">
-							</abm-form-group>
-							<abm-form-group ng-if="NewPatientProblemController.newPatientProblem.transfusion">
-								<label abm-label>Fecha</label>
-								<div class="input-group">
-									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="date" ng-model="NewPatientProblemController.newPatientProblem.date" is-open="NewPatientProblemController.dateCalendarPopup.opened" datepicker-options="NewPatientProblemController.dateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.dateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
-									<div class="input-group-btn">
-										<button type="button" class="btn btn-default" ng-click="NewPatientProblemController.dateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<abm-form-group name="transmition" ng-required="true">
+								<label data-abm-label type="static" style="font-weight:bold">Vias de transmisión más probables</label>
+								<div class="checkbox" abm-checkbox label="Transmisión vertical">
+									<input type="checkbox" name="vertical" value="vertical" ng-model="NewPatientProblemController.newPatientProblem.vertical">
+								</div>
+								<div class="checkbox" abm-checkbox label="Relaciones sexuales con mujeres">
+									<input type="checkbox"  name="mujeres" value="mujeres" ng-model="NewPatientProblemController.newPatientProblem.mujeres">
+								</div>
+								<div class="checkbox" abm-checkbox label="Relaciones sexuales con hombres">
+									<input type="checkbox" name="hombres" value="hombres" ng-model="NewPatientProblemController.newPatientProblem.hombres">
+								</div>
+								<div class="checkbox" abm-checkbox label="Relaciones sexuales con trans">
+									<input type="checkbox" name="trans" value="trans" ng-model="NewPatientProblemController.newPatientProblem.trans">
+								</div>
+								<div class="checkbox" abm-checkbox label="Uso compartido de equipo de inyección en los últimos 10 años">
+									<input type="checkbox" name="inyeccion" value="inyeccion" ng-model="NewPatientProblemController.newPatientProblem.inyeccion">
+								</div>
+								<div class="checkbox" abm-checkbox label="Accidente laboral">
+									<input type="checkbox" name="accidente" value="accidente"  ng-model="NewPatientProblemController.newPatientProblem.accidente">
+								</div>
+								<div class="checkbox" abm-checkbox label="Transfusión sanguínea o derivados">
+									<input type="checkbox" name="transfusion" value="transfusion" ng-model="NewPatientProblemController.newPatientProblem.transfusion">
+								</div>
+								<abm-form-group ng-if="NewPatientProblemController.newPatientProblem.transfusion">
+									<label data-abm-label type="static">Institución</label>
+									<input type="text" abm-form-control  name="institution" maxlength="70" class="form-control" ng-required=" NewPatientProblemController.isHIV() && NewPatientProblemController.newPatientProblem.transfusion" ng-model="NewPatientProblemController.newPatientProblem.institution">
+								</abm-form-group>
+								<abm-form-group ng-if="NewPatientProblemController.newPatientProblem.transfusion">
+									<label data-abm-label type="static">Ciudad</label>
+									<input type="text" abm-form-control name="city" maxlength="70" class="form-control" ng-model="NewPatientProblemController.newPatientProblem.city" ng-required="NewPatientProblemController.isHIV() && NewPatientProblemController.newPatientProblem.transfusion">
+								</abm-form-group>
+								<abm-form-group ng-if="NewPatientProblemController.newPatientProblem.transfusion" name="transfusionDate" ng-class="{'has-error':NewPatientProblemController.controllerForm.transmition.transfusionDate.$invalid}" name="transfusionDate" >
+									<label data-abm-label type="static">Fecha(*)<small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
+									<div class="input-group">
+										<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="date" ng-model="NewPatientProblemController.newPatientProblem.date" is-open="NewPatientProblemController.dateCalendarPopup.opened" datepicker-options="NewPatientProblemController.dateCalendarPopup.options" close-text="Cerrar" alt-input-formats="NewPatientProblemController.dateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="NewPatientProblemController.isHIV() && NewPatientProblemController.newPatientProblem.transfusion"/>
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default" ng-click="NewPatientProblemController.dateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+										</div>
 									</div>
+								</abm-form-group>
+								<div class="checkbox" abm-checkbox label="Otras">
+									<input type="checkbox" name="otraCheck" value="otraCheck" ng-model="NewPatientProblemController.newPatientProblem.otraCheck">
+								</div>
+								<abm-form-group ng-if="NewPatientProblemController.newPatientProblem.otraCheck">
+									<label data-abm-label type="static">¿Cual?</label>
+									<input type="text" abm-form-control name="otherTransmission" maxlength="70" class="form-control" ng-model="NewPatientProblemController.newPatientProblem.other" ng-required="NewPatientProblemController.isHIV() && NewPatientProblemController.newPatientProblem.otraCheck">
+								</abm-form-group>
+								<div class="checkbox" abm-checkbox label="Desconocida">
+									<input type="checkbox" name="desconocida" ng-model="NewPatientProblemController.newPatientProblem.desconocida">
 								</div>
 							</abm-form-group>
-							<div class="checkbox" abm-checkbox label="Otras">
-								<input type="checkbox" name="otraCheck" ng-model="NewPatientProblemController.newPatientProblem.otraCheck">
-							</div>
-							<input ng-if="NewPatientProblemController.newPatientProblem.otraCheck" type="text" name="otras" maxlength="70" class="form-control" placeholder="¿Cual?" ng-model="NewPatientProblemController.newPatientProblem.otras">
-							<div class="checkbox" abm-checkbox label="Desconocida">
-								<input type="checkbox" name="desconocida" ng-model="NewPatientProblemController.newPatientProblem.desconocida">
-							</div>
 							<abm-form-group>
-								<label type="static" style="font-weight:bold">Si es mujer, ¿el diagnóstico se realizó durante un embarazo, parto o puerperio?</label>
+								<label class="control-label" type="static">Si es mujer, ¿el diagnóstico se realizó durante un embarazo, parto o puerperio?</label>
 								<div class="radio" abm-radio label="Si">
-									<input type="radio" name="Si" value="Si" ng-model="NewPatientProblemController.newPatientProblem.woman">
+									<input type="radio" id="hivDuringLabor" name="hivDuringLabor" value="Si" ng-model="NewPatientProblemController.newPatientProblem.woman">
 								</div>
 								<div class="radio" abm-radio label="No">
-									<input type="radio" name="No" value="No" ng-model="NewPatientProblemController.newPatientProblem.woman">
+									<input type="radio" id="hivDuringLabor" name="hivDuringLabor" value="No" ng-model="NewPatientProblemController.newPatientProblem.woman">
 								</div>
 								<div class="radio" abm-radio label="Desconocido">
-									<input type="radio" name="Desconocido" value="Desconocido" ng-model="NewPatientProblemController.newPatientProblem.woman">
+									<input type="radio" name="hivDuringLabor" value="Desconocido" ng-model="NewPatientProblemController.newPatientProblem.woman">
 								</div>
 							</abm-form-group>
-							<abm-form-group>
-								<label type="static" style="font-weight:bold">Estadio clínico al momento del diagnóstico serológico confirmado</label>
-								<div class="radio" abm-radio label="Síndrome retroviral agudo">
-									<input type="radio" name="radio_agudo" value="agudo" ng-model="NewPatientProblemController.newPatientProblem.clinicalState">
+							<abm-form-group name="clinicalState" >
+								<label data-abm-label type="static" style="font-weight:bold">Estadio clínico al momento del diagnóstico serológico confirmado</label>
+								<div class="radio" abm-radio name="clinicalState" label="Síndrome retroviral agudo">
+									<input type="radio" id="clinicalState" name="clinicalState" value="agudo" ng-model="NewPatientProblemController.newPatientProblem.clinicalState" ng-required="NewPatientProblemController.isHIV()">
 								</div>
-								<div class="radio" abm-radio label="Infección asintomática">
-									<input type="radio" name="radio_asintomatica" value="asintomatica" ng-model="NewPatientProblemController.newPatientProblem.clinicalState">
+								<div class="radio" abm-radio name="clinicalState" label="Infección asintomática">
+									<input type="radio" name="clinicalState" id="clinicalState" value="asintomatica" ng-model="NewPatientProblemController.newPatientProblem.clinicalState" ng-required="NewPatientProblemController.isHIV()">
 								</div>
-								<div class="radio" abm-radio label="Infección sintomática sin criterio de sida">
-									<input type="radio" name="radio_sintomatica" value="sintomatica" ng-model="NewPatientProblemController.newPatientProblem.clinicalState">
+								<div class="radio" abm-radio  name="clinicalState" label="Infección sintomática sin criterio de sida">
+									<input type="radio" id="clinicalState" name="clinicalState" value="sintomatica" ng-model="NewPatientProblemController.newPatientProblem.clinicalState" ng-required="NewPatientProblemController.isHIV()">
 								</div>
 								<div class="radio" abm-radio label="Enfermedad marcadora de sida">
-									<input type="radio" name="radio_marcadora" value="enfMarcadoraSida" ng-model="NewPatientProblemController.newPatientProblem.clinicalState">
+									<input type="radio" name="clinicalState" value="enfMarcadoraSida" id="clinicalState" ng-model="NewPatientProblemController.newPatientProblem.clinicalState" ng-required="NewPatientProblemController.isHIV()">
 								</div>
 								<div class="radio" abm-radio label="Desconocido">
-									<input type="radio" name="radio_desconocido" value="desconocido" ng-model="NewPatientProblemController.newPatientProblem.clinicalState">
+									<input type="radio" name="clinicalState" id="clinicalState" value="desconocido" ng-model="NewPatientProblemController.newPatientProblem.clinicalState" ng-required="NewPatientProblemController.isHIV()">
 								</div>
 							</abm-form-group>
-						</abm-form-group>
+						</div>
 					</div>
 				</div>
 			</div>
-
-
+		</div>
+	</form>
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="row" >
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="row" >

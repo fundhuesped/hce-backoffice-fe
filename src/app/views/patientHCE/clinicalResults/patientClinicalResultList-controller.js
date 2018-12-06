@@ -19,7 +19,7 @@
       vm.filters = {};
       vm.pageChanged = pageChanged;
       vm.patientClinicalResults = [];
-
+      vm.isSearching = false;
 
       vm.openNewPatientClinicalResultModal = openNewPatientClinicalResultModal;
       vm.openEditPatientClinicalResultModal = openEditPatientClinicalResultModal;
@@ -38,13 +38,16 @@
         vm.filters.page = vm.currentPage;
         vm.filters.page_size = vm.pageSize;
         vm.filters.pacienteId = HCService.currentPacienteId;
+        vm.isSearching = true;
         PatientClinicalResult.getPaginatedForPaciente(vm.filters, function (paginatedResult) {
+          vm.isSearching = false;
           vm.patientClinicalResults = paginatedResult.results;
           if(vm.currentPage===1){
             vm.totalItems = paginatedResult.count;
           }
         }, function (err) {
-          // body...
+          vm.isSearching = false;
+          displayComunicationError();
         });
       }
 

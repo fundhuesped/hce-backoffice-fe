@@ -1,0 +1,73 @@
+<div class="well hce-card">
+    <div class="hce-card-title">Resumen HIV</div>
+		<div class="hce-card-body">
+
+<!--     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	    <div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-12 col-lg-12"><h2>Resumen HIV</h2></div>
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h3>Tratamiento actual</h3></div>
+			<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"><button class="btn btn-success pull-right btn-sm" style="margin-top:20px;" ng-click="Ctrl.goToTreatment()">Ir a tratamientos</button></div>
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h3>Últimos laboratorios</h3></div>
+			<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"><button class="btn btn-success pull-right btn-sm" style="margin-top:20px;" ng-click="Ctrl.goToLaboratories()">Ir a laboratorios</button></div>
+
+		</div>
+ -->	    
+
+	 		<div class="row">
+		    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			    	<table class="table Medication table-condensed" ng-show="Ctrl.treatment">
+			    		<thead> 
+			    			<tr> 
+			    				<th style="font-size:12px">Esquema</th>
+			    				<th style="font-size:12px">Fecha inicio</th>
+			    				<th></th>
+			    			</tr> 
+			    		</thead>
+			    		<tbody>
+			    			<tr>
+		    					<td style="text-transform: capitalize;">{{Ctrl.getSchema(Ctrl.treatment.patientARVTreatmentMedications)}}</td> 
+		    					<td>{{Ctrl.treatment.startDate | date:"dd/MM/yyyy"}}</td> 
+		    					<td>
+			    					<button class="btn btn-info" type="button" ng-click="Ctrl.openEditPatientMedicationModal()" style="padding: 6px 12px; margin:0px; text-transform: none;"><i class="fa fa-search"></i></button>
+		    					</td> 
+	    					</tr>
+	    				</tbody>
+	    			</table>
+	    			<div ng-show="!Ctrl.treatment" style="text-align: center; font-size: 16px; padding-top:30px;padding-bottom: 20px;">--- No tiene tratamiento activo ---</div>
+		    	</div>
+		    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		    		<div class="row">
+				    	<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+		    				<span style="font-weight: bold; font-size:12px">Carga Viral</span>
+		    			</div>
+				    	<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9" ng-show="!Ctrl.cv.value">
+			    			<span style="text-align: center;">--- No se registra ---</span>
+			    		</div>
+				    	<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" ng-show="Ctrl.cv.value">
+			    			<span>{{Ctrl.cv.date | date:"dd/MM/yyyy"}}</span>
+		    			</div>
+				    	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="Ctrl.cv.value">
+			    			<span>{{Ctrl.cv.value}} {{Ctrl.cv.unitOfMeasure}}</span>
+		    			</div>
+		    		</div>
+		    	</div>
+		    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		    		<div class="row" >
+				    	<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+		    				<span style="font-weight: bold; font-size:12px">CD4</span>
+		    			</div>
+		    			<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9" ng-show="!Ctrl.cd4.value">
+			    			<span style="text-align: center;">--- No se registra ---</span>
+			    		</div>
+		    			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" ng-show="Ctrl.cd4.value">
+			    			<span ng-show="Ctrl.cd4.value">{{Ctrl.cd4.date | date:"dd/MM/yyyy"}}</span>
+		    			</div>
+		    			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="Ctrl.cd4.value">
+			    			<span >{{Ctrl.cd4.value}} {{Ctrl.cd4.unitOfMeasure}}</span>
+			    		</div>
+		    		</div>
+		    	</div>
+		    </div>
+		</div>
+	</div>
+</div>

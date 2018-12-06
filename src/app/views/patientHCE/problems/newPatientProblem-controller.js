@@ -19,6 +19,8 @@
       vm.newProblemDateOption = null;
       vm.newProblemDate = null;
       vm.canSaveNewProblem = canSaveNewProblem;
+      vm.changeStatus = changeStatus;
+      vm.isHIV = isHIV;
       vm.error = null;
 
 
@@ -43,6 +45,7 @@
         altInputFormats: ['d!-M!-yyyy'],
         opened: false,
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -57,6 +60,7 @@
         altInputFormats: ['d!-M!-yyyy'],
         opened: false,
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -72,6 +76,7 @@
         altInputFormats: ['d!-M!-yyyy'],
         opened: false,
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -83,6 +88,7 @@
         altInputFormats: ['d!-M!-yyyy'],
         opened: false,
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -120,13 +126,9 @@
       }
 
       function canSaveNewProblem() {
-        if(vm.newPatientProblem && vm.newPatientProblem.startDate&&vm.newPatientProblem.state&&vm.newPatientProblem.state=='Active'&&vm.newPatientProblem.problem){
+        if(vm.controllerForm.$valid){
           return true;
         }
-        if(vm.newPatientProblem && vm.newPatientProblem.startDate&&vm.newPatientProblem.closeDate&&vm.newPatientProblem.state&&vm.newPatientProblem.state=='Closed'&&vm.newPatientProblem.problem){
-            return true;
-        }
-
         return false;
       }
 
@@ -135,6 +137,13 @@
           vm.problems = problems;
         }, displayComunicationError);
 	    }
+
+      function changeStatus() {
+        if(vm.newPatientProblem.state == 'Active'){
+          vm.newPatientProblem.closeDate = null;
+          vm.startDateCalendarPopup.options.maxDate = new Date();
+        }
+      }
 
       function displayComunicationError(loading){
         if(!toastr.active()){
@@ -153,6 +162,10 @@
           vm.problems = problems;
         }, displayComunicationError).$promise;
 
+      }
+
+      function isHIV() {
+        return vm.newPatientProblem&&vm.newPatientProblem.problem ?vm.newPatientProblem.problem.name=='Infección por HIV' || vm.newPatientProblem.problem=='Infección por HIV':false;
       }
 
       function cancelNewPatientProblem() {

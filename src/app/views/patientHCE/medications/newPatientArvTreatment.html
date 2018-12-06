@@ -1,240 +1,245 @@
 <div class="container-fluid hce-container-modal">
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="hce-form-title">Nuevo tratamiento ARV</div>
-				</div>
-			</div>
-			<div class="row" ng-show="NewPatientArvTreatmentController.showInfo()">
-				<button ng-click="NewPatientArvTreatmentController.goToProblems()" class="alert alert-info col-xs-12 col-sm-12 col-md-12 col-lg-12" role="alert">Recuerde primero dar de alta el problema HIV correspondiente desde aquí</button>
-			</div>
-			<br>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-					<div class="list-container">
-				    	<table class="table table-condensed table-fixed">
-				    		<thead> 
-				    			<tr> 
-		    						<th>NRTI</th>
-				    			</tr> 
-				    		</thead>
-				    		<tbody>
-				    			<tr ng-repeat="medication in NewPatientArvTreatmentController.nrtiMedications | orderBy:'selected'" ng-class="{success:medication.selected}" title="{{medication.recipeName}}">
-			    					<td style="text-transform: capitalize;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
-									      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
-									    </div>
-									</td> 
-			    				</tr>
-			    			</tbody>
-			    		</table>
+	<form name="NewPatientArvTreatmentController.controllerForm">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="hce-form-title">Nuevo tratamiento ARV</div>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-					<div class="list-container">
-				    	<table class="table table-condensed table-fixed">
-				    		<thead> 
-				    			<tr> 
-		    						<th>NNRTI</th>
-				    			</tr> 
-				    		</thead>
-				    		<tbody>
-				    			<tr ng-repeat="medication in NewPatientArvTreatmentController.nnrtiMedications | orderBy:'selected'"
-				    			ng-class="{success:medication.selected}" title="{{medication.name}}">
-			    					<td style="text-transform: capitalize;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
-			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
-									      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
-									    </div>
-									</td> 
-								</tr>
-			    			</tbody>
-			    		</table>
+				<div class="row" ng-show="NewPatientArvTreatmentController.showInfo()">
+					<button ng-click="NewPatientArvTreatmentController.goToProblems()" class="alert alert-info col-xs-12 col-sm-12 col-md-12 col-lg-12" role="alert">Recuerde primero dar de alta el problema HIV correspondiente desde aquí</button>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group class="form-group-lg">
+							<label abm-label for="problem" type="static">Indicación de ARV(*)</label>
+							<select class="form-control" name="problem" ng-options="problem as problem.problem.name for problem in NewPatientArvTreatmentController.patientProblems | filter:{problem:{problemType:'HIV'}}" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.patientProblem" abm-form-control ng-required="true">
+							</select>
+						</abm-form-group>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-					<div class="list-container">
-				    	<table class="table table-condensed table-fixed">
-				    		<thead> 
-				    			<tr> 
-		    						<th>IP</th>
-				    			</tr> 
-				    		</thead>
-				    		<tbody>
-				    			<tr ng-repeat="medication in NewPatientArvTreatmentController.ipMedications | orderBy:'selected'" ng-class="{success:medication.selected}" title="{{medication.name}}">
-			    					<td style="text-transform: capitalize;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
-									      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
-									    </div>
-									</td> 
-								</tr>
-			    			</tbody>
-			    		</table>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="list-container">
+					    	<table class="table table-condensed table-fixed">
+					    		<thead> 
+					    			<tr> 
+			    						<th>NRTI</th>
+					    			</tr> 
+					    		</thead>
+					    		<tbody>
+					    			<tr ng-repeat="medication in NewPatientArvTreatmentController.nrtiMedications | orderBy:'selected'" ng-class="{success:medication.selected}" title="{{medication.recipeName}}">
+				    					<td class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
+										      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
+										    </div>
+										</td> 
+				    				</tr>
+				    			</tbody>
+				    		</table>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="list-container">
+					    	<table class="table table-condensed table-fixed">
+					    		<thead> 
+					    			<tr> 
+			    						<th>NNRTI</th>
+					    			</tr> 
+					    		</thead>
+					    		<tbody>
+					    			<tr ng-repeat="medication in NewPatientArvTreatmentController.nnrtiMedications"
+					    			ng-class="{success:medication.selected}" title="{{medication.name}}">
+				    					<td  class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
+				    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
+										      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
+										    </div>
+										</td> 
+									</tr>
+				    			</tbody>
+				    		</table>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="list-container">
+					    	<table class="table table-condensed table-fixed">
+					    		<thead> 
+					    			<tr> 
+			    						<th>IP</th>
+					    			</tr> 
+					    		</thead>
+					    		<tbody>
+					    			<tr ng-repeat="medication in NewPatientArvTreatmentController.ipMedications | orderBy:'selected'" ng-class="{success:medication.selected}" title="{{medication.name}}">
+				    					<td  class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
+										      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
+										    </div>
+										</td> 
+									</tr>
+				    			</tbody>
+				    		</table>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="list-container">
+					    	<table class="table table-condensed table-fixed">
+					    		<thead> 
+					    			<tr> 
+			    						<th>INI</th>
+					    			</tr> 
+					    		</thead>
+					    		<tbody>
+					    			<tr ng-repeat="medication in NewPatientArvTreatmentController.iiMedications | orderBy:'selected'"
+					    			ng-class="{success:medication.selected}" title="{{medication.name}}">
+				    					<td  class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
+				    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
+										      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
+										    </div>
+										</td> 
+									</tr>
+				    			</tbody>
+				    		</table>
+						</div>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-					<div class="list-container">
-				    	<table class="table table-condensed table-fixed">
-				    		<thead> 
-				    			<tr> 
-		    						<th>INI</th>
-				    			</tr> 
-				    		</thead>
-				    		<tbody>
-				    			<tr ng-repeat="medication in NewPatientArvTreatmentController.iiMedications | orderBy:'selected'"
-				    			ng-class="{success:medication.selected}" title="{{medication.name}}">
-			    					<td style="text-transform: capitalize;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
-			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
-									      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
-									    </div>
-									</td> 
-								</tr>
-			    			</tbody>
-			    		</table>
+				<div class="row arv-treatment-selection-row">
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-4 col-md-offset-2 col-lg-offset-2">
+						<div class="list-container">
+					    	<table class="table table-condensed table-fixed">
+					    		<thead> 
+					    			<tr> 
+			    						<th>COMBOS</th>
+					    			</tr> 
+					    		</thead>
+					    		<tbody>
+					    			<tr ng-repeat="medication in NewPatientArvTreatmentController.comboMedications | orderBy:'selected'"
+					    			ng-class="{success:medication.selected}" title="{{medication.name}}">
+				    					<td  class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
+				    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
+										      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
+										    </div>
+										</td> 
+									</tr>
+				    			</tbody>
+				    		</table>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						<div class="list-container">
+					    	<table class="table table-condensed table-fixed">
+					    		<thead> 
+					    			<tr> 
+			    						<th>OTROS</th>
+					    			</tr> 
+					    		</thead>
+					    		<tbody>
+					    			<tr ng-repeat="medication in NewPatientArvTreatmentController.otherMedications | orderBy:'selected'"
+					    			ng-class="{success:medication.selected}" title="{{medication.name}}">
+				    					<td  class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
+				    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
+										      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
+										    </div>
+										</td> 
+									</tr>
+				    			</tbody>
+				    		</table>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row arv-treatment-selection-row">
-				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-4 col-md-offset-2 col-lg-offset-2">
-					<div class="list-container">
-				    	<table class="table table-condensed table-fixed">
-				    		<thead> 
-				    			<tr> 
-		    						<th>COMBOS</th>
-				    			</tr> 
-				    		</thead>
-				    		<tbody>
-				    			<tr ng-repeat="medication in NewPatientArvTreatmentController.comboMedications | orderBy:'selected'"
-				    			ng-class="{success:medication.selected}" title="{{medication.name}}">
-			    					<td style="text-transform: capitalize;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
-			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
-									      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
-									    </div>
-									</td> 
-								</tr>
-			    			</tbody>
-			    		</table>
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-					<div class="list-container">
-				    	<table class="table table-condensed table-fixed">
-				    		<thead> 
-				    			<tr> 
-		    						<th>OTROS</th>
-				    			</tr> 
-				    		</thead>
-				    		<tbody>
-				    			<tr ng-repeat="medication in NewPatientArvTreatmentController.otherMedications | orderBy:'selected'"
-				    			ng-class="{success:medication.selected}" title="{{medication.name}}">
-			    					<td style="text-transform: capitalize;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
-			    						<div class="checkbox" abm-checkbox label="{{medication.abbreviation + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'' )}}">
-									      <input type="checkbox" ng-model="medication.selected" ng-change="NewPatientArvTreatmentController.toggleMedicationSelection(medication)">
-									    </div>
-									</td> 
-								</tr>
-			    			</tbody>
-			    		</table>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group class="form-group-lg">
-						<label abm-label for="problem" type="static">Problema del paciente(*)</label>
-						<select class="form-control" name="problem" ng-options="problem as problem.problem.name for problem in NewPatientArvTreatmentController.patientProblems | filter:{problem:{problemType:'HIV'}}" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.patientProblem" abm-form-control ng-required="true">
-						</select>
-					</abm-form-group>
-				</div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			    	<table class="table table-condensed">
-			    		<thead> 
-			    			<tr> 
-			    				<th>Medicamento</th>
-			    				<th>Cantidad por día(*)</th>
-			    				<th>Cantidad por mes(*)</th>
-			    			</tr> 
-			    		</thead>
-			    		<tbody>
-			    			<tr ng-repeat="medication in NewPatientArvTreatmentController.newPatientArvTreatment.patientARVTreatmentMedications">
-		    					<td><div style="margin-top: 10px;margin-bottom: 9px;">{{medication.medication.abbreviation + (medication.medication.composition?' ' +medication.medication.composition:'' ) + (medication.medication.presentation?' ' +medication.medication.presentation:'' )}}</div></td> 
-		    					<td>
-		    						<input type="number" ng-model="medication.quantityPerDay" onkeypress="return event.charCode >= 48" min="0" ng-change="medication.quantityPerMonth=medication.quantityPerDay*30" ng-required="true"/>
-		    					</td> 
-		    					<td>
-		    						<input type="number" ng-model="medication.quantityPerMonth" onkeypress="return event.charCode >= 48" min="0" ng-required="true"/>
-		    					</td> 
-	    					</tr>
-	    				</tbody>
-	    			</table>
-    			</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-				  	<abm-form-group>
-					    <label data-abm-label type="static">Fecha de inicio(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
-							<div class="input-group">
-								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.startDate" is-open="NewPatientArvTreatmentController.startDateCalendar.opened" datepicker-options="NewPatientArvTreatmentController.startDateCalendar.options" close-text="Cerrar" alt-input-formats="NewPatientArvTreatmentController.startDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
-		                        <div class="input-group-btn">
-		                          <button type="button" class="btn btn-default" ng-click="NewPatientArvTreatmentController.startDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
-		                        </div>
-						    </div>
-				  	</abm-form-group>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="NewPatientArvTreatmentController.newPatientArvTreatment.state=='Closed'">
-				  	<abm-form-group>
-					    <label data-abm-label type="static">Fecha de fin(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
-							<div class="input-group">
-								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.endDate" is-open="NewPatientArvTreatmentController.endDateCalendar.opened" datepicker-options="NewPatientArvTreatmentController.endDateCalendar.options" close-text="Cerrar" alt-input-formats="NewPatientArvTreatmentController.endDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
-		                        <div class="input-group-btn">
-		                          <button type="button" class="btn btn-default" ng-click="NewPatientArvTreatmentController.endDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
-		                        </div>
-						    </div>
-				  	</abm-form-group>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-				  	<abm-form-group>
-				    	<label abm-label type="static">Estado del tratamiento(*)</label>
-					    <div class="radio" abm-radio label="Activo">
-					      <input type="radio" name="activo" value="Active" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.state" ng-disabled=" NewPatientArvTreatmentController.currentARVTreatment">
-					    </div>
-					    <div class="radio" abm-radio label="Inactivo">
-					      <input type="radio" name="inactivo" value="Closed" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.state">
-					    </div>					    
-				  	</abm-form-group>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="NewPatientArvTreatmentController.newPatientArvTreatment.state=='Closed'">
-					<abm-form-group class="form-group-lg">
-				    	<label abm-label for="reason" type="static">Motivo de cambio(*)</label>
-				    	<select class="form-control" name="reason" ng-options="reason  for reason in NewPatientArvTreatmentController.changeReasons" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.changeReason" abm-form-control >
-				    	</select>
-				  	</abm-form-group>
-		  		</div>
 
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group>
-				    	<label data-abm-label type="static">Observaciones</label>
-				    	<textarea type="text" abm-form-control ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.observations"></textarea>
-				  	</abm-form-group>
-		  		</div>
-		  	</div>
-			<div class="row" >
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="row" >
-					  	<div>
-					  		<button class="btn btn-success btn-raised pull-right" ng-click="NewPatientArvTreatmentController.save()"  ng-disabled="!NewPatientArvTreatmentController.canSave()">Guardar</button>
-					  		<button class="btn btn-default pull-right" ng-click="NewPatientArvTreatmentController.cancel()">Cancelar</button>
+				<br>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div abm-form-group name="medications">
+					    	<table class="table table-condensed">
+					    		<thead> 
+					    			<tr> 
+					    				<th>Medicamento</th>
+					    				<th><label class="control-label isnot-error" ng-class="{'is-error':NewPatientArvTreatmentController.controllerForm.medications.$invalid}"> Cantidad por día(*)</label></th>
+					    				<th><label class="control-label isnot-error" ng-class="{'is-error':NewPatientArvTreatmentController.controllerForm.medications.$invalid}">Cantidad por mes(*)</label></th>
+					    			</tr> 
+					    		</thead>
+					    		<tbody>
+					    			<tr ng-repeat="medication in NewPatientArvTreatmentController.newPatientArvTreatment.patientARVTreatmentMedications">
+				    					<td><div style="margin-top: 10px;margin-bottom: 9px;">{{medication.medication.abbreviation + (medication.medication.composition?' ' +medication.medication.composition:'' ) + (medication.medication.presentation?' ' +medication.medication.presentation:'' )}}</div></td> 
+				    					<td>
+				    						<input type="number" ng-model="medication.quantityPerDay" onkeypress="return event.charCode >= 48" min="0" ng-change="medication.quantityPerMonth=medication.quantityPerDay*30" ng-required="true"/>
+				    					</td> 
+				    					<td>
+				    						<input type="number" ng-model="medication.quantityPerMonth" onkeypress="return event.charCode >= 48" min="0" ng-required="true"/>
+				    					</td> 
+			    					</tr>
+			    				</tbody>
+			    			</table>
+		    			</div>
+	    			</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					  	<abm-form-group ng-class="{'has-error':NewPatientArvTreatmentController.controllerForm.startDate.$invalid}" name="startDate">
+						    <label data-abm-label type="static">Fecha de inicio(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
+								<div class="input-group">
+									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.startDate" is-open="NewPatientArvTreatmentController.startDateCalendar.opened" datepicker-options="NewPatientArvTreatmentController.startDateCalendar.options" close-text="Cerrar" alt-input-formats="NewPatientArvTreatmentController.startDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="true" ng-change="NewPatientArvTreatmentController.endDateCalendar.updateMinVal()"/>
+			                        <div class="input-group-btn">
+			                          <button type="button" class="btn btn-default" ng-click="NewPatientArvTreatmentController.startDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+			                        </div>
+							    </div>
+					  	</abm-form-group>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="NewPatientArvTreatmentController.newPatientArvTreatment.state=='Closed'">
+					  	<abm-form-group ng-class="{'has-error':NewPatientArvTreatmentController.controllerForm.endDate.$invalid}" name="endDate">
+						    <label data-abm-label type="static">Fecha de fin(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
+								<div class="input-group">
+									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.endDate" is-open="NewPatientArvTreatmentController.endDateCalendar.opened" datepicker-options="NewPatientArvTreatmentController.endDateCalendar.options" close-text="Cerrar" alt-input-formats="NewPatientArvTreatmentController.endDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="NewPatientArvTreatmentController.newPatientArvTreatment.state=='Closed'" ng-change="NewPatientArvTreatmentController.startDateCalendar.updateMaxVal()"/>
+			                        <div class="input-group-btn">
+			                          <button type="button" class="btn btn-default" ng-click="NewPatientArvTreatmentController.endDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+			                        </div>
+							    </div>
+					  	</abm-form-group>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					  	<abm-form-group>
+					    	<label abm-label type="static">Estado del tratamiento(*)</label>
+						    <div class="radio" abm-radio label="Activo">
+						      <input type="radio" name="activo" value="Active" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.state" ng-disabled=" NewPatientArvTreatmentController.currentARVTreatment" ng-required="true" ng-change="NewPatientArvTreatmentController.changeStatus()">
+						    </div>
+						    <div class="radio" abm-radio label="Inactivo">
+						      <input type="radio" name="inactivo" value="Closed" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.state" ng-required="true">
+						    </div>					    
+					  	</abm-form-group>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="NewPatientArvTreatmentController.newPatientArvTreatment.state=='Closed'">
+						<abm-form-group class="form-group-lg" ng-class="{'has-error':NewPatientArvTreatmentController.controllerForm.changeReason.$invalid}" name="changeReason">
+					    	<label abm-label for="reason" type="static">Motivo de cambio(*)</label>
+					    	<select class="form-control" name="reason" ng-options="reason  for reason in NewPatientArvTreatmentController.changeReasons" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.changeReason" ng-required="NewPatientArvTreatmentController.newPatientArvTreatment.state=='Closed'" abm-form-control >
+					    	</select>
+					  	</abm-form-group>
+			  		</div>
+
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group>
+					    	<label data-abm-label type="static">Observaciones</label>
+					    	<textarea type="text" abm-form-control ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.observations"></textarea>
+					  	</abm-form-group>
+			  		</div>
+			  	</div>
+				<div class="row" >
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="row" >
+						  	<div>
+						  		<button class="btn btn-success btn-raised pull-right" ng-click="NewPatientArvTreatmentController.save()"  ng-disabled="!NewPatientArvTreatmentController.canSave()">Guardar</button>
+						  		<button class="btn btn-default pull-right" ng-click="NewPatientArvTreatmentController.cancel()">Cancelar</button>
+						  	</div>
 					  	</div>
 				  	</div>
-			  	</div>
-			</div>		    					
+				</div>		    					
+			</div>
 		</div>
-	</div>
+	</form>
 </div>

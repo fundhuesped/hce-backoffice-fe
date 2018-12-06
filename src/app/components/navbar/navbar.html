@@ -25,7 +25,7 @@
                 <div class="row" style="padding-top: 5px; padding-bottom: 5px;">
                   <span class="hce-navbar-patient-age">{{NavbarController.currentPaciente.socialService.name}}</span>
                   <span class="hce-navbar-patient-age">{{NavbarController.currentPaciente.socialServiceNumber}}</span>
-                  <span class="hce-navbar-patient-age">{{NavbarController.currentPaciente.genderAtBirth.name.substring(0,1)+NavbarController.currentPaciente.firstName.substring(0,2).toUpperCase()+NavbarController.currentPaciente.fatherSurname.substring(0,2).toUpperCase()+NavbarController.formatedBirthDate()}}</span>
+                  <span class="hce-navbar-patient-age">{{NavbarController.currentPaciente.pns}}</span>
                 </div>
               </div>
             </div>
@@ -39,13 +39,13 @@
           </div>
         </div>
         <div class="row ">
-          <div class="hce-360-navbar-btn" ui-sref-active="active" ui-sref="app.patientHCE.resumen">Vista 360</div>
           <div class="hce-360-navbar-btn" ui-sref-active="active" ui-sref="app.patientHCE.evolutions">Evoluciones</div>
           <div class="hce-360-navbar-btn" ui-sref-active="active" ui-sref="app.patientHCE.problems">Problemas y antecedentes</div>
           <div class="hce-360-navbar-btn" ui-sref-active="active" ui-sref="app.patientHCE.medications">Tratamientos</div>
           <div class="hce-360-navbar-btn" ui-sref-active="active" ui-sref="app.patientHCE.laboratoryResults">Laboratorios</div>
           <div class="hce-360-navbar-btn" ui-sref-active="active" ui-sref="app.patientHCE.clinicalResults">Otros estudios</div>
           <div class="hce-360-navbar-btn" ui-sref-active="active" ui-sref="app.patientHCE.vaccines">Vacunas</div>
+          <div class="hce-360-navbar-btn" ui-sref-active="active" ui-sref="app.patientHCE.hceSummary">Otros</div>
 
         </div>
       </div>

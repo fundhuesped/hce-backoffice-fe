@@ -15,6 +15,11 @@
             method: 'PUT',
             params:{id:'@id'}
           },
+          getEvolution:{
+            url: apiBase+'hce/visit/:id/',
+            method: 'GET',
+            params:{id:'@id'}            
+          },
           getPaginatedForPaciente:{
             url: apiBase+'hce/paciente/:pacienteId/visits',
             params:{pacienteId:'@pacienteId'},

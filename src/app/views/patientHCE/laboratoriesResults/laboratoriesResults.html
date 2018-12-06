@@ -33,7 +33,7 @@
 							</div>
 						</div>
 						<div ng-repeat-end class="row hce-labResult-row" ng-repeat="determinacion in categoriaDeterminacion.determinaciones" ng-show="categoriaDeterminacion.show">
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell" style="text-align: left;padding-left: 30px">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell" style="text-align: left; overflow:hidden;" title="{{determinacion.label}}">
 								{{determinacion.label}}
 							</div>
 							<div ng-if="categoriaDeterminacion.name!=='CARGA VIRAL HIV'">

@@ -18,7 +18,7 @@
       vm.toggleMedicationSelection = toggleMedicationSelection;
       vm.showInfo = showInfo;
       vm.goToProblems = goToProblems;
-
+      vm.changeStatus = changeStatus;
 
       vm.nrtiMedications = [];
       vm.nnrtiMedications = [];
@@ -33,6 +33,17 @@
                           'Fallo'];
 
 
+      // vm.patientProblems = [{
+      //   name:'Infeccion cronica por HIV',
+      // },{
+      //   name:'Infeccion aguda HIV',
+      // },{
+      //   name:'Pre',
+      // },{
+      //   name:'POS Sex',
+      // },{
+      //   name:'POS Laboral',
+      // }]
       Object.defineProperty(
           vm,
           'patientProblems', {
@@ -56,7 +67,11 @@
       vm.startDateCalendar = {
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
+        updateMaxVal: function (value) {
+          this.options.maxDate = (vm.newPatientArvTreatment.endDate?vm.newPatientArvTreatment.endDate:new Date());
+        },
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -67,7 +82,11 @@
       vm.endDateCalendar = {
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
+        updateMinVal: function () {
+          this.options.minDate = (vm.newPatientArvTreatment.startDate?vm.newPatientArvTreatment.startDate:new Date());
+        },
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -91,10 +110,17 @@
       }
 
       function canSave() {
-        if(vm.newPatientArvTreatment &&vm.newPatientArvTreatment.patientARVTreatmentMedications && vm.newPatientArvTreatment.patientProblem &&vm.newPatientArvTreatment.patientARVTreatmentMedications.length > 0 && vm.newPatientArvTreatment.startDate){
+        if(vm.controllerForm.$valid && vm.newPatientArvTreatment &&vm.newPatientArvTreatment.patientARVTreatmentMedications && vm.newPatientArvTreatment.patientARVTreatmentMedications.length > 0){
           return true;
         }
         return false;
+      }
+
+      function changeStatus() {
+        if(vm.newPatientArvTreatment.state == 'Active'){
+          vm.newPatientArvTreatment.endDate = null;
+          vm.startDateCalendar.options.maxDate = new Date();
+        }
       }
 
       function showInfo() {

@@ -17,7 +17,8 @@
       vm.cancel = cancel;
       vm.canSave = canSave;
       vm.error = null;
-
+      vm.hasSelectedMedication = hasSelectedMedication;
+      vm.changeStatus = changeStatus;
       Object.defineProperty(
           vm,
           'patientProblems', {
@@ -32,7 +33,11 @@
       vm.startDateCalendar = {
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
+        updateMaxVal: function (value) {
+          this.options.maxDate = (vm.newPatientMedication.endDate?vm.newPatientMedication.endDate:new Date());
+        },
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -42,8 +47,12 @@
 
       vm.endDateCalendar = {
         opened: false,
+        updateMinVal: function () {
+          this.options.minDate = (vm.newPatientMedication.startDate?vm.newPatientMedication.startDate:new Date());
+        },
         altInputFormats: ['d!-M!-yyyy'],
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -67,8 +76,6 @@
           return;
         }
 
-
-
         var tmpPatientMedication = angular.copy(vm.newPatientMedication);
         tmpPatientMedication.paciente = HCService.currentPaciente.id;
         tmpPatientMedication.startDate = moment(tmpPatientMedication.startDate).format('YYYY-MM-DD');
@@ -83,7 +90,7 @@
       }
 
       function canSave() {
-        if(vm.newPatientMedication &&vm.newPatientMedication.medication && vm.newPatientMedication.startDate){
+        if(vm.controllerForm.$valid && hasSelectedMedication()){
           return true;
         }
         return false;
@@ -104,6 +111,10 @@
         }
       }
 
+      function hasSelectedMedication() {
+        return typeof vm.newPatientMedication.medication === 'object'; 
+      }
+
       function getMedications($viewValue) {
         var filters = {
           name : $viewValue
@@ -114,6 +125,14 @@
         }, displayComunicationError).$promise;
 
       }
+
+      function changeStatus() {
+        if(vm.newPatientMedication.state == 'Active'){
+          vm.newPatientMedication.endDate = null;
+          vm.startDateCalendar.options.maxDate = new Date();
+        }
+      }
+
 
       function cancel() {
         $uibModalInstance.dismiss('cancel');

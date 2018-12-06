@@ -1,0 +1,27 @@
+<div class="container-fluid hce-container-modal">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="hce-form-title">¿Cerrar evolución?</div>
+				</div>
+			</div>
+			<div class="row" >
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					Existen cambios sin guardar en el motivo de consulta o texto de la evolución, si cierra ahora la consulta se perderan.
+				</div>
+			</div>
+			<div class="row" >
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="row" >
+					  	<div>
+					  		<button class="btn btn-success btn-raised pull-right" ng-click="Ctrl.saveChanges()">Guardar cambios</button>
+					  		<button class="btn btn-warning pull-right" ng-show="Ctrl.canDiscardChanges()" ng-click="Ctrl.discardChanges()">Descartar cambios</button>
+					  		<button class="btn btn-default pull-right" ng-click="Ctrl.cancel()">Cancelar</button>
+					  	</div>
+				  	</div>
+			  	</div>
+			</div>		    					
+		</div>
+	</div>
+</div>

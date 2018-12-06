@@ -30,6 +30,16 @@
             }
           },
       })
+      .state('app.patientHCE.hceSummary', {
+          url: '/resumenHCE',
+          views: {
+            'detail': {
+              templateUrl: 'app/views/patientHCE/hceSummary/hceSummary.html',
+              controller: 'HCESummaryController',
+              controllerAs: 'Ctrl'        
+            }
+          },
+      })
       .state('app.patientHCE.problems', {
           url: '/problemas',
           views: {

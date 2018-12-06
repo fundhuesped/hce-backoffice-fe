@@ -17,17 +17,8 @@
       vm.cancel = cancel;
       vm.canSave = canSave;
       vm.markAsError = markAsError;
-      vm.applicationDateCalendar = {
-        opened: false,
-        altInputFormats: ['d!-M!-yyyy'],
-        options: {
-          maxDate: new Date()
-        },
-        open : function(){
-          this.opened = true;
-        }
-      };
-
+      vm.changeStatus = changeStatus;
+      vm.canEdit = canEdit;
 
       Object.defineProperty(
           vm,
@@ -43,7 +34,12 @@
       vm.startDateCalendar = {
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
+        updateMaxVal: function () {
+          this.options.maxDate = (vm.patientMedication.endDate?vm.patientMedication.endDate:new Date());
+        },
+
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -54,7 +50,12 @@
       vm.endDateCalendar = {
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
+        updateMinVal: function () {
+          this.options.minDate = (vm.patientMedication.startDate?vm.patientMedication.startDate:new Date());
+        },
+
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -77,8 +78,15 @@
         }, showError);
       }
 
+      function changeStatus() {
+        if(vm.patientMedication.state == 'Active'){
+          vm.patientMedication.endDate = null;
+          vm.startDateCalendar.options.maxDate = new Date();
+        }
+      }
+
       function canSave() {
-        if(vm.patientMedication &&vm.patientMedication.medication && vm.patientMedication.startDate){
+        if(vm.controllerForm.$valid){
           return true;
         }
         return false;
@@ -91,9 +99,12 @@
         HCService.getPatientProblems();
         vm.patientMedication = angular.copy(patientMedication);
         vm.patientMedication.startDate = new Date(vm.patientMedication.startDate + 'T03:00:00');
+        vm.endDateCalendar.options.minDate = vm.patientMedication.startDate;
 
         if(vm.patientMedication.endDate && (vm.patientMedication.state == 'Closed' || vm.patientMedication.state == 'Error') ){
           vm.patientMedication.endDate = new Date(vm.patientMedication.endDate + 'T03:00:00');
+          vm.startDateCalendar.options.maxDate = new Date();
+
         }
 
 	    }
@@ -116,6 +127,9 @@
           vm.medications = medications;
         }, displayComunicationError).$promise;
 
+      }
+      function canEdit() {
+        return moment().diff(moment(patientMedication.createdOn), 'hours') <= 8;
       }
 
 

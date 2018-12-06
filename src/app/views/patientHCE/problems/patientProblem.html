@@ -1,80 +1,79 @@
 <div class="container-fluid hce-container-modal">
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="hce-form-title">Editar problema</div>
+	<form name="PatientProblemController.controllerForm">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="hce-form-title">Editar problema</div>
+					</div>
 				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group class="form-group-lg">
-		    			<label data-abm-label type="static">Escriba el problema</label>
-                		<input type="text" abm-form-control ng-model="PatientProblemController.problem.problem" uib-typeahead="problem as problem.name for problem in PatientProblemController.getProblems($viewValue)" class="form-control" typeahead-min-length="3" disabled="true">
-                	</abm-form-group>
-                </div>
-			</div>
-			<div class="row" >
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
-				  	<abm-form-group>
-						<label>Fecha de inicio <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small> </label>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group>
+			    			<label data-abm-label type="static">Escriba el problema</label>
+	                		<input type="text" abm-form-control ng-model="PatientProblemController.problem.problem" uib-typeahead="problem as problem.name for problem in PatientProblemController.getProblems($viewValue)" class="form-control" typeahead-min-length="3" disabled="true">
+	                	</abm-form-group>
+	                </div>
+				</div>
+				<div class="row" >
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					  	<abm-form-group ng-class="{'has-error':PatientProblemController.controllerForm.startDate.$invalid}" name="startDate" name="startDate">
+							<label data-abm-label type="static">Fecha de inicio(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small> </label>
+								<div class="input-group">
+									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="PatientProblemController.problem.startDate" is-open="PatientProblemController.startDateCalendarPopup.opened" datepicker-options="PatientProblemController.startDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PatientProblemController.startDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="true" ng-change="PatientProblemController.closeDateCalendarPopup.updateMinVal()" ng-disabled="!PatientProblemController.canEdit()"/>
+			                        <div class="input-group-btn">
+			                          <button type="button" class="btn btn-default" ng-click="PatientProblemController.startDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+			                        </div>
+							    </div>
+					  	</abm-form-group>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-show="PatientProblemController.problem.state=='Closed'">
+					  	<abm-form-group ng-class="{'has-error':PatientProblemController.controllerForm.closeDate.$invalid}" name="closeDate">
+						    <label data-abm-label type="static">Fecha de cierre(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small> </label>
 							<div class="input-group">
-								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="PatientProblemController.problem.startDate" is-open="PatientProblemController.startDateCalendarPopup.opened" datepicker-options="PatientProblemController.startDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PatientProblemController.startDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
+								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="closeDate" ng-model="PatientProblemController.problem.closeDate" is-open="PatientProblemController.closeDateCalendarPopup.opened" datepicker-options="PatientProblemController.closeDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PatientProblemController.closeDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="PatientProblemController.problem.state=='Closed'" 
+								ng-change="PatientProblemController.startDateCalendarPopup.updateMaxVal()" ng-disabled="!PatientProblemController.canEdit() && !PatientProblemController.canBeClosed()"/>
 		                        <div class="input-group-btn">
-		                          <button type="button" class="btn btn-default" ng-click="PatientProblemController.startDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+		                          <button type="button" class="btn btn-default" ng-click="PatientProblemController.closeDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
 		                        </div>
 						    </div>
-				  	</abm-form-group>
+					  	</abm-form-group>
+					</div>
 				</div>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-show="PatientProblemController.problem.state=='Closed'">
-				  	<abm-form-group>
-					    <label>Fecha de cierre <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small> </label>
-						<div class="input-group">
-							<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="closeDate" ng-model="PatientProblemController.problem.closeDate" is-open="PatientProblemController.closeDateCalendarPopup.opened" datepicker-options="PatientProblemController.closeDateCalendarPopup.options" close-text="Cerrar" alt-input-formats="PatientProblemController.closeDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
-	                        <div class="input-group-btn">
-	                          <button type="button" class="btn btn-default" ng-click="PatientProblemController.closeDateCalendarPopup.open()"><i class="glyphicon glyphicon-calendar"></i></button>
-	                        </div>
-					      <!-- <div class="input-group-addon">.00</div> -->
-					    </div>
-				  	</abm-form-group>
-				</div>
-
-			</div>
-			<div class="row" >
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				  	<abm-form-group>
-					    <label>Estado del problema </label>
-					    <div class="radio" abm-radio label="Activo" >
-					      <input type="radio" name="activo" value="Active" ng-model="PatientProblemController.problem.state" ng-disabled="PatientProblemController.originalProblem.state == 'Closed'">
-					    </div>
-					    <div class="radio" abm-radio label="Resuelto">
-					      <input type="radio" name="cerrado" value="Closed" ng-model="PatientProblemController.problem.state" ng-disabled="PatientProblemController.originalProblem.state == 'Closed'">
-					    </div>					    
-				  	</abm-form-group>
-				</div>
-			</div>
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="row" >
-					<abm-form-group class="form-group-lg">
-				    	<label data-abm-label type="static">Observaciones</label>
-				    	<input type="text" abm-form-control ng-model="PatientProblemController.problem.observations">
-				  	</abm-form-group>
-		  		</div>
-		  	</div>
-
-			<div class="row" >
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					  	<abm-form-group>
+						    <label abm-label type="static">Estado del problema(*) </label>
+						    <div class="radio" abm-radio label="Activo" >
+						      <input type="radio" name="activo" value="Active" ng-model="PatientProblemController.problem.state" ng-change="PatientProblemController.changeStatus()" ng-disabled="!PatientProblemController.canEdit() && !PatientProblemController.canBeClosed()" ng-required="true">
+						    </div>
+						    <div class="radio" abm-radio label="Resuelto">
+						      <input type="radio" name="cerrado" value="Closed" ng-model="PatientProblemController.problem.state" ng-disabled="!PatientProblemController.canEdit() && !PatientProblemController.canBeClosed()" ng-required="true" >
+						    </div>					    
+					  	</abm-form-group>
+					</div>
+				</div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="row" >
-					  	<div>
-					  		<button class="btn btn-danger pull-left" ng-click="PatientProblemController.markAsError()">Pasar a error</button>
+						<abm-form-group>
+					    	<label data-abm-label type="static">Observaciones</label>
+					    	<input type="text" abm-form-control ng-model="PatientProblemController.problem.observations" ng-disabled="!PatientProblemController.canEdit()">
+					  	</abm-form-group>
+			  		</div>
+			  	</div>
 
-					  		<button class="btn btn-success btn-raised pull-right" ng-click="PatientProblemController.save()"  ng-disabled="!PatientProblemController.canSaveNewProblem()">Guardar problema</button>
-					  		<button class="btn btn-default pull-right" ng-click="PatientProblemController.cancel()">Cancelar</button>
+				<div class="row" >
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="row" >
+						  	<div>
+						  		<button class="btn btn-danger pull-left" ng-click="PatientProblemController.markAsError()" ng-show="PatientProblemController.canBeMarkedAsError()">Pasar a error</button>
+						  		<button class="btn btn-success btn-raised pull-right" ng-click="PatientProblemController.save()" ng-show="PatientProblemController.canEdit() || PatientProblemController.canBeClosed()" ng-disabled="!PatientProblemController.canSaveNewProblem() && !PatientProblemController.canBeClosed()">Guardar problema</button>
+						  		<button class="btn btn-default pull-right" ng-click="PatientProblemController.cancel()">Cancelar</button>
+						  	</div>
 					  	</div>
 				  	</div>
-			  	</div>
-			</div>		    					
+				</div>		    					
+			</div>
 		</div>
-	</div>
+	</form>
 </div>

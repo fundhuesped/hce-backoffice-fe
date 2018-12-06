@@ -37,7 +37,7 @@
       vm.openEditPatientMedicationModal = openEditPatientMedicationModal;
       vm.openNewRecetaModal = openNewRecetaModal;
       vm.hasActiveMedications = hasActiveMedications;
-
+      vm.isSearching = false;
 
       Object.defineProperty(
           vm,
@@ -69,12 +69,19 @@
       }
 
       function searchPatientMedications() {
+        vm.isSearching = true;
         vm.filters.page = vm.currentPage;
         vm.filters.page_size = vm.pageSize;
         vm.filters.notMedicationTypeCode = 'PROF';
         HCService.getPatientMedications(vm.filters).$promise.then(function (paginatedResult) {
+          vm.isSearching = false;
           if(vm.currentPage===1){
             vm.totalItems = paginatedResult.count;
+          }
+        }, function (err) {
+          vm.isSearching = false;
+          if(err.status !== 403 && err.status !== 401){
+            displayComunicationError();
           }
         });
       }

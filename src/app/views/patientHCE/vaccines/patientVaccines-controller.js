@@ -6,24 +6,22 @@
     	.module('hce.patientHCE')
     	.controller('PatientVaccinesController', patientVaccinesController);
 
-	patientVaccinesController.$inject = ['$state', 'HCService', 'PatientVaccine', 'Vaccine', 'toastr', 'moment', '$uibModal'];
+	patientVaccinesController.$inject = ['$state', 'HCService', 'PatientVaccine', 'Vaccine', 'toastr', 'moment', '$uibModal', 'lodash'];
 
-    function patientVaccinesController ($state, HCService, PatientVaccine, Vaccine, toastr, moment, $uibModal) {
+    function patientVaccinesController ($state, HCService, PatientVaccine, Vaccine, toastr, moment, $uibModal, lodash) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.searchPatientVaccines = searchPatientVaccines;
-      vm.currentPage = 1;
-      vm.pageSize = 5;
-      vm.totalItems = null;
       vm.problems = [];
       vm.filters = {};
       vm.pageChanged = pageChanged;
       vm.getVaccines = getVaccines;
       vm.openNewRecetaModal = openNewRecetaModal;
-
+      vm.hasVaccines = hasVaccines;
+      vm.vaccinesList = [];
       vm.openNewPatientVaccineModal = openNewPatientVaccineModal;
       vm.openEditPatientVaccineModal = openEditPatientVaccineModal;
-
+      vm.isSearching = false;
 
       Object.defineProperty(
           vm,
@@ -46,13 +44,20 @@
       }
 
       function searchPatientVaccines() {
-        vm.filters.page = vm.currentPage;
-        vm.filters.page_size = vm.pageSize;
-        HCService.getPatientVaccines(vm.filters).$promise.then(function (paginatedResult) {
-          if(vm.currentPage===1){
-            vm.totalItems = paginatedResult.count;
-          }
+        vm.isSearching = true;
+        vm.filters.all = true;
+        HCService.getPatientVaccines(vm.filters).$promise.then(function (result) {
+          vm.isSearching = false;
+          vm.vaccinesList = result;
+          vm.vaccines = lodash.groupBy(result, 'vaccine.name');
+        }, function (err) {
+          vm.isSearching = false;
+          displayComunicationError();
         });
+      }
+
+      function hasVaccines() {
+        return vm.vaccinesList.length>0;
       }
 
       function openEditPatientVaccineModal(selectedVaccine) {
@@ -121,7 +126,7 @@
           name : $viewValue
         };
 
-        return Vaccine.getFullActiveList(filters, function(problems){
+        return Vaccine.getFullActiveList(filters, function(vaccines){
           vm.vaccines = vaccines;
         }, displayComunicationError).$promise;
 

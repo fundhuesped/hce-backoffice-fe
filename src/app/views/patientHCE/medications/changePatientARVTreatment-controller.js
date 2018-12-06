@@ -26,7 +26,9 @@
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
         options: {
-          maxDate: new Date()
+          showWeeks: false,
+          maxDate: new Date(),
+          minDate: patientArvTreatment.startDate
         },
         open : function(){
           this.opened = true;

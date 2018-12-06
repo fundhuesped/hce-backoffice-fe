@@ -246,8 +246,14 @@
   background-color: lightgrey; 
 }
 
-.registry-error{
-  background-color: #f59088;
+.registry-error {
+  text-decoration: line-through!important;
+  background-color: lightgrey;
+}
+
+.registry-error div{
+  text-decoration: line-through!important;
+  background-color: lightgrey;
 }
 
 .hce-input-observation{
@@ -537,4 +543,13 @@
     -o-transition-duration: 0.3s;
     transition-duration: 0.3s;
 
+}
+
+
+.is-error{
+  color: #f44336!important;
+}
+
+.isnot-error{
+  color: black;
 }

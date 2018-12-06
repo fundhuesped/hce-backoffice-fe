@@ -31,10 +31,7 @@
       }
 
       function canSaveNewProblem() {
-        if(vm.newFamilyProblem &&vm.newFamilyProblem.problem && vm.newFamilyProblem.relationship){
-          return true;
-        }
-        return false;
+        return vm.controllerForm.$valid;
       }
 
 	    function activate(){

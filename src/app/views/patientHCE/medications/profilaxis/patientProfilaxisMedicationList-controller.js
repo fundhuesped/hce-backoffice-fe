@@ -36,6 +36,7 @@
       vm.patientProxilaxisMedications = [];
       vm.openNewRecetaModal = openNewRecetaModal;
       vm.hasActiveMedications = hasActiveMedications;
+      vm.isSearching = false;
       activate();
 
 
@@ -59,15 +60,20 @@
       }
 
       function searchPatientProfilaxisMedications() {
+        vm.isSearching = true;
         vm.filters.page = vm.currentPage;
         vm.filters.page_size = vm.pageSize;
         vm.filters.medicationTypeCode = 'PROF';
         vm.filters.pacienteId = HCService.currentPacienteId;
         PatientMedication.getPaginatedForPaciente(vm.filters, function (paginatedResult) {
+        vm.isSearching = false;
           vm.patientMedications = paginatedResult.results;
           vm.totalItems = paginatedResult.count;
-        }, function(argument) {
-          // body...
+        }, function(err) {
+          vm.isSearching = false;
+          if(err.status !== 403){
+            displayComunicationError();
+          }
         });
       }
 

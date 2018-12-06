@@ -57,6 +57,7 @@
       vm.birthDateCalendarPopup = {
         opened: false,
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         altInputFormats: ['d!-M!-yyyy'],
@@ -69,6 +70,7 @@
       vm.visitFromDateCalendarPopup = {
         opened: false,
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         altInputFormats: ['d!-M!-yyyy'],
@@ -80,6 +82,7 @@
       vm.visitToDateCalendarPopup = {
         opened: false,
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         altInputFormats: ['d!-M!-yyyy'],
@@ -237,7 +240,7 @@
 
       function openPatient(patient) {
           if(HCService.canOpenPatient(patient)){
-            $state.go('app.patientHCE.resumen',{patientId: patient.id});
+            $state.go('app.patientHCE.evolutions',{patientId: patient.id});
           }else{
             vm.changePacientModal.show(patient);
           }

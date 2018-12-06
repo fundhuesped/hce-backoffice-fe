@@ -1,48 +1,50 @@
 <div class="container-fluid hce-container-modal">
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="hce-form-title">Nuevo antecedente familiar</div>
+	<form name="NewFamilyProblemController.controllerForm">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="hce-form-title">Nuevo antecedente familiar</div>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group class="form-group-lg">
-		    			<label data-abm-label type="static">Escriba el problema</label>
-                		<input type="text" abm-form-control ng-model="NewFamilyProblemController.newFamilyProblem.problem" uib-typeahead="problem as problem.name for problem in NewFamilyProblemController.getProblems($viewValue)" class="form-control" typeahead-min-length="3">
-                	</abm-form-group>
-                </div>
-			</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group class="form-group-lg">
+			    			<label data-abm-label type="static">Escriba el problema(*)</label>
+	                		<input type="text" abm-form-control ng-model="NewFamilyProblemController.newFamilyProblem.problem" uib-typeahead="problem as problem.name for problem in NewFamilyProblemController.getProblems($viewValue)" class="form-control" typeahead-min-length="3" ng-required="true">
+	                	</abm-form-group>
+	                </div>
+				</div>
 
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group class="form-group-lg">
-				    	<label abm-label for="relationship" type="static">Parentesco</label>
-				    	<select class="form-control" name="relationship" ng-options="relationship.name as relationship.label for relationship in NewFamilyProblemController.relationshipChoices" ng-model="NewFamilyProblemController.newFamilyProblem.relationship" abm-form-control >
-				    	</select>
-				  	</abm-form-group>
-		  		</div>
-		  	</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group class="form-group-lg">
-				    	<label data-abm-label type="static">Observaciones</label>
-				    	<textarea type="text" abm-form-control ng-model="NewFamilyProblemController.newFamilyProblem.observations"></textarea>
-				  	</abm-form-group>
-		  		</div>
-		  	</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group class="form-group-lg">
+					    	<label abm-label for="relationship" type="static">Parentesco(*)</label>
+					    	<select class="form-control" name="relationship" ng-options="relationship.name as relationship.label for relationship in NewFamilyProblemController.relationshipChoices" ng-required="true" ng-model="NewFamilyProblemController.newFamilyProblem.relationship" abm-form-control >
+					    	</select>
+					  	</abm-form-group>
+			  		</div>
+			  	</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group class="form-group-lg">
+					    	<label data-abm-label type="static">Observaciones</label>
+					    	<textarea type="text" abm-form-control ng-model="NewFamilyProblemController.newFamilyProblem.observations"></textarea>
+					  	</abm-form-group>
+			  		</div>
+			  	</div>
 
-			<div class="row" >
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="row" >
-					  	<div>
-					  		<button class="btn btn-success btn-raised pull-right" ng-click="NewFamilyProblemController.saveNewFamilyProblem()"  ng-disabled="!NewFamilyProblemController.canSaveNewProblem()">Guardar problema</button>
-					  		<button class="btn btn-default pull-right" ng-click="NewFamilyProblemController.cancel()">Cancelar</button>
+				<div class="row" >
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="row" >
+						  	<div>
+						  		<button class="btn btn-success btn-raised pull-right" ng-click="NewFamilyProblemController.saveNewFamilyProblem()"  ng-disabled="!NewFamilyProblemController.canSaveNewProblem()">Guardar problema</button>
+						  		<button class="btn btn-default pull-right" ng-click="NewFamilyProblemController.cancel()">Cancelar</button>
+						  	</div>
 					  	</div>
 				  	</div>
-			  	</div>
-			</div>		    					
+				</div>		    					
+			</div>
 		</div>
-	</div>
+	</form>
 </div>

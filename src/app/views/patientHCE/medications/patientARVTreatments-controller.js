@@ -24,6 +24,7 @@
       vm.openEditPatientMedicationModal = openEditPatientMedicationModal;
       vm.openChangePatientArvTreatmentModal = openChangePatientArvTreatmentModal;
       vm.openNewRecetaModal = openNewRecetaModal;
+      vm.isSearching = false;
       activate();
 
 
@@ -47,14 +48,19 @@
       }
 
       function searchPatientTreatments() {
+        vm.isSearching = true;
         vm.filters.page = vm.currentPage;
         vm.filters.page_size = vm.pageSize;
         vm.filters.pacienteId = HCService.currentPacienteId;
         HCService.getCurrentARVTreatment();
         PatientArvTreatment.getPaginatedForPaciente(vm.filters, function (paginatedResult) {
+            vm.isSearching = false;
             vm.patientTreatments = paginatedResult.results;
         }, function (err) {
-             
+            vm.isSearching = false;
+            if(err.status !== 403 && err.status !== 401){
+              displayComunicationError(); 
+            }
         });                
       }
 

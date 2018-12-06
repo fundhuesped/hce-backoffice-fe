@@ -1,110 +1,112 @@
 <div class="container-fluid hce-container-modal">
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="hce-form-title">Nuevo medicamento</div>
+	<form name="NewPatientProfilaxisMedicationController.controllerForm">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="hce-form-title">Nuevo medicamento</div>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div ng-show="NewPatientProfilaxisMedicationController.error" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning">
-					{{NewPatientProfilaxisMedicationController.error}}
+				<div class="row">
+					<div ng-show="NewPatientProfilaxisMedicationController.error" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning">
+						{{NewPatientProfilaxisMedicationController.error}}
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group>
-		    			<label data-abm-label type="static">Escriba el medicamento(*)</label>
-                		<input type="text" abm-form-control ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.medication" uib-typeahead="medication as (medication.abbreviation?medication.abbreviation:medication.name) + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'') for medication in NewPatientProfilaxisMedicationController.getMedications($viewValue)" class="form-control" typeahead-min-length="3" ng-required="true">
-                	</abm-form-group>
-                </div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-				  	<abm-form-group>
-						<label data-abm-label type="static">Fecha de inicio(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
-							<div class="input-group">
-								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.startDate" is-open="NewPatientProfilaxisMedicationController.startDateCalendar.opened" datepicker-options="NewPatientProfilaxisMedicationController.startDateCalendar.options" close-text="Cerrar" alt-input-formats="NewPatientProfilaxisMedicationController.startDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
-		                        <div class="input-group-btn">
-		                          <button type="button" class="btn btn-default" ng-click="NewPatientProfilaxisMedicationController.startDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
-		                        </div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group>
+			    			<label data-abm-label type="static">Escriba el medicamento(*)</label>
+	                		<input type="text" abm-form-control ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.medication" uib-typeahead="medication as (medication.abbreviation?medication.abbreviation:medication.name) + (medication.composition?' ' +medication.composition:'' ) + (medication.presentation?' ' +medication.presentation:'') for medication in NewPatientProfilaxisMedicationController.getMedications($viewValue)" class="form-control" typeahead-min-length="3" ng-required="true">
+	                	</abm-form-group>
+	                </div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					  	<abm-form-group ng-class="{'has-error':NewPatientProfilaxisMedicationController.controllerForm.startDate.$invalid}" name="startDate">
+							<label data-abm-label type="static">Fecha de inicio(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
+								<div class="input-group">
+									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.startDate" is-open="NewPatientProfilaxisMedicationController.startDateCalendar.opened" datepicker-options="NewPatientProfilaxisMedicationController.startDateCalendar.options" close-text="Cerrar" alt-input-formats="NewPatientProfilaxisMedicationController.startDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="true" ng-change="NewPatientProfilaxisMedicationController.endDateCalendar.updateMinVal()"/>
+			                        <div class="input-group-btn">
+			                          <button type="button" class="btn btn-default" ng-click="NewPatientProfilaxisMedicationController.startDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+			                        </div>
+							    </div>
+					  	</abm-form-group>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="NewPatientProfilaxisMedicationController.newPatientMedication.state=='Closed'">
+					  	<abm-form-group ng-class="{'has-error':NewPatientProfilaxisMedicationController.controllerForm.endDate.$invalid}" name="endDate">
+						    <label data-abm-label type="static">Fecha de fin(*)<small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
+								<div class="input-group">
+									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.endDate" is-open="NewPatientProfilaxisMedicationController.endDateCalendar.opened" datepicker-options="NewPatientProfilaxisMedicationController.endDateCalendar.options" close-text="Cerrar" alt-input-formats="NewPatientProfilaxisMedicationController.endDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="NewPatientProfilaxisMedicationController.newPatientMedication.state=='Closed'"  ng-change="NewPatientProfilaxisMedicationController.startDateCalendar.updateMaxVal()"/>
+			                        <div class="input-group-btn">
+			                          <button type="button" class="btn btn-default" ng-click="NewPatientProfilaxisMedicationController.endDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+			                        </div>
+							    </div>
+					  	</abm-form-group>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				    	<table class="table table-condensed">
+				    		<thead> 
+				    			<tr> 
+				    				<th><label class="control-label isnot-error" ng-class="{'is-error':NewPatientProfilaxisMedicationController.controllerForm.quantityPerDay.$invalid}">Cantidad por día(*)</th>
+				    				<th> <label class="control-label isnot-error" ng-class="{'is-error':NewPatientProfilaxisMedicationController.controllerForm.quantityPerMonth.$invalid}">Cantidad por mes(*)</th>
+				    			</tr> 
+				    		</thead>
+				    		<tbody>
+				    			<tr>
+			    					<td>
+			    						<input type="number" name="quantityPerDay" min="0" onkeypress="return event.charCode >= 48" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerDay" ng-change="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerMonth=NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerDay*30" ng-required="true"/>
+			    					</td> 
+			    					<td>
+			    						<input type="number" name="quantityPerMonth" min="0" onkeypress="return event.charCode >= 48" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerMonth" ng-required="true"/>
+			    					</td> 
+		    					</tr>
+		    				</tbody>
+		    			</table>
+	    			</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					  	<abm-form-group>
+					    	<label abm-label type="static">Estado del medicamento(*)</label>
+						    <div class="radio" abm-radio label="Activo">
+						      <input type="radio" name="activo" value="Active" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.state" ng-required="true" ng-change="NewPatientProfilaxisMedicationController.changeStatus()">
 						    </div>
-				  	</abm-form-group>
+						    <div class="radio" abm-radio label="Inactivo">
+						      <input type="radio" name="inactivo" value="Closed" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.state" ng-required="true">
+						    </div>					    
+					  	</abm-form-group>
+					</div>
 				</div>
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-show="NewPatientProfilaxisMedicationController.newPatientMedication.state=='Closed'">
-				  	<abm-form-group>
-					    <label data-abm-label type="static">Fecha de fin(*)</label>
-							<div class="input-group">
-								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.endDate" is-open="NewPatientProfilaxisMedicationController.endDateCalendar.opened" datepicker-options="NewPatientProfilaxisMedicationController.endDateCalendar.options" close-text="Cerrar" alt-input-formats="NewPatientProfilaxisMedicationController.endDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
-		                        <div class="input-group-btn">
-		                          <button type="button" class="btn btn-default" ng-click="NewPatientProfilaxisMedicationController.endDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
-		                        </div>
-						    </div>
-				  	</abm-form-group>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			    	<table class="table table-condensed">
-			    		<thead> 
-			    			<tr> 
-			    				<th>Cantidad por día(*)</th>
-			    				<th>Cantidad por mes(*)</th>
-			    			</tr> 
-			    		</thead>
-			    		<tbody>
-			    			<tr>
-		    					<td>
-		    						<input type="number" min="0" onkeypress="return event.charCode >= 48" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerDay" ng-change="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerMonth=NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerDay*30" ng-required="true"/>
-		    					</td> 
-		    					<td>
-		    						<input type="number" min="0" onkeypress="return event.charCode >= 48" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerMonth" ng-required="true"/>
-		    					</td> 
-	    					</tr>
-	    				</tbody>
-	    			</table>
-    			</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				  	<abm-form-group>
-				    	<label abm-label type="static">Estado del medicamento(*)</label>
-					    <div class="radio" abm-radio label="Activo">
-					      <input type="radio" name="activo" value="Active" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.state">
-					    </div>
-					    <div class="radio" abm-radio label="Inactivo">
-					      <input type="radio" name="inactivo" value="Closed" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.state">
-					    </div>					    
-				  	</abm-form-group>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group class="form-group-lg">
-				    	<label abm-label for="problem" type="static">Problema del paciente(*)</label>
-				    	<select class="form-control" name="problem" ng-options="problem as problem.problem.name for problem in NewPatientProfilaxisMedicationController.patientProblems" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.patientProblem" abm-form-control ng-required="true">
-				    	</select>
-				  	</abm-form-group>
-		  		</div>
-		  	</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group>
-				    	<label data-abm-label type="static">Observaciones</label>
-				    	<textarea type="text" abm-form-control ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.observations"></textarea>
-				  	</abm-form-group>
-		  		</div>
-		  	</div>
-			<div class="row" >
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="row" >
-					  	<div>
-					  		<button class="btn btn-success btn-raised pull-right" ng-click="NewPatientProfilaxisMedicationController.save()"  ng-disabled="!NewPatientProfilaxisMedicationController.canSave()">Guardar</button>
-					  		<button class="btn btn-default pull-right" ng-click="NewPatientProfilaxisMedicationController.cancel()">Cancelar</button>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group class="form-group-lg">
+					    	<label abm-label for="problem" type="static">Problema del paciente(*)</label>
+					    	<select class="form-control" name="problem" ng-options="problem as problem.problem.name for problem in NewPatientProfilaxisMedicationController.patientProblems" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.patientProblem" abm-form-control ng-required="true">
+					    	</select>
+					  	</abm-form-group>
+			  		</div>
+			  	</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group>
+					    	<label data-abm-label type="static">Observaciones</label>
+					    	<textarea type="text" abm-form-control ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.observations"></textarea>
+					  	</abm-form-group>
+			  		</div>
+			  	</div>
+				<div class="row" >
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="row" >
+						  	<div>
+						  		<button class="btn btn-success btn-raised pull-right" ng-click="NewPatientProfilaxisMedicationController.save()"  ng-disabled="!NewPatientProfilaxisMedicationController.canSave()">Guardar</button>
+						  		<button class="btn btn-default pull-right" ng-click="NewPatientProfilaxisMedicationController.cancel()">Cancelar</button>
+						  	</div>
 					  	</div>
 				  	</div>
-			  	</div>
-			</div>		    					
+				</div>		    					
+			</div>
 		</div>
-	</div>
+	</form>
 </div>

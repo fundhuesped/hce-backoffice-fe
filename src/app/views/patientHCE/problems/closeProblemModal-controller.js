@@ -19,6 +19,7 @@
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
         options: {
+          showWeeks: false,
           minDate: patientProblem.startDate
         },
         open : function(){

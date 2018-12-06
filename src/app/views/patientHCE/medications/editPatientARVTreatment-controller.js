@@ -11,7 +11,7 @@
     function editPatientARVTreatmentController ($state, HCService, PatientArvTreatment, toastr, moment, Medication, $uibModalInstance, $filter, patientArvTreatment) {
 	    var vm = this;
       vm.hceService = HCService;
-      vm.patientArvTreatment = patientArvTreatment;
+      vm.patientArvTreatment = angular.copy(patientArvTreatment);
       vm.cancel = cancel;
 
 
@@ -42,6 +42,7 @@
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -53,6 +54,7 @@
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -134,7 +136,13 @@
           }
           vm.otherMedications = medications;
         }, displayComunicationError);
-        	HCService.getPatientProblems();
+
+        vm.patientArvTreatment.startDate = new Date(vm.patientArvTreatment.startDate + 'T03:00:00');
+
+        if(vm.patientArvTreatment.endDate && (vm.patientArvTreatment.state == 'Closed' || vm.patientArvTreatment.state == 'Error') ){
+          vm.patientArvTreatment.endDate = new Date(vm.patientArvTreatment.endDate + 'T03:00:00');
+        }
+
 	    }
 
       function displayComunicationError(loading){

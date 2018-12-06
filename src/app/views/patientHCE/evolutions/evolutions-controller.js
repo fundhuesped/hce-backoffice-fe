@@ -16,8 +16,9 @@
       vm.saveNewEvolution = saveNewEvolution;
       vm.closeEvolution = closeEvolution;
       vm.cancelEvolution = cancelEvolution;
-      vm.evolutionCanBeCanceled = evolutionCanBeCanceled;
+      vm.canEditEvolution = canEditEvolution;
       vm.searchEvolutions = searchEvolutions;
+      vm.editEvolution = editEvolution;
       vm.currentPage = 1;
       vm.pageSize = 10;
       vm.totalItems = null;
@@ -25,6 +26,8 @@
       vm.filters = {};
       vm.newEvolutionFocused = false;
       vm.visitTypes = ['Programada', 'Espontanea', 'Otro'];
+      vm.isSearching = false;
+
       Object.defineProperty(
           vm,
           'currentEvolution', {
@@ -52,29 +55,6 @@
 
       activate();
 
-
-      vm.fromCalendarPopup = {
-        opened: false,
-        altInputFormats: ['d!-M!-yyyy'],
-        options: {
-          maxDate: new Date()
-        },
-        open : function(){
-          this.opened = true;
-        }
-      };
-
-      vm.toCalendarPopup = {
-        opened: false,
-        altInputFormats: ['d!-M!-yyyy'],
-        options: {
-          maxDate: new Date()
-        },
-        open : function(){
-          this.opened = true;
-        }
-      };
-
       function saveNewEvolution() {
         HCService.saveNewEvolution().then(function() {
           toastr.success('Visita guardada con exito');
@@ -101,12 +81,18 @@
         searchEvolutions();
       }
       function searchEvolutions() {
+        vm.isSearching = true;
         vm.filters.page = vm.currentPage;
         vm.filters.page_size = vm.pageSize;
         HCService.getEvolutions(vm.filters).$promise.then(function (paginatedResult) {
+          vm.isSearching = false;
+
           if(vm.currentPage===1){
             vm.totalItems = paginatedResult.count;
           }
+        }, function (err) {
+          vm.isSearching = false;
+          displayComunicationError();
         });
       }
 
@@ -116,13 +102,27 @@
         }, showError);
       }
 
-      function evolutionCanBeCanceled(evolution) {
-        return moment().diff(moment(evolution.date), 'hours') <= 12;
+      function canEditEvolution(evolution) {
+        return moment().diff(moment(evolution.date), 'hours') <= 8;
+      }
+
+      function displayComunicationError(loading){
+        if(!toastr.active()){
+          toastr.warning('Ocurrió un error en la comunicación, por favor intente nuevamente.');
+        }
+        if(loading){
+        }
+      }
+
+
+      function editEvolution(evolution) {
+        HCService.getEvolution({id:evolution.id}).then(function () {
+        }, showError)
       }
 
       function showError(error) {
         if(error){
-          toastr.error(error);
+          toastr.error(error.data.detail);
         }else{
           toastr.error('Ocurrio un error');
         }

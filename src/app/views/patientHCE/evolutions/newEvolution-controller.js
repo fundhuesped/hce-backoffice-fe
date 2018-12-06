@@ -39,31 +39,9 @@
 
       activate();
 
-
-      vm.fromCalendarPopup = {
-        opened: false,
-        altInputFormats: ['d!-M!-yyyy'],
-        options: {
-          maxDate: new Date()
-        },
-        open : function(){
-          this.opened = true;
-        }
-      };
-
-      vm.toCalendarPopup = {
-        opened: false,
-        altInputFormats: ['d!-M!-yyyy'],
-        options: {
-          maxDate: new Date()
-        },
-        open : function(){
-          this.opened = true;
-        }
-      };
-
       function saveNewEvolution() {
-        HCService.saveNewEvolution().then(function() {
+        return HCService.saveNewEvolution().then(function() {
+          HCService.getEvolutions();
           toastr.success('Visita guardada con exito');
           vm.newEvolutionFocused = false;
         }, showError);

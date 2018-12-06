@@ -38,6 +38,7 @@
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -86,7 +87,7 @@
       function save() {
         var tmpNewLab = angular.copy(vm.newLab);
         var determinacionValor;
-        tmpNewLab.date = moment(tmpNewLab.date).format('YYYY-MM-DD');
+        // tmpNewLab.date = moment(tmpNewLab.date).format('YYYY-MM-DD');
         tmpNewLab.values = [];
         for (var determinacionCod in vm.newLabValues){
             if (typeof vm.newLabValues[determinacionCod] !== 'function') {

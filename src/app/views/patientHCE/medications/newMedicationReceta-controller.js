@@ -22,6 +22,7 @@
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
         options: {
+          showWeeks: false,
           minDate: new Date()
         },
         open : function(){

@@ -1,55 +1,57 @@
 <div class="container-fluid hce-container-modal">
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="hce-form-title">Nueva vacuna</div>
+	<form name="NewPatientVaccineController.controllerForm">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="hce-form-title">Nueva vacuna</div>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div ng-show="NewPatientVaccineController.error" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning">
-					{{NewPatientVaccineController.error}}
+				<div class="row">
+					<div ng-show="NewPatientVaccineController.error" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning">
+						{{NewPatientVaccineController.error}}
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group>
-		    			<label data-abm-label type="static">Seleccione la vacuna(*)</label>
-                		<input type="text" abm-form-control ng-model="NewPatientVaccineController.newPatientVaccine.vaccine" uib-typeahead="vaccine as vaccine.name for vaccine in NewPatientVaccineController.getVaccines($viewValue)" class="form-control" typeahead-min-length="3" placeholder="Escriba tres o mas letras para buscar">
-                	</abm-form-group>
-                </div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				  	<abm-form-group>
-					    <label data-abm-label type="static">Fecha de aplicación(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
-							<div class="input-group">
-								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientVaccineController.newPatientVaccine.appliedDate" is-open="NewPatientVaccineController.applicationDateCalendar.opened" datepicker-options="NewPatientVaccineController.applicationDateCalendar.options" close-text="Cerrar" alt-input-formats="NewPatientVaccineController.applicationDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
-		                        <div class="input-group-btn">
-		                          <button type="button" class="btn btn-default" ng-click="NewPatientVaccineController.applicationDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
-		                        </div>
-						    </div>
-				  	</abm-form-group>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group>
+			    			<label data-abm-label type="static">Seleccione la vacuna(*)</label>
+	                		<input type="text" abm-form-control ng-model="NewPatientVaccineController.newPatientVaccine.vaccine" uib-typeahead="vaccine as vaccine.name for vaccine in NewPatientVaccineController.getVaccines($viewValue)" class="form-control" typeahead-min-length="3" placeholder="Escriba tres o mas letras para buscar"ng-required="true">
+	                	</abm-form-group>
+	                </div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group>
-				    	<label data-abm-label type="static">Observaciones</label>
-				    	<textarea type="text" abm-form-control ng-model="NewPatientVaccineController.newPatientVaccine.observations"></textarea>
-				  	</abm-form-group>
-		  		</div>
-		  	</div>
-			<div class="row" >
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="row" >
-					  	<div>
-					  		<button class="btn btn-success btn-raised pull-right" ng-click="NewPatientVaccineController.save()"  ng-disabled="!NewPatientVaccineController.canSave()">Guardar vacuna</button>
-					  		<button class="btn btn-default pull-right" ng-click="NewPatientVaccineController.cancel()">Cancelar</button>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					  	<abm-form-group ng-class="{'has-error':NewPatientVaccineController.controllerForm.startDate.$invalid}" name="startDate">
+						    <label data-abm-label type="static">Fecha de aplicación(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
+								<div class="input-group">
+									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="NewPatientVaccineController.newPatientVaccine.appliedDate" is-open="NewPatientVaccineController.applicationDateCalendar.opened" datepicker-options="NewPatientVaccineController.applicationDateCalendar.options" close-text="Cerrar" alt-input-formats="NewPatientVaccineController.applicationDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="true"/>
+			                        <div class="input-group-btn">
+			                          <button type="button" class="btn btn-default" ng-click="NewPatientVaccineController.applicationDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+			                        </div>
+							    </div>
+					  	</abm-form-group>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group>
+					    	<label data-abm-label type="static">Observaciones</label>
+					    	<textarea type="text" abm-form-control ng-model="NewPatientVaccineController.newPatientVaccine.observations"></textarea>
+					  	</abm-form-group>
+			  		</div>
+			  	</div>
+				<div class="row" >
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="row" >
+						  	<div>
+						  		<button class="btn btn-success btn-raised pull-right" ng-click="NewPatientVaccineController.save()"  ng-disabled="!NewPatientVaccineController.canSave()">Guardar vacuna</button>
+						  		<button class="btn btn-default pull-right" ng-click="NewPatientVaccineController.cancel()">Cancelar</button>
+						  	</div>
 					  	</div>
 				  	</div>
-			  	</div>
-			</div>		    					
+				</div>		    					
+			</div>
 		</div>
-	</div>
+	</form>
 </div>

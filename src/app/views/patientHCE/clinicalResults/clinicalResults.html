@@ -28,6 +28,11 @@
     					</tr>
     				</tbody>
     			</table>
+				<div ng-if="PatientClinicalResultsListController.isSearching" class="center-text" style="font-size:16px;padding-top:30px;">    <span class="glyphicon glyphicon-refresh spinning"></span> Cargando...    
+				</div>
+
+				<div ng-if="!PatientClinicalResultsListController.isSearching && (!PatientClinicalResultsListController.patientClinicalResults || PatientClinicalResultsListController.patientClinicalResults.length==0)" class="center-text" style="font-size:16px;padding-top:30px;">---- Aún no se registran ----
+				</div>
 				<div class="row" ng-show="PatientClinicalResultsListController.totalItems">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				  		<div uib-pagination previous-text="Anterior" next-text="Siguiente" total-items="PatientClinicalResultsListController.totalItems" items-per-page="PatientClinicalResultsListController.pageSize" ng-model="PatientClinicalResultsListController.currentPage" ng-change="PatientClinicalResultsListController.pageChanged()" class="pagination-sm"></div>

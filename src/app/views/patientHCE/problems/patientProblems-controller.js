@@ -28,6 +28,8 @@
       vm.newProblemDate = null;
       vm.canSaveNewProblem = canSaveNewProblem;
       vm.canEditProblem = canEditProblem;
+      vm.isSearching = false;
+      vm.isSearchingFamilyProblems = false;
 
       vm.translateRelationship = FamilyPatientProblem.translateRelationship;
 
@@ -153,20 +155,33 @@
         filters.page = vm.familyPager.currentPage;
         filters.page_size = vm.familyPager.pageSize;
         filters.pacienteId = HCService.currentPacienteId;
+        vm.isSearchingFamilyProblems = true;
+
         FamilyPatientProblem.getPaginatedForPaciente(filters,function (paginatedResult) {
+          vm.isSearchingFamilyProblems = false;
           vm.familyProblems = paginatedResult.results;
           if(vm.familyPager.currentPage===1){
             vm.familyPager.totalItems = paginatedResult.count;
           }
-        },displayComunicationError);
+        },function (err) {
+          vm.isSearchingFamilyProblems = false;
+           displayComunicationError()
+        });
       }
       function searchPatientProblems() {
         vm.filters.page = vm.currentPage;
         vm.filters.page_size = vm.pageSize;
+        vm.isSearching = true;
+
         HCService.getPatientProblems(vm.filters).$promise.then(function (paginatedResult) {
+          vm.isSearching = false;
+
           if(vm.currentPage===1){
             vm.totalItems = paginatedResult.count;
           }
+        }, function (err) {
+            vm.isSearching = false;
+            displayComunicationError()
         });
       }
 

@@ -1,51 +1,53 @@
 <div class="container-fluid hce-container-modal">
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="hce-form-title">Editar antecedente familiar</div>
+	<form name="EditFamilyProblemController.controllerForm">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="hce-form-title">Editar antecedente familiar</div>
+					</div>
 				</div>
-			</div>
 
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group class="form-group-lg">
-		    			<label data-abm-label type="static">Escriba el problema</label>
-                		<input type="text" abm-form-control ng-model="EditFamilyProblemController.familyProblem.problem"  class="form-control" uib-typeahead="problem as problem.name for problem in EditFamilyProblemController.getProblems($viewValue)" typeahead-min-length="3" disabled="true">
-                	</abm-form-group>
-                </div>
-			</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group>
+			    			<label data-abm-label type="static">Escriba el problema(*)</label>
+	                		<input type="text" abm-form-control ng-model="EditFamilyProblemController.familyProblem.problem"  class="form-control" uib-typeahead="problem as problem.name for problem in EditFamilyProblemController.getProblems($viewValue)" ng-disabled="!EditFamilyProblemController.canEdit()" ng-required="true"  typeahead-min-length="3" disabled="true">
+	                	</abm-form-group>
+	                </div>
+				</div>
 
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group class="form-group-lg">
-				    	<label abm-label for="relationship" type="static">Parentesco</label>
-				    	<select class="form-control" name="relationship" ng-options="relationship.name as relationship.label for relationship in EditFamilyProblemController.relationshipChoices" ng-model="EditFamilyProblemController.familyProblem.relationship" abm-form-control >
-				    	</select>
-				  	</abm-form-group>
-		  		</div>
-		  	</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group class="form-group-lg">
-				    	<label data-abm-label type="static">Observaciones</label>
-				    	<textarea type="text" abm-form-control ng-model="EditFamilyProblemController.familyProblem.observations"></textarea>
-				  	</abm-form-group>
-		  		</div>
-		  	</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group>
+					    	<label abm-label for="relationship" type="static">Parentesco(*)</label>
+					    	<select class="form-control" name="relationship" ng-options="relationship.name as relationship.label for relationship in EditFamilyProblemController.relationshipChoices" ng-model="EditFamilyProblemController.familyProblem.relationship" ng-disabled="!EditFamilyProblemController.canEdit()" ng-required="true" abm-form-control >
+					    	</select>
+					  	</abm-form-group>
+			  		</div>
+			  	</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group class="form-group-lg">
+					    	<label data-abm-label type="static">Observaciones</label>
+					    	<textarea type="text" abm-form-control ng-model="EditFamilyProblemController.familyProblem.observations" ng-disabled="!EditFamilyProblemController.canEdit()"></textarea>
+					  	</abm-form-group>
+			  		</div>
+			  	</div>
 
-			<div class="row" >
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="row" >
-					  	<div>
-					  		<button class="btn btn-danger pull-left" ng-click="EditFamilyProblemController.markAsError()">Pasar a error</button>
+				<div class="row" >
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="row" >
+						  	<div>
+						  		<button class="btn btn-danger pull-left" ng-click="EditFamilyProblemController.markAsError()" ng-show="EditFamilyProblemController.canEdit()">Pasar a error</button>
 
-					  		<button class="btn btn-success btn-raised pull-right" ng-click="EditFamilyProblemController.save()">Guardar problema</button>
-					  		<button class="btn btn-default pull-right" ng-click="EditFamilyProblemController.cancel()">Cancelar</button>
+						  		<button class="btn btn-success btn-raised pull-right" ng-click="EditFamilyProblemController.save()" ng-show="EditFamilyProblemController.canEdit()" ng-disabled="!EditFamilyProblemController.canSave()">Guardar problema</button>
+						  		<button class="btn btn-default pull-right" ng-click="EditFamilyProblemController.cancel()">Cancelar</button>
+						  	</div>
 					  	</div>
 				  	</div>
-			  	</div>
-			</div>		    					
+				</div>		    					
+			</div>
 		</div>
-	</div>
+	</form>
 </div>

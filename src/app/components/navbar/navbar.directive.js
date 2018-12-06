@@ -89,17 +89,66 @@
 
       }
 
+      function openLeaveHCEModal() {
+        return $uibModal.open({
+          backdrop: 'static',
+          templateUrl: 'app/components/navbar/closeEvolution-modal.html',
+          size: 'md',
+          controller: 'CloseEvolutionController',
+          controllerAs: 'Ctrl',
+          resolve: {
+            canDiscardChanges: function () {
+              return HCService.isDirty();
+            }
+          }
+        });
+      }
+
       function formatedBirthDate() {
         return (vm.currentPaciente?moment(vm.currentPaciente.birthDate, "YYYY-MM-DD").format('DDMMYYYY'):"");
       }
       function closeEvolution() {
         HCService.closeEvolution().then(function() {
           toastr.success('Visita cerrada con exito');
-        }, showError);
+          $state.go('app.patientSearch');
+        }, function (error) {
+          if(error=='ISDIRTY'){
+            openLeaveHCEModal().result.then(function (resolution) {
+              if(resolution==='save'){
+                HCService.saveNewEvolution(function () {
+                  closeEvolution(function () {
+
+                  },
+                  function (error) {
+                    showError(error)
+                  });
+                }, function (error) {
+                  showError(error)
+                })
+              }
+              if(resolution=='discard'){
+                HCService.discardChanges();
+                  closeEvolution(function () {
+                    // body...
+                  },
+                  function (error) {
+                    showError(error)
+                  });
+              }
+            }, function () {
+            });
+          }else{
+            showError(error);
+          }
+        });
       }
       function showError(error) {
         if(error){
-          toastr.error(error);
+          if(error.data){
+            toastr.error(error.data.detail);
+          }else{
+            toastr.error(error);
+          }
         }else{
           toastr.error('Ocurrio un error');
         }

@@ -1,13 +1,15 @@
 (function(){
     'use strict';
-    function loginRedirectInterceptor($injector, $q) {
+    function loginRedirectInterceptor($injector, $q ) {
         var loginRedirectInterceptor = {
             responseError: function(response) {
                 var $state = $injector.get('$state');
                 if (response.status === 401 || response.status === 403)
                 {
-                    //console.log("REDIRIGIR");
-                    $state.go('home', {returnTo:$state.current.name, withParams:$state.params}, {custom:{'silent': true}});
+                    $state.go('home', {returnTo:$state.current.name, withParams:$state.params}, {custom:{'silent': true, loggedOut: true}});
+                    response.data.detail = 'Su sesión fue cerrada'; 
+                    var toastr = $injector.get('toastr');
+                    toastr.error('Su sesión fue cerrada');
                 }
                 return $q.reject(response);
             }

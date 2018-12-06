@@ -38,6 +38,11 @@
     					</tr>
     				</tbody>
     			</table>
+				<div ng-if="PMLController.isSearching" class="center-text" style="font-size:16px;padding-top:30px;">    <span class="glyphicon glyphicon-refresh spinning"></span> Cargando...    
+				</div>
+
+				<div ng-if="!PMLController.isSearching&& (!PMLController.patientMedications || PMLController.patientMedications.length==0)" class="center-text" style="font-size:16px;padding-top:30px;">---- Aún no se registran ----
+				</div>
 				<div class="row" ng-show="PMLController.totalItems">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				  		<div uib-pagination previous-text="Anterior" next-text="Siguiente" total-items="PMLController.totalItems" items-per-page="PMLController.pageSize" ng-model="PMLController.currentPage" ng-change="PMLController.pageChanged()" class="pagination-sm"></div>

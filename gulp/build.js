@@ -3,6 +3,7 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
+var zip = require('gulp-zip');
 
 var $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'main-bower-files', 'uglify-save-license', 'del']
@@ -87,6 +88,12 @@ gulp.task('other', function () {
   ])
     .pipe(fileFilter)
     .pipe(gulp.dest(path.join(conf.paths.dist, '/')));
+});
+
+gulp.task('pack',['build'],function () {
+    gulp.src(path.join(conf.paths.dist, '/**/*'))
+        .pipe(zip('dist.zip'))
+        .pipe(gulp.dest('release'));
 });
 
 gulp.task('clean', function () {

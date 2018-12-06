@@ -20,7 +20,7 @@
 		</div>
 
 	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	    	<div class="row " ng-repeat="evolution in EvolutionsController.evolutions" ng-class="{'row-epicrisis':evolution.visitType == 'Epicrisis'}" style="    padding-bottom: 10px;
+	    	<div class="row " ng-repeat="evolution in EvolutionsController.evolutions" ng-class="{'row-epicrisis':evolution.visitType == 'Epicrisis', 'registry-error': evolution.status=='Inactive'}" style="    padding-bottom: 10px;
 padding-top: 10px;border-bottom:1px solid;border-bottom-color:#D2D2D2" ng-click="evolution.selected=!evolution.selected">
     			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     				<div class="row" ng-class="{'evolution-header':evolution.selected}">
@@ -38,14 +38,22 @@ padding-top: 10px;border-bottom:1px solid;border-bottom-color:#D2D2D2" ng-click=
     				</div>
     				<div class="row">
 		    			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="evolution.selected">
-						  	<div ng-show="EvolutionsController.evolutionCanBeCanceled(evolution)">
+						  	<div ng-show="EvolutionsController.canEditEvolution(evolution)">
 						  		<button class="btn btn-danger pull-right btn-raised" ng-click="EvolutionsController.cancelEvolution(evolution)">Anular</button>
+						  	</div>
+						  	<div ng-show="EvolutionsController.canEditEvolution(evolution)">
+						  		<button class="btn pull-right btn-raised" ng-click="EvolutionsController.editEvolution(evolution)">Editar</button>
 						  	</div>
 		    			</div>		    					
     				</div>
     			</div>
 	    	</div>
 	    </div>
+		<div ng-if="EvolutionsController.isSearching" class="center-text" style="font-size:16px;padding-top:30px;">    <span class="glyphicon glyphicon-refresh spinning"></span> Cargando...    
+		</div>
+		<div ng-if="!EvolutionsController.isSearching&& (!EvolutionsController.evolutions || EvolutionsController.evolutions.length==0)" class="center-text" style="font-size:16px;padding-top:30px;">---- Aún no se registran ----
+		</div>
+
 		<div class="row" ng-show="EvolutionsController.totalItems">
 		  <div uib-pagination previous-text="Anterior" next-text="Siguiente" total-items="EvolutionsController.totalItems" items-per-page="EvolutionsController.pageSize" ng-model="EvolutionsController.currentPage" ng-change="EvolutionsController.pageChanged()" class="pagination-sm"></div>
 		</div>

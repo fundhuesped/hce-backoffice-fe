@@ -1,50 +1,52 @@
 <div class="container-fluid hce-container-modal">
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="hce-form-title">Nuevo estudio</div>
+	<form name="NewPatientClinicalResultsController.controllerForm">		
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="hce-form-title">Nuevo estudio</div>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group>
-		    			<label data-abm-label type="static">Seleccione el estudio(*)</label>
-                		<input type="text" abm-form-control ng-model="NewPatientClinicalResultsController.newPatientClinicalResult.clinicalStudy" uib-typeahead="clinicalStudy as clinicalStudy.name for clinicalStudy in NewPatientClinicalResultsController.getClinicalStudies($viewValue)" class="form-control" typeahead-min-length="2" placeholder="Escriba tres o mas letras para buscar">
-                	</abm-form-group>
-                </div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-				  	<abm-form-group>
-					    <label data-abm-label type="static">Fecha del estudio(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
-							<div class="input-group">
-								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="studyDate" ng-model="NewPatientClinicalResultsController.newPatientClinicalResult.studyDate" is-open="NewPatientClinicalResultsController.studyDateCalendar.opened" datepicker-options="NewPatientClinicalResultsController.studyDateCalendar.options" close-text="Cerrar" alt-input-formats="NewPatientClinicalResultsController.studyDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
-		                        <div class="input-group-btn">
-		                          <button type="button" class="btn btn-default" ng-click="NewPatientClinicalResultsController.studyDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
-		                        </div>
-						    </div>
-				  	</abm-form-group>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group>
+			    			<label data-abm-label type="static">Seleccione el estudio(*)</label>
+	                		<input type="text" abm-form-control ng-model="NewPatientClinicalResultsController.newPatientClinicalResult.clinicalStudy" uib-typeahead="clinicalStudy as clinicalStudy.name for clinicalStudy in NewPatientClinicalResultsController.getClinicalStudies($viewValue)" class="form-control" typeahead-min-length="2" placeholder="Escriba tres o mas letras para buscar" ng-required="true">
+	                	</abm-form-group>
+	                </div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group>
-				    	<label data-abm-label type="static">Observaciones</label>
-				    	<textarea type="text" abm-form-control ng-model="NewPatientClinicalResultsController.newPatientClinicalResult.observations"></textarea>
-				  	</abm-form-group>
-		  		</div>
-		  	</div>
-			<div class="row" >
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="row" >
-					  	<div>
-					  		<button class="btn btn-success btn-raised pull-right" ng-click="NewPatientClinicalResultsController.save()"  ng-disabled="!NewPatientClinicalResultsController.canSave()">Guardar</button>
-					  		<button class="btn btn-default pull-right" ng-click="NewPatientClinicalResultsController.cancel()">Cancelar</button>
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					  	<abm-form-group  ng-class="{'has-error':NewPatientClinicalResultsController.controllerForm.studyDate.$invalid}" name="studyDate">
+						    <label data-abm-label type="static">Fecha del estudio(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
+								<div class="input-group">
+									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="studyDate" ng-model="NewPatientClinicalResultsController.newPatientClinicalResult.studyDate" is-open="NewPatientClinicalResultsController.studyDateCalendar.opened" datepicker-options="NewPatientClinicalResultsController.studyDateCalendar.options" close-text="Cerrar" alt-input-formats="NewPatientClinicalResultsController.studyDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="true"/>
+			                        <div class="input-group-btn">
+			                          <button type="button" class="btn btn-default" ng-click="NewPatientClinicalResultsController.studyDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+			                        </div>
+							    </div>
+					  	</abm-form-group>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group>
+					    	<label data-abm-label type="static">Observaciones</label>
+					    	<textarea type="text" abm-form-control ng-model="NewPatientClinicalResultsController.newPatientClinicalResult.observations"></textarea>
+					  	</abm-form-group>
+			  		</div>
+			  	</div>
+				<div class="row" >
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="row" >
+						  	<div>
+						  		<button class="btn btn-success btn-raised pull-right" ng-click="NewPatientClinicalResultsController.save()"  ng-disabled="!NewPatientClinicalResultsController.canSave()">Guardar</button>
+						  		<button class="btn btn-default pull-right" ng-click="NewPatientClinicalResultsController.cancel()">Cancelar</button>
+						  	</div>
 					  	</div>
 				  	</div>
-			  	</div>
-			</div>		    					
+				</div>		    					
+			</div>
 		</div>
-	</div>
+	</form>
 </div>

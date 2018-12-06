@@ -7,9 +7,9 @@
         .module('hce.services')
         .service('HCService', HCService );
 
-    HCService.$inject = ['$q', 'Paciente', 'Evolution', 'PatientProblem', 'PatientVaccine', 'PatientMedication', 'PatientArvTreatment', 'localStorageService', 'moment'];
+    HCService.$inject = ['$q', 'Paciente', 'Evolution', 'PatientProblem', 'PatientVaccine', 'PatientMedication', 'PatientArvTreatment', 'localStorageService', 'moment', 'lodash'];
 
-    function HCService($q, Paciente, Evolution, PatientProblem, PatientVaccine, PatientMedication, PatientArvTreatment, localStorageService, moment){
+    function HCService($q, Paciente, Evolution, PatientProblem, PatientVaccine, PatientMedication, PatientArvTreatment, localStorageService, moment, lodash){
         var srv = this;
 
         //Common
@@ -28,11 +28,13 @@
         srv.closeEvolution = closeEvolution;
         srv.cancelEvolution = cancelEvolution;
         srv.getEvolutions = getEvolutions;
+        srv.getEvolution = getEvolution;
         srv.saveNewEvolution = saveNewEvolution;
         srv.openNewEvolution = openNewEvolution;
         srv.getCurrentEvolution = getCurrentEvolution;
-
-
+        srv.cleanAll = cleanAll;
+        srv.cleanEvolution = cleanEvolution;
+        srv.discardChanges = discardChanges;
         //Problems
         srv.getActivePatientProblems = getActivePatientProblems;
         srv.getPatientProblems = getPatientProblems;
@@ -85,6 +87,9 @@
             if(srv.currentEvolution && srv.currentEvolution.notaClinica != srv.currentEvolutionCopy.notaClinica){
                 return true;
             }
+            if(srv.currentEvolution && srv.currentEvolution.reason != srv.currentEvolutionCopy.reason){
+                return true;
+            }
             return false;
         }
 
@@ -132,6 +137,13 @@
             return srv.currentEvolution && srv.currentEvolution.notaClinica && srv.currentEvolution.reason;
         }
 
+        function discardChanges(cbOk, cbNok) {
+            srv.currentEvolution = srv.currentEvolutionCopy;
+            if(cbOk){
+                cbOk();
+            }
+        }
+
         function getCurrentEvolution(){
             return Evolution.getCurrentVisit({pacienteId:srv.currentPacienteId}, function (evolution) {
                 srv.currentEvolution = evolution;
@@ -147,27 +159,67 @@
             }
         }
 
-        function saveNewEvolution() {
+        function saveNewEvolution(cbOK, cbNok) {
             if(srv.currentEvolution.id){
-                return srv.currentEvolution.$update(function (evolution) {
+                var promise = srv.currentEvolution.$update(function (evolution) {
                     srv.currentEvolution = evolution;
                     srv.currentEvolutionCopy = angular.copy(evolution);
+                    if(cbOK){
+                        cbOK(evolution);
+                    }
                 }, function (err) {
+                    if(cbNok){
+                        cbNok(evolution);
+                    }
                     console.log(err);
-                });
+                }).$promise;
+                return promise;
             }else{
-                return srv.currentEvolution.$save({pacienteId:srv.currentPaciente.id}, function (evolution) {
+                var promise = srv.currentEvolution.$save({pacienteId:srv.currentPaciente.id}, function (evolution) {
                     srv.currenEvolution = evolution;
                     srv.currentEvolutionCopy = angular.copy(evolution);
+                    if(cbOK){
+                        cbOK(evolution);
+                    }
                 }, function (err) {
+                    if(cbNok){
+                        cbNok(evolution);
+                    }
                     console.log(err);
-                });
+                }).$promise;
+                return promise;
             }
         }
 
-        function closeEvolution() {
+        function cleanAll() {
+            return closeEvolution(true);
+        }
+
+        function cleanEvolution() {
+            srv.currentEvolution = null;
+        }
+
+        function checkEvolutionIsComplete() {
             var evolution = angular.copy(srv.currentEvolution);
-            evolution.state = Evolution.stateChoices.STATE_CLOSED;
+            if(!evolution.reason && !evolution.notaClinica){
+                return 'Por favor ingrese motivo de consulta y texto de la evolución'
+            }
+            if(!bypass && evolution.reason && !evolution.notaClinica){
+                return 'Por favor ingrese texto de la evolución'
+            }
+            if(!bypass && !evolution.reason && evolution.notaClinica){
+                return 'Por favor ingrese motivo de consulta'
+            }
+            return null;
+        }
+
+        function closeEvolution(force) {
+            var evolution = angular.copy(srv.currentEvolution);
+            if(isDirty()){
+                return $q(function(resolve, reject) {
+                    reject('ISDIRTY');
+                });
+            }
             if(!evolution.reason && !evolution.notaClinica){
                 return $q(function(resolve, reject) {
                     reject('Por favor ingrese motivo de consulta y texto de la evolución');
@@ -183,9 +235,11 @@
                     reject('Por favor ingrese motivo de consulta');
                 }); 
             }
+
+            evolution.state = Evolution.stateChoices.STATE_CLOSED;
+
             return evolution.$update(function () {
                 srv.currentEvolution = null;
-
                 srv.getEvolutions();
             }, function (err) {
                 if(err.status == 400 && err.data == 'Solo se pueden modificar dentro de las 8 horas'){
@@ -193,12 +247,12 @@
                     srv.getEvolutions();
                 }
                 console.log(err);
-            }).$promise;
+            });
         }
 
         function cancelEvolution(evolution) {
             var evolutionModified = angular.copy(evolution);
-            evolutionModified.status = 'Inactive';
+            evolutionModified.state = 'Cancelled';
             return Evolution.update(evolutionModified,function () {
                 srv.getEvolutions();
             }, function (err) {
@@ -241,6 +295,24 @@
             }
         }
 
+
+        function getEvolution(idEvolution){
+            if(srv.isDirty()){
+                return $q(function(resolve, reject) {
+                    reject('ISDIRTY');
+                });
+            }
+            if(srv.currentEvolution){
+                return $q(function(resolve, reject) {
+                    reject('EVOLUTIONOPEN');
+                });
+            }
+            return Evolution.getEvolution(idEvolution, function (result) {
+                    srv.currentEvolution = result;
+            }, function (err) {
+                     
+            });
+        }
 
         function openNewPatientProblem() {
             if(!srv.newPatientProblem){
@@ -324,30 +396,40 @@
         }
 
 
+        function getPatientAllVaccines() {
+            // body...
+        }
+
         function getPatientVaccines(filters) {
             getActivePatientVaccines();
             if(filters){
                 var localFilters = angular.copy(filters);
                 localFilters.pacienteId = srv.currentPacienteId;
-                return PatientVaccine.getPaginatedForPaciente(localFilters, function (paginatedResult) {
-                    srv.patientVaccines = paginatedResult.results;
-                }, function (err) {
-                     
-                });                
+                if(filters.all){
+                    return PatientVaccine.getFullList(localFilters, function (paginatedResult) {
+                        srv.patientVaccines = paginatedResult;
+                    }, function (err) {
+                    });                
+                }else{
+                    return PatientVaccine.getPaginatedForPaciente(localFilters, function (paginatedResult) {
+                        srv.patientVaccines = paginatedResult.results;
+                    }, function (err) {
+                    });                
+                }
+
             }else{
                 return PatientVaccine.getPaginatedForPaciente({pacienteId:srv.currentPaciente.id}, function (paginatedResult) {
                     srv.patientVaccines = paginatedResult.results;
                 }, function (err) {
-                     
                 });
 
             }
         }
 
         function getActivePatientVaccines() {
-            return PatientVaccine.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, page_size:3, state:'Applied'}, function (paginatedResult) {
-                srv.activePatientVaccinesCount = paginatedResult.count;
-                srv.summaryPatientVaccines = paginatedResult.results;
+            return PatientVaccine.getFullList({pacienteId:srv.currentPacienteId, state:'Applied'}, function (result) {
+                srv.activePatientVaccinesCount = result.length;
+                srv.summaryPatientVaccines = lodash.groupBy(result, 'vaccine.name');
             }, function (err) {
                  
             });

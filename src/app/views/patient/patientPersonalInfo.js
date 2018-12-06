@@ -17,11 +17,14 @@
         vm.searchDistricts = searchDistricts;
         vm.cancel = cancel;
         vm.originalPaciente = {};
+        vm.showAllowDuplicate = false;
+        vm.allowDuplicate = false;
         vm.confirmStatusChange = confirmStatusChange;
         vm.birthDateCalendarPopup = {
             opened: false,
             altInputFormats: ['d!-M!-yyyy'],
             options: {
+                showWeeks: false,
                 maxDate: new Date(),
             }
         };
@@ -29,6 +32,7 @@
             opened: false,
             altInputFormats: ['d!-M!-yyyy'],
             options: {
+                showWeeks: false,
                 maxDate: new Date(),
             }
         };
@@ -107,11 +111,17 @@
                 paciente.prospect = false;
                 paciente.birthDate = $filter('date')(paciente.birthDate, 'yyyy-MM-dd');
                 paciente.firstVisit = $filter('date')(paciente.firstVisit, 'yyyy-MM-dd');
-                paciente.$update(function(){
+                paciente.$update({allowDuplicate:vm.allowDuplicate}, function(){
                     $loading.finish('app');
                     $uibModalInstance.close('modified');
-                },function(){
-                    displayComunicationError('app');
+                },function(error){
+                    if(error.status==400 && error.data == 'Duplicate paciente exists'){
+                      toastr.warning('Por favor revise que ya existe un paciente con estos datos');
+                      $loading.finish('app');
+                      vm.showAllowDuplicate = true;
+                    }else{
+                        displayComunicationError('app');
+                    }
                 });
             }else{
                 vm.errorMessage = 'Por favor revise el formulario';

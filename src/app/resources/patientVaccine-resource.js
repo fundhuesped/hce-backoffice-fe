@@ -15,6 +15,12 @@
             method: 'PUT',
             params:{id:'@id'}
           },
+          getFullList:{
+            url: apiBase+'hce/paciente/:pacienteId/vaccines',
+            params:{pacienteId:'@pacienteId', all: true},
+            method: 'GET',
+            isArray: true
+          },
           getPaginatedForPaciente:{
             url: apiBase+'hce/paciente/:pacienteId/vaccines',
             params:{pacienteId:'@pacienteId'},

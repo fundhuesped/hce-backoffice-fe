@@ -17,6 +17,7 @@
       vm.cancel = cancel;
       vm.canSave = canSave;
       vm.error = null;
+      vm.changeStatus = changeStatus;
 
       Object.defineProperty(
           vm,
@@ -29,10 +30,15 @@
       });
 
 
+
       vm.startDateCalendar = {
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
+        updateMaxVal: function (value) {
+          this.options.maxDate = (vm.newPatientMedication.endDate?vm.newPatientMedication.endDate:new Date());
+        },
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -43,7 +49,11 @@
       vm.endDateCalendar = {
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
+        updateMinVal: function () {
+          this.options.minDate = (vm.newPatientMedication.startDate?vm.newPatientMedication.startDate:new Date());
+        },
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -82,11 +92,16 @@
       }
 
       function canSave() {
-        if(vm.newPatientMedication &&vm.newPatientMedication.medication && vm.newPatientMedication.startDate){
+        if(vm.controllerForm.$valid && hasSelectedMedication()){
           return true;
         }
         return false;
       }
+
+      function hasSelectedMedication() {
+        return typeof vm.newPatientMedication.medication === 'object'; 
+      }
+
 
 	    function activate(){
         Medication.getActiveList(function(medications){
@@ -114,6 +129,14 @@
         }, displayComunicationError).$promise;
 
       }
+
+      function changeStatus() {
+        if(vm.newPatientMedication.state == 'Active'){
+          vm.newPatientMedication.endDate = null;
+          vm.startDateCalendar.options.maxDate = new Date();
+        }
+      }
+
 
       function cancel() {
         $uibModalInstance.dismiss('cancel');

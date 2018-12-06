@@ -1,0 +1,75 @@
+<div class="container-fluid">
+	<form name="Ctrl.controllerForm">
+	  	<div class="row">	
+		    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	    		<div class="well" style="min-height:350px">
+				    <div class="row">
+						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8"><h2>Resumen de historia clínica</h2></div>
+					</div>
+					<div class="row" >
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<abm-form-group name="displayName">
+							    <label abm-label type="static">Utilizar nombre o PNS del paciente(*) </label>
+							    <div class="radio" abm-radio label="Nombre">
+							      <input type="radio" id="displayName" name="displayName" value="name" ng-model="Ctrl.newHCESummary.displayName" ng-required="true" ng-change="Ctrl.changeStatus()"/>
+							    </div>
+							    <div class="radio" abm-radio label="PNS">
+							      <input type="radio" id="displayName" name="displayName" value="pns" ng-model="Ctrl.newHCESummary.displayName" ng-required="true"/>
+							    </div>					    
+					  		</abm-form-group>
+				  		</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<abm-form-group name="categories" ng-required="true">
+								<label data-abm-label type="static" style="font-weight:bold">Seleccione categorías a incluir</label>
+								<div class="checkbox" abm-checkbox label="Evoluciones">
+									<input type="checkbox" name="vertical" value="vertical" ng-model="Ctrl.categories.evolutions">
+								</div>
+								<div class="checkbox" abm-checkbox label="Problemas">
+									<input type="checkbox"  name="mujeres" value="mujeres" ng-model="Ctrl.categories.problems">
+								</div>
+								<div class="checkbox" abm-checkbox label="Tratamiento ARV">
+									<input type="checkbox" name="hombres" value="hombres" ng-model="Ctrl.categories.arv">
+								</div>
+								<div class="checkbox" abm-checkbox label="Profilaxis">
+									<input type="checkbox" name="trans" value="trans" ng-model="Ctrl.categories.profilaxis">
+								</div>
+								<div class="checkbox" abm-checkbox label="Tratamiento general">
+									<input type="checkbox" name="inyeccion" value="inyeccion" ng-model="Ctrl.categories.generalTreatment">
+								</div>
+								<div class="checkbox" abm-checkbox label="Laboratorio">
+									<input type="checkbox" name="accidente" value="accidente"  ng-model="Ctrl.categories.laboratory">
+								</div>
+								<div class="checkbox" abm-checkbox label="Otros estudios">
+									<input type="checkbox" name="transfusion" value="transfusion" ng-model="Ctrl.categories.otherStudies">
+								</div>
+								<div class="checkbox" abm-checkbox label="Vacunas">
+									<input type="checkbox" name="transfusion" value="transfusion" ng-model="Ctrl.categories.vaccines">
+								</div>
+							</abm-form-group>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<abm-form-group class="form-group-lg">
+						    	<label data-abm-label type="static">Observaciones</label>
+						    	<textarea type="text" abm-form-control ng-model="Ctrl.observations"></textarea>
+						  	</abm-form-group>
+				  		</div>
+				  	</div>
+
+					<div class="row" >
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="row" >
+							  	<div>
+							  		<button class="btn btn-success btn-raised pull-right" ng-click="Ctrl.generateSummary()"  ng-disabled="!Ctrl.canGenerateSummary()">Generar resumen</button>
+							  	</div>
+						  	</div>
+					  	</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

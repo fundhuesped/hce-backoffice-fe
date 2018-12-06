@@ -18,10 +18,12 @@
       vm.cancel = cancel;
       vm.canSave = canSave;
       vm.markAsError = markAsError;
+      vm.canEdit = canEdit;
       vm.studyDateCalendar = {
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
         options: {
+          showWeeks: false,
           maxDate: new Date()
         },
         open : function(){
@@ -75,6 +77,9 @@
 
       }
 
+      function canEdit() {
+        return moment().diff(moment(patientClinicalResult.createdOn), 'hours') <= 8;
+      }
 
       function markAsError() {
         var tmpPatientClinicalResult = angular.copy(vm.patientClinicalResult);
