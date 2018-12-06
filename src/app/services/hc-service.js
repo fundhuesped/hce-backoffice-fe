@@ -169,7 +169,7 @@
                     }
                 }, function (err) {
                     if(cbNok){
-                        cbNok(evolution);
+                        cbNok(err);
                     }
                     console.log(err);
                 }).$promise;
@@ -183,7 +183,7 @@
                     }
                 }, function (err) {
                     if(cbNok){
-                        cbNok(evolution);
+                        cbNok(err);
                     }
                     console.log(err);
                 }).$promise;

@@ -117,14 +117,13 @@
               if(resolution==='save'){
                 HCService.saveNewEvolution(function () {
                   closeEvolution(function () {
-
                   },
                   function (error) {
-                    showError(error)
+                    showError(error);
                   });
                 }, function (error) {
-                  showError(error)
-                })
+                  showError(error);
+                });
               }
               if(resolution=='discard'){
                 HCService.discardChanges();
@@ -132,7 +131,7 @@
                     // body...
                   },
                   function (error) {
-                    showError(error)
+                    showError(error);
                   });
               }
             }, function () {
@@ -145,7 +144,11 @@
       function showError(error) {
         if(error){
           if(error.data){
-            toastr.error(error.data.detail);
+            if(error.data.detail){
+              toastr.error(error.data.detail);
+            }else{
+              toastr.error(error.data);
+            }
           }else{
             toastr.error(error);
           }
