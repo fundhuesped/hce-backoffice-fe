@@ -17,6 +17,7 @@
       vm.closeEvolution = closeEvolution;
       vm.cancelEvolution = cancelEvolution;
       vm.canEditEvolution = canEditEvolution;
+      vm.canCancelEvolution = canCancelEvolution;
       vm.searchEvolutions = searchEvolutions;
       vm.editEvolution = editEvolution;
       vm.currentPage = 1;
@@ -103,7 +104,11 @@
       }
 
       function canEditEvolution(evolution) {
-        return moment().diff(moment(evolution.date), 'hours') <= 8;
+        return evolution.status == 'Active' && moment().diff(moment(evolution.date), 'hours') <= 8;
+      }
+
+      function canCancelEvolution(evolution) {
+        return evolution.status == 'Active';
       }
 
       function displayComunicationError(loading){

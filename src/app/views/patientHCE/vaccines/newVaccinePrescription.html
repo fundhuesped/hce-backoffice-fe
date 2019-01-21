@@ -1,69 +1,71 @@
 <div class="container-fluid hce-container-modal">
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="hce-form-title">Generar receta</div>
+	<form name="Ctrl.controllerForm">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="hce-form-title">Generar receta</div>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<table class="table table-condensed table-fixed">
-			    		<thead> 
-			    			<tr> 
-	    						<th class="col-xs-8 col-sm-8 col-md-8 col-lg-8">Nombre(*)</th>
-			    			</tr> 
-			    		</thead>
-			    		<tbody>
-			    			<tr ng-repeat="vaccine in Ctrl.vaccines" ng-class="{success:vaccine.selected}">
-		    					<td style="text-transform: capitalize;" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">    
-		    						<div class="checkbox" abm-checkbox label="{{vaccine.name}}">
-								      <input type="checkbox" ng-model="vaccine.selected" ng-change="Ctrl.toggleVaccineSelection(vaccine)">
-								    </div>
-								</td> 
-							</tr>
-		    			</tbody>
-		    		</table>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<table class="table table-condensed table-fixed">
+				    		<thead> 
+				    			<tr> 
+		    						<th class="col-xs-8 col-sm-8 col-md-8 col-lg-8">Nombre(*)</th>
+				    			</tr> 
+				    		</thead>
+				    		<tbody>
+				    			<tr ng-repeat="vaccine in Ctrl.vaccines" ng-class="{success:vaccine.selected}">
+			    					<td style="text-transform: capitalize;" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">    
+			    						<div class="checkbox" abm-checkbox label="{{vaccine.name}}">
+									      <input type="checkbox" ng-model="vaccine.selected" ng-change="Ctrl.toggleVaccineSelection(vaccine)">
+									    </div>
+									</td> 
+								</tr>
+			    			</tbody>
+			    		</table>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-				  	<abm-form-group>
-					    <label data-abm-label type="static">Fecha de emisión(*)</label>
-							<div class="input-group">
-								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="issuedDate" ng-model="Ctrl.newReceta.issuedDate" is-open="Ctrl.startDateCalendar.opened" datepicker-options="Ctrl.startDateCalendar.options" close-text="Cerrar" alt-input-formats="Ctrl.startDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
-		                        <div class="input-group-btn">
-		                          <button type="button" class="btn btn-default" ng-click="Ctrl.startDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
-		                        </div>
-						    </div>
-				  	</abm-form-group>
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					  	<abm-form-group ng-class="{'has-error':Ctrl.controllerForm.issuedDate.$invalid}" name="issuedDate">
+						    <label data-abm-label type="static">Fecha de emisión(*)</label>
+								<div class="input-group">
+									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="issuedDate" ng-model="Ctrl.newReceta.issuedDate" is-open="Ctrl.startDateCalendar.opened" datepicker-options="Ctrl.startDateCalendar.options" close-text="Cerrar" alt-input-formats="Ctrl.startDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
+			                        <div class="input-group-btn">
+			                          <button type="button" class="btn btn-default" ng-click="Ctrl.startDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+			                        </div>
+							    </div>
+					  	</abm-form-group>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="checkbox" abm-checkbox label="Requiere duplicado">
-				      	<input type="checkbox" ng-model="Ctrl.newReceta.duplicateRequired">
-				    </div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="checkbox" abm-checkbox label="Requiere duplicado">
+					      	<input type="checkbox" ng-model="Ctrl.newReceta.duplicateRequired">
+					    </div>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<abm-form-group>
-				    	<label data-abm-label type="static">Observaciones</label>
-				    	<textarea type="text" abm-form-control ng-model="Ctrl.newReceta.observations"></textarea>
-				  	</abm-form-group>
-		  		</div>
-		  	</div>
-			<div class="row" >
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="row" >
-					  	<div>
-					  		<button class="btn btn-success btn-raised pull-right" ng-click="Ctrl.save()"  ng-disabled="!Ctrl.canSave()">Imprimir receta</button>
-					  		<button class="btn btn-default pull-right" ng-click="Ctrl.cancel()">Cancelar</button>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<abm-form-group>
+					    	<label data-abm-label type="static">Observaciones</label>
+					    	<textarea type="text" abm-form-control ng-model="Ctrl.newReceta.observations"></textarea>
+					  	</abm-form-group>
+			  		</div>
+			  	</div>
+				<div class="row" >
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="row" >
+						  	<div>
+						  		<button class="btn btn-success btn-raised pull-right" ng-click="Ctrl.save()"  ng-disabled="!Ctrl.canSave()">Imprimir receta</button>
+						  		<button class="btn btn-default pull-right" ng-click="Ctrl.cancel()">Cancelar</button>
+						  	</div>
 					  	</div>
 				  	</div>
-			  	</div>
-			</div>		    					
+				</div>		    					
+			</div>
 		</div>
-	</div>
+	</form>
 </div>

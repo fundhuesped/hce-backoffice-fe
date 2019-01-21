@@ -19,6 +19,7 @@
       vm.newProblemDate = null;
       vm.canSave = canSave;
       vm.error = null;
+      vm.controllerForm = {};
       vm.selectedVaccines = [];
       vm.toggleVaccineSelection = toggleVaccineSelection;
       vm.startDateCalendar = {

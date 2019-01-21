@@ -55,11 +55,11 @@
           Vacunas
         </div>
         <div class="hce-card-body">
-          <div class="row" ng-repeat="(vaccine, applications) in PHCECtrl.summaryPatientVaccines | objectLimitTo:3" style="text-transform: capitalize;">
+          <div class="row" ng-repeat="application in PHCECtrl.summaryPatientVaccines | objectLimitTo:3" style="text-transform: capitalize;">
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="white-space: nowrap; overflow: hidden;">
-              • {{applications[0].vaccine.synonym}}
+              • {{application.vaccine.synonym}}
             </div>
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">{{applications[0].appliedDate  | date:"dd/MM/yyyy"}}</div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">{{application.appliedDate  | date:"dd/MM/yyyy"}}</div>
           </div>
         </div>
         <div class="hce-card-footer">

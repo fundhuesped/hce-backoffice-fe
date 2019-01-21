@@ -60,7 +60,9 @@
         localStorage.setItem('tabActive', Date.now());
         localStorage.removeItem('tabActive');
       } else if (event.key == 'tabActive' && !sessionStorage.getItem('activeTab')) {
-        openAlreadyOpenModal();
+        if(window.location.href.indexOf("Prescription")<0){
+          openAlreadyOpenModal();
+        }
       }
     });
   }

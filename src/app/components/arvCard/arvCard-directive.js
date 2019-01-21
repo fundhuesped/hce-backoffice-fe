@@ -22,11 +22,6 @@
       vm.goToTreatment = goToTreatment;
       vm.goToLaboratories = goToLaboratories;
 
-      vm.cd4 = {value : 350};
-      vm.cd4.date = new Date(1535917693000);
-      vm.cv = {value : 1122};
-      vm.cv.date = new Date(1535917693000);
-
       Object.defineProperty(
           vm,
           'treatment', {
@@ -48,14 +43,14 @@
             vm.cd4.unitOfMeasure = result.unitOfMeasure;
         }, function (err) {
           vm.cd4= {};
-        })
+        });
         HIVData.getCV({patientId: HCService.currentPacienteId}, function (result) {
             vm.cv = {value : result.value};
             vm.cv.date = new Date(result.date);
             vm.cv.unitOfMeasure = result.unitOfMeasure;
         }, function (err) {
           vm.cv= {};
-        })
+        });
       }
 
       function getSchema(medications) {

@@ -6,9 +6,25 @@
     	.module('hce.patientHCE')
     	.controller('NewPatientArvTreatmentController', newPatientArvTreatmentController);
 
-	  newPatientArvTreatmentController.$inject = ['$state', 'HCService', 'PatientArvTreatment', 'toastr', 'moment', 'Medication', '$uibModalInstance', '$filter'];
+	  newPatientArvTreatmentController.$inject = ['$state',
+                                                'HCService',
+                                                'PatientArvTreatment',
+                                                'toastr',
+                                                'moment',
+                                                'Medication',
+                                                'PatientProblem',
+                                                '$uibModalInstance',
+                                                '$filter'];
 
-    function newPatientArvTreatmentController ($state, HCService, PatientArvTreatment, toastr, moment, Medication, $uibModalInstance, $filter) {
+    function newPatientArvTreatmentController ($state,
+                                               HCService,
+                                               PatientArvTreatment,
+                                               toastr,
+                                               moment,
+                                               Medication,
+                                               PatientProblem,
+                                               $uibModalInstance,
+                                               $filter) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newPatientArvTreatment = new PatientArvTreatment();
@@ -19,7 +35,7 @@
       vm.showInfo = showInfo;
       vm.goToProblems = goToProblems;
       vm.changeStatus = changeStatus;
-
+      vm.patientProblems = [];
       vm.nrtiMedications = [];
       vm.nnrtiMedications = [];
       vm.ipMedications = [];
@@ -44,15 +60,15 @@
       // },{
       //   name:'POS Laboral',
       // }]
-      Object.defineProperty(
-          vm,
-          'patientProblems', {
-          enumerable: true,
-          configurable: false,
-          get: function () {
-              return HCService.activeProblems;
-          }
-      });
+      // Object.defineProperty(
+      //     vm,
+      //     'patientProblems', {
+      //     enumerable: true,
+      //     configurable: false,
+      //     get: function () {
+      //         return HCService.activeProblems;
+      //     }
+      // });
 
       Object.defineProperty(
           vm,
@@ -124,8 +140,7 @@
       }
 
       function showInfo() {
-        var problems = $filter('filter')(HCService.activeProblems, {problem:{problemType:'HIV'}});
-        if(problems && problems.length>0){
+        if(vm.patientProblems && vm.patientProblems.length>0){
           return false;
         }else{
           return true;
@@ -157,7 +172,14 @@
         Medication.getActiveList({medicationGroup:'ARV', medicationTypeCode: 'OTROS'},function(medications){
           vm.otherMedications = medications;
         }, displayComunicationError);
-        	HCService.getPatientProblems();
+        	// HCService.getPatientProblems();
+
+          PatientProblem.getForPaciente({pacienteId: HCService.currentPaciente.id, problemType:'HIV', state:'Active'}, function (result) {
+              vm.patientProblems = result;
+          }, function (err) {
+               
+          });                
+
 
           if(vm.currentARVTreatment){
             vm.newPatientArvTreatment.state = 'Closed';

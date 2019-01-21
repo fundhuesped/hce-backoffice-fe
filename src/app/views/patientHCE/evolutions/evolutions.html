@@ -38,7 +38,7 @@ padding-top: 10px;border-bottom:1px solid;border-bottom-color:#D2D2D2" ng-click=
     				</div>
     				<div class="row">
 		    			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="evolution.selected">
-						  	<div ng-show="EvolutionsController.canEditEvolution(evolution)">
+						  	<div ng-show="EvolutionsController.canCancelEvolution(evolution)">
 						  		<button class="btn btn-danger pull-right btn-raised" ng-click="EvolutionsController.cancelEvolution(evolution)">Anular</button>
 						  	</div>
 						  	<div ng-show="EvolutionsController.canEditEvolution(evolution)">

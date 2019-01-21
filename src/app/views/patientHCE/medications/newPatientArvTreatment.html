@@ -15,7 +15,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<abm-form-group class="form-group-lg">
 							<label abm-label for="problem" type="static">Indicación de ARV(*)</label>
-							<select class="form-control" name="problem" ng-options="problem as problem.problem.name for problem in NewPatientArvTreatmentController.patientProblems | filter:{problem:{problemType:'HIV'}}" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.patientProblem" abm-form-control ng-required="true">
+							<select class="form-control" name="problem" ng-options="problem as problem.problem.name for problem in NewPatientArvTreatmentController.patientProblems" ng-model="NewPatientArvTreatmentController.newPatientArvTreatment.patientProblem" abm-form-control ng-required="true">
 							</select>
 						</abm-form-group>
 					</div>
@@ -165,10 +165,10 @@
 					    			<tr ng-repeat="medication in NewPatientArvTreatmentController.newPatientArvTreatment.patientARVTreatmentMedications">
 				    					<td><div style="margin-top: 10px;margin-bottom: 9px;">{{medication.medication.abbreviation + (medication.medication.composition?' ' +medication.medication.composition:'' ) + (medication.medication.presentation?' ' +medication.medication.presentation:'' )}}</div></td> 
 				    					<td>
-				    						<input type="number" ng-model="medication.quantityPerDay" onkeypress="return event.charCode >= 48" min="0" ng-change="medication.quantityPerMonth=medication.quantityPerDay*30" ng-required="true"/>
+				    						<input type="number" ng-model="medication.quantityPerDay" onkeypress="return event.charCode >= 48 || event.charCode == 44" min="0" ng-change="medication.quantityPerMonth=medication.quantityPerDay*30" ng-required="true"/>
 				    					</td> 
 				    					<td>
-				    						<input type="number" ng-model="medication.quantityPerMonth" onkeypress="return event.charCode >= 48" min="0" ng-required="true"/>
+				    						<input type="number" ng-model="medication.quantityPerMonth" onkeypress="return event.charCode >= 48 || event.charCode == 44" min="0" ng-change="medication.quantityPerDay=medication.quantityPerMonth/30"ng-required="true"/>
 				    					</td> 
 			    					</tr>
 			    				</tbody>

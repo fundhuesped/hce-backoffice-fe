@@ -252,7 +252,8 @@
 
         function cancelEvolution(evolution) {
             var evolutionModified = angular.copy(evolution);
-            evolutionModified.state = 'Cancelled';
+            evolutionModified.state = 'Canceled';
+            evolutionModified.status = 'Inactive';
             return Evolution.update(evolutionModified,function () {
                 srv.getEvolutions();
             }, function (err) {
@@ -405,6 +406,7 @@
             if(filters){
                 var localFilters = angular.copy(filters);
                 localFilters.pacienteId = srv.currentPacienteId;
+                localFilters.order = 'name';
                 if(filters.all){
                     return PatientVaccine.getFullList(localFilters, function (paginatedResult) {
                         srv.patientVaccines = paginatedResult;
@@ -427,9 +429,9 @@
         }
 
         function getActivePatientVaccines() {
-            return PatientVaccine.getFullList({pacienteId:srv.currentPacienteId, state:'Applied'}, function (result) {
-                srv.activePatientVaccinesCount = result.length;
-                srv.summaryPatientVaccines = lodash.groupBy(result, 'vaccine.name');
+            return PatientVaccine.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, state:'Applied'}, function (result) {
+                srv.activePatientVaccinesCount = result.count;
+                srv.summaryPatientVaccines = result.results;
             }, function (err) {
                  
             });
