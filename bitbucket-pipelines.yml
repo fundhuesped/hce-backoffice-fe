@@ -11,7 +11,7 @@ pipelines:
         caches:
           - node
         script: # Modify the commands below to build your repository.
-          - npx install
+          - npm install
           - npx bower install --allow-root
           - npx gulp clean
           - npx gulp pack
