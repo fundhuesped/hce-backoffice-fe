@@ -3,7 +3,7 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image:  gabrielaraujof/nodejs-gulp-bower
+image:  node:8.15-stretch
 
 pipelines:
   default:
@@ -11,7 +11,7 @@ pipelines:
         caches:
           - node
         script: # Modify the commands below to build your repository.
-          - npm install
-          - bower install --allow-root
-          - gulp clean
-          - gulp pack
+          - npx install
+          - npx bower install --allow-root
+          - npx gulp clean
+          - npx gulp pack
