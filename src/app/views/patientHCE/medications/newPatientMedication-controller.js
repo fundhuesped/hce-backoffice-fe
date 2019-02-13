@@ -29,6 +29,24 @@
           }
       });
 
+      Object.defineProperty(
+        vm,
+        'activeProblems', {
+        enumerable: true,
+        configurable: false,
+        get: function () {
+          if(HCService.activeProblems){
+            var problems = [];
+            for (var i = 0; i <HCService.activeProblems.length; i++) {
+              if (HCService.activeProblems[i].state !== 'Error') {
+                problems.push(HCService.activeProblems[i])
+              }
+            }
+            return (problems) ;
+          }
+        }
+    });
+
 
       vm.startDateCalendar = {
         opened: false,
