@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('EditPatientProfilaxisMedicationController', editPatientProfilaxisMedicationController);
 
-	  editPatientProfilaxisMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication', '$uibModalInstance', 'patientMedication'];
+	  editPatientProfilaxisMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication', 'PatientProblem', '$uibModalInstance', 'patientMedication'];
 
-    function editPatientProfilaxisMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication, $uibModalInstance, patientMedication) {
+    function editPatientProfilaxisMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication, PatientProblem, $uibModalInstance, patientMedication ) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.save = save;
@@ -19,6 +19,7 @@
       vm.markAsError = markAsError;
       vm.changeStatus = changeStatus;
       vm.canEdit = canEdit;
+      vm.activeProblems = [];
       vm.applicationDateCalendar = {
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
@@ -30,17 +31,6 @@
           this.opened = true;
         }
       };
-
-
-      Object.defineProperty(
-          vm,
-          'patientProblems', {
-          enumerable: true,
-          configurable: false,
-          get: function () {
-              return HCService.activeProblems;
-          }
-      });
 
 
       vm.startDateCalendar = {
@@ -116,6 +106,12 @@
         }else{
           vm.patientMedication.endDate = null;
         }
+        PatientProblem.getAllForPaciente({pacienteId: HCService.currentPaciente.id, state:'Active', }, function (result) {
+          vm.activeProblems = result;
+        }, function (err) {
+          
+      });
+
 
 	    }
       function changeStatus() {
