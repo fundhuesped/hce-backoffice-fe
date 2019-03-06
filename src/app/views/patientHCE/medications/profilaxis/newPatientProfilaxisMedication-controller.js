@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewPatientProfilaxisMedicationController', newPatientProfilaxisMedicationController);
 
-	  newPatientProfilaxisMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication', '$uibModalInstance'];
+	  newPatientProfilaxisMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication', 'PatientProblem', '$uibModalInstance'];
 
-    function newPatientProfilaxisMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication, $uibModalInstance) {
+    function newPatientProfilaxisMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication, PatientProblem, $uibModalInstance) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newPatientMedication = new PatientMedication();
@@ -18,36 +18,6 @@
       vm.canSave = canSave;
       vm.error = null;
       vm.changeStatus = changeStatus;
-
-      Object.defineProperty(
-          vm,
-          'patientProblems', {
-          enumerable: true,
-          configurable: false,
-          get: function () {
-              return HCService.activeProblems;
-          }
-      });
-
-      Object.defineProperty(
-        vm,
-        'activeProblems', {
-        enumerable: true,
-        configurable: false,
-        get: function () {
-          if(HCService.activeProblems){
-            var problems = [];
-            for (var i = 0; i <HCService.activeProblems.length; i++) {
-              if (HCService.activeProblems[i].state !== 'Error') {
-                problems.push(HCService.activeProblems[i])
-              }
-            }
-            return (problems) ;
-          }
-        }
-    });
-
-
 
 
       vm.startDateCalendar = {
@@ -126,8 +96,13 @@
         Medication.getActiveList(function(medications){
           vm.medications = medications;
         }, displayComunicationError);
-        HCService.getPatientProblems();
-	    }
+        PatientProblem.getAllForPaciente({pacienteId: HCService.currentPaciente.id, state:'Active', }, function (result) {
+          vm.activeProblems = result;
+        }, function (err) {
+            
+        });
+
+      }
 
       function displayComunicationError(loading){
         if(!toastr.active()){

@@ -191,8 +191,7 @@
               vm.patientProblems = result;
           }, function (err) {
                
-          });                
-
+          });
 
           if(vm.currentARVTreatment){
             vm.newPatientArvTreatment.state = 'Closed';
