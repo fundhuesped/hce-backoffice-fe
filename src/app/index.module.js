@@ -3,8 +3,9 @@
 
   angular
     .module('hce.app', ['ngAnimate', 
-    	'ngCookies', 
-    	'ngTouch', 
+        'ngCookies', 
+        'ngTouch',
+        'ngMask',
     	'ngSanitize', 
     	'ngMessages', 
     	'ngAria',

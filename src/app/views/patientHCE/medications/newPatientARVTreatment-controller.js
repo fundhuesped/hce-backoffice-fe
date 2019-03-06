@@ -1,4 +1,4 @@
-(function(){
+(function($scope){
     'use strict';
     /* jshint validthis: true */
      /*jshint latedef: nofunc */
@@ -29,6 +29,7 @@
       vm.hceService = HCService;
       vm.newPatientArvTreatment = new PatientArvTreatment();
       vm.save = save;
+      vm.miAlert = miAlert;
       vm.cancel = cancel;
       vm.canSave = canSave;
       vm.toggleMedicationSelection = toggleMedicationSelection;
@@ -80,6 +81,16 @@
           }
       });
 
+
+
+     function miAlert(key, value) {
+   
+       $("#quantityPerDay_"+key).val(value.toFixed(2))
+
+      
+       // vm.medication[index].quantityPerDay = quantityPerDayFixed;
+    }
+
       vm.startDateCalendar = {
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
@@ -90,6 +101,8 @@
           showWeeks: false,
           maxDate: new Date()
         },
+
+
         open : function(){
           this.opened = true;
         }
