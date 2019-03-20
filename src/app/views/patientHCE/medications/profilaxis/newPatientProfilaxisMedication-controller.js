@@ -113,16 +113,25 @@
       }
 
       function getMedications($viewValue) {
+  
         var filters = {
           name : $viewValue,
           medicationTypeCode : 'PROF'
         };
 
+
         return Medication.getFullActiveList(filters, function(medications){
           vm.medications = medications;
+          if(medications.length === 0){
+            toastr.error('No existen medicamentos.');
+          }
         }, displayComunicationError).$promise;
 
       }
+
+
+
+      
 
       function changeStatus() {
         if(vm.newPatientMedication.state == 'Active'){
