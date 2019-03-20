@@ -125,8 +125,12 @@
         }, showError);
       }
 
+      function hasSelectedTransmission() {
+        return vm.newPatientProblem.vertical || vm.newPatientProblem.mujeres || vm.newPatientProblem.hombres || vm.newPatientProblem.trans || vm.newPatientProblem.inyeccion || vm.newPatientProblem.accidente || vm.newPatientProblem.transfusion
+      }
+
       function canSaveNewProblem() {
-        if(vm.controllerForm.$valid){
+        if(vm.controllerForm.$valid && vm.newPatientProblem.clinicalState && hasSelectedTransmission() ){
           return true;
         }
         return false;
