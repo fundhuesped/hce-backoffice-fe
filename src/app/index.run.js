@@ -45,7 +45,7 @@
           controller: 'CloseEvolutionController',
           controllerAs: 'Ctrl',
           resolve: {
-            canDiscardChanges: () => {
+            canDiscardChanges: function() {
               return HCService.isDirty();
             }
           }

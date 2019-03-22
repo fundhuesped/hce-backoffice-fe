@@ -161,21 +161,22 @@
 
         function saveNewEvolution(cbOK, cbNok) {
             if(srv.currentEvolution.id){
-                var promise = srv.currentEvolution.$update(function (evolution) {
-                    srv.currentEvolution = evolution;
-                    srv.currentEvolutionCopy = angular.copy(evolution);
-                    if(cbOK){
-                        cbOK(evolution);
-                    }
-                }, function (err) {
-                    if(cbNok){
-                        cbNok(err);
-                    }
-                    console.log(err);
-                }).$promise;
-                return promise;
+                return $q(function(resolve, reject) {
+                    resolve( srv.currentEvolution.$update(function (evolution) {
+                        srv.currentEvolution = evolution;
+                        srv.currentEvolutionCopy = angular.copy(evolution);
+                        if(cbOK){
+                            cbOK(evolution);
+                        }
+                    }, function (err) {
+                        if(cbNok){
+                            cbNok(err);
+                        }
+                        console.log(err);
+                    }).$promise);
+                });
             }else{
-                var promise = srv.currentEvolution.$save({pacienteId:srv.currentPaciente.id}, function (evolution) {
+                return srv.currentEvolution.$save({pacienteId:srv.currentPaciente.id}, function (evolution) {
                     srv.currenEvolution = evolution;
                     srv.currentEvolutionCopy = angular.copy(evolution);
                     if(cbOK){
@@ -187,7 +188,6 @@
                     }
                     console.log(err);
                 }).$promise;
-                return promise;
             }
         }
 
