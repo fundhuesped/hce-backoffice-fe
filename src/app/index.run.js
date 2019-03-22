@@ -12,35 +12,96 @@
         event.preventDefault(); 
 
         openLeaveHCEModal().result.then(function (resolution) {
-          if(resolution==='leave'){
-            if(HCService.currentEvolution.id){
-              HCService.cleanAll().then(function () {
-                $state.go(toState);
-              }, function (error) {
-                toastr.error(error)
-              }); 
-            }else{
-              HCService.cleanEvolution();
-              $state.go(toState);
-            }
+          if(resolution==='save'){
+            HCService.saveNewEvolution(function () {
+              closeEvolution(function () {
+              },
+              function (error) {
+                showError(error);
+              });
+            }, function (error) {
+              showError(error);
+            });
+          }
+          if(resolution=='discard'){
+            HCService.discardChanges();
+              closeEvolution(function () {
+                // body...
+              },
+              function (error) {
+                showError(error);
+              });
           }
         }, function () {
-          event.preventDefault(); 
         });
       }
     })
 
-
-
-
     function openLeaveHCEModal() {
       return $uibModal.open({
         backdrop: 'static',
-        templateUrl: 'app/views/patientHCE/leaveHCEModal.html',
-        size: 'md',
-        controller: 'LeaveHCEController',
-        controllerAs: 'Ctrl',
+        templateUrl: 'app/components/navbar/closeEvolution-modal.html',
+          size: 'md',
+          controller: 'CloseEvolutionController',
+          controllerAs: 'Ctrl',
+          resolve: {
+            canDiscardChanges: function() {
+              return HCService.isDirty();
+            }
+          }
       });
+    }
+
+    function closeEvolution() {
+      HCService.closeEvolution().then(function() {
+        toastr.success('Visita cerrada con exito');
+        $state.go('app.patientSearch');
+      }, function (error) {
+        
+        if(error=='ISDIRTY'){
+          openLeaveHCEModal().result.then(function (resolution) {
+            if(resolution==='save'){
+              HCService.saveNewEvolution(function () {
+                closeEvolution(function () {
+                },
+                function (error) {
+                  showError(error);
+                });
+              }, function (error) {
+                showError(error);
+              });
+            }
+            if(resolution=='discard'){
+              HCService.discardChanges();
+                closeEvolution(function () {
+                  // body...
+                },
+                function (error) {
+                  showError(error);
+                });
+            }
+          }, function () {
+          });
+        }else{
+          showError(error);
+        }
+      });
+    }
+
+    function showError(error) {
+      if(error){
+        if(error.data){
+          if(error.data.detail){
+            toastr.error(error.data.detail);
+          }else{
+            toastr.error(error.data);
+          }
+        }else{
+          toastr.error(error);
+        }
+      }else{
+        toastr.error('Ocurrio un error');
+      }
     }
 
     function openAlreadyOpenModal() {

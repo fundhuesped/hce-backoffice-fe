@@ -42,7 +42,8 @@
       function saveNewEvolution() {
         return HCService.saveNewEvolution().then(function() {
           HCService.getEvolutions();
-          toastr.success('Visita guardada con exito');
+          toastr.success('Recargue la pagina para ver los datos guardados');
+          toastr.success('Evolucion guardada con exito');
           vm.newEvolutionFocused = false;
         }, showError);
       }
