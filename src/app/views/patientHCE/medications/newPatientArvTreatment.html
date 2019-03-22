@@ -165,10 +165,10 @@
 					    			<tr ng-repeat="(key, medication) in NewPatientArvTreatmentController.newPatientArvTreatment.patientARVTreatmentMedications">
 				    					<td><div style="margin-top: 10px;margin-bottom: 9px;">{{medication.medication.abbreviation + (medication.medication.composition?' ' +medication.medication.composition:'' ) + (medication.medication.presentation?' ' +medication.medication.presentation:'' )}}</div></td> 
 				    					<td>
-				    						<input type="number" ng-model="medication.quantityPerDay" onkeypress="return event.charCode >= 48 || event.charCode == 44" min="0"  ng-change="medication.quantityPerMonth=medication.quantityPerDay*30" ng-required="true"/>
+				    						<input type="number" ng-model="medication.quantityPerDay" onkeypress="return event.charCode >= 48 || event.charCode == 44" min="0"  ng-change="medication.quantityPerMonth=medication.quantityPerDay*30" ng-required="true" ng-pattern="/^[0-9]+(\.[0-9]{1,1})?$/" step="0.1"/>
 				    					</td> 
 				    					<td>
-				    						<input type="number"  ng-model="medication.quantityPerMonth" onkeypress="return event.charCode >= 48 || event.charCode == 44" min="0" ng-change="medication.quantityPerDay=medication.quantityPerMonth/30" ng-required="true"/>
+				    						<input type="number"  ng-model="medication.quantityPerMonth" onkeypress="return event.charCode >= 48 || event.charCode == 44" min="0" ng-change="medication.quantityPerDay=medication.quantityPerMonth/30" ng-required="true" ng-pattern="/^[0-9]+(\.[0-9]{1,1})?$/" step="0.1"/>
 				    					</td> 
 			    					</tr>
 			    				</tbody>
