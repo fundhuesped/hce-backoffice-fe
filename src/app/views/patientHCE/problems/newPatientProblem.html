@@ -135,19 +135,19 @@
 								</div>
 							</abm-form-group>
 							<abm-form-group name='woman' ng-required=false>
-								<label class="control-label" type="static">Si es mujer, ¿el diagnóstico se realizó durante un embarazo, parto o puerperio?</label>
+								<label style="font-weight:bold;font-size: 14px;" type="static">Si es mujer, ¿el diagnóstico se realizó durante un embarazo, parto o puerperio?</label>
 								<div class="radio" abm-radio label="Si">
-									<input type="radio" id="hivDuringLabor" name="hivDuringLabor" value="Si" ng-model="NewPatientProblemController.newPatientProblem.woman">
+									<input type="radio" id="hivDuringLabor" name="hivDuringLabor" value="Si" ng-model="NewPatientProblemController.newPatientProblem.woman" ng-required=false>
 								</div>
 								<div class="radio" abm-radio label="No">
-									<input type="radio" id="hivDuringLabor" name="hivDuringLabor" value="No" ng-model="NewPatientProblemController.newPatientProblem.woman">
+									<input type="radio" id="hivDuringLabor" name="hivDuringLabor" value="No" ng-model="NewPatientProblemController.newPatientProblem.woman" ng-required=false>
 								</div>
 								<div class="radio" abm-radio label="Desconocido">
-									<input type="radio" name="hivDuringLabor" value="Desconocido" ng-model="NewPatientProblemController.newPatientProblem.woman">
+									<input type="radio" name="hivDuringLabor" value="Desconocido" ng-model="NewPatientProblemController.newPatientProblem.woman" ng-required=false>
 								</div>
 							</abm-form-group>
 							<abm-form-group name="clinicalState" ng-required="NewPatientProblemController.newPatientProblem.clinicalState == undefined">
-								<label data-abm-label type="static" style="font-weight:bold">Estadio clínico al momento del diagnóstico serológico confirmado (*)</label>
+								<label data-abm-label type="static" style="font-weight:bold;font-size: 14px;">Estadio clínico al momento del diagnóstico serológico confirmado (*)</label>
 								<div class="radio" abm-radio name="clinicalState" label="Síndrome retroviral agudo">
 									<input type="radio" id="clinicalState" name="clinicalState" value="agudo" ng-model="NewPatientProblemController.newPatientProblem.clinicalState" ng-required="NewPatientProblemController.isHIV()">
 								</div>
