@@ -113,7 +113,8 @@
 
       function getMedications($viewValue) {
         var filters = {
-          name : $viewValue
+          name : $viewValue,
+          medicationTypeCode: 10
         };
 
         return Medication.getFullActiveList(filters, function(medications){
