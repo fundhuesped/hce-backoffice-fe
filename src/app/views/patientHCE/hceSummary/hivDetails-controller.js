@@ -6,16 +6,16 @@
     	.module('hce.patientHCE')
     	.controller('HivDetailsController', hivDetailsController);
 
-	hivDetailsController.$inject = ['$state', 'HCService', 'toastr', 'moment', 'Problem', '$uibModal', '$uibModalInstance', 'PatientProblem', 'SessionService','patientProblem'];
+	hivDetailsController.$inject = ['toastr', 'moment',  '$uibModalInstance', 'PatientProblem', 'SessionService'];
 
-    function hivDetailsController ($state, HCService, toastr, moment, Problem, $uibModal, $uibModalInstance, PatientProblem, SessionService, patientProblem) {
+    function hivDetailsController (toastr, moment, $uibModalInstance, PatientProblem, SessionService) {
     	var vm = this;
     	vm.cancel = cancel;
     	vm.problem = null;
     	vm.canSaveNewProblem = canSaveNewProblem;
     	vm.markAsError = markAsError;
       vm.save = save;
-      vm.originalProblem = patientProblem;
+      vm.originalProblem = {};  //TODO Delete it
       vm.changeStatus = changeStatus;
       vm.canEdit = canEdit;
       vm.canBeClosed = canBeClosed;
@@ -53,8 +53,9 @@
 
     	activate();
 
+      //TODO delete it?
     	function activate() {
-    		vm.problem = angular.copy(patientProblem);
+    		vm.problem = {};
 
         vm.closeDateCalendarPopup.options.minDate = vm.problem.startDate;
         vm.problem.startDate = new Date(vm.problem.startDate + 'T03:00:00');
@@ -115,14 +116,12 @@
       }
 
       function canBeClosed() {
-        if(patientProblem.state == 'Closed'){
-          return false;
-        }
         return true;
       }
 
+      //TODO delete it
       function canBeMarkedAsError(argument) {
-        return patientProblem.state !== 'Error';
+        return False;
       }
 
       function changeStatus() {

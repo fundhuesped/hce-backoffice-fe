@@ -6,21 +6,20 @@
     	.module('hce.patientHCE')
     	.controller('HCESummaryController', hceSummaryController);
 
-	hceSummaryController.$inject = [];
+	hceSummaryController.$inject = ['HCService', '$uibModal', 'SessionService'];
 
-    function hceSummaryController () {
+    function hceSummaryController (HCService, $uibModal, SessionService) {
 	    var vm = this;
         vm.canGenerateSummary = canGenerateSummary;
         vm.categories = {};
 
         function canGenerateSummary() {
             return vm.controllerForm.$valid && (vm.categories.evolutions||vm.categories.problems||vm.categories.arv||vm.categories.profilaxis||vm.categories.generalTreatment||vm.categories.laboratories||vm.categories.otherStudies||vm.categories.vaccines);
-        };
+        }
 
         vm.openHivModal = openHivModal;
 
-        //TODO FIXME change selectedProblem for user id or similar
-        function openHivModal(selectedProblem) {
+        function openHivModal() {
             var modalInstance = $uibModal.open({
             backdrop: 'static',
             templateUrl: 'app/views/patientHCE/hceSummary/hivDetails.html',
@@ -28,12 +27,12 @@
             controller: 'HivDetailsController',
             controllerAs: 'HivDetailsController',
             resolve: {
-                //TODO FIXME replace with user id or similar
-                patientProblem: function () {
-                return selectedProblem;
+                userId: function () {
+                return SessionService.currentUser.id;
                 }
             }
             });
+            
             modalInstance.result.then(function (resolution) {
             if(resolution==='markedError' || resolution==='edited'){
                 searchPatientProblems();
@@ -42,6 +41,6 @@
                 }
             }
             });
-        };
+        }
     }
 })();
