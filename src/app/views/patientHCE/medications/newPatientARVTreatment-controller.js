@@ -36,6 +36,7 @@
       vm.showInfo = showInfo;
       vm.goToProblems = goToProblems;
       vm.changeStatus = changeStatus;
+      vm.roundNumber = roundNumber;
       vm.patientProblems = [];
       vm.nrtiMedications = [];
       vm.nnrtiMedications = [];
@@ -241,6 +242,11 @@
         }else{
           toastr.error('Ocurrio un error');
         }
+      }
+
+      function roundNumber(number) {
+        console.log(`-- Called round number with ${number} --`);
+        return (Math.round(number*10)/10);
       }
     }
 })();
