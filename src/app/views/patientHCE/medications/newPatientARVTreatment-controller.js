@@ -245,6 +245,7 @@
       }
 
       function roundNumber(number) {
+        console.log(`-- Called round number with ${number} --`);
         return (Math.round(number*10)/10);
       }
     }
