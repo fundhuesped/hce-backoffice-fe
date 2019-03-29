@@ -26,9 +26,6 @@
 	    					<td>{{(problem.startDate | date: "dd/MM/yyyy") || 'No informado'}}</td> 
 	    					<td>{{(problem.closeDate | date: "dd/MM/yyyy") || '-'}}</td> 
 	    					<td>{{problem.observations}}</td> 
-	    					<td>
-		    					<button class="btn btn-info" type="button" ng-show="PatientProblemsController.canEditProblem(problem)" ng-click="PatientProblemsController.openEditProblemModal(problem)" style="padding: 6px 12px; margin:0px; text-transform: none;"><i class="fa fa-pencil"></i> Editar</button>
-	    					</td> 
     					</tr>
     				</tbody>
     			</table>
