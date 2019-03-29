@@ -162,17 +162,19 @@
         function saveNewEvolution(cbOK, cbNok) {
             if(srv.currentEvolution.id){
                 return $q(function(resolve, reject) {
-                    resolve( srv.currentEvolution.$update(function (evolution) {
+                    return( srv.currentEvolution.$update(function (evolution) {
                         srv.currentEvolution = evolution;
                         srv.currentEvolutionCopy = angular.copy(evolution);
                         if(cbOK){
                             cbOK(evolution);
                         }
+                        resolve();
                     }, function (err) {
+                        console.log(err);
                         if(cbNok){
                             cbNok(err);
                         }
-                        console.log(err);
+                        reject(err);
                     }).$promise);
                 });
             }else{
@@ -183,10 +185,11 @@
                         cbOK(evolution);
                     }
                 }, function (err) {
+                    console.log(err);
                     if(cbNok){
                         cbNok(err);
                     }
-                    console.log(err);
+                    reject(err);
                 }).$promise;
             }
         }
@@ -284,13 +287,13 @@
                 return Evolution.getPaginatedForPaciente(localFilters, function (paginatedResult) {
                     srv.evolutions = paginatedResult.results;
                 }, function (err) {
-                     
+                    console.error(err);
                 });                
             }else{
                 return Evolution.getPaginatedForPaciente({pacienteId:srv.currentPaciente.id}, function (paginatedResult) {
                     srv.evolutions = paginatedResult.results;
                 }, function (err) {
-                     
+                    console.error(err);
                 });
 
             }
@@ -311,7 +314,7 @@
             return Evolution.getEvolution(idEvolution, function (result) {
                     srv.currentEvolution = result;
             }, function (err) {
-                     
+                console.error(err);
             });
         }
 
@@ -343,7 +346,7 @@
                 srv.activeProblemsCount = paginatedResult.count;
                 srv.summaryActiveProblems = paginatedResult.results;
             }, function (err) {
-                 
+                console.error(err);
             });
         }
 
@@ -361,9 +364,8 @@
                 return PatientProblem.getPaginatedForPaciente({pacienteId:srv.currentPaciente.id}, function (paginatedResult) {
                     srv.activeProblems = paginatedResult.results;
                 }, function (err) {
-                     
+                    console.error(err);
                 });
-
             }
         }
 
