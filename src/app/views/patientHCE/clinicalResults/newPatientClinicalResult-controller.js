@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewPatientClinicalResultsController', newPatientClinicalResultsController);
 
-	  newPatientClinicalResultsController.$inject = ['$state', 'HCService', 'PatientClinicalResult', 'toastr', 'moment', 'ClinicalStudy', '$uibModalInstance'];
+	  newPatientClinicalResultsController.$inject = ['$state', 'HCService', 'PatientClinicalResult', 'toastr', 'moment', 'ClinicalStudy', '$uibModalInstance', '$timeout'];
 
-    function newPatientClinicalResultsController ($state, HCService, PatientClinicalResult, toastr, moment, ClinicalStudy, $uibModalInstance) {
+    function newPatientClinicalResultsController ($state, HCService, PatientClinicalResult, toastr, moment, ClinicalStudy, $uibModalInstance, $timeout) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.save = save;
@@ -17,6 +17,7 @@
       vm.getClinicalStudies = getClinicalStudies;
       vm.cancel = cancel;
       vm.canSave = canSave;
+      vm.waitingToShowError = false;
 
       vm.studyDateCalendar = {
         opened: false,
@@ -71,6 +72,14 @@
         };
         return ClinicalStudy.getFullActiveList(filters, function(clinicalStudies){
           vm.clinicalStudies = clinicalStudies;
+          if (clinicalStudies.length <= 0 && !vm.waitingToShowError){
+            toastr.warning('No se han encontrado resultados');
+            vm.waitingToShowError = true;
+            $timeout(
+              () => {
+                vm.waitingToShowError = false;
+              }, 1500);
+          }
         }, displayComunicationError).$promise;
 
       }

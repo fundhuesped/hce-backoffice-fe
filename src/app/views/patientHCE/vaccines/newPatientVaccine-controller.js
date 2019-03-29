@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewPatientVaccineController', newPatientVaccineController);
 
-	  newPatientVaccineController.$inject = ['$state', 'HCService', 'PatientVaccine', 'toastr', 'moment', 'Vaccine', '$uibModalInstance'];
+	  newPatientVaccineController.$inject = ['$state', 'HCService', 'PatientVaccine', 'toastr', 'moment', 'Vaccine', '$uibModalInstance', '$timeout'];
 
-    function newPatientVaccineController ($state, HCService, PatientVaccine, toastr, moment, Vaccine, $uibModalInstance) {
+    function newPatientVaccineController ($state, HCService, PatientVaccine, toastr, moment, Vaccine, $uibModalInstance, $timeout) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newPatientVaccine = new PatientVaccine();
@@ -19,6 +19,7 @@
       vm.newProblemDate = null;
       vm.canSave = canSave;
       vm.error = null;
+      vm.waitingToShowError = false;
 
       vm.applicationDateCalendar = {
         altInputFormats: ['d!-M!-yyyy'],
@@ -78,6 +79,14 @@
 
         return Vaccine.getFullActiveList(filters, function(vaccines){
           vm.vaccines = vaccines;
+          if (vaccines.length <= 0 && !vm.waitingToShowError){
+            toastr.warning('No se han encontrado resultados');
+            vm.waitingToShowError = true;
+            $timeout(
+              () => {
+                vm.waitingToShowError = false;
+              }, 1500);
+          }
         }, displayComunicationError).$promise;
 
       }

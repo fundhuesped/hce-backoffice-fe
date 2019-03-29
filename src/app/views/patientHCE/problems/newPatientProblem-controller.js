@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewPatientProblemController', newPatientProblemController);
 
-	  newPatientProblemController.$inject = ['$state', 'HCService', 'PatientProblem', 'toastr', 'moment', 'Problem', '$uibModalInstance'];
+	  newPatientProblemController.$inject = ['$state', 'HCService', 'PatientProblem', 'toastr', 'moment', 'Problem', '$uibModalInstance', '$timeout'];
 
-    function newPatientProblemController ($state, HCService, PatientProblem, toastr, moment, Problem, $uibModalInstance) {
+    function newPatientProblemController ($state, HCService, PatientProblem, toastr, moment, Problem, $uibModalInstance, $timeout) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newPatientProblem = {};
@@ -22,6 +22,7 @@
       vm.changeStatus = changeStatus;
       vm.isHIV = isHIV;
       vm.error = null;
+      vm.waitingToShowError = false;
 
 
       Object.defineProperty(
@@ -164,6 +165,14 @@
 
         return Problem.getFullActiveList(filters, function(problems){
           vm.problems = problems;
+          if (problems.length <= 0 && !vm.waitingToShowError){
+            toastr.warning('No se han encontrado resultados');
+            vm.waitingToShowError = true;
+            $timeout(
+              () => {
+                vm.waitingToShowError = false;
+              }, 1500);
+          }
         }, displayComunicationError).$promise;
 
       }
