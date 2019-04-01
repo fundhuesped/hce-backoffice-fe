@@ -169,7 +169,7 @@
             toastr.warning('No se han encontrado resultados');
             vm.waitingToShowError = true;
             $timeout(
-              () => {
+              function() {
                 vm.waitingToShowError = false;
               }, 1500);
           }
