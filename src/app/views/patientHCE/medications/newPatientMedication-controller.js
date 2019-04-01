@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewPatientMedicationController', newPatientMedicationController);
 
-	  newPatientMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication','PatientProblem', '$uibModalInstance'];
+	  newPatientMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication','PatientProblem', '$uibModalInstance', '$timeout'];
 
-    function newPatientMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication,PatientProblem, $uibModalInstance) {
+    function newPatientMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication,PatientProblem, $uibModalInstance, $timeout) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newPatientMedication = new PatientMedication();
@@ -20,6 +20,7 @@
       vm.hasSelectedMedication = hasSelectedMedication;
       vm.changeStatus = changeStatus;
       vm.activeProblems = [];
+      vm.waitingToShowError = false;
 
       vm.startDateCalendar = {
         opened: false,
@@ -119,6 +120,14 @@
 
         return Medication.getFullActiveList(filters, function(medications){
           vm.medications = medications;
+          if (medications.length <= 0 && !vm.waitingToShowError){
+            toastr.warning('No se han encontrado resultados');
+            vm.waitingToShowError = true;
+            $timeout(
+              function() {
+                vm.waitingToShowError = false;
+              }, 1500);
+          }
         }, displayComunicationError).$promise;
 
       }
