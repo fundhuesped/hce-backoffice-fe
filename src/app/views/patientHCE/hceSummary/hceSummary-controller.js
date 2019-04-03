@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('HCESummaryController', hceSummaryController);
 
-	hceSummaryController.$inject = ['HCService', '$uibModal', 'SessionService', 'toastr'];
+	hceSummaryController.$inject = ['HCService', '$uibModal', 'toastr'];
 
-    function hceSummaryController (HCService, $uibModal, SessionService, toastr) {
+    function hceSummaryController (HCService, $uibModal, toastr) {
 	    var vm = this;
         vm.canGenerateSummary = canGenerateSummary;
         vm.categories = {};
@@ -32,12 +32,7 @@
             templateUrl: 'app/views/patientHCE/hceSummary/hivDetails.html',
             size: 'md', //TODO FIXME See if we need to set it bigger
             controller: 'HivDetailsController',
-            controllerAs: 'HivDetailsController',
-            resolve: {
-                userId: function () {
-                return SessionService.currentUser.id;
-                }
-            }
+            controllerAs: 'HivDetailsController'
             });
             
             modalInstance.result.then(function (resolution) {

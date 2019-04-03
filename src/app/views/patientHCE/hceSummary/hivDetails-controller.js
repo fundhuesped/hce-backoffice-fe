@@ -15,11 +15,9 @@
     	vm.canSaveNewProblem = canSaveNewProblem;
     	vm.markAsError = markAsError;
       vm.save = save;
-      vm.originalProblem = {};  //TODO Delete it
       vm.changeStatus = changeStatus;
       vm.canEdit = canEdit;
       vm.canBeClosed = canBeClosed;
-      vm.canBeMarkedAsError = canBeMarkedAsError;
 
       vm.startDateCalendarPopup = {
         opened: false,
@@ -117,11 +115,6 @@
 
       function canBeClosed() {
         return true;
-      }
-
-      //TODO delete it
-      function canBeMarkedAsError(argument) {
-        return False;
       }
 
       function changeStatus() {
