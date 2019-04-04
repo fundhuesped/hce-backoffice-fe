@@ -23,6 +23,7 @@
             if (vm.categories.hiv) {
                 openHivModal(); return;
             }
+            //Add here methods for other options
             toastr.warning("Por favor seleccione una opcion valida");
         }
 
@@ -30,7 +31,7 @@
             var modalInstance = $uibModal.open({
             backdrop: 'static',
             templateUrl: 'app/views/patientHCE/hceSummary/hivDetails.html',
-            size: 'md', //TODO FIXME See if we need to set it bigger
+            size: 'md',
             controller: 'HivDetailsController',
             controllerAs: 'HivDetailsController'
             });
