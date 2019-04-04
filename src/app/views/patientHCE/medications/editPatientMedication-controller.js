@@ -129,7 +129,6 @@
 
       }
       function canEdit() {
-        debugger;
         return patientMedication.profesional.id == SessionService.currentUser.id && (moment().diff(moment(patientMedication.createdOn), 'hours') <= 8);
       }
 
