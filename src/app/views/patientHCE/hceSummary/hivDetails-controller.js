@@ -24,8 +24,8 @@
       }
 
       function getDetails() {
-        //TODO FIXME replace this
-        return HCService.currentARVTreatment;
+        debugger;
+        return HCService.summaryActiveProblems.filter( treatment => treatment.problem.name == "Infección por HIV" )[0];
       }
 
     }
