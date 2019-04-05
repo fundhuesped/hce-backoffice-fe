@@ -1,65 +1,95 @@
 <div class="container-fluid hce-container-modal">
 	<form name="HivDetailsController.controllerForm">
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<div class="hce-form-title">Ficha HIV</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<abm-form-group>
-			    			<label data-abm-label type="static">Problema</label>
-	                		<input type="text" abm-form-control ng-model="HivDetailsController.problem.patientProblem.problem.name" class="form-control" typeahead-min-length="3" disabled="true">
-	                	</abm-form-group>
-	                </div>
-				</div>
-				<div class="row" >
-					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					  	<abm-form-group name="startDate" name="startDate">
-							<label data-abm-label type="static">Fecha de inicio(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small> </label>
-								<div class="input-group">
-									<input type="text" class="form-control"  name="startDate" ng-model="HivDetailsController.problem.startDate" disabled/>
-			                        <div class="input-group-btn">
-			                          <button type="button" class="btn btn-default" disabled><i class="glyphicon glyphicon-calendar"></i></button>
-			                        </div>
-							    </div>
-					  	</abm-form-group>
-					</div>
-					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-show="HivDetailsController.problem.state=='Closed'">
-					  	<abm-form-group  name="closeDate">
-						    <label data-abm-label type="static">Fecha de cierre(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small> </label>
-							<div class="input-group">
-								<input type="text" class="form-control" name="closeDate" ng-model="HivDetailsController.problem.endDate" disabled/>
-		                        <div class="input-group-btn">
-		                          <button type="button" class="btn btn-default" disabled><i class="glyphicon glyphicon-calendar"></i></button>
-		                        </div>
-						    </div>
-					  	</abm-form-group>
-					</div>
-				</div>
-				<div class="row" >
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					  	<abm-form-group>
-						    <label abm-label type="static">Estado del problema(*) </label>
-						    <div class="radio" abm-radio label="Activo" >
-						      <input type="radio" name="activo" value="Active" ng-model="HivDetailsController.problem.state" ng-change="HivDetailsController.changeStatus()" ng-disabled="true" >
-						    </div>
-						    <div class="radio" abm-radio label="Resuelto">
-						      <input type="radio" name="cerrado" value="Closed" ng-model="HivDetailsController.problem.state" ng-disabled="true" >
-						    </div>					    
-					  	</abm-form-group>
-					</div>
-				</div>
+			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="row" >
-						<abm-form-group>
-					    	<label data-abm-label type="static">Observaciones</label>
-					    	<input type="text" abm-form-control ng-model="HivDetailsController.problem.observations" placeholder="Sin Observaciones" ng-disabled="true">
-					  	</abm-form-group>
-			  		</div>
-			  	</div>
+					<div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<abm-form-group>
+									<label type="static" style="font-weight:bold">Información adicional del virus HIV</label>
+								</abm-form-group>
+							</div>
+						</div>
+	
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<abm-form-group name="transmition">
+									<label class="control-label" type="static" style="font-weight:bold">Vias de transmisión más probables (*)</label>
+									<div class="checkbox" abm-checkbox label="Transmisión vertical">
+										<input type="checkbox" name="vertical" value="vertical" ng-model="HivDetailsController.details.vertical" disabled>
+									</div>
+									<div class="checkbox" abm-checkbox label="Relaciones sexuales con mujeres">
+										<input type="checkbox"  name="mujeres" value="mujeres" ng-model="HivDetailsController.details.mujeres" disabled>
+									</div>
+									<div class="checkbox" abm-checkbox label="Relaciones sexuales con hombres">
+										<input type="checkbox" name="hombres" value="hombres" ng-model="HivDetailsController.details.hombres" disabled>
+									</div>
+									<div class="checkbox" abm-checkbox label="Relaciones sexuales con trans">
+										<input type="checkbox" name="trans" value="trans" ng-model="HivDetailsController.details.trans" disabled>
+									</div>
+									<div class="checkbox" abm-checkbox label="Uso compartido de equipo de inyección en los últimos 10 años">
+										<input type="checkbox" name="inyeccion" value="inyeccion" ng-model="HivDetailsController.details.inyeccion" disabled>
+									</div>
+									<div class="checkbox" abm-checkbox label="Accidente laboral">
+										<input type="checkbox" name="accidente" value="accidente"  ng-model="HivDetailsController.details.accidente" disabled>
+									</div>
+									<div class="checkbox" abm-checkbox label="Transfusión sanguínea o derivados">
+										<input type="checkbox" name="transfusion" value="transfusion" ng-model="HivDetailsController.details.transfusion" disabled>
+									</div>
+									<abm-form-group ng-if="HivDetailsController.details.transfusion">
+										<label data-abm-label type="static">Institución</label>
+										<input type="text" abm-form-control  name="institution" maxlength="70" class="form-control" disabled>
+									</abm-form-group>
+									<abm-form-group ng-if="HivDetailsController.details.transfusion">
+										<label data-abm-label type="static">Ciudad</label>
+										<input type="text" abm-form-control name="city" maxlength="70" class="form-control" ng-model="HivDetailsController.details.city" disabled>
+									</abm-form-group>
+									<div class="checkbox" abm-checkbox label="Otras">
+										<input type="checkbox" name="otraCheck" value="otraCheck" ng-model="HivDetailsController.details.otraCheck" disabled>
+									</div>
+									<abm-form-group ng-if="HivDetailsController.details.otraCheck">
+										<label data-abm-label type="static">¿Cual?</label>
+										<input type="text" abm-form-control name="otherTransmission" maxlength="70" class="form-control" ng-model="HivDetailsController.details.other" disabled>
+									</abm-form-group>
+									<div class="checkbox" abm-checkbox label="Desconocida">
+										<input type="checkbox" name="desconocida" ng-model="HivDetailsController.details.desconocida" disabled>
+									</div>
+								</abm-form-group>
+								<abm-form-group name='woman'>
+									<label class="control-label" type="static">Si es mujer, ¿el diagnóstico se realizó durante un embarazo, parto o puerperio?</label>
+									<div class="radio" abm-radio label="Si">
+										<input type="radio" id="hivDuringLabor" name="hivDuringLabor" value="Si" ng-model="HivDetailsController.details.woman" disabled>
+									</div>
+									<div class="radio" abm-radio label="No">
+										<input type="radio" id="hivDuringLabor" name="hivDuringLabor" value="No" ng-model="HivDetailsController.details.woman" disabled>
+									</div>
+									<div class="radio" abm-radio label="Desconocido">
+										<input type="radio" name="hivDuringLabor" value="Desconocido" ng-model="HivDetailsController.details.woman" disabled>
+									</div>
+								</abm-form-group>
+								<abm-form-group name="clinicalState" disabled>
+									<label data-abm-label type="static" style="font-weight:bold">Estadio clínico al momento del diagnóstico serológico confirmado (*)</label>
+									<div class="radio" abm-radio name="clinicalState" label="Síndrome retroviral agudo">
+										<input type="radio" id="clinicalState" name="clinicalState" value="agudo" ng-model="HivDetailsController.details.clinicalState" disabled>
+									</div>
+									<div class="radio" abm-radio name="clinicalState" label="Infección asintomática">
+										<input type="radio" name="clinicalState" id="clinicalState" value="asintomatica" ng-model="HivDetailsController.details.clinicalState" disabled>
+									</div>
+									<div class="radio" abm-radio  name="clinicalState" label="Infección sintomática sin criterio de sida">
+										<input type="radio" id="clinicalState" name="clinicalState" value="sintomatica" ng-model="HivDetailsController.details.clinicalState" disabled>
+									</div>
+									<div class="radio" abm-radio label="Enfermedad marcadora de sida">
+										<input type="radio" name="clinicalState" value="enfMarcadoraSida" id="clinicalState" ng-model="HivDetailsController.details.clinicalState" disabled>
+									</div>
+									<div class="radio" abm-radio label="Desconocido">
+										<input type="radio" name="clinicalState" id="clinicalState" value="desconocido" ng-model="HivDetailsController.details.clinicalState" disabled>
+									</div>
+								</abm-form-group>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
 				<div class="row" >
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

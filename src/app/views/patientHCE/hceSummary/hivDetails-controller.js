@@ -12,7 +12,7 @@
       var vm = this;
       vm.cancel = cancel;
       vm.canBeClosed = canBeClosed;
-      vm.problem = getProblem();
+      vm.details = getDetails();
 
 
       function cancel() {
@@ -23,7 +23,8 @@
         return true;
       }
 
-      function getProblem() {
+      function getDetails() {
+        //TODO FIXME replace this
         return HCService.currentARVTreatment;
       }
 
