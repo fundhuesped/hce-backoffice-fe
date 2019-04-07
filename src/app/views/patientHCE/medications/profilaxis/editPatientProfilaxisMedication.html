@@ -31,7 +31,7 @@
 					  	<abm-form-group ng-class="{'has-error':EditPatientMedicationController.controllerForm.endDate.$invalid}" name="endDate">
 						    <label data-abm-label type="static">Fecha de fin(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
 								<div class="input-group">
-									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="endDate" ng-model="EditPatientMedicationController.patientMedication.endDate" is-open="EditPatientMedicationController.endDateCalendar.opened" datepicker-options="EditPatientMedicationController.endDateCalendar.options" close-text="Cerrar" alt-input-formats="EditPatientMedicationController.endDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="EditPatientMedicationController.patientMedication.state=='Closed'" ng-change="EditPatientMedicationController.startDateCalendar.updateMaxVal()" ng-disabled="!EditPatientMedicationController.canEdit();"/>
+									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="endDate" ng-model="EditPatientMedicationController.patientMedication.endDate" is-open="EditPatientMedicationController.endDateCalendar.opened" datepicker-options="EditPatientMedicationController.endDateCalendar.options" close-text="Cerrar" alt-input-formats="EditPatientMedicationController.endDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="EditPatientMedicationController.patientMedication.state=='Closed'" ng-change="EditPatientMedicationController.startDateCalendar.updateMaxVal()" />
 			                        <div class="input-group-btn">
 			                          <button type="button" class="btn btn-default" ng-click="EditPatientMedicationController.endDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
 			                        </div>
@@ -43,11 +43,11 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					  	<abm-form-group>
 					    	<label abm-label type="static">Estado del medicamento</label>
-						    <div class="radio" abm-radio label="Activo">
-						      <input type="radio" name="activo" value="Active" ng-model="EditPatientMedicationController.patientMedication.state" ng-required="true" ng-change="EditPatientMedicationController.changeStatus()" ng-disabled="!EditPatientMedicationController.canEdit();">
+						    <div class="radio" abm-radio label="Activo"> 
+						      <input type="radio" name="activo" value="Active" ng-model="EditPatientMedicationController.patientMedication.state" ng-required="true" ng-change="EditPatientMedicationController.changeStatus()" >
 						    </div>
 						    <div class="radio" abm-radio label="Inactivo">
-						      <input type="radio" name="inactivo" value="Closed" ng-disabled="!EditPatientMedicationController.canEdit();" ng-model="EditPatientMedicationController.patientMedication.state">
+						      <input type="radio" name="inactivo" value="Closed"  ng-model="EditPatientMedicationController.patientMedication.state">
 						    </div>					    
 					  	</abm-form-group>
 					</div>
@@ -56,7 +56,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<abm-form-group class="form-group-lg">
 					    	<label abm-label for="problem" type="static">Problema del paciente</label>
-					    	<select class="form-control" name="problem" ng-options="problem as problem.problem.name for problem in EditPatientMedicationController.activeProblems track by problem.problem" ng-model="EditPatientMedicationController.patientMedication.patientProblem" ng-required="true" ng-disabled="!EditPatientMedicationController.canEdit();"abm-form-control >
+					    	<select class="form-control" name="problem" ng-model="EditPatientMedicationController.patientMedication.patientProblem" ng-disabled="!EditPatientMedicationController.canEdit();" abm-form-control >
 					    	</select>
 					  	</abm-form-group>
 			  		</div>
@@ -73,9 +73,9 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="row" >
 						  	<div>
-						  		<button class="btn btn-danger pull-left" ng-click="EditPatientMedicationController.markAsError()" ng-show="EditPatientMedicationController.canEdit()">Pasar a error</button>
+						  		<button class="btn btn-danger pull-left" ng-click="EditPatientMedicationController.markAsError()" >Pasar a error</button>
 						  		<button class="btn btn-success btn-raised pull-right" ng-click="EditPatientMedicationController.save()" 
-						  		ng-show="EditPatientMedicationController.canEdit()" ng-disabled="!EditPatientMedicationController.canSave()">Guardar</button>
+						  		ng-disabled="!EditPatientMedicationController.canSave()">Guardar</button>
 						  		<button class="btn btn-default pull-right" ng-click="EditPatientMedicationController.cancel()">Cancelar</button>
 						  	</div>
 					  	</div>
