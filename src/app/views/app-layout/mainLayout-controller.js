@@ -13,6 +13,8 @@
         vm.currentUserCan = SessionService.currentUserCan;
         vm.changeCollapsed = changedCollapsed;
         vm.drawerCollapsed = true;
+        vm.logoBig = '/assets/images/logo-redclin.png';
+        vm.logoSmall = '/assets/images/logo_2_redclin_57x37.png';
 
         Object.defineProperty(
           vm,
