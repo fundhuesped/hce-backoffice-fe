@@ -11,7 +11,9 @@
     function newPatientProblemController ($state, HCService, PatientProblem, toastr, moment, Problem, $uibModalInstance, $timeout) {
 	    var vm = this;
       vm.hceService = HCService;
-      vm.newPatientProblem = {};
+      vm.newPatientProblem = {
+        aditionalData:{}
+      };
       vm.saveNewPatientProblem = saveNewPatientProblem;
       vm.radio = {};
       vm.getProblems = getProblems;
@@ -127,11 +129,11 @@
       }
 
       function hasSelectedTransmission() {
-        return vm.newPatientProblem.vertical || vm.newPatientProblem.mujeres || vm.newPatientProblem.hombres || vm.newPatientProblem.trans || vm.newPatientProblem.inyeccion || vm.newPatientProblem.accidente || vm.newPatientProblem.transfusion
+        return vm.newPatientProblem.aditionalData.vertical || vm.newPatientProblem.aditionalData.mujeres || vm.newPatientProblem.aditionalData.hombres || vm.newPatientProblem.aditionalData.trans || vm.newPatientProblem.aditionalData.inyeccion || vm.newPatientProblem.aditionalData.accidente || vm.newPatientProblem.aditionalData.transfusion
       }
 
       function canSaveNewProblem() {
-        if(vm.controllerForm.$valid && vm.newPatientProblem.clinicalState && hasSelectedTransmission() ){
+        if(vm.controllerForm.$valid && vm.newPatientProblem.aditionalData.clinicalState && hasSelectedTransmission() ){
           return true;
         }
         return false;

@@ -21,7 +21,7 @@
       vm.openEditPatientMedicationModal = openEditPatientMedicationModal;
       vm.goToTreatment = goToTreatment;
       vm.goToLaboratories = goToLaboratories;
-
+      vm.openHivModal = openHivModal
       Object.defineProperty(
           vm,
           'treatment', {
@@ -34,7 +34,24 @@
 
       activate();
 
-
+      function openHivModal() {
+        var modalInstance = $uibModal.open({
+        backdrop: 'static',
+        templateUrl: 'app/views/patientHCE/hceSummary/hivDetails.html',
+        size: 'md',
+        controller: 'HivDetailsController',
+        controllerAs: 'HivDetailsController'
+        });
+        
+        modalInstance.result.then(function (resolution) {
+        if(resolution==='markedError' || resolution==='edited'){
+            searchPatientProblems();
+            if(!HCService.currentEvolution){
+            HCService.getCurrentEvolution();
+            }
+        }
+        });
+      }
       function activate(){
         HCService.getCurrentARVTreatment();
         HIVData.getCD4({patientId: HCService.currentPacienteId}, function (result) {
