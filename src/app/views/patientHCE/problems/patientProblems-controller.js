@@ -291,10 +291,7 @@
       }
 
       function openNewPatientProblem() {
-        if(!vm.showNewPatientProblem){
-          vm.showNewPatientProblem = true;
           HCService.openNewPatientProblem();
-        }
       }
 
       function cancelNewPatientProblem() {
