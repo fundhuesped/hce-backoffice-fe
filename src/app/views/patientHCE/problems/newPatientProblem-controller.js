@@ -133,8 +133,14 @@
       }
 
       function canSaveNewProblem() {
-        if(vm.controllerForm.$valid && vm.newPatientProblem.aditionalData.clinicalState && hasSelectedTransmission() ){
-          return true;
+        if(vm.controllerForm.$valid){
+          if(!isHIV()){
+            return true;
+          }else{
+            if(vm.newPatientProblem.aditionalData.clinicalState && hasSelectedTransmission()){
+              return true; 
+            }
+          }
         }
         return false;
       }
