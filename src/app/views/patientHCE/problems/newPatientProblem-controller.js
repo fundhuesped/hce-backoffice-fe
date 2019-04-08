@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewPatientProblemController', newPatientProblemController);
 
-	  newPatientProblemController.$inject = ['$state', 'HCService', 'PatientProblem', 'toastr', 'moment', 'Problem', '$uibModalInstance'];
+	  newPatientProblemController.$inject = ['$state', 'HCService', 'PatientProblem', 'toastr', 'moment', 'Problem', '$uibModalInstance', '$timeout'];
 
-    function newPatientProblemController ($state, HCService, PatientProblem, toastr, moment, Problem, $uibModalInstance) {
+    function newPatientProblemController ($state, HCService, PatientProblem, toastr, moment, Problem, $uibModalInstance, $timeout) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newPatientProblem = {
@@ -24,6 +24,7 @@
       vm.changeStatus = changeStatus;
       vm.isHIV = isHIV;
       vm.error = null;
+      vm.waitingToShowError = false;
 
 
       Object.defineProperty(

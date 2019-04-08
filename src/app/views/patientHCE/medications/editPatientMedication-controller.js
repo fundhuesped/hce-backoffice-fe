@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('EditPatientMedicationController', editPatientMedicationController);
 
-	  editPatientMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication', '$uibModalInstance', 'patientMedication'];
+	  editPatientMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication', '$uibModalInstance', 'patientMedication', 'SessionService'];
 
-    function editPatientMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication, $uibModalInstance, patientMedication) {
+    function editPatientMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication, $uibModalInstance, patientMedication, SessionService) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.save = save;
@@ -129,7 +129,7 @@
 
       }
       function canEdit() {
-        return moment().diff(moment(patientMedication.createdOn), 'hours') <= 8;
+        return patientMedication.profesional.id == SessionService.currentUser.id && (moment().diff(moment(patientMedication.createdOn), 'hours') <= 8);
       }
 
 

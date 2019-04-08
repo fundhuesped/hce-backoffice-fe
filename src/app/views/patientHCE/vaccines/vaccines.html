@@ -27,7 +27,7 @@
 	    					<td><div ng-class="{'problem-closed':application.state=='Closed','registry-error':application.state=='Error' }" ng-repeat="application in vaccine | limitTo : (vaccine.expanded?10000:1)" style="line-height: 30px">{{application.appliedDate | date:"dd/MM/yyyy"}}</div></td> 
 	    					<td><div ng-class="{'problem-closed':application.state=='Closed','registry-error':application.state=='Error' }" ng-repeat="application in vaccine| limitTo : (vaccine.expanded?10000:1)" style="line-height: 30px">{{application.observations}}</div></td> 
 	    					<td>
-	    						<div ng-repeat="application in vaccine| limitTo : (vaccine.expanded?10000:1)"><button class="btn btn-info btn-sm" type="button" ng-click="PatientVaccinesController.openEditPatientVaccineModal(application)" style="padding: 6px 12px; margin:0px; text-transform: none;"><i class="fa fa-pencil"></i> Editar</button></div>
+	    						<div ng-repeat="application in vaccine| limitTo : (vaccine.expanded?10000:1)"><button class="btn btn-info btn-sm" type="button" ng-click="PatientVaccinesController.openEditPatientVaccineModal(application)" style="padding: 6px 12px; margin:0px; text-transform: none;"><i class="fa fa-pencil"></i> Ver y Editar</button></div>
 		    					
 	    					</td> 
     					</tr>

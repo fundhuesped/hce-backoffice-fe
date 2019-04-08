@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewFamilyProblemController', newFamilyProblemController);
 
-	  newFamilyProblemController.$inject = ['$state', 'HCService', 'FamilyPatientProblem', 'toastr', 'moment', 'Problem', '$uibModalInstance'];
+	  newFamilyProblemController.$inject = ['$state', 'HCService', 'FamilyPatientProblem', 'toastr', 'moment', 'Problem', '$uibModalInstance', '$timeout'];
 
-    function newFamilyProblemController ($state, HCService, FamilyPatientProblem, toastr, moment, Problem, $uibModalInstance) {
+    function newFamilyProblemController ($state, HCService, FamilyPatientProblem, toastr, moment, Problem, $uibModalInstance, $timeout) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newFamilyProblem = new FamilyPatientProblem();
@@ -20,6 +20,9 @@
       vm.newProblemDate = null;
       vm.canSaveNewProblem = canSaveNewProblem;
       vm.relationshipChoices = FamilyPatientProblem.relationshipChoices;
+      vm.waitingToShowError = false;
+
+
       activate();
 
       function saveNewFamilyProblem() {
@@ -55,6 +58,14 @@
 
         return Problem.getFullActiveList(filters, function(problems){
           vm.problems = problems;
+          if (problems.length <= 0 && !vm.waitingToShowError){
+            toastr.warning('No se han encontrado resultados');
+            vm.waitingToShowError = true;
+            $timeout(
+              function() {
+                vm.waitingToShowError = false;
+              }, 1500);
+          }
         }, displayComunicationError).$promise;
 
       }
