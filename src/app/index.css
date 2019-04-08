@@ -20,7 +20,10 @@
 	font-size: 14px;
 	color:black;
 }
-
+.btn-minimalize{
+  margin:0px;
+  padding:0px;
+}
 .form-group .checkbox label, .form-group .radio label, .form-group label{
 	color:black;
 }

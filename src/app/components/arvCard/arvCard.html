@@ -1,18 +1,13 @@
 <div class="well hce-card">
-    <div class="hce-card-title">Resumen HIV</div>
+    <div class="hce-card-title">
+				<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+						Resumen HIV
+				</div>
+				<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+						<button class="btn btn-success btn-link btn-minimalize pull-right" ng-click="Ctrl.openHivModal()">Ver ficha HIV</button>
+				</div>
+			</div>
 		<div class="hce-card-body">
-
-<!--     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	    <div class="row">
-			<div class="col-xs-12 col-sm-6 col-md-12 col-lg-12"><h2>Resumen HIV</h2></div>
-			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h3>Tratamiento actual</h3></div>
-			<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"><button class="btn btn-success pull-right btn-sm" style="margin-top:20px;" ng-click="Ctrl.goToTreatment()">Ir a tratamientos</button></div>
-			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h3>Últimos laboratorios</h3></div>
-			<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"><button class="btn btn-success pull-right btn-sm" style="margin-top:20px;" ng-click="Ctrl.goToLaboratories()">Ir a laboratorios</button></div>
-
-		</div>
- -->	    
-
 	 		<div class="row">
 		    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			    	<table class="table Medication table-condensed" ng-show="Ctrl.treatment">

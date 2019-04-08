@@ -22,7 +22,12 @@
                   url: apiBase + 'laboratory/paciente/:patientId/cv',
                   isArray: false
                 },
-
+                getHIVChart: {
+                  method: 'GET',
+                  params:  {id: '@patientId'},
+                  url: apiBase + 'hce/paciente/:patientId/hivChart',
+                  isArray: false
+                }
             });
 
             return HIVData;
