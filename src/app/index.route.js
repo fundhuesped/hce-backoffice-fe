@@ -34,6 +34,18 @@
               prescription: null
           }
       })
+
+      .state('summaryDetails', {
+        //TODO FIXME add more params
+        url: '/summaryDetails?patientId',
+        templateUrl: 'app/views/patientHCE/hceSummary/hivDetails.html',
+        controller: 'HivDetailsController',
+        controllerAs: 'CtrHivDetailsControllerl',        
+        params: {
+          patientId: null
+        }
+      })
+
       .state('profilaxisPrescription', {
           url: '/profilaxisPrescription?prescriptionId',
           templateUrl: 'app/views/patientHCE/prescriptions/profilaxisPrescription.html',

@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('HivDetailsController', hivDetailsController);
 
-	hivDetailsController.$inject = ['toastr', '$uibModalInstance', 'HCService', 'HIVData'];
+  hivDetailsController.$inject = ['toastr', '$stateParams', 'HIVData'];
 
-    function hivDetailsController (toastr, $uibModalInstance, HCService, HIVData) {
+    function hivDetailsController (toastr, $stateParams, HIVData) {
       var vm = this;
       vm.cancel = cancel;
       vm.canBeClosed = canBeClosed;
@@ -21,7 +21,7 @@
       }
 
       function cancel() {
-        $uibModalInstance.dismiss('cancel');
+        
       }
 
       function canBeClosed() {
@@ -29,7 +29,8 @@
       }
 
       function getDetails() {
-        HIVData.getHIVChart({patientId: HCService.currentPacienteId}, function (result) {
+        //TODO FIXME this is broken, use params instead
+        HIVData.getHIVChart({patientId: $stateParams.patientId}, function (result) {
             vm.details = result;
         }, function (err) {
           vm.details = null;

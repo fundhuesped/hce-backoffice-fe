@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('HCESummaryController', hceSummaryController);
 
-	hceSummaryController.$inject = ['HCService', '$uibModal', 'toastr'];
+	hceSummaryController.$inject = ['HCService', '$uibModal', 'toastr', '$state', '$window'];
 
-    function hceSummaryController (HCService, $uibModal, toastr) {
+    function hceSummaryController (HCService, $uibModal, toastr, $state, $window) {
 	    var vm = this;
         vm.canGenerateSummary = canGenerateSummary;
         vm.categories = {};
@@ -21,13 +21,16 @@
 
 
         function openModal() {
-            if (vm.categories.hiv) {
-                openHivModal(); return;
-            }
-            //Add here methods for other options
-            toastr.warning("Por favor seleccione una opcion valida");
+            //TODO FIXME Add here methods for other options
+            // if (vm.categories.hiv) {
+            //     openHivModal(); return;
+            // }
+            //TODO FIXME add more params
+            var url = $state.href('summaryDetails', {patientId: HCService.currentPacienteId});
+            $window.open(url,'_blank');
         }
 
+        //TODO FIXME Delete it
         function openHivModal() {
             var modalInstance = $uibModal.open({
             backdrop: 'static',
@@ -41,7 +44,7 @@
             if(resolution==='markedError' || resolution==='edited'){
                 searchPatientProblems();
                 if(!HCService.currentEvolution){
-                HCService.getCurrentEvolution();
+                    HCService.getCurrentEvolution();
                 }
             }
             });
