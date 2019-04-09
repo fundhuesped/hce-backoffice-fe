@@ -40,7 +40,7 @@
         url: '/summaryDetails?patientId',
         templateUrl: 'app/views/patientHCE/hceSummary/hivDetails.html',
         controller: 'HivDetailsController',
-        controllerAs: 'CtrHivDetailsControllerl',        
+        controllerAs: 'HivDetailsController',        
         params: {
           patientId: null
         }

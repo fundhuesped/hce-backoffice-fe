@@ -33,6 +33,7 @@
         HIVData.getHIVChart({patientId: $stateParams.patientId}, function (result) {
             vm.details = result;
         }, function (err) {
+          console.error(err);
           vm.details = null;
         });
       }
