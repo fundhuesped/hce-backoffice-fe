@@ -6,13 +6,14 @@
     	.module('hce.patientHCE')
     	.controller('SummaryDetailsController', summaryDetailsController);
 
-  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData'];
+  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData', 'Paciente'];
 
-    function summaryDetailsController (toastr, $stateParams, HIVData) {
+    function summaryDetailsController (toastr, $stateParams, HIVData, Paciente) {
       var vm = this;
       vm.cancel = cancel;
       vm.canBeClosed = canBeClosed;
-      vm.details = null;
+      vm.hiv_details = null;
+      vm.patient_details = null;
 
       init();
 
@@ -29,12 +30,18 @@
       }
 
       function getDetails() {
-        //TODO FIXME this is broken, use params instead
-        HIVData.getHIVChart({patientId: $stateParams.patientId}, function (result) {
-            vm.details = result;
+        Paciente.get({id:$stateParams.patientId}, function(patient){
+          vm.patient_details = patient;
         }, function (err) {
           console.error(err);
-          vm.details = null;
+          vm.patient_details = null;
+        });
+
+        HIVData.getHIVChart({patientId: $stateParams.patientId}, function (result) {
+            vm.hiv_details = result;
+        }, function (err) {
+          console.error(err);
+          vm.hiv_details = null;
         });
       }
     }
