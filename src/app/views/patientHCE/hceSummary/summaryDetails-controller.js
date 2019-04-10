@@ -4,11 +4,11 @@
      /*jshint latedef: nofunc */
     angular
     	.module('hce.patientHCE')
-    	.controller('HivDetailsController', hivDetailsController);
+    	.controller('SummaryDetailsController', summaryDetailsController);
 
-  hivDetailsController.$inject = ['toastr', '$stateParams', 'HIVData'];
+  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData'];
 
-    function hivDetailsController (toastr, $stateParams, HIVData) {
+    function summaryDetailsController (toastr, $stateParams, HIVData) {
       var vm = this;
       vm.cancel = cancel;
       vm.canBeClosed = canBeClosed;

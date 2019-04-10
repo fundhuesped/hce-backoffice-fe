@@ -37,7 +37,7 @@
       function openHivModal() {
         var modalInstance = $uibModal.open({
         backdrop: 'static',
-        templateUrl: 'app/views/patientHCE/hceSummary/hivDetails.html',
+        templateUrl: 'app/views/patientHCE/hceSummary/summaryDetails.html',
         size: 'md',
         controller: 'HivDetailsController',
         controllerAs: 'HivDetailsController'

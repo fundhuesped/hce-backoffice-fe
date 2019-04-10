@@ -38,9 +38,9 @@
       .state('summaryDetails', {
         //TODO FIXME add more params
         url: '/summaryDetails?patientId',
-        templateUrl: 'app/views/patientHCE/hceSummary/hivDetails.html',
-        controller: 'HivDetailsController',
-        controllerAs: 'HivDetailsController',        
+        templateUrl: 'app/views/patientHCE/hceSummary/summaryDetails.html',
+        controller: 'SummaryDetailsController',
+        controllerAs: 'SummaryDetailsController',        
         params: {
           patientId: null
         }
