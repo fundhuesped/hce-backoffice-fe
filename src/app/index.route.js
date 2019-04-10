@@ -29,10 +29,22 @@
           url: '/generalPrescription?prescriptionId',
           templateUrl: 'app/views/patientHCE/prescriptions/generalPrescription.html',
           controller: 'MedicationRecetaNuevaController',
-          controllerAs: 'Ctrl',        
+          controllerAs: 'Ctrl',
           params: {
               prescription: null
           }
+      })
+      .state('hceSummary', {
+        url: '/resumenHCE?patientId&patientIdentification&evolutions&problems',
+        templateUrl: 'app/views/patientHCE/hceSummary/hceSummaryReport.html',
+        controller: 'HCESummaryReportController',
+        controllerAs: 'Ctrl',
+        params: {
+          patientId: null,
+          patientIdentification: null,
+          evolutions : null,
+          problems: null
+        }
       })
       .state('profilaxisPrescription', {
           url: '/profilaxisPrescription?prescriptionId',

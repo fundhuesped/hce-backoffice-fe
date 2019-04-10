@@ -1,0 +1,69 @@
+<div class="do-print">
+    <div class="container-fluid">
+        <div class="row">
+            <img src="{{Ctrl.headerImage}}" class="center-block">	
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="row prescriptionPatientName">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="hce-form-title">
+                            {{Ctrl.patientIdentification}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row prescriptionPatientSocialService" ng-if="Ctrl.patient.socialService && Ctrl.patient.socialService.name !='No tiene'">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="">
+                            {{Ctrl.patient.socialService.name}} 
+                        </div>
+                        <div class="">
+                            {{Ctrl.patient.socialServiceNumber}}
+                        </div>
+                    </div>
+                </div>
+                <div class="prescriptionMedicationsList">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            Evoluciones
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="row " ng-repeat="evolution in Ctrl.evolutions" style="padding-bottom: 10px;
+                            padding-top: 10px;border-bottom:1px solid;border-bottom-color:#D2D2D2">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="row" ng-class="{'evolution-header':evolution.selected}">
+                                        <div class="col-xs-1-5 col-sm-1-5 col-md-1-5 col-lg-1-5">
+                                            {{evolution.date | date:"dd/MM/yyyy"}}
+                                        </div>
+                                        <div class="col-md-1-5 col-md-1-5 col-md-1-5 col-md-1-5">{{evolution.profesional.first_name}} {{evolution.profesional.last_name}}</div>
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">{{evolution.reason}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="evolution.selected" style="white-space: pre-line;word-wrap:break-word;">
+                                            {{evolution.notaClinica}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>	    					
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                {{Ctrl.prescription.observations}}
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            </div>
+        </div>
+        <div class="row" style="margin-top: 300px">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                {{Ctrl.prescription.issuedDate| date:"d/M/yy"}}
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                Firma y sello
+            </div>
+        </div>
+    </div>
+</div>
