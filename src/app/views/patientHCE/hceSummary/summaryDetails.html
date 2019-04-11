@@ -1,12 +1,5 @@
 	<div class="do-print">
 	<div class="container-fluid hce-container-modal">
-		<input ng-model="SummaryDetailsController.patient_details.pns"> </input>
-		<input ng-model="SummaryDetailsController.patient_details.firstName"> </input>
-		<input ng-model="SummaryDetailsController.patient_details.fatherSurname"> </input>
-		<input ng-model="SummaryDetailsController.patient_details.socialService.name"> </input>
-		<input ng-model="SummaryDetailsController.patient_details.socialServiceNumber"> </input>
-		<input ng-model="SummaryDetailsController.patient_details.documentNumber"> </input>
-		<input ng-model="SummaryDetailsController.patient_details.birthDate"> </input>
 		<div class="container-fluid">
 			<div class="row">
 				<img src="{{SummaryDetailsController.headerImage}}" class="center-block">	
@@ -20,16 +13,28 @@
 							</div>
 						</div>
 					</div>
-					<div class="row prescriptionPatientSocialService" ng-if="SummaryDetailsController.patient_details.socialService && SummaryDetailsController.patient_details.socialService.name !='No tiene'">
+					<div class="row" >
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="">
-								{{SummaryDetailsController.patient_details.socialService.name}} 
+								Documento: {{SummaryDetailsController.patient_details.documentNumber}} 
 							</div>
 							<div class="">
-								{{SummaryDetailsController.patient_details.socialServiceNumber}}
+								Fecha de Nacimiento: {{SummaryDetailsController.patient_details.birthDate}}
 							</div>
 						</div>
 					</div>
+					<div class="row prescriptionPatientSocialService" ng-if="SummaryDetailsController.patient_details.socialService && SummaryDetailsController.patient_details.socialService.name !='No tiene'">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="">
+								Cobertura de Salud: {{SummaryDetailsController.patient_details.socialService.name}} 
+							</div>
+							<div class="">
+								Numero de Afiliado: {{SummaryDetailsController.patient_details.socialServiceNumber}}
+							</div>
+						</div>
+					</div>
+
+
 					<div class="prescriptionMedicationsList">
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

@@ -21,18 +21,16 @@
 
 
         function openModal() {
-            //TODO FIXME Add here methods for other options
-            // if (vm.categories.hiv) {
-            //     openHivModal(); return;
-            // }
             //TODO FIXME add more params
             var booleanValue = vm.displayName == "pns";
+
             var url = $state.href('summaryDetails', {
                 patientId: HCService.currentPacienteId,
                 showPNS: booleanValue,
                 showHIV: vm.categories.hiv,
                 showEvolutions: vm.categories.evolutions
             });
+            
             $window.open(url,'_blank');
         }
     }
