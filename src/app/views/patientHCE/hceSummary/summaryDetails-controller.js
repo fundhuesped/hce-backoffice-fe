@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('SummaryDetailsController', summaryDetailsController);
 
-  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem'];
+  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem', 'PatientArvTreatment'];
 
-    function summaryDetailsController (toastr, $stateParams, HIVData, Paciente, Evolution, PatientProblem) {
+    function summaryDetailsController (toastr, $stateParams, HIVData, Paciente, Evolution, PatientProblem, PatientArvTreatment) {
       var vm = this;
       vm.cancel = cancel;
       vm.canBeClosed = canBeClosed;
@@ -20,6 +20,8 @@
       vm.showEvolutions = false;
       vm.problems = [];
       vm.showProblems = false;
+      vm.arvTreatments = [];
+      vm.showARV = false;
 
       init();
 
@@ -59,6 +61,8 @@
         vm.showProblems = checkTrue($stateParams.showProblems);
         if(checkTrue($stateParams.showProblems)) getPatienProblems();
         
+        vm.showARV = checkTrue($stateParams.showARV);
+        if(checkTrue($stateParams.showARV)) getArvTreatments();
       }
 
       function getHIVdetails() {
@@ -75,7 +79,7 @@
           vm.evolutions = results;
         }, function (err) {
           console.error(err);
-          vm.evolutions = null;
+          vm.evolutions = [];
         });
       }
 
@@ -84,7 +88,16 @@
           vm.problems = results;
         }, function (err) {
           console.error(err);
-          vm.problems = null;
+          vm.problems = [];
+        });
+      }
+
+      function getArvTreatments() {
+        PatientArvTreatment.getForPaciente({pacienteId: $stateParams.patientId}, function (results) {
+          vm.arvTreatments = results;
+        }, function (err) {
+          console.error(err);
+          vm.arvTreatments = [];
         });
       }
     }

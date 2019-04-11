@@ -29,7 +29,8 @@
                 showPNS: booleanValue,
                 showHIV: vm.categories.hiv,
                 showEvolutions: vm.categories.evolutions,
-                showProblems: vm.categories.problems
+                showProblems: vm.categories.problems,
+                showARV: vm.categories.arv
             });
 
             $window.open(url,'_blank');
