@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('SummaryDetailsController', summaryDetailsController);
 
-  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData', 'Paciente', 'Evolution'];
+  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem'];
 
-    function summaryDetailsController (toastr, $stateParams, HIVData, Paciente, Evolution) {
+    function summaryDetailsController (toastr, $stateParams, HIVData, Paciente, Evolution, PatientProblem) {
       var vm = this;
       vm.cancel = cancel;
       vm.canBeClosed = canBeClosed;
@@ -18,6 +18,8 @@
       vm.showHIV = false;
       vm.evolutions = [];
       vm.showEvolutions = false;
+      vm.problems = [];
+      vm.showProblems = false;
 
       init();
 
@@ -53,6 +55,10 @@
 
         vm.showEvolutions = checkTrue($stateParams.showEvolutions);
         if(checkTrue($stateParams.showEvolutions)) getEvolutionsDetails();
+
+        vm.showProblems = checkTrue($stateParams.showProblems);
+        if(checkTrue($stateParams.showProblems)) getPatienProblems();
+        
       }
 
       function getHIVdetails() {
@@ -66,10 +72,19 @@
 
       function getEvolutionsDetails() {
         Evolution.getForPaciente({pacienteId: $stateParams.patientId}, function (results) {
-            vm.evolutions = results;
+          vm.evolutions = results;
         }, function (err) {
           console.error(err);
-          vm.hiv_details = null;
+          vm.evolutions = null;
+        });
+      }
+
+      function getPatienProblems() {
+        PatientProblem.getAllForPaciente({pacienteId: $stateParams.patientId}, function (results) {
+          vm.problems = results;
+        }, function (err) {
+          console.error(err);
+          vm.problems = null;
         });
       }
     }

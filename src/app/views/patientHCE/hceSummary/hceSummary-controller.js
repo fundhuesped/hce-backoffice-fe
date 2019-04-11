@@ -28,9 +28,10 @@
                 patientId: HCService.currentPacienteId,
                 showPNS: booleanValue,
                 showHIV: vm.categories.hiv,
-                showEvolutions: vm.categories.evolutions
+                showEvolutions: vm.categories.evolutions,
+                showProblems: vm.categories.problems
             });
-            
+
             $window.open(url,'_blank');
         }
     }
