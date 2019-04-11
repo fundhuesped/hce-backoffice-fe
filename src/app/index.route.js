@@ -36,8 +36,7 @@
       })
 
       .state('summaryDetails', {
-        //TODO FIXME add more params
-        url: '/summaryDetails?patientId&showPNS&showHIV&showEvolutions&showProblems',
+        url: '/summaryDetails?patientId&showPNS&showHIV&showEvolutions&showProblems&showARV&showProfilaxis&showGeneral&showLab&showOthers&showVaccines',
         templateUrl: 'app/views/patientHCE/hceSummary/summaryDetails.html',
         controller: 'SummaryDetailsController',
         controllerAs: 'SummaryDetailsController',        
@@ -46,7 +45,13 @@
           showPNS: "false",
           showHIV: "false",
           showEvolutions: "false",
-          showProblems: "false"
+          showProblems: "false",
+          showARV: "false",
+          showProfilaxis: "false",
+          showGeneral: "false",
+          showLab: "false",
+          showOthers: "false",
+          showVaccines: "false"
         }
       })
 
