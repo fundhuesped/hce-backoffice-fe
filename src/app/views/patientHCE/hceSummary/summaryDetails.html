@@ -81,7 +81,6 @@
 												{{problem.problem.problemType}}
 											</div>
 											<div class="col-md-1-5 col-md-1-5 col-md-1-5 col-md-1-5">{{problem.problem.description}}</div>
-											<div class="col-md-1-5 col-md-1-5 col-md-1-5 col-md-1-5">{{problem.profesional.first_name}} {{problem.profesional.last_name}}</div>
 										</div>
 										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="word-wrap:break-word;">
 											{{problem.problem.observations}}
@@ -122,6 +121,42 @@
 											</div>
 											<div class="col-xs-1-5 col-sm-1-5 col-md-1-5 col-lg-1-5" style="word-wrap:break-word;">
 												Observaciones: {{treatment.observations}}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.showProfilaxis">
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<label style="font-weight:bold;color:black;">
+								Medicación Profilaxis
+								</label>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div class="row " ng-repeat="medication in SummaryDetailsController.medications" style="padding-bottom: 10px;
+								padding-top: 10px;border-bottom:1px solid;border-bottom-color:#D2D2D2">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										<div class="row" ng-class="{'evolution-header':medication.selected}">
+											<div class="col-xs-1-5 col-sm-1-5 col-md-1-5 col-lg-1-5">
+												{{medication.medication.name}}
+											</div>
+											<div class="ol-xs-1-5 col-sm-1-5 col-md-1-5 col-lg-1-5">{{medication.quantityPerDay}} por dia</div>
+											<div class="ol-xs-1-5 col-sm-1-5 col-md-1-5 col-lg-1-5">{{medication.quantityPerMonth}} por mes</div>
+											<div class="ol-xs-1-5 col-sm-1-5 col-md-1-5 col-lg-1-5">
+												Inicio: {{medication.startDate | date:"dd/MM/yyyy"}}
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-1-5 col-sm-1-5 col-md-1-5 col-lg-1-5" ng-if="medication.endDate">
+												Fin: {{medication.endDate | date:"dd/MM/yyyy"}}
+											</div>
+											<div class="col-xs-1-5 col-sm-1-5 col-md-1-5 col-lg-1-5" style="word-wrap:break-word;">
+												Observaciones: {{medication.observations}}
 											</div>
 										</div>
 									</div>

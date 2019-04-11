@@ -30,7 +30,8 @@
                 showHIV: vm.categories.hiv,
                 showEvolutions: vm.categories.evolutions,
                 showProblems: vm.categories.problems,
-                showARV: vm.categories.arv
+                showARV: vm.categories.arv,
+                showProfilaxis: vm.categories.profilaxis
             });
 
             $window.open(url,'_blank');
