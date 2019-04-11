@@ -14,6 +14,8 @@
       vm.canBeClosed = canBeClosed;
       vm.hiv_details = null;
       vm.patient_details = null;
+      vm.patientIdentification = null;
+      vm.showHIV = false;
 
       init();
 
@@ -28,21 +30,33 @@
       function canBeClosed() {
         return true;
       }
-
+      
+      function checkTrue(string){
+        return string == "true";
+      }
+      
       function getDetails() {
         Paciente.get({id:$stateParams.patientId}, function(patient){
           vm.patient_details = patient;
+          vm.patientIdentification = (checkTrue($stateParams.showPNS))
+                                      ? patient.pns
+                                      : (patient.firstName + " " + patient.fatherSurname); 
         }, function (err) {
           console.error(err);
           vm.patient_details = null;
         });
 
+        vm.showHIV = checkTrue($stateParams.showHIV);
+        if(checkTrue($stateParams.showHIV)) getHIVdetails();
+      }
+
+      function getHIVdetails() {
         HIVData.getHIVChart({patientId: $stateParams.patientId}, function (result) {
-            vm.hiv_details = result;
-        }, function (err) {
-          console.error(err);
-          vm.hiv_details = null;
-        });
+          vm.hiv_details = result;
+      }, function (err) {
+        console.error(err);
+        vm.hiv_details = null;
+      });
       }
     }
 })();

@@ -13,7 +13,7 @@
         vm.canGenerateSummary = canGenerateSummary;
         vm.categories = {};
         vm.openModal = openModal;
-        vm.openHivModal = openHivModal;
+        vm.displayName = null;
 
         function canGenerateSummary() {
             return vm.controllerForm.$valid && (vm.categories.evolutions||vm.categories.problems||vm.categories.arv||vm.categories.hiv||vm.categories.profilaxis||vm.categories.generalTreatment||vm.categories.laboratories||vm.categories.otherStudies||vm.categories.vaccines);
@@ -26,28 +26,14 @@
             //     openHivModal(); return;
             // }
             //TODO FIXME add more params
-            var url = $state.href('summaryDetails', {patientId: HCService.currentPacienteId});
+            var booleanValue = vm.displayName == "pns";
+            var url = $state.href('summaryDetails', {
+                patientId: HCService.currentPacienteId,
+                showPNS: booleanValue,
+                showHIV: vm.categories.hiv,
+                showEvolutions: vm.categories.evolutions
+            });
             $window.open(url,'_blank');
-        }
-
-        //TODO FIXME Delete it
-        function openHivModal() {
-            var modalInstance = $uibModal.open({
-            backdrop: 'static',
-            templateUrl: 'app/views/patientHCE/hceSummary/summaryDetails.html',
-            size: 'md',
-            controller: 'HivDetailsController',
-            controllerAs: 'HivDetailsController'
-            });
-            
-            modalInstance.result.then(function (resolution) {
-            if(resolution==='markedError' || resolution==='edited'){
-                searchPatientProblems();
-                if(!HCService.currentEvolution){
-                    HCService.getCurrentEvolution();
-                }
-            }
-            });
         }
     }
 })();
