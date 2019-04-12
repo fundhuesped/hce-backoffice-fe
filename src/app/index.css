@@ -537,8 +537,12 @@
   background-color: #66325F;
 }
 
-.btn.btn-raised:not(.btn-link):hover.btn-success{
+.btn.btn-raised:not(.btn-link):hover.btn-success, .btn.btn-raised:not(.btn-link):active.btn-success, .btn.btn-raised:not(.btn-link):focus.btn-success{
   background-color: #af56a2;
+}
+
+.btn.btn-raised.btn-success:disabled{
+  background: transparent;
 }
 
 .btn:not(.btn-raised).btn-danger, .btn:not(.btn-raised).btn-info.button-menu{
