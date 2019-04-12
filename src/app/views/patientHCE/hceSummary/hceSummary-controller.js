@@ -33,8 +33,8 @@
                 showARV: vm.categories.arv,
                 showProfilaxis: vm.categories.profilaxis,
                 showGeneral: vm.categories.generalTreatment,
-                showOthers: vm.categories.otherStudies,
                 showLab: vm.categories.laboratory,
+                showOthers: vm.categories.otherStudies,
                 showVaccines: vm.categories.vaccines
             });
 

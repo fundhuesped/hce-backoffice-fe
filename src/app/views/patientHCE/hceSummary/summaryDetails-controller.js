@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('SummaryDetailsController', summaryDetailsController);
 
-  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem', 'PatientArvTreatment', 'PatientMedication', 'PatientClinicalResult', 'PatientLaboratoryResult'];
+  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem', 'PatientArvTreatment', 'PatientMedication', 'PatientClinicalResult', 'PatientLaboratoryResult', 'PatientVaccine'];
 
-    function summaryDetailsController (toastr, $stateParams, HIVData, Paciente, Evolution, PatientProblem, PatientArvTreatment, PatientMedication, PatientClinicalResult, PatientLaboratoryResult) {
+    function summaryDetailsController (toastr, $stateParams, HIVData, Paciente, Evolution, PatientProblem, PatientArvTreatment, PatientMedication, PatientClinicalResult, PatientLaboratoryResult, PatientVaccine) {
       var vm = this;
       vm.cancel = cancel;
       vm.canBeClosed = canBeClosed;
@@ -30,6 +30,8 @@
       vm.generalMedications = [];
       vm.showLab = false;
       vm.laboratoryResults = [];
+      vm.showVaccines = false;
+      vm.vaccines = [];
 
       init();
 
@@ -83,6 +85,9 @@
         
         vm.showOthers = checkTrue($stateParams.showOthers);
         if(checkTrue($stateParams.showOthers)) getOthers();
+        
+        vm.showVaccines = checkTrue($stateParams.showVaccines);
+        if(checkTrue($stateParams.showVaccines)) getVaccines();
       }
 
       function getHIVdetails() {
@@ -155,6 +160,15 @@
         }, function (err) {
           console.error(err);
           vm.laboratoryResults = [];
+        });
+      }
+
+      function getVaccines() {
+        PatientVaccine.getForPaciente({pacienteId: $stateParams.patientId}, function (results) {
+          vm.vaccines = results;
+        }, function (err) {
+          console.error(err);
+          vm.vaccines = [];
         });
       }
     }
