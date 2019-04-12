@@ -537,6 +537,11 @@
   background-color: #af56a2;
 }
 
+.btn:not(.btn-raised).btn-danger{
+  color: #af56a2;
+}
+
+
 .form-group.is-focused label, .form-group.is-focused label.control-label {
   color: #66325F;
 }
