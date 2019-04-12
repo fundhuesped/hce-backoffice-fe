@@ -128,7 +128,7 @@
 
       function getProfilaxis() {
         PatientMedication.getForPaciente({pacienteId: $stateParams.patientId}, function (results) {
-          vm.medications = results.filter( med => med.medication.medicationType.name == "Profilaxis" );
+          vm.medications = results.filter( function (med) {  return med.medication.medicationType.name == "Profilaxis"; } );
         }, function (err) {
           console.error(err);
           vm.medications = [];
@@ -138,7 +138,7 @@
 
       function getGeneralTreatments() {
         PatientMedication.getForPaciente({pacienteId: $stateParams.patientId}, function (results) {
-          vm.generalMedications = results.filter( med => med.medication.medicationType.name != "Profilaxis" );
+          vm.generalMedications = results.filter( function(med) { return med.medication.medicationType.name != "Profilaxis";} );
         }, function (err) {
           console.error(err);
           vm.generalMedications = [];
