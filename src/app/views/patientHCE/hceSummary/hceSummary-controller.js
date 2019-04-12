@@ -16,7 +16,7 @@
         vm.displayName = null;
 
         function canGenerateSummary() {
-            return vm.controllerForm.$valid && (vm.categories.evolutions||vm.categories.problems||vm.categories.arv||vm.categories.hiv||vm.categories.profilaxis||vm.categories.generalTreatment||vm.categories.laboratories||vm.categories.otherStudies||vm.categories.vaccines);
+            return vm.controllerForm.$valid && (vm.categories.evolutions||vm.categories.problems||vm.categories.arv||vm.categories.hiv||vm.categories.profilaxis||vm.categories.generalTreatment||vm.categories.laboratory||vm.categories.otherStudies||vm.categories.vaccines);
         }
 
 
@@ -33,7 +33,9 @@
                 showARV: vm.categories.arv,
                 showProfilaxis: vm.categories.profilaxis,
                 showGeneral: vm.categories.generalTreatment,
-                showOthers: vm.categories.otherStudies
+                showOthers: vm.categories.otherStudies,
+                showLab: vm.categories.laboratory,
+                showVaccines: vm.categories.vaccines
             });
 
             $window.open(url,'_blank');

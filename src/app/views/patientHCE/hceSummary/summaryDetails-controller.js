@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('SummaryDetailsController', summaryDetailsController);
 
-  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem', 'PatientArvTreatment', 'PatientMedication', 'PatientClinicalResult'];
+  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem', 'PatientArvTreatment', 'PatientMedication', 'PatientClinicalResult', 'PatientLaboratoryResult'];
 
-    function summaryDetailsController (toastr, $stateParams, HIVData, Paciente, Evolution, PatientProblem, PatientArvTreatment, PatientMedication, PatientClinicalResult) {
+    function summaryDetailsController (toastr, $stateParams, HIVData, Paciente, Evolution, PatientProblem, PatientArvTreatment, PatientMedication, PatientClinicalResult, PatientLaboratoryResult) {
       var vm = this;
       vm.cancel = cancel;
       vm.canBeClosed = canBeClosed;
@@ -28,6 +28,8 @@
       vm.clinicalResults = [];
       vm.showGeneral = false;
       vm.generalMedications = [];
+      vm.showLab = false;
+      vm.laboratoryResults = [];
 
       init();
 
@@ -75,6 +77,9 @@
         
         vm.showGeneral = checkTrue($stateParams.showGeneral);
         if(checkTrue($stateParams.showGeneral)) getGeneralTreatments();
+        
+        vm.showLab = checkTrue($stateParams.showLab);
+        if(checkTrue($stateParams.showLab)) getLabResults();
         
         vm.showOthers = checkTrue($stateParams.showOthers);
         if(checkTrue($stateParams.showOthers)) getOthers();
@@ -141,6 +146,15 @@
         }, function (err) {
           console.error(err);
           vm.clinicalResults = [];
+        });
+      }
+
+      function getLabResults() {
+        PatientLaboratoryResult.getForPaciente({pacienteId: $stateParams.patientId}, function (results) {
+          vm.laboratoryResults = results;
+        }, function (err) {
+          console.error(err);
+          vm.laboratoryResults = [];
         });
       }
     }
