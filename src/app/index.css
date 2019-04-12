@@ -529,6 +529,14 @@
   background-color: #af56a2;  
 }
 
+.btn.btn-raised.btn-success{
+  background-color: #66325F;
+}
+
+.btn.btn-raised:not(.btn-link):hover.btn-success{
+  background-color: #af56a2;
+}
+
 .form-group.is-focused label, .form-group.is-focused label.control-label {
   color: #66325F;
 }
