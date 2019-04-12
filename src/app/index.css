@@ -541,7 +541,7 @@
   background-color: #af56a2;
 }
 
-.btn:not(.btn-raised).btn-danger, .btn:not(.btn-raised).btn-info{
+.btn:not(.btn-raised).btn-danger, .btn:not(.btn-raised).btn-info.button-menu{
   color: #af56a2;
 }
 
