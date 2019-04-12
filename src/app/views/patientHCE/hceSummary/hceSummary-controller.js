@@ -31,7 +31,8 @@
                 showEvolutions: vm.categories.evolutions,
                 showProblems: vm.categories.problems,
                 showARV: vm.categories.arv,
-                showProfilaxis: vm.categories.profilaxis
+                showProfilaxis: vm.categories.profilaxis,
+                showGeneral: vm.categories.generalTreatment
             });
 
             $window.open(url,'_blank');
