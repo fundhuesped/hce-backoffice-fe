@@ -26,6 +26,8 @@
       vm.medications = [];
       vm.showOthers = false;
       vm.clinicalResults = [];
+      vm.showGeneral = false;
+      vm.generalMedications = [];
 
       init();
 
@@ -71,6 +73,9 @@
         vm.showProfilaxis = checkTrue($stateParams.showProfilaxis);
         if(checkTrue($stateParams.showProfilaxis)) getProfilaxis();
         
+        vm.showGeneral = checkTrue($stateParams.showGeneral);
+        if(checkTrue($stateParams.showGeneral)) getGeneralTreatments();
+        
         vm.showOthers = checkTrue($stateParams.showOthers);
         if(checkTrue($stateParams.showOthers)) getOthers();
       }
@@ -113,10 +118,20 @@
 
       function getProfilaxis() {
         PatientMedication.getForPaciente({pacienteId: $stateParams.patientId}, function (results) {
-          vm.medications = results;
+          vm.medications = results.filter( med => med.medication.medicationType.name == "Profilaxis" );
         }, function (err) {
           console.error(err);
           vm.medications = [];
+        });
+      }
+
+
+      function getGeneralTreatments() {
+        PatientMedication.getForPaciente({pacienteId: $stateParams.patientId}, function (results) {
+          vm.generalMedications = results.filter( med => med.medication.medicationType.name != "Profilaxis" );
+        }, function (err) {
+          console.error(err);
+          vm.generalMedications = [];
         });
       }
 

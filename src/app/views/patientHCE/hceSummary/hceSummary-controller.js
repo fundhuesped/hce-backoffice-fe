@@ -32,7 +32,8 @@
                 showProblems: vm.categories.problems,
                 showARV: vm.categories.arv,
                 showProfilaxis: vm.categories.profilaxis,
-                showGeneral: vm.categories.generalTreatment
+                showGeneral: vm.categories.generalTreatment,
+                showOthers: vm.categories.otherStudies
             });
 
             $window.open(url,'_blank');
