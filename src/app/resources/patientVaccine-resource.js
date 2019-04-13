@@ -32,6 +32,12 @@
             method: 'POST',
             params:{pacienteId:'@pacienteId'}
           },
+          getAllForPaciente:{
+            url: apiBase+'hce/paciente/:pacienteId/vaccines',
+            params:{pacienteId:'@pacienteId', all:"True"},
+            method: 'GET',
+            isArray: true
+          },
           getForPaciente: {
             url: apiBase+'hce/paciente/:pacienteId/vaccines',
             params:{pacienteId:'@pacienteId'},

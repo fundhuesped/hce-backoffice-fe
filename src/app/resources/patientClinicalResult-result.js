@@ -15,6 +15,13 @@
             method: 'PUT',
             params:{id:'@id'}
           },
+          getAllForPaciente:{
+            url: apiBase+'hce/paciente/:pacienteId/clinicalStudyResults',
+            params:{pacienteId:'@pacienteId', all:"True"},
+            method: 'GET',
+            isArray: true
+          },
+
           getPaginatedForPaciente:{
             url: apiBase+'hce/paciente/:pacienteId/clinicalStudyResults',
             params:{pacienteId:'@pacienteId'},

@@ -121,7 +121,8 @@
         localStorage.setItem('tabActive', Date.now());
         localStorage.removeItem('tabActive');
       } else if (event.key == 'tabActive' && !sessionStorage.getItem('activeTab')) {
-        if(window.location.href.indexOf("Prescription")<0){
+        //TODO FIXME understand this condition and add an exception if the tab is summaryDetails
+        if(window.location.href.indexOf("Prescription")<0 && window.location.href.indexOf("Información adicional del virus HIV")>0){
           openAlreadyOpenModal();
         }
       }

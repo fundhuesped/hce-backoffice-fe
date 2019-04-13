@@ -21,6 +21,11 @@
             method: 'GET',
             isArray: false
           },
+          getAllForPaciente:{
+            params:{pacienteId:'@pacienteId', all:"True"},
+            method: 'GET',
+            isArray: true
+          },
           save: {
             url: apiBase+'hce/paciente/:pacienteId/medications',
             method: 'POST',

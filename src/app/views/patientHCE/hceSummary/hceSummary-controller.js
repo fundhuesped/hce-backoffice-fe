@@ -6,45 +6,40 @@
     	.module('hce.patientHCE')
     	.controller('HCESummaryController', hceSummaryController);
 
-	hceSummaryController.$inject = ['HCService', '$uibModal', 'toastr'];
+	hceSummaryController.$inject = ['HCService', '$uibModal', 'toastr', '$state', '$window'];
 
-    function hceSummaryController (HCService, $uibModal, toastr) {
+    function hceSummaryController (HCService, $uibModal, toastr, $state, $window) {
 	    var vm = this;
         vm.canGenerateSummary = canGenerateSummary;
         vm.categories = {};
         vm.openModal = openModal;
-        vm.openHivModal = openHivModal;
+        vm.displayName = null;
 
         function canGenerateSummary() {
-            return vm.controllerForm.$valid && (vm.categories.evolutions||vm.categories.problems||vm.categories.arv||vm.categories.hiv||vm.categories.profilaxis||vm.categories.generalTreatment||vm.categories.laboratories||vm.categories.otherStudies||vm.categories.vaccines);
+            return vm.controllerForm.$valid && (vm.categories.evolutions||vm.categories.problems||vm.categories.arv||vm.categories.hiv||vm.categories.profilaxis||vm.categories.generalTreatment||vm.categories.laboratory||vm.categories.otherStudies||vm.categories.vaccines);
         }
 
 
         function openModal() {
-            if (vm.categories.hiv) {
-                openHivModal(); return;
-            }
-            //Add here methods for other options
-            toastr.warning("Por favor seleccione una opcion valida");
-        }
+            //TODO FIXME add more params
+            var booleanValue = vm.displayName == "pns";
 
-        function openHivModal() {
-            var modalInstance = $uibModal.open({
-            backdrop: 'static',
-            templateUrl: 'app/views/patientHCE/hceSummary/hivDetails.html',
-            size: 'md',
-            controller: 'HivDetailsController',
-            controllerAs: 'HivDetailsController'
+            var url = $state.href('summaryDetails', {
+                patientId: HCService.currentPacienteId,
+                showPNS: booleanValue,
+                showHIV: vm.categories.hiv,
+                showEvolutions: vm.categories.evolutions,
+                showProblems: vm.categories.problems,
+                showARV: vm.categories.arv,
+                showProfilaxis: vm.categories.profilaxis,
+                showGeneral: vm.categories.generalTreatment,
+                showLab: vm.categories.laboratory,
+                showOthers: vm.categories.otherStudies,
+                showVaccines: vm.categories.vaccines,
+                observations: vm.observations
             });
-            
-            modalInstance.result.then(function (resolution) {
-            if(resolution==='markedError' || resolution==='edited'){
-                searchPatientProblems();
-                if(!HCService.currentEvolution){
-                HCService.getCurrentEvolution();
-                }
-            }
-            });
+
+            $window.open(url,'_blank');
         }
     }
 })();
