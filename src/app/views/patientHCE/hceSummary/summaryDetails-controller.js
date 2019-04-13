@@ -32,7 +32,11 @@
       vm.laboratoryResults = [];
       vm.showVaccines = false;
       vm.vaccines = [];
-
+      vm.$stateParams = $stateParams;
+      vm.observations = $stateParams.observations;
+      vm.issuedDate = new Date();
+      vm.showPNS = showPNS;
+      vm.getSchema = getSchema;
       init();
 
       function init() {
@@ -51,10 +55,14 @@
         return string == "true";
       }
       
+      function showPNS(){
+       return checkTrue($stateParams.showPNS) 
+      }
+
       function getDetails() {
         Paciente.get({id:$stateParams.patientId}, function(patient){
           vm.patient_details = patient;
-          vm.patientIdentification = (checkTrue($stateParams.showPNS))
+          vm.patientIdentification = (showPNS())
                                       ? patient.pns
                                       : (patient.firstName + " " + patient.fatherSurname); 
         }, function (err) {
@@ -100,7 +108,7 @@
       }
 
       function getEvolutionsDetails() {
-        Evolution.getForPaciente({pacienteId: $stateParams.patientId}, function (results) {
+        Evolution.getAllForPaciente({pacienteId: $stateParams.patientId, notState:'Error'}, function (results) {
           vm.evolutions = results;
         }, function (err) {
           console.error(err);
@@ -109,7 +117,7 @@
       }
 
       function getPatienProblems() {
-        PatientProblem.getAllForPaciente({pacienteId: $stateParams.patientId}, function (results) {
+        PatientProblem.getAllForPaciente({pacienteId: $stateParams.patientId, notState:'Error'}, function (results) {
           vm.problems = results;
         }, function (err) {
           console.error(err);
@@ -118,7 +126,7 @@
       }
 
       function getArvTreatments() {
-        PatientArvTreatment.getForPaciente({pacienteId: $stateParams.patientId}, function (results) {
+        PatientArvTreatment.getAllForPaciente({pacienteId: $stateParams.patientId, notState:'Error'}, function (results) {
           vm.arvTreatments = results;
         }, function (err) {
           console.error(err);
@@ -127,7 +135,7 @@
       }
 
       function getProfilaxis() {
-        PatientMedication.getForPaciente({pacienteId: $stateParams.patientId}, function (results) {
+        PatientMedication.getAllForPaciente({pacienteId: $stateParams.patientId, notState:'Error'}, function (results) {
           vm.medications = results.filter( function (med) {  return med.medication.medicationType.name == "Profilaxis"; } );
         }, function (err) {
           console.error(err);
@@ -137,7 +145,7 @@
 
 
       function getGeneralTreatments() {
-        PatientMedication.getForPaciente({pacienteId: $stateParams.patientId}, function (results) {
+        PatientMedication.getForPaciente({pacienteId: $stateParams.patientId, notState:'Error'}, function (results) {
           vm.generalMedications = results.filter( function(med) { return med.medication.medicationType.name != "Profilaxis";} );
         }, function (err) {
           console.error(err);
@@ -146,7 +154,7 @@
       }
 
       function getOthers() {
-        PatientClinicalResult.getForPaciente({pacienteId: $stateParams.patientId}, function (results) {
+        PatientClinicalResult.getAllForPaciente({pacienteId: $stateParams.patientId, notState:'Error'}, function (results) {
           vm.clinicalResults = results;
         }, function (err) {
           console.error(err);
@@ -164,12 +172,109 @@
       }
 
       function getVaccines() {
-        PatientVaccine.getForPaciente({pacienteId: $stateParams.patientId}, function (results) {
+        PatientVaccine.getAllForPaciente({pacienteId: $stateParams.patientId, notState:'Error'}, function (results) {
           vm.vaccines = results;
         }, function (err) {
           console.error(err);
           vm.vaccines = [];
         });
       }
+
+      function getSchema(medications) {
+        var nrti = [];
+        var nnrti = [];
+        var ip = [];
+        var ii = [];
+        var combo = [];
+        var other = [];
+        var schema = '';
+        if(!medications){
+          return;
+        }
+        for (var i = medications.length - 1; i >= 0; i--) {
+          if(medications[i].medication.medicationType.code == 'NRTI'){
+            nrti.push(medications[i].medication.abbreviation);
+          }
+          if(medications[i].medication.medicationType.code == 'NNRTI'){
+            nnrti.push(medications[i].medication.abbreviation);
+          }
+          if(medications[i].medication.medicationType.code == 'IP'){
+            ip.push(medications[i].medication.abbreviation);
+          }
+          if(medications[i].medication.medicationType.code == 'INI'){
+            ii.push(medications[i].medication.abbreviation);
+          }
+          if(medications[i].medication.medicationType.code == 'COMBO'){
+            combo.push(medications[i].medication.abbreviation);
+          }
+          if(medications[i].medication.medicationType.code == 'OTROS'){
+            other.push(medications[i].medication.abbreviation);
+          }
+        }
+        if(nrti.length>0){
+          schema += '['; 
+          for (var i = nrti.length - 1; i >= 0; i--) {
+            schema += nrti[i];
+            if(i>0){
+              schema += ',';
+            }
+          }
+          schema += '] '; 
+        }
+        if(nnrti.length>0){
+          schema += '['; 
+          for (var i = nnrti.length - 1; i >= 0; i--) {
+            schema += nnrti[i];
+            if(i>0){
+              schema += ',';
+            }
+          }
+          schema += '] '; 
+        }
+        if(ip.length>0){
+          schema += '['; 
+          for (var i = ip.length - 1; i >= 0; i--) {
+            schema += ip[i];
+            if(i>0){
+              schema += ',';
+            }
+          }
+          schema += '] '; 
+        }
+        if(ii.length>0){
+          schema += '['; 
+          for (var i = ii.length - 1; i >= 0; i--) {
+            schema += ii[i];
+            if(i>0){
+              schema += ',';
+            }
+          }
+          schema += '] '; 
+        }
+        if(combo.length>0){
+          schema += '['; 
+          for (var i = combo.length - 1; i >= 0; i--) {
+            schema += combo[i];
+            if(i>0){
+              schema += ',';
+            }
+          }
+          schema += '] '; 
+        }
+        if(other.length>0){
+          schema += '['; 
+          for (var i = other.length - 1; i >= 0; i--) {
+            schema += other[i];
+            if(i>0){
+              schema += ',';
+            }
+          }
+          schema += ']'; 
+        }
+        return schema;
+
+      }
+
+
     }
 })();

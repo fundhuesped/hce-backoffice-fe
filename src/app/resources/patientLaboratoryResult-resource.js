@@ -22,6 +22,11 @@
           save: {
             method: 'POST',
           },
+          getAllForPaciente:{
+            params:{pacienteId:'@pacienteId', all:"True"},
+            method: 'GET',
+            isArray: true
+          },
           getForPaciente: {
             method: 'GET',
             isArray: true,

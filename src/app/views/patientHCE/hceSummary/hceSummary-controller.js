@@ -35,7 +35,8 @@
                 showGeneral: vm.categories.generalTreatment,
                 showLab: vm.categories.laboratory,
                 showOthers: vm.categories.otherStudies,
-                showVaccines: vm.categories.vaccines
+                showVaccines: vm.categories.vaccines,
+                observations: vm.observations
             });
 
             $window.open(url,'_blank');

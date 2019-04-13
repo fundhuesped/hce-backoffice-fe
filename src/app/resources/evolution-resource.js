@@ -20,6 +20,12 @@
             method: 'GET',
             params:{id:'@id'}            
           },
+          getAllForPaciente:{
+            url: apiBase+'hce/paciente/:pacienteId/visits',
+            params:{pacienteId:'@pacienteId', all:"True"},
+            method: 'GET',
+            isArray: true
+          },
           getPaginatedForPaciente:{
             url: apiBase+'hce/paciente/:pacienteId/visits',
             params:{pacienteId:'@pacienteId'},

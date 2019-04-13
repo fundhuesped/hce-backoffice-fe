@@ -32,7 +32,13 @@
             method: 'GET',
             isArray: true,
             transformResponse: transformDataSet
-          }
+          },
+          getAllForPaciente:{
+            url: apiBase+'hce/paciente/:pacienteId/arvTreatments',
+            params:{pacienteId:'@pacienteId', all:"True"},
+            method: 'GET',
+            isArray: true
+          },
       });
 
 

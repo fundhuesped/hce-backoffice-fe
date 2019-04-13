@@ -36,7 +36,7 @@
       })
 
       .state('summaryDetails', {
-        url: '/summaryDetails?patientId&showPNS&showHIV&showEvolutions&showProblems&showARV&showProfilaxis&showGeneral&showLab&showOthers&showVaccines',
+        url: '/summaryDetails?patientId&showPNS&showHIV&showEvolutions&showProblems&showARV&showProfilaxis&showGeneral&showLab&showOthers&showVaccines%observations',
         templateUrl: 'app/views/patientHCE/hceSummary/summaryDetails.html',
         controller: 'SummaryDetailsController',
         controllerAs: 'SummaryDetailsController',        
@@ -51,7 +51,8 @@
           showGeneral: "false",
           showLab: "false",
           showOthers: "false",
-          showVaccines: "false"
+          showVaccines: "false",
+          observations: ""
         }
       })
 
