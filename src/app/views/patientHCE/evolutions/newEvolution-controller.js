@@ -71,8 +71,16 @@
       }
 
       function showError(error) {
-        if(error.data){
-          toastr.error(error.data);
+        if(error){
+          if(error.data){
+            if(error.data.detail){
+              toastr.error(error.data.detail);
+            }else{
+              toastr.error(error.data);
+            }
+          }else{
+            toastr.error(error);
+          }
         }else{
           toastr.error('Ocurrio un error');
         }
