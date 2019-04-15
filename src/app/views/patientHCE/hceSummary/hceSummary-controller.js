@@ -21,7 +21,6 @@
 
 
         function openModal() {
-            //TODO FIXME add more params
             var booleanValue = vm.displayName == "pns";
 
             var url = $state.href('summaryDetails', {
