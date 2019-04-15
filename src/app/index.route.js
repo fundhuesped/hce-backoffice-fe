@@ -66,12 +66,13 @@
           }
       })
       .state('arvPrescription', {
-          url: '/arvPrescription?prescriptionId',
+          url: '/arvPrescription?prescriptionId&issuedDate',
           templateUrl: 'app/views/patientHCE/prescriptions/arvPrescription.html',
           controller: 'ArvMedicationRecetaController',
           controllerAs: 'Ctrl',        
           params: {
-              prescription: null
+              prescriptionId: null,
+              issuedDate: null
           }
       })
       .state('vaccinePrescription', {

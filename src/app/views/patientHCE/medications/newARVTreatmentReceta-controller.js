@@ -45,18 +45,24 @@
         tmpNewReceta.prescripctionType = 'Arv';
         tmpNewReceta.cantRecetas = vm.cantRecetas;
         tmpNewReceta.issuedDate = moment(tmpNewReceta.issuedDate).format('YYYY-MM-DD');
+        var issuedDateFormatted = tmpNewReceta.issuedDate;
 
         tmpNewReceta.$save({pacienteId:HCService.currentPaciente.id},function(prescription) {
           toastr.success('Receta generada con éxito');
           if(prescription.prescriptionsIds){
             for (var i = prescription.prescriptionsIds.length - 1; i >= 0; i--) {
-              var url = $state.href('arvPrescription', {prescriptionId: prescription.prescriptionsIds[i]});
+              var url = $state.href('arvPrescription', {
+                prescriptionId: prescription.prescriptionsIds[i],
+                issuedDate: issuedDateFormatted
+              });
               $window.open(url,'_blank');                          
             }
           }else{
-            var url = $state.href('arvPrescription', {prescriptionId: prescription.id});
+            var url = $state.href('arvPrescription', {
+              prescriptionId: prescription.id,
+              issuedDate: issuedDateFormatted
+            });
             $window.open(url,'_blank');
-            openRecetaModal(prescription.id);
             $uibModalInstance.close('created');            
           }
         }, showError);
@@ -85,20 +91,6 @@
         });
 
 	    }
-      function openRecetaModal(prescriptionsIds) {
-        var modalInstance = $uibModal.open({
-          backdrop: 'static',
-            templateUrl: 'app/views/patientHCE/prescriptions/arvPrescription.html',
-            size: 'md',
-            controller: 'MedicationRecetaController',
-            controllerAs: 'Ctrl',
-            resolve: {
-              prescriptionsIds: function () {
-                return prescriptionsIds;
-              }
-            }
-          });
-      }
 
 	    function toggleMedicationSelection(medication) {
 	    	for (var i = vm.selectedMedications.length - 1; i >= 0; i--) {
@@ -112,14 +104,6 @@
 	    		}
 	    	}
 	    }
-
-      function displayComunicationError(loading){
-        if(!toastr.active()){
-          toastr.warning('Ocurrió un error en la comunicación, por favor intente nuevamente.');
-        }
-        if(loading){
-        }
-      }
 
       function cancel() {
         $uibModalInstance.dismiss('cancel');
