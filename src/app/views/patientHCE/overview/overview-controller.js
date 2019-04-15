@@ -49,14 +49,21 @@
               toastr.success('Visita cerrada con exito');
             }, showError);
         }
+        
         function showError(error) {
-            if(error){
-              toastr.error(error);
+          if(error){
+            if(error.data){
+              if(error.data.detail){
+                toastr.error(error.data.detail);
+              }else{
+                toastr.error(error.data);
+              }
             }else{
-              toastr.error('Ocurrio un error');
+              toastr.error(error);
             }
+          }else{
+            toastr.error('Ocurrio un error');
+          }
         }
-
-
     }
 })();
