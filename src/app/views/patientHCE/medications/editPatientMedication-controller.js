@@ -144,6 +144,7 @@
             toastr.success('Medicación marcada como error');
           $uibModalInstance.close('markedError');
         }, function (err) {
+            console.error(err);
             toastr.error('Ocurrio un error');
         });
       }

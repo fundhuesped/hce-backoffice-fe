@@ -12,6 +12,7 @@
 	    var vm = this;
       vm.hceService = HCService;
       vm.patientArvTreatment = angular.copy(patientArvTreatment);
+      vm.markAsError = markAsError;
       vm.cancel = cancel;
 
 
@@ -157,12 +158,20 @@
         $uibModalInstance.dismiss('cancel');
       }
 
-      function showError(error) {
-        if(error){
-          toastr.error(error.data.detail);
-        }else{
-          toastr.error('Ocurrio un error');
+      function markAsError() {
+        var tmpPatientArvTreatment = angular.copy(vm.patientArvTreatment);
+        tmpPatientArvTreatment.state = PatientArvTreatment.stateChoices.STATE_ERROR;
+        tmpPatientArvTreatment.startDate = moment(tmpPatientArvTreatment.startDate).format('YYYY-MM-DD');
+        if(tmpPatientArvTreatment.endDate){
+          tmpPatientArvTreatment.endDate = moment(tmpPatientArvTreatment.endDate).format('YYYY-MM-DD');
         }
+        PatientArvTreatment.update(tmpPatientArvTreatment, function (response) {
+            toastr.success('Medicación marcada como error');
+          $uibModalInstance.close('markedError');
+        }, function (err) {
+            console.error(err);
+            toastr.error('Ocurrio un error');
+        });
       }
     }
 })();
