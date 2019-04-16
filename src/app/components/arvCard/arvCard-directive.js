@@ -15,13 +15,13 @@
       scope: true,
     };
     /** @ngInject */
-    function hceArvCardController(moment, HCService, PatientArvTreatment, $uibModal, $state, HIVData) {
+    function hceArvCardController(moment, HCService, PatientArvTreatment, $uibModal, $state, HIVData, $window) {
       var vm = this;
       vm.getSchema = getSchema;
       vm.openEditPatientMedicationModal = openEditPatientMedicationModal;
       vm.goToTreatment = goToTreatment;
       vm.goToLaboratories = goToLaboratories;
-      vm.openHivModal = openHivModal
+      vm.openHivModal = openHivDetails;
       Object.defineProperty(
           vm,
           'treatment', {
@@ -34,24 +34,27 @@
 
       activate();
 
-      function openHivModal() {
-        var modalInstance = $uibModal.open({
-        backdrop: 'static',
-        templateUrl: 'app/views/patientHCE/hceSummary/summaryDetails.html',
-        size: 'md',
-        controller: 'HivDetailsController',
-        controllerAs: 'HivDetailsController'
+      function openHivDetails() {
+
+        var url = $state.href('summaryDetails', {
+            patientId: HCService.currentPacienteId,
+            showPNS: false,
+            showHIV: true,
+            showEvolutions: false,
+            showProblems: false,
+            showARV: false,
+            showProfilaxis: false,
+            showGeneral: false,
+            showLab: false,
+            showOthers: false,
+            showVaccines: false,
+            observations: false
         });
-        
-        modalInstance.result.then(function (resolution) {
-        if(resolution==='markedError' || resolution==='edited'){
-            searchPatientProblems();
-            if(!HCService.currentEvolution){
-            HCService.getCurrentEvolution();
-            }
-        }
-        });
+
+        $window.open(url,'_blank');
       }
+
+      
       function activate(){
         HCService.getCurrentARVTreatment();
         HIVData.getCD4({patientId: HCService.currentPacienteId}, function (result) {
