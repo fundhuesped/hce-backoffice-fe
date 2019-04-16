@@ -33,6 +33,11 @@
 
       activate();
 
+      function differReceta( date, multiplier ){
+        var daysMultiplier = 28 * multiplier;
+        return moment(date).add(daysMultiplier, 'days').format('YYYY-MM-DD');
+      }
+
       function save() {
         var tmpNewReceta = angular.copy(vm.newReceta);
         tmpNewReceta.prescriptedMedications = [];
@@ -51,9 +56,10 @@
           toastr.success('Receta generada con éxito');
           if(prescription.prescriptionsIds){
             for (var i = prescription.prescriptionsIds.length - 1; i >= 0; i--) {
+              var multiplier = prescription.prescriptionsIds.length - i -1; //Reverse i. It starts in 0,1,2,3,4, etc.
               var url = $state.href('arvPrescription', {
                 prescriptionId: prescription.prescriptionsIds[i],
-                issuedDate: issuedDateFormatted
+                issuedDate: differReceta(issuedDateFormatted, multiplier)
               });
               $window.open(url,'_blank');                          
             }
