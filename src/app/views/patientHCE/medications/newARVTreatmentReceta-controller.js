@@ -55,8 +55,7 @@
             }
           }else{
             var url = $state.href('arvPrescription', {
-              prescriptionId: prescription.id,
-              issuedDate: issuedDateFormatted
+              prescriptionId: prescription.id
             });
             $window.open(url,'_blank');
             $uibModalInstance.close('created');            
