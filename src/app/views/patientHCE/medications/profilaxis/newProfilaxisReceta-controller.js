@@ -43,13 +43,11 @@
         }
         tmpNewReceta.prescripctionType = 'Prophylaxis';
         tmpNewReceta.issuedDate = moment(tmpNewReceta.issuedDate).format('YYYY-MM-DD');
-        var issuedDateFormatted = tmpNewReceta.issuedDate;
 
         tmpNewReceta.$save({pacienteId:HCService.currentPaciente.id},function(prescription) {
           toastr.success('Receta generada con éxito');
           var url = $state.href('profilaxisPrescription', {
-            prescriptionId: prescription.id,
-            issuedDate: issuedDateFormatted
+            prescriptionId: prescription.id
           });
           $window.open(url,'_blank');
           $uibModalInstance.close('created');

@@ -11,7 +11,6 @@
     function arvMedicationRecetaController ($state, $stateParams, ARVReceta, Preference) {
       var vm = this;
       vm.prescription = $stateParams.prescription;
-      vm.issuedDate = $stateParams.issuedDate;
       vm.numberToText = numberToText;
       vm.removeDecimals = removeDecimals;
       vm.headerImage = '';

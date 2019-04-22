@@ -57,23 +57,21 @@
       })
 
       .state('profilaxisPrescription', {
-          url: '/profilaxisPrescription?prescriptionId&issuedDate',
+          url: '/profilaxisPrescription?prescriptionId',
           templateUrl: 'app/views/patientHCE/prescriptions/profilaxisPrescription.html',
           controller: 'MedicationRecetaNuevaController',
           controllerAs: 'Ctrl',        
           params: {
-            prescriptionId: null,
-            issuedDate: null
+            prescriptionId: null
           }
       })
       .state('arvPrescription', {
-          url: '/arvPrescription?prescriptionId&issuedDate',
+          url: '/arvPrescription?prescriptionId',
           templateUrl: 'app/views/patientHCE/prescriptions/arvPrescription.html',
           controller: 'ArvMedicationRecetaController',
           controllerAs: 'Ctrl',        
           params: {
-              prescriptionId: null,
-              issuedDate: null
+              prescriptionId: null
           }
       })
       .state('vaccinePrescription', {

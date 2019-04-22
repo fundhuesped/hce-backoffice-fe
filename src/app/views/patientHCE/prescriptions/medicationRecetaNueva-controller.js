@@ -11,7 +11,6 @@
     function medicationRecetaNuevaController ($state, $stateParams, Preference, Receta) {
 	    var vm = this;
       vm.prescription = $stateParams.prescription;
-      vm.issuedDate = $stateParams.issuedDate;
       vm.numberToText = numberToText;
       vm.headerImage = '';
 
