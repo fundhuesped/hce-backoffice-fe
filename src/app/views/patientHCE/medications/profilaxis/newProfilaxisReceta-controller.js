@@ -46,7 +46,9 @@
 
         tmpNewReceta.$save({pacienteId:HCService.currentPaciente.id},function(prescription) {
           toastr.success('Receta generada con éxito');
-          var url = $state.href('profilaxisPrescription', {prescriptionId: prescription.id});
+          var url = $state.href('profilaxisPrescription', {
+            prescriptionId: prescription.id
+          });
           $window.open(url,'_blank');
           $uibModalInstance.close('created');
         }, showError);
@@ -83,15 +85,6 @@
 	    		vm.selectedMedications.push(medication);
 	    	}
 	    }
-
-
-      function displayComunicationError(loading){
-        if(!toastr.active()){
-          toastr.warning('Ocurrió un error en la comunicación, por favor intente nuevamente.');
-        }
-        if(loading){
-        }
-      }
 
       function cancel() {
         $uibModalInstance.dismiss('cancel');

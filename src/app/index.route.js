@@ -62,7 +62,7 @@
           controller: 'MedicationRecetaNuevaController',
           controllerAs: 'Ctrl',        
           params: {
-              prescription: null
+            prescriptionId: null
           }
       })
       .state('arvPrescription', {
@@ -71,7 +71,7 @@
           controller: 'ArvMedicationRecetaController',
           controllerAs: 'Ctrl',        
           params: {
-              prescription: null
+              prescriptionId: null
           }
       })
       .state('vaccinePrescription', {
