@@ -29,6 +29,14 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group>
+                                    <label abm-label for="firstName">ID de Paciente</label>
+                                    <input abm-form-control type="text" name="firstName" maxlength="70" class="form-control" ng-model="PacienteCtrl.paciente.id" ng-required="false" ng-disabled="true">
+                                </abm-form-group>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <abm-form-group>
                                     <label abm-label for="firstName">Nombre(*) <span class="hce-input-observation">(máximo 70 caracteres)</span></label>
                                     <input abm-form-control type="text" name="firstName" maxlength="70" class="form-control" ng-model="PacienteCtrl.paciente.firstName" ng-required="true">
                                 </abm-form-group>
