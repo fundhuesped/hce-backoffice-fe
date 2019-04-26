@@ -49,9 +49,9 @@
 
         //Global document parameters
         var margins = {
-            top: 120,
+            top: 60,
             left: 30,
-            bottom: 180,
+            bottom: 60,
             right: 50
         };
 
@@ -74,7 +74,7 @@
                 var doc = new jsPDF('p', 'mm', [dimensions.width, dimensions.height], compression.enable); //Portrait
 
             doc.addImage(canvas, 'png', margins.left, margins.top, canvas.width, canvas.height, undefined, compression.type.MEDIUM);
-            doc.save('impresion.pdf');
+            doc.save('Resumen.pdf');
         });
       }
 
