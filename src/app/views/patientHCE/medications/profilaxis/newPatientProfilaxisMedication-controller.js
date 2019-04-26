@@ -73,6 +73,9 @@
         if(tmpPatientMedication.endDate && tmpPatientMedication.state == 'Closed'){
           tmpPatientMedication.endDate = moment(tmpPatientMedication.endDate).format('YYYY-MM-DD');
         }
+        if(tmpPatientMedication.activeProblems.problem){
+          tmpPatientMedication.patientProblem = tmpPatientMedication.activeProblems.problem;
+        }
 
         tmpPatientMedication.$save({pacienteId:HCService.currentPaciente.id},function() {
           toastr.success('Medicación guardada con exito');
