@@ -29,14 +29,6 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group>
-                                    <label abm-label for="id">ID de Paciente</label>
-                                    <input abm-form-control type="text" name="id" maxlength="70" class="form-control" ng-model="PacienteCtrl.paciente.id" ng-required="false" ng-disabled="true">
-                                </abm-form-group>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <abm-form-group>
                                     <label abm-label for="firstName">Nombre(*) <span class="hce-input-observation">(máximo 70 caracteres)</span></label>
                                     <input abm-form-control type="text" name="firstName" maxlength="70" class="form-control" ng-model="PacienteCtrl.paciente.firstName" ng-required="true">
                                 </abm-form-group>
@@ -259,6 +251,12 @@
                                     <select abm-form-control class="form-control" name="education" ng-model="PacienteCtrl.paciente.education" ng-options="education as education.name for education in PacienteCtrl.educationTypes track by education.id">
                                         <option value="" selected="selected">---Seleccione---</option>
                                     </select>
+                                </abm-form-group>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <abm-form-group>
+                                    <label abm-label for="id">Número de historia clínica (ID Paciente)</label>
+                                    <input abm-form-control type="text" name="id" maxlength="70" class="form-control" ng-model="PacienteCtrl.paciente.id" ng-required="false" ng-disabled="true">
                                 </abm-form-group>
                             </div>
                         </div>
