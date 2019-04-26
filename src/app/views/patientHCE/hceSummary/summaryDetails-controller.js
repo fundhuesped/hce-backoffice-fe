@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('SummaryDetailsController', summaryDetailsController);
 
-  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem', 'PatientArvTreatment', 'PatientMedication', 'PatientClinicalResult', 'PatientLaboratoryResult', 'PatientVaccine'];
+  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem', 'PatientArvTreatment', 'PatientMedication', 'PatientClinicalResult', 'PatientLaboratoryResult', 'PatientVaccine', '$scope'];
 
-    function summaryDetailsController (toastr, $stateParams, HIVData, Paciente, Evolution, PatientProblem, PatientArvTreatment, PatientMedication, PatientClinicalResult, PatientLaboratoryResult, PatientVaccine) {
+    function summaryDetailsController (toastr, $stateParams, HIVData, Paciente, Evolution, PatientProblem, PatientArvTreatment, PatientMedication, PatientClinicalResult, PatientLaboratoryResult, PatientVaccine, $scope) {
       var vm = this;
       vm.cancel = cancel;
       vm.canBeClosed = canBeClosed;
@@ -37,11 +37,47 @@
       vm.issuedDate = new Date();
       vm.showPNS = showPNS;
       vm.getSchema = getSchema;
+      vm.exportPDF = exportPDF;
       init();
 
       function init() {
         getDetails();
       }
+
+      function exportPDF() {
+        console.warn("--- called export pdf ---");
+
+        //Global document parameters
+        var margins = {
+            top: 120,
+            left: 30,
+            bottom: 180,
+            right: 50
+        };
+
+        var compression = {
+            enable: true,
+            type: {FAST:'FAST', MEDIUM: 'MEDIUM', SLOW: 'SLOW', NONE:'NONE'}
+        };
+
+        html2canvas(document.getElementById('exportthis'))
+        .then(function(canvas) {
+
+            var dimensions = {
+                width: canvas.width + margins.right,
+                height: canvas.height + margins.bottom
+            };
+
+            if(canvas.width > canvas.height)
+                var doc = new jsPDF('l', 'mm', [dimensions.width, dimensions.height], compression.enable); //Landscape
+            else
+                var doc = new jsPDF('p', 'mm', [dimensions.width, dimensions.height], compression.enable); //Portrait
+
+            doc.addImage(canvas, 'png', margins.left, margins.top, canvas.width, canvas.height, undefined, compression.type.MEDIUM);
+            doc.save('impresion.pdf');
+        });
+      }
+
 
       function cancel() {
         

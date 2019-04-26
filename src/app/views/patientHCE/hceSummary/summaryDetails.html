@@ -1,5 +1,5 @@
 	<div class="do-print">
-	<div class="container-fluid hce-container-modal">
+	<div class="container-fluid hce-container-modal" id="exportthis">
 		<div class="container-fluid">
 			<div class="row">
 				<img src="{{SummaryDetailsController.headerImage}}" class="center-block">	
@@ -430,7 +430,7 @@
 		</form>
 
 
-		<div class="row" ng-if={{SummaryDetailsController.observations}}>
+		<div class="row" ng-if="SummaryDetailsController.observations">
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 					{{SummaryDetailsController.observations}}
 				</div>
@@ -446,4 +446,5 @@
 				</div>
 			</div>
 	</div>
+	<button ng-click="SummaryDetailsController.exportPDF()">export</button>
 </div>
