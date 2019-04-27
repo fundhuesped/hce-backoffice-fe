@@ -188,7 +188,7 @@
 				  	<abm-form-group>
 					    <label data-abm-label type="static">Fecha de fin(*)</label>
 							<div class="input-group">
-								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="Ctrl.patientArvTreatment.endDate" is-open="Ctrl.endDateCalendar.opened" datepicker-options="Ctrl.endDateCalendar.options" close-text="Cerrar" alt-input-formats="Ctrl.endDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-disabled="true"/>
+								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="Ctrl.patientArvTreatment.endDate" is-open="Ctrl.endDateCalendar.opened" datepicker-options="Ctrl.endDateCalendar.options" close-text="Cerrar" alt-input-formats="Ctrl.endDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-disabled="Ctrl.patientArvTreatment.endDate != undefined"/>
 		                        <div class="input-group-btn">
 		                          <button type="button" class="btn btn-default" ng-click="Ctrl.endDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
 		                        </div>
@@ -201,10 +201,10 @@
 				  	<abm-form-group>
 				    	<label abm-label type="static">Estado del tratamiento(*)</label>
 					    <div class="radio" abm-radio label="Activo">
-					      <input type="radio" name="activo" value="Active" ng-model="Ctrl.patientArvTreatment.state" ng-disabled="true">
+					      <input type="radio" name="activo" value="Active" ng-model="Ctrl.patientArvTreatment.state" ng-disabled="Ctrl.patientArvTreatment.state=='Closed'">
 					    </div>
 					    <div class="radio" abm-radio label="Inactivo">
-					      <input type="radio" name="inactivo" value="Closed" ng-model="Ctrl.patientArvTreatment.state" ng-disabled="true">
+					      <input type="radio" name="inactivo" value="Closed" ng-model="Ctrl.patientArvTreatment.state" ng-disabled="Ctrl.patientArvTreatment.state=='Closed'">
 					    </div>					    
 				  	</abm-form-group>
 				</div>
