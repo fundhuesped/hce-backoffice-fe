@@ -583,3 +583,15 @@
 .isnot-error{
   color: black;
 }
+
+input[type='checkbox'] {
+  -webkit-appearance:none;
+  width:20px;
+  height:20px;
+  background:white;
+  border-radius:2px;
+  border:2px solid #009688;
+}
+input[type='checkbox']:checked {
+  background: #009688;
+}

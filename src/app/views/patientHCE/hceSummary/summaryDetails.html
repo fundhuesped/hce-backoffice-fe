@@ -351,25 +351,25 @@
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<abm-form-group name="transmition">
 										<label class="control-label" type="static" style="font-weight:bold">Vias de transmisión más probables (*)</label>
-										<div class="checkbox" abm-checkbox label="Transmisión vertical">
+										<div  abm-checkbox label="Transmisión vertical">
 											<input type="checkbox" name="vertical" value="vertical" ng-model="SummaryDetailsController.hiv_details.vertical" disabled>
 										</div>
-										<div class="checkbox" abm-checkbox label="Relaciones sexuales con mujeres">
+										<div abm-checkbox label="Relaciones sexuales con mujeres">
 											<input type="checkbox"  name="mujeres" value="mujeres" ng-model="SummaryDetailsController.hiv_details.mujeres" disabled>
 										</div>
-										<div class="checkbox" abm-checkbox label="Relaciones sexuales con hombres">
+										<div abm-checkbox label="Relaciones sexuales con hombres">
 											<input type="checkbox" name="hombres" value="hombres" ng-model="SummaryDetailsController.hiv_details.hombres" disabled>
 										</div>
-										<div class="checkbox" abm-checkbox label="Relaciones sexuales con trans">
+										<div abm-checkbox label="Relaciones sexuales con trans">
 											<input type="checkbox" name="trans" value="trans" ng-model="SummaryDetailsController.hiv_details.trans" disabled>
 										</div>
-										<div class="checkbox" abm-checkbox label="Uso compartido de equipo de inyección en los últimos 10 años">
+										<div abm-checkbox label="Uso compartido de equipo de inyección en los últimos 10 años">
 											<input type="checkbox" name="inyeccion" value="inyeccion" ng-model="SummaryDetailsController.hiv_details.inyeccion" disabled>
 										</div>
-										<div class="checkbox" abm-checkbox label="Accidente laboral">
+										<div abm-checkbox label="Accidente laboral">
 											<input type="checkbox" name="accidente" value="accidente"  ng-model="SummaryDetailsController.hiv_details.accidente" disabled>
 										</div>
-										<div class="checkbox" abm-checkbox label="Transfusión sanguínea o derivados">
+										<div abm-checkbox label="Transfusión sanguínea o derivados">
 											<input type="checkbox" name="transfusion" value="transfusion" ng-model="SummaryDetailsController.hiv_details.transfusion" disabled>
 										</div>
 										<abm-form-group ng-if="SummaryDetailsController.hiv_details.transfusion">
@@ -380,44 +380,44 @@
 											<label data-abm-label type="static">Ciudad</label>
 											<input type="text" abm-form-control name="city" maxlength="70" class="form-control" ng-model="SummaryDetailsController.hiv_details.city" disabled>
 										</abm-form-group>
-										<div class="checkbox" abm-checkbox label="Otras">
+										<div abm-checkbox label="Otras">
 											<input type="checkbox" name="otraCheck" value="otraCheck" ng-model="SummaryDetailsController.hiv_details.otraCheck" disabled>
 										</div>
 										<abm-form-group ng-if="SummaryDetailsController.hiv_details.otraCheck">
 											<label data-abm-label type="static">¿Cual?</label>
 											<input type="text" abm-form-control name="otherTransmission" maxlength="70" class="form-control" ng-model="SummaryDetailsController.hiv_details.other" disabled>
 										</abm-form-group>
-										<div class="checkbox" abm-checkbox label="Desconocida">
+										<div abm-checkbox label="Desconocida">
 											<input type="checkbox" name="desconocida" ng-model="SummaryDetailsController.hiv_details.desconocida" disabled>
 										</div>
 									</abm-form-group>
 									<abm-form-group name='woman'>
 										<label class="control-label" type="static">Si es mujer, ¿el diagnóstico se realizó durante un embarazo, parto o puerperio?</label>
-										<div class="radio" abm-radio label="Si">
+										<div abm-radio label="Si">
 											<input type="radio" id="hivDuringLabor" name="hivDuringLabor" value="Si" ng-model="SummaryDetailsController.hiv_details.woman" disabled>
 										</div>
-										<div class="radio" abm-radio label="No">
+										<div abm-radio label="No">
 											<input type="radio" id="hivDuringLabor" name="hivDuringLabor" value="No" ng-model="SummaryDetailsController.hiv_details.woman" disabled>
 										</div>
-										<div class="radio" abm-radio label="Desconocido">
+										<div abm-radio label="Desconocido">
 											<input type="radio" name="hivDuringLabor" value="Desconocido" ng-model="SummaryDetailsController.hiv_details.woman" disabled>
 										</div>
 									</abm-form-group>
 									<abm-form-group name="clinicalState" disabled>
 										<label data-abm-label type="static" style="font-weight:bold">Estadio clínico al momento del diagnóstico serológico confirmado (*)</label>
-										<div class="radio" abm-radio name="clinicalState" label="Síndrome retroviral agudo">
+										<div abm-radio name="clinicalState" label="Síndrome retroviral agudo">
 											<input type="radio" id="clinicalState" name="clinicalState" value="agudo" ng-model="SummaryDetailsController.hiv_details.clinicalState" disabled>
 										</div>
-										<div class="radio" abm-radio name="clinicalState" label="Infección asintomática">
+										<div abm-radio name="clinicalState" label="Infección asintomática">
 											<input type="radio" name="clinicalState" id="clinicalState" value="asintomatica" ng-model="SummaryDetailsController.hiv_details.clinicalState" disabled>
 										</div>
-										<div class="radio" abm-radio  name="clinicalState" label="Infección sintomática sin criterio de sida">
+										<div abm-radio  name="clinicalState" label="Infección sintomática sin criterio de sida">
 											<input type="radio" id="clinicalState" name="clinicalState" value="sintomatica" ng-model="SummaryDetailsController.hiv_details.clinicalState" disabled>
 										</div>
-										<div class="radio" abm-radio label="Enfermedad marcadora de sida">
+										<div abm-radio label="Enfermedad marcadora de sida">
 											<input type="radio" name="clinicalState" value="enfMarcadoraSida" id="clinicalState" ng-model="SummaryDetailsController.hiv_details.clinicalState" disabled>
 										</div>
-										<div class="radio" abm-radio label="Desconocido">
+										<div abm-radio label="Desconocido">
 											<input type="radio" name="clinicalState" id="clinicalState" value="desconocido" ng-model="SummaryDetailsController.hiv_details.clinicalState" disabled>
 										</div>
 									</abm-form-group>
