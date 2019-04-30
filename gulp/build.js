@@ -82,12 +82,22 @@ gulp.task('other', function () {
     return file.stat.isFile();
   });
 
+  gulp.src([
+    path.join(conf.paths.src, '/assets/*.js')])
+    .pipe(fileFilter)
+    .pipe(gulp.dest(path.join(conf.paths.dist, '/assets')));
+
+
+
   return gulp.src([
     path.join(conf.paths.src, '/**/*'),
     path.join('!' + conf.paths.src, '/**/*.{html,css,js}')
   ])
     .pipe(fileFilter)
     .pipe(gulp.dest(path.join(conf.paths.dist, '/')));
+
+  
+  
 });
 
 gulp.task('pack',['build'],function () {
