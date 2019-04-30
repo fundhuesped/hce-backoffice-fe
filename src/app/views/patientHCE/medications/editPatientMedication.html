@@ -63,10 +63,10 @@
 					  	<abm-form-group>
 					    	<label abm-label type="static">Estado del medicamento(*)</label>
 						    <div class="radio" abm-radio label="Activo">
-						      <input type="radio" name="activo" value="Active" ng-model="EditPatientMedicationController.patientMedication.state" ng-required="true" ng-change="EditPatientMedicationController.changeStatus()" >
+						      <input type="radio" name="activo" value="Active" ng-model="EditPatientMedicationController.patientMedication.state" ng-required="true" ng-change="EditPatientMedicationController.changeStatus()" ng-disabled="EditPatientMedicationController.patientMedication.state=='Closed'" >
 						    </div>
 						    <div class="radio" abm-radio label="Inactivo">
-						      <input type="radio" name="inactivo" value="Closed" ng-model="EditPatientMedicationController.patientMedication.state"ng-required="true" >
+						      <input type="radio" name="inactivo" value="Closed" ng-model="EditPatientMedicationController.patientMedication.state"ng-required="true" ng-disabled="EditPatientMedicationController.patientMedication.state=='Closed'" >
 						    </div>					    
 					  	</abm-form-group>
 					</div>
