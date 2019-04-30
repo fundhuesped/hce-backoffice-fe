@@ -314,18 +314,20 @@
 					padding-top: 10px;border-bottom:1px solid;border-bottom-color:#D2D2D2">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div ng-class="{'evolution-header':vaccine.selected}">
-								<div class="rowcol-xs-1 col-sm-1 col-md-1 col-lg-1">
+								<div class="rowcol-xs-3 col-sm-3 col-md-3 col-lg-3">
 									{{vaccine.vaccine.synonym}}
 								</div>
-								<div class="col-md-1-5 col-md-1-5 col-md-1-5 col-md-1-5">
+								<div class="col-md-4 col-md-4 col-md-4 col-md-4">
 									{{vaccine.vaccine.name}}
 								</div>
-								<div class="col-xs-1-5 col-sm-1-5 col-md-1-5 col-lg-1-5">
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 									Aplicada: {{vaccine.appliedDate | date:"dd/MM/yyyy"}}
 								</div>
-								<div class="col-md-2-5 col-md-2-5 col-md-2-5 col-md-2-5">{{vaccine.profesional.first_name}} {{vaccine.profesional.last_name}}</div>
-								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="word-wrap:break-word;">
-									Observaciones: {{vaccine.observations}}
+								<div class="row">
+									<div class="col-md-3 col-md-3 col-md-3 col-md-3">{{vaccine.profesional.first_name}} {{vaccine.profesional.last_name}}</div>
+									<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="word-wrap:break-word;">
+										Observaciones: {{vaccine.observations}}
+									</div>
 								</div>
 							</div>
 						</div>
