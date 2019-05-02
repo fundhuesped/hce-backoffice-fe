@@ -47,36 +47,49 @@
       function exportPDF() {
         console.warn("--- called export pdf ---");
 
-        //Global document parameters
-        var margins = {
-            top: 60,
-            left: 30,
-            bottom: 120,
-            right: 50
-        };
-
-        var compression = {
-            enable: true,
-            type: {FAST:'FAST', MEDIUM: 'MEDIUM', SLOW: 'SLOW', NONE:'NONE'}
-        };
-
-        html2canvas(document.getElementById('exportthis'))
+        var quotes = document.getElementById('export-this');
+        html2canvas(quotes)
         .then(function(canvas) {
+          var pdf = new jsPDF('p', 'pt', 'a4');
 
-            var dimensions = {
-                width: canvas.width + margins.right,
-                height: canvas.height + margins.bottom
-            };
+          for (var i = 0; i <= quotes.clientHeight/980; i++) {
+              // This is all just html2canvas stuff
+              var srcImg  = canvas;
+              var sX      = 0;
+              var sWidth  = 778;
+              var sHeight = 1100;
+              var sY      = sHeight*i; // start 980 pixels down for every new page
+              var dX      = 0;
+              var dY      = 0;
+              var dWidth  = sWidth;
+              var dHeight = sHeight;
 
-            if(canvas.width > canvas.height)
-                var doc = new jsPDF('l', 'mm', [dimensions.width, dimensions.height], compression.enable); //Landscape
-            else
-                var doc = new jsPDF('p', 'mm', [dimensions.width, dimensions.height], compression.enable); //Portrait
+              window.onePageCanvas = document.createElement("canvas");
+              onePageCanvas.setAttribute('width', sWidth);
+              onePageCanvas.setAttribute('height', sHeight);
+              var ctx = onePageCanvas.getContext('2d');
+              // details on this usage of this function: 
+              // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images#Slicing
+              ctx.drawImage(srcImg,sX,sY,sWidth,sHeight,dX,dY,dWidth,dHeight);
 
-            doc.addImage(canvas, 'png', margins.left, margins.top, canvas.width, canvas.height, undefined, compression.type.MEDIUM);
-            doc.autoPrint();
-            debugger;
-            doc.save('Resumen.pdf');
+              // document.body.appendChild(canvas);
+              var canvasDataURL = onePageCanvas.toDataURL("image/png", 1.0);
+
+              var width         = onePageCanvas.width;
+              var height        = onePageCanvas.clientHeight;
+
+              // If we're on anything other than the first page, add another page
+              if (i > 0) {
+                  pdf.addPage(595, 842); //8.5" x 11" in pts (in*72)
+              }
+              // now we declare that we're working on that page
+              pdf.setPage(i+1);
+              // now we add content to that page!
+              pdf.addImage(canvasDataURL, 'png', 0, 0, (width*.72), (height*.71));
+
+          };
+          pdf.autoPrint();
+          pdf.save('Resumen.pdf');
         });
       }
 
