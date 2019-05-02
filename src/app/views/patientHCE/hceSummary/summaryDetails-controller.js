@@ -42,6 +42,9 @@
 
       function init() {
         getDetails();
+        toastr.info('Puede elegir "Guardar como PDF" para descargar el resumen', 'Instrucciones');
+        toastr.info('Imprima dando click derecho -> "imprimir"', 'Instrucciones');
+        toastr.info('Por favor espere unos segundos antes de imprimir', 'Cargando información...');
       }
 
       function exportPDF() {
