@@ -1,4 +1,4 @@
-	<div class="do-print">
+<div class="do-print">
 	<button  class="btn btn-success btn-raised btn-lg btn-block" ng-click="SummaryDetailsController.exportPDF()">Guardar en PDF</button>
 	<div class="container-fluid hce-container-modal" id="exportthis">
 		<div class="container-fluid">
@@ -427,26 +427,24 @@
 							</div>
 						</div>
 					</div>
-				</div>	    					
-				</div>
-			</div>
+				</div>	
 		</form>
 
 
 		<div class="row" ng-if="SummaryDetailsController.observations">
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-					{{SummaryDetailsController.observations}}
-				</div>
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-				</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				{{SummaryDetailsController.observations}}
 			</div>
-			<div class="row" style="margin-top: 300px">
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-					{{SummaryDetailsController.issuedDate| date:"d/M/yy"}}
-				</div>
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-					Firma y sello
-				</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 			</div>
+		</div>
+		<div class="row" style="margin-top: 300px">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				{{SummaryDetailsController.issuedDate| date:"d/M/yy"}}
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				Firma y sello
+			</div>
+		</div>    					
 	</div>
 </div>
