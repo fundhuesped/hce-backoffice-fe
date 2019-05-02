@@ -129,7 +129,9 @@
       }
 
       function hasSelectedTransmission() {
-        return vm.newPatientProblem.aditionalData.vertical || vm.newPatientProblem.aditionalData.mujeres || vm.newPatientProblem.aditionalData.hombres || vm.newPatientProblem.aditionalData.trans || vm.newPatientProblem.aditionalData.inyeccion || vm.newPatientProblem.aditionalData.accidente || vm.newPatientProblem.aditionalData.transfusion
+        return vm.newPatientProblem.aditionalData.vertical || vm.newPatientProblem.aditionalData.mujeres || vm.newPatientProblem.aditionalData.hombres || vm.newPatientProblem.aditionalData.trans || vm.newPatientProblem.aditionalData.inyeccion || vm.newPatientProblem.aditionalData.accidente || vm.newPatientProblem.aditionalData.transfusion ||
+        vm.newPatientProblem.aditionalData.otraCheck ||
+        vm.newPatientProblem.aditionalData.desconocida
       }
 
       function canSaveNewProblem() {
