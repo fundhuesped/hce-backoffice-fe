@@ -73,7 +73,6 @@
         if(tmpPatientMedication.endDate && tmpPatientMedication.state == 'Closed'){
           tmpPatientMedication.endDate = moment(tmpPatientMedication.endDate).format('YYYY-MM-DD');
         }
-
         tmpPatientMedication.$save({pacienteId:HCService.currentPaciente.id},function() {
           toastr.success('Medicación guardada con exito');
           $uibModalInstance.close('created');
