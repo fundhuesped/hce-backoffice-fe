@@ -203,7 +203,7 @@
 											<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" ng-if="medication.endDate">
 												Fin: {{medication.endDate | date:"dd/MM/yyyy"}}
 											</div>
-											<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+											<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
 												Observaciones: {{medication.observations}}
 											</div>
 										</div>
@@ -219,26 +219,26 @@
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<label style="font-weight:bold;color:black;">
-								Otra medicación
+									Otra medicación
 								</label>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<div class="row " ng-repeat="medication in SummaryDetailsController.generalMedications" style="padding-bottom: 10px;
 								padding-top: 10px;border-bottom:1px solid;border-bottom-color:#D2D2D2">
 									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-										<div class="row" ng-class="{'evolution-header':medication.selected}">
-											<div class="col-xs-9 col-sm-3 col-md-3 col-lg-3">
+										<div class="row" ng-class="{'evolution-header':treatment.selected}">
+											<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 												{{medication.medication.name}}
 											</div>
-											<div class="ol-xs-3 col-sm-3 col-md-3 col-lg-3">
+											<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 												Inicio: {{medication.startDate | date:"dd/MM/yyyy"}}
 											</div>
 										</div>
-										<div class="row">
+										<div class="row" ng-class="{'evolution-header':treatment.selected}">
 											<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" ng-if="medication.endDate">
 												Fin: {{medication.endDate | date:"dd/MM/yyyy"}}
 											</div>
-											<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="word-wrap:break-word;">
+											<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
 												Observaciones: {{medication.observations}}
 											</div>
 										</div>
