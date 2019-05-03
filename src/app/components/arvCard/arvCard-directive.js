@@ -48,7 +48,7 @@
             showLab: false,
             showOthers: false,
             showVaccines: false,
-            observations: false
+            observations: ""
         });
 
         $window.open(url,'_blank');
