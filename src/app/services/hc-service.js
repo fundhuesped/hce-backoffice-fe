@@ -303,12 +303,12 @@
         function getEvolution(idEvolution){
             if(srv.isDirty()){
                 return $q(function(resolve, reject) {
-                    reject('ISDIRTY');
+                    reject('Debe guardar los cambios antes de continuar');
                 });
             }
             if(srv.currentEvolution){
                 return $q(function(resolve, reject) {
-                    reject('EVOLUTIONOPEN');
+                    reject('Debe ingresar una nueva evolución');
                 });
             }
             return Evolution.getEvolution(idEvolution, function (result) {
