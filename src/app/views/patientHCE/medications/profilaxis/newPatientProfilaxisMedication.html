@@ -56,10 +56,10 @@
 				    		<tbody>
 				    			<tr>
 			    					<td>
-			    						<input type="number" name="quantityPerDay" min="0" onkeypress="return event.charCode >= 48" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerDay" ng-change="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerMonth=NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerDay*30" ng-required="true"/>
+			    						<input type="number" name="quantityPerDay" min="0" onkeypress="return event.charCode >= 48 || event.charCode == 44" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerDay" ng-change="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerMonth=NewPatientProfilaxisMedicationController.roundNumber(NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerDay*30)" ng-required="true" ng-pattern="/^[0-9]+(\.[0-9]{1,1})?$/" step="0.1"/>
 			    					</td> 
 			    					<td>
-			    						<input type="number" name="quantityPerMonth" min="0" onkeypress="return event.charCode >= 48" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerMonth" ng-required="true"/>
+			    						<input type="number" name="quantityPerMonth" min="0" onkeypress="return event.charCode >= 48 || event.charCode == 44" ng-model="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerMonth" ng-change="NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerDay=NewPatientProfilaxisMedicationController.roundNumber(NewPatientProfilaxisMedicationController.newPatientMedication.quantityPerMonth/30)" ng-required="true" ng-pattern="/^[0-9]+(\.[0-9]{1,1})?$/" step="0.1"/>
 			    					</td> 
 		    					</tr>
 		    				</tbody>

@@ -18,6 +18,7 @@
       vm.canSave = canSave;
       vm.error = null;
       vm.changeStatus = changeStatus;
+      vm.roundNumber = roundNumber;
 
 
       vm.startDateCalendar = {
@@ -158,6 +159,10 @@
         }else{
           toastr.error('Ocurrio un error');
         }
+      }
+
+      function roundNumber(number) {
+        return (Math.round(number*10)/10);
       }
     }
 })();
