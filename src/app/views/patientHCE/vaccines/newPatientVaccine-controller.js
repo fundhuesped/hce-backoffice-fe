@@ -20,6 +20,7 @@
       vm.canSave = canSave;
       vm.error = null;
       vm.waitingToShowError = false;
+      vm.loading = false;
 
       vm.applicationDateCalendar = {
         altInputFormats: ['d!-M!-yyyy'],
@@ -73,12 +74,22 @@
       }
 
       function getVaccines($viewValue) {
+        if(vm.loading==false){
+          toastr.info('Cargando..');
+          vm.loading = true;
+          $timeout(
+            function() {
+              vm.loading = false;
+            }, 1500);
+        }
+
         var filters = {
           name : $viewValue
         };
 
         return Vaccine.getFullActiveList(filters, function(vaccines){
           vm.vaccines = vaccines;
+          vm.loading = false;
           if (vaccines.length <= 0 && !vm.waitingToShowError){
             toastr.warning('No se han encontrado resultados');
             vm.waitingToShowError = true;
