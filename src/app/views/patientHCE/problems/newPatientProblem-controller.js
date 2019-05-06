@@ -25,6 +25,7 @@
       vm.isHIV = isHIV;
       vm.error = null;
       vm.waitingToShowError = false;
+      vm.loading = false;
 
 
       Object.defineProperty(
@@ -169,12 +170,22 @@
       }
 
       function getProblems($viewValue) {
+        if(vm.loading==false){
+          toastr.info('Cargando..');
+          vm.loading = true;
+          $timeout(
+            function() {
+              vm.loading = false;
+            }, 1500);
+        }
+
         var filters = {
           name : $viewValue
         };
 
         return Problem.getFullActiveList(filters, function(problems){
           vm.problems = problems;
+          vm.loading = false;
           if (problems.length <= 0 && !vm.waitingToShowError){
             toastr.warning('No se han encontrado resultados');
             vm.waitingToShowError = true;
