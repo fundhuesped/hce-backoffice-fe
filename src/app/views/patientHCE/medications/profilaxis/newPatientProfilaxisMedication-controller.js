@@ -19,6 +19,8 @@
       vm.error = null;
       vm.changeStatus = changeStatus;
       vm.roundNumber = roundNumber;
+      vm.waitingToShowError = false;
+      vm.loading = false;
 
 
       vm.startDateCalendar = {
@@ -113,6 +115,15 @@
       }
 
       function getMedications($viewValue) {
+        if(vm.loading==false){
+          toastr.info('Cargando..');
+          vm.loading = true;
+          $timeout(
+            function() {
+              vm.loading = false;
+            }, 1500);
+        }
+
   
         var filters = {
           name : $viewValue,
@@ -122,8 +133,14 @@
 
         return Medication.getFullActiveList(filters, function(medications){
           vm.medications = medications;
-          if(medications.length === 0){
+          vm.loading = false;
+          if(medications.length === 0 && !vm.waitingToShowError){
             toastr.error('No existen medicamentos.');
+            vm.waitingToShowError = true;
+            $timeout(
+              function() {
+                vm.waitingToShowError = false;
+              }, 1500);
           }
         }, displayComunicationError).$promise;
 
