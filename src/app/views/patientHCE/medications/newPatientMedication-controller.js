@@ -21,6 +21,8 @@
       vm.changeStatus = changeStatus;
       vm.activeProblems = [];
       vm.waitingToShowError = false;
+      vm.loading = false;
+      
 
       vm.startDateCalendar = {
         opened: false,
@@ -113,6 +115,16 @@
       }
 
       function getMedications($viewValue) {
+        if(vm.loading==false){
+          toastr.info('Cargando..');
+          vm.loading = true;
+          $timeout(
+            function() {
+              vm.loading = false;
+            }, 1500);
+        }
+
+        
         var filters = {
           name : $viewValue,
           medicationType: 10
@@ -120,6 +132,7 @@
 
         return Medication.getFullActiveList(filters, function(medications){
           vm.medications = medications;
+          vm.loading = false;
           if (medications.length <= 0 && !vm.waitingToShowError){
             toastr.warning('No se han encontrado resultados');
             vm.waitingToShowError = true;

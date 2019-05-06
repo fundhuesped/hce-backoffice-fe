@@ -135,7 +135,7 @@
           vm.medications = medications;
           vm.loading = false;
           if(medications.length === 0 && !vm.waitingToShowError){
-            toastr.error('No existen medicamentos.');
+            toastr.warning('No se han encontrado resultados');
             vm.waitingToShowError = true;
             $timeout(
               function() {
