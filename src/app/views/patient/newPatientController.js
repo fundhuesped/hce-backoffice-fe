@@ -102,7 +102,7 @@
                     }
                 );
             }else{
-                vm.errorMessage = 'Por favor revise el formulario';
+                toastr.error('Por favor revise el formulario, los datos ingresados No son validos');
             }
         }
 
