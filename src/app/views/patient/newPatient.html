@@ -45,7 +45,7 @@
                                 </abm-form-group>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <abm-form-group>
+                                <abm-form-group ng-class="{'has-error': true}">
                                     <label abm-label for="birthDate">Fecha nacimiento(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
                                     <p class="input-group">
                                         <input type="text" name="birthDate" class="form-control" uib-datepicker-popup="d!/M!/yyyy" ng-model="NewPatientController.paciente.birthDate" is-open="NewPatientController.birthDateCalendarPopup.opened" datepicker-options="NewPatientController.birthDateCalendarPopup.options" alt-input-formats="NewPatientController.birthDateCalendarPopup.altInputFormats" current-text="Hoy" clear-text="Limpiar" close-text="Cerrar" ng-required="true"/>
