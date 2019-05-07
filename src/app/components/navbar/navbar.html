@@ -8,7 +8,17 @@
       </button>
     </div>
     <div class="navbar-collapse collapse navbar-responsive-collapse">
-      <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 no-padding" style="margin-left: -15px;">
+      <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 no-padding" style="margin-left: -15px; width:100%">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{NavbarController.currentUser.first_name}} {{NavbarController.currentUser.last_name}}<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li ng-show="NavbarController.currentUser"><a ui-sref="changePassword">Cambiar contraseña</a></li>
+              <li ng-show="NavbarController.currentUser"><a ng-click="NavbarController.logout()">Cerrar sesión</a></li>
+              <li ng-show="!NavbarController.currentUser"><a ui-sref="login">Iniciar sesión</a></li>
+            </ul>
+          </li>
+        </ul>
         <div class="row ">
           <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
             <div class="row">
@@ -49,16 +59,6 @@
 
         </div>
       </div>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{NavbarController.currentUser.first_name}} {{NavbarController.currentUser.last_name}}<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li ng-show="NavbarController.currentUser"><a ui-sref="changePassword">Cambiar contraseña</a></li>
-            <li ng-show="NavbarController.currentUser"><a ng-click="NavbarController.logout()">Cerrar sesión</a></li>
-            <li ng-show="!NavbarController.currentUser"><a ui-sref="login">Iniciar sesión</a></li>
-          </ul>
-        </li>
-      </ul>
     </div>
   </div>
 </div>
