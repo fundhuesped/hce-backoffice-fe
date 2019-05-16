@@ -18,6 +18,7 @@
       vm.cancel = cancel;
       vm.canSave = canSave;
       vm.waitingToShowError = false;
+      vm.loading = false;
 
       vm.studyDateCalendar = {
         opened: false,
@@ -67,11 +68,22 @@
 
 
       function getClinicalStudies($viewValue) {
+        if(vm.loading==false){
+          toastr.info('Cargando..');
+          vm.loading = true;
+          $timeout(
+            function() {
+              vm.loading = false;
+            }, 1500);
+        }
+
+        
         var filters = {
           name : $viewValue
         };
         return ClinicalStudy.getFullActiveList(filters, function(clinicalStudies){
           vm.clinicalStudies = clinicalStudies;
+          vm.loading = false;
           if (clinicalStudies.length <= 0 && !vm.waitingToShowError){
             toastr.warning('No se han encontrado resultados');
             vm.waitingToShowError = true;
