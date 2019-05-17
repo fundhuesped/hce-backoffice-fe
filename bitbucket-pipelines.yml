@@ -15,7 +15,5 @@ pipelines:
           - npx bower install --allow-root
           - npx gulp clean
           - npx gulp pack
-    - step:
-        script: # Modify the commands below to build your repository.
           - scp release/dist.zip root@hce-dev.eastus.cloudapp.azure.com:/tmp
           - ssh root@hce-dev.eastus.cloudapp.azure.com ./deployfe.sh
