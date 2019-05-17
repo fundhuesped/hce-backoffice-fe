@@ -15,3 +15,4 @@ pipelines:
           - npx bower install --allow-root
           - npx gulp clean
           - npx gulp pack
+          - scp release/dist.zip root@hce-dev.eastus.cloudapp.azure.com:/tmp
