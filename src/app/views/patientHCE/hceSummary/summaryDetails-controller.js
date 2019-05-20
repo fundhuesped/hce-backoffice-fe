@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('SummaryDetailsController', summaryDetailsController);
 
-  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem', 'PatientArvTreatment', 'PatientMedication', 'PatientClinicalResult', 'PatientLaboratoryResult', 'PatientVaccine', '$scope'];
+  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem', 'PatientArvTreatment', 'PatientMedication', 'PatientClinicalResult', 'PatientLaboratoryResult', 'PatientVaccine', '$scope', 'Preference'];
 
-    function summaryDetailsController (toastr, $stateParams, HIVData, Paciente, Evolution, PatientProblem, PatientArvTreatment, PatientMedication, PatientClinicalResult, PatientLaboratoryResult, PatientVaccine, $scope) {
+    function summaryDetailsController (toastr, $stateParams, HIVData, Paciente, Evolution, PatientProblem, PatientArvTreatment, PatientMedication, PatientClinicalResult, PatientLaboratoryResult, PatientVaccine, $scope, Preference) {
       var vm = this;
       vm.cancel = cancel;
       vm.canBeClosed = canBeClosed;
@@ -38,9 +38,13 @@
       vm.showPNS = showPNS;
       vm.getSchema = getSchema;
       vm.exportPDF = exportPDF;
+      vm.headerImage = '';
       init();
 
       function init() {
+        Preference.get({section:'global', name: 'general__prescription_header_image'}, function (response) {
+          vm.headerImage = response.value;
+        })
         getDetails();
         toastr.info('Imprima dando click derecho -> "imprimir"', 'Instrucciones');
         toastr.info('Por favor espere unos segundos antes de imprimir', 'Cargando información...');
