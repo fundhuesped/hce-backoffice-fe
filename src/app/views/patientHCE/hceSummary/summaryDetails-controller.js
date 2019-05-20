@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('SummaryDetailsController', summaryDetailsController);
 
-  summaryDetailsController.$inject = ['toastr', '$stateParams', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem', 'PatientArvTreatment', 'PatientMedication', 'PatientClinicalResult', 'PatientLaboratoryResult', 'PatientVaccine', '$scope'];
+  summaryDetailsController.$inject = ['toastr', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem', 'PatientArvTreatment', 'PatientMedication', 'PatientClinicalResult', 'PatientLaboratoryResult', 'PatientVaccine', '$scope', '$uibModalInstance', 'HCService'];
 
-    function summaryDetailsController (toastr, $stateParams, HIVData, Paciente, Evolution, PatientProblem, PatientArvTreatment, PatientMedication, PatientClinicalResult, PatientLaboratoryResult, PatientVaccine, $scope) {
+    function summaryDetailsController (toastr, HIVData, Paciente, Evolution, PatientProblem, PatientArvTreatment, PatientMedication, PatientClinicalResult, PatientLaboratoryResult, PatientVaccine, $scope, $uibModalInstance, HCService) {
       var vm = this;
       vm.cancel = cancel;
       vm.canBeClosed = canBeClosed;
@@ -32,7 +32,7 @@
       vm.laboratoryResults = [];
       vm.showVaccines = false;
       vm.vaccines = [];
-      vm.$stateParams = $stateParams;
+      vm.$stateParams = $stateParams; //TODO FIXME DELETE
       vm.observations = $stateParams.observations;
       vm.issuedDate = new Date();
       vm.showPNS = showPNS;
@@ -46,58 +46,8 @@
         toastr.info('Por favor espere unos segundos antes de imprimir', 'Cargando información...');
       }
 
-      function exportPDF() {
-        console.warn("--- called export pdf ---");
-
-        var quotes = document.getElementById('export-this');
-        html2canvas(quotes)
-        .then(function(canvas) {
-          var pdf = new jsPDF('p', 'pt', 'a4');
-
-          for (var i = 0; i <= quotes.clientHeight/980; i++) {
-              // This is all just html2canvas stuff
-              var srcImg  = canvas;
-              var sX      = 0;
-              var sWidth  = 778;
-              var sHeight = 1100;
-              var sY      = sHeight*i; // start 980 pixels down for every new page
-              var dX      = 0;
-              var dY      = 0;
-              var dWidth  = sWidth;
-              var dHeight = sHeight;
-
-              window.onePageCanvas = document.createElement("canvas");
-              onePageCanvas.setAttribute('width', sWidth);
-              onePageCanvas.setAttribute('height', sHeight);
-              var ctx = onePageCanvas.getContext('2d');
-              // details on this usage of this function: 
-              // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images#Slicing
-              ctx.drawImage(srcImg,sX,sY,sWidth,sHeight,dX,dY,dWidth,dHeight);
-
-              // document.body.appendChild(canvas);
-              var canvasDataURL = onePageCanvas.toDataURL("image/png", 1.0);
-
-              var width         = onePageCanvas.width;
-              var height        = onePageCanvas.clientHeight;
-
-              // If we're on anything other than the first page, add another page
-              if (i > 0) {
-                  pdf.addPage(595, 842); //8.5" x 11" in pts (in*72)
-              }
-              // now we declare that we're working on that page
-              pdf.setPage(i+1);
-              // now we add content to that page!
-              pdf.addImage(canvasDataURL, 'png', 0, 0, (width*.72), (height*.71));
-
-          };
-          pdf.autoPrint();
-          pdf.save('Resumen.pdf');
-        });
-      }
-
-
       function cancel() {
-        
+        $uibModalInstance.dismiss('cancel');
       }
 
       function canBeClosed() {
@@ -108,12 +58,12 @@
         return string == "true";
       }
       
-      function showPNS(){
+      function showPNS(){ //TODO FIXME Change
        return checkTrue($stateParams.showPNS) 
       }
 
       function getDetails() {
-        Paciente.get({id:$stateParams.patientId}, function(patient){
+        Paciente.get({id:HCService.currentPacienteId}, function(patient){
           vm.patient_details = patient;
           vm.patientIdentification = (showPNS())
                                       ? patient.pns
@@ -123,36 +73,36 @@
           vm.patient_details = null;
         });
 
-        vm.showHIV = checkTrue($stateParams.showHIV);
+        vm.showHIV = checkTrue($stateParams.showHIV); //TODO FIXME Change
         if(checkTrue($stateParams.showHIV)) getHIVdetails();
 
-        vm.showEvolutions = checkTrue($stateParams.showEvolutions);
+        vm.showEvolutions = checkTrue($stateParams.showEvolutions); //TODO FIXME Change
         if(checkTrue($stateParams.showEvolutions)) getEvolutionsDetails();
 
-        vm.showProblems = checkTrue($stateParams.showProblems);
+        vm.showProblems = checkTrue($stateParams.showProblems); //TODO FIXME Change
         if(checkTrue($stateParams.showProblems)) getPatienProblems();
         
-        vm.showARV = checkTrue($stateParams.showARV);
+        vm.showARV = checkTrue($stateParams.showARV); //TODO FIXME Change
         if(checkTrue($stateParams.showARV)) getArvTreatments();
         
-        vm.showProfilaxis = checkTrue($stateParams.showProfilaxis);
+        vm.showProfilaxis = checkTrue($stateParams.showProfilaxis); //TODO FIXME Change
         if(checkTrue($stateParams.showProfilaxis)) getProfilaxis();
         
-        vm.showGeneral = checkTrue($stateParams.showGeneral);
+        vm.showGeneral = checkTrue($stateParams.showGeneral); //TODO FIXME Change
         if(checkTrue($stateParams.showGeneral)) getGeneralTreatments();
         
-        vm.showLab = checkTrue($stateParams.showLab);
+        vm.showLab = checkTrue($stateParams.showLab); //TODO FIXME Change
         if(checkTrue($stateParams.showLab)) getLabResults();
         
-        vm.showOthers = checkTrue($stateParams.showOthers);
+        vm.showOthers = checkTrue($stateParams.showOthers); //TODO FIXME Change
         if(checkTrue($stateParams.showOthers)) getOthers();
         
-        vm.showVaccines = checkTrue($stateParams.showVaccines);
+        vm.showVaccines = checkTrue($stateParams.showVaccines); //TODO FIXME Change
         if(checkTrue($stateParams.showVaccines)) getVaccines();
       }
 
       function getHIVdetails() {
-        HIVData.getHIVChart({patientId: $stateParams.patientId}, function (result) {
+        HIVData.getHIVChart({patientId: HCService.currentPacienteId}, function (result) {
             vm.hiv_details = result;
         }, function (err) {
           console.error(err);
@@ -161,7 +111,7 @@
       }
 
       function getEvolutionsDetails() {
-        Evolution.getAllForPaciente({pacienteId: $stateParams.patientId, notState:'Error'}, function (results) {
+        Evolution.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
           vm.evolutions = results;
         }, function (err) {
           console.error(err);
@@ -170,7 +120,7 @@
       }
 
       function getPatienProblems() {
-        PatientProblem.getAllForPaciente({pacienteId: $stateParams.patientId, notState:'Error'}, function (results) {
+        PatientProblem.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
           vm.problems = results;
         }, function (err) {
           console.error(err);
@@ -179,7 +129,7 @@
       }
 
       function getArvTreatments() {
-        PatientArvTreatment.getAllForPaciente({pacienteId: $stateParams.patientId, notState:'Error'}, function (results) {
+        PatientArvTreatment.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
           vm.arvTreatments = results;
         }, function (err) {
           console.error(err);
@@ -188,7 +138,7 @@
       }
 
       function getProfilaxis() {
-        PatientMedication.getAllForPaciente({pacienteId: $stateParams.patientId, notState:'Error'}, function (results) {
+        PatientMedication.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
           vm.medications = results.filter( function (med) {  return med.medication.medicationType.name == "Profilaxis"; } );
         }, function (err) {
           console.error(err);
@@ -198,7 +148,7 @@
 
 
       function getGeneralTreatments() {
-        PatientMedication.getForPaciente({pacienteId: $stateParams.patientId, notState:'Error'}, function (results) {
+        PatientMedication.getForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
           vm.generalMedications = results.filter( function(med) { return med.medication.medicationType.name != "Profilaxis";} );
         }, function (err) {
           console.error(err);
@@ -207,7 +157,7 @@
       }
 
       function getOthers() {
-        PatientClinicalResult.getAllForPaciente({pacienteId: $stateParams.patientId, notState:'Error'}, function (results) {
+        PatientClinicalResult.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
           vm.clinicalResults = results;
         }, function (err) {
           console.error(err);
@@ -216,7 +166,7 @@
       }
 
       function getLabResults() {
-        PatientLaboratoryResult.getForPaciente({pacienteId: $stateParams.patientId}, function (results) {
+        PatientLaboratoryResult.getForPaciente({pacienteId: HCService.currentPacienteId}, function (results) {
           vm.laboratoryResults = results;
         }, function (err) {
           console.error(err);
@@ -225,7 +175,7 @@
       }
 
       function getVaccines() {
-        PatientVaccine.getAllForPaciente({pacienteId: $stateParams.patientId, notState:'Error'}, function (results) {
+        PatientVaccine.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
           vm.vaccines = results;
         }, function (err) {
           console.error(err);

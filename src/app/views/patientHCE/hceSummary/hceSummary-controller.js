@@ -20,7 +20,7 @@
         }
 
 
-        function openModal() {
+        function openTab() {
             var booleanValue = vm.displayName == "pns";
 
             var url = $state.href('summaryDetails', {
@@ -39,6 +39,25 @@
             });
 
             $window.open(url,'_blank');
+        }
+
+        function openModal() {
+            var modalInstance = $uibModal.open({
+                backdrop: 'static',
+                templateUrl: 'app/views/patientHCE/hceSummary/summaryDetails.html',
+                size: 'md',
+                controller: 'SummaryDetailsController',
+                controllerAs: 'SummaryDetailsController'
+            });
+            
+            modalInstance.result.then(function (resolution) {
+            if(resolution==='markedError' || resolution==='edited'){
+                searchPatientProblems();
+                if(!HCService.currentEvolution){
+                    HCService.getCurrentEvolution();
+                }
+            }
+            });
         }
     }
 })();

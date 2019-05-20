@@ -35,27 +35,6 @@
           }
       })
 
-      .state('summaryDetails', {
-        url: '/summaryDetails?patientId&showPNS&showHIV&showEvolutions&showProblems&showARV&showProfilaxis&showGeneral&showLab&showOthers&showVaccines%observations',
-        templateUrl: 'app/views/patientHCE/hceSummary/summaryDetails.html',
-        controller: 'SummaryDetailsController',
-        controllerAs: 'SummaryDetailsController',        
-        params: {
-          patientId: null,
-          showPNS: "false",
-          showHIV: "false",
-          showEvolutions: "false",
-          showProblems: "false",
-          showARV: "false",
-          showProfilaxis: "false",
-          showGeneral: "false",
-          showLab: "false",
-          showOthers: "false",
-          showVaccines: "false",
-          observations: ""
-        }
-      })
-
       .state('profilaxisPrescription', {
           url: '/profilaxisPrescription?prescriptionId',
           templateUrl: 'app/views/patientHCE/prescriptions/profilaxisPrescription.html',
