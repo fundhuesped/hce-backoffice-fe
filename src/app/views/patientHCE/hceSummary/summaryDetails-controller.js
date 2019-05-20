@@ -40,6 +40,9 @@
       init();
 
       function init() {
+        Preference.get({section:'global', name: 'general__prescription_header_image'}, function (response) {
+          vm.headerImage = response.value;
+        })
         getDetails();
         toastr.info('Imprima dando click derecho -> "imprimir"', 'Instrucciones');
         toastr.info('Por favor espere unos segundos antes de imprimir', 'Cargando información...');
