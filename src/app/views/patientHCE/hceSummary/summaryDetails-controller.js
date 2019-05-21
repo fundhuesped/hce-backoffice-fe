@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('SummaryDetailsController', summaryDetailsController);
 
-  summaryDetailsController.$inject = ['toastr', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem', 'PatientArvTreatment', 'PatientMedication', 'PatientClinicalResult', 'PatientLaboratoryResult', 'PatientVaccine', '$scope', '$uibModalInstance', 'HCService'];
+  summaryDetailsController.$inject = ['toastr', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem', 'PatientArvTreatment', 'PatientMedication', 'PatientClinicalResult', 'PatientLaboratoryResult', 'PatientVaccine', '$scope', '$uibModalInstance', 'HCService', 'showPNS', 'showHIV', 'showEvolutions', 'showProblems', 'showARV', 'showProfilaxis', 'showGeneral', 'showLab', 'showOthers', 'showVaccines', 'observations'];
 
-    function summaryDetailsController (toastr, HIVData, Paciente, Evolution, PatientProblem, PatientArvTreatment, PatientMedication, PatientClinicalResult, PatientLaboratoryResult, PatientVaccine, $scope, $uibModalInstance, HCService) {
+    function summaryDetailsController (toastr, HIVData, Paciente, Evolution, PatientProblem, PatientArvTreatment, PatientMedication, PatientClinicalResult, PatientLaboratoryResult, PatientVaccine, $scope, $uibModalInstance, HCService, showPNS, showHIV, showEvolutions, showProblems, showARV, showProfilaxis, showGeneral, showLab, showOthers, showVaccines, observations) {
       var vm = this;
       vm.cancel = cancel;
       vm.canBeClosed = canBeClosed;
@@ -32,12 +32,10 @@
       vm.laboratoryResults = [];
       vm.showVaccines = false;
       vm.vaccines = [];
-      vm.$stateParams = $stateParams; //TODO FIXME DELETE
-      vm.observations = $stateParams.observations;
+      vm.observations = observations;
       vm.issuedDate = new Date();
-      vm.showPNS = showPNS;
+      vm.showPNS = canShowPNS;
       vm.getSchema = getSchema;
-      vm.exportPDF = exportPDF;
       init();
 
       function init() {
@@ -58,14 +56,14 @@
         return string == "true";
       }
       
-      function showPNS(){ //TODO FIXME Change
-       return checkTrue($stateParams.showPNS) 
+      function canShowPNS(){
+       return checkTrue(showPNS) 
       }
 
       function getDetails() {
         Paciente.get({id:HCService.currentPacienteId}, function(patient){
           vm.patient_details = patient;
-          vm.patientIdentification = (showPNS())
+          vm.patientIdentification = (canShowPNS())
                                       ? patient.pns
                                       : (patient.firstName + " " + patient.fatherSurname); 
         }, function (err) {
@@ -73,32 +71,32 @@
           vm.patient_details = null;
         });
 
-        vm.showHIV = checkTrue($stateParams.showHIV); //TODO FIXME Change
-        if(checkTrue($stateParams.showHIV)) getHIVdetails();
+        vm.showHIV = checkTrue(showHIV);
+        if(checkTrue(showHIV)) getHIVdetails();
 
-        vm.showEvolutions = checkTrue($stateParams.showEvolutions); //TODO FIXME Change
-        if(checkTrue($stateParams.showEvolutions)) getEvolutionsDetails();
+        vm.showEvolutions = checkTrue(showEvolutions);
+        if(checkTrue(showEvolutions)) getEvolutionsDetails();
 
-        vm.showProblems = checkTrue($stateParams.showProblems); //TODO FIXME Change
-        if(checkTrue($stateParams.showProblems)) getPatienProblems();
+        vm.showProblems = checkTrue(showProblems);
+        if(checkTrue(showProblems)) getPatienProblems();
         
-        vm.showARV = checkTrue($stateParams.showARV); //TODO FIXME Change
-        if(checkTrue($stateParams.showARV)) getArvTreatments();
+        vm.showARV = checkTrue(showARV);
+        if(checkTrue(showARV)) getArvTreatments();
         
-        vm.showProfilaxis = checkTrue($stateParams.showProfilaxis); //TODO FIXME Change
-        if(checkTrue($stateParams.showProfilaxis)) getProfilaxis();
+        vm.showProfilaxis = checkTrue(showProfilaxis);
+        if(checkTrue(showProfilaxis)) getProfilaxis();
         
-        vm.showGeneral = checkTrue($stateParams.showGeneral); //TODO FIXME Change
-        if(checkTrue($stateParams.showGeneral)) getGeneralTreatments();
+        vm.showGeneral = checkTrue(showGeneral);
+        if(checkTrue(showGeneral)) getGeneralTreatments();
         
-        vm.showLab = checkTrue($stateParams.showLab); //TODO FIXME Change
-        if(checkTrue($stateParams.showLab)) getLabResults();
+        vm.showLab = checkTrue(showLab);
+        if(checkTrue(showLab)) getLabResults();
         
-        vm.showOthers = checkTrue($stateParams.showOthers); //TODO FIXME Change
-        if(checkTrue($stateParams.showOthers)) getOthers();
+        vm.showOthers = checkTrue(showOthers);
+        if(checkTrue(showOthers)) getOthers();
         
-        vm.showVaccines = checkTrue($stateParams.showVaccines); //TODO FIXME Change
-        if(checkTrue($stateParams.showVaccines)) getVaccines();
+        vm.showVaccines = checkTrue(showVaccines);
+        if(checkTrue(showVaccines)) getVaccines();
       }
 
       function getHIVdetails() {

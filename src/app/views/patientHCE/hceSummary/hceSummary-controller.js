@@ -42,12 +42,52 @@
         }
 
         function openModal() {
+            var booleanValue = vm.displayName == "pns";
+
             var modalInstance = $uibModal.open({
                 backdrop: 'static',
                 templateUrl: 'app/views/patientHCE/hceSummary/summaryDetails.html',
                 size: 'md',
                 controller: 'SummaryDetailsController',
-                controllerAs: 'SummaryDetailsController'
+                controllerAs: 'SummaryDetailsController',
+                resolve: {
+                    patientId: function () {
+                        return HCService.currentPacienteId;
+                    },
+                    showPNS: function () {
+                        return booleanValue;
+                    },
+                    showHIV: function () {
+                        return vm.categories.hiv;
+                    },
+                    showEvolutions: function () {
+                        return vm.categories.evolutions;
+                    },
+                    showProblems: function () {
+                        return vm.categories.problems;
+                    },
+                    showARV: function () {
+                        return  vm.categories.arv;
+                    },
+                    showProfilaxis: function () {
+                        return  vm.categories.profilaxis;
+                    },
+                    showGeneral: function () {
+                        return vm.categories.generalTreatment;
+                    },
+                    showLab: function () {
+                        return vm.categories.laboratory;
+                    },
+                    showOthers: function () {
+                        return vm.categories.otherStudies;
+                    },
+                    showVaccines: function () {
+                        return vm.categories.vaccines;
+                    },
+                    observations: function () {
+                        return vm.observations;
+                    },
+                }
             });
             
             modalInstance.result.then(function (resolution) {
