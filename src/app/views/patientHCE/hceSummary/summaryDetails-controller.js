@@ -15,26 +15,26 @@
       vm.hiv_details = null;
       vm.patient_details = null;
       vm.patientIdentification = null;
-      vm.showHIV = false;
+      vm.canShowHIV = false;
       vm.evolutions = [];
-      vm.showEvolutions = false;
+      vm.canShowEvolutions = false;
       vm.problems = [];
-      vm.showProblems = false;
+      vm.canShowProblems = false;
       vm.arvTreatments = [];
-      vm.showARV = false;
-      vm.showProfilaxis = false;
+      vm.canShowARV = false;
+      vm.canShowProfilaxis = false;
       vm.medications = [];
-      vm.showOthers = false;
+      vm.canShowOthers = false;
       vm.clinicalResults = [];
-      vm.showGeneral = false;
+      vm.canShowGeneral = false;
       vm.generalMedications = [];
-      vm.showLab = false;
+      vm.canShowLab = false;
       vm.laboratoryResults = [];
-      vm.showVaccines = false;
+      vm.canShowVaccines = false;
       vm.vaccines = [];
       vm.observations = observations;
       vm.issuedDate = new Date();
-      vm.showPNS = canShowPNS;
+      vm.canShowPNS = canShowPNS;
       vm.getSchema = getSchema;
       init();
 
@@ -53,10 +53,11 @@
       }
       
       function checkTrue(string){
-        return string == "true";
+        return string == true;
       }
       
       function canShowPNS(){
+        console.log("-- called canShowPNS --");
        return checkTrue(showPNS) 
       }
 
@@ -71,32 +72,33 @@
           vm.patient_details = null;
         });
 
-        vm.showHIV = checkTrue(showHIV);
+        debugger;
         if(checkTrue(showHIV)) getHIVdetails();
+        vm.canShowHIV = checkTrue(showHIV);
 
-        vm.showEvolutions = checkTrue(showEvolutions);
         if(checkTrue(showEvolutions)) getEvolutionsDetails();
+        vm.canShowEvolutions = checkTrue(showEvolutions);
 
-        vm.showProblems = checkTrue(showProblems);
         if(checkTrue(showProblems)) getPatienProblems();
+        vm.canShowProblems = checkTrue(showProblems);
         
-        vm.showARV = checkTrue(showARV);
         if(checkTrue(showARV)) getArvTreatments();
+        vm.canShowARV = checkTrue(showARV);
         
-        vm.showProfilaxis = checkTrue(showProfilaxis);
         if(checkTrue(showProfilaxis)) getProfilaxis();
+        vm.canShowProfilaxis = checkTrue(showProfilaxis);
         
-        vm.showGeneral = checkTrue(showGeneral);
         if(checkTrue(showGeneral)) getGeneralTreatments();
+        vm.canShowGeneral = checkTrue(showGeneral);
         
-        vm.showLab = checkTrue(showLab);
         if(checkTrue(showLab)) getLabResults();
+        vm.canShowLab = checkTrue(showLab);
         
-        vm.showOthers = checkTrue(showOthers);
         if(checkTrue(showOthers)) getOthers();
+        vm.canShowOthers = checkTrue(showOthers);
         
-        vm.showVaccines = checkTrue(showVaccines);
         if(checkTrue(showVaccines)) getVaccines();
+        vm.canShowVaccines = checkTrue(showVaccines);
       }
 
       function getHIVdetails() {
@@ -109,7 +111,9 @@
       }
 
       function getEvolutionsDetails() {
+        console.log("called getEvolutionsDetails")
         Evolution.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
+          console.log("Obtained getEvolutionsDetails");
           vm.evolutions = results;
         }, function (err) {
           console.error(err);
@@ -119,6 +123,7 @@
 
       function getPatienProblems() {
         PatientProblem.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
+          console.log("Obtained problems");
           vm.problems = results;
         }, function (err) {
           console.error(err);
@@ -127,7 +132,9 @@
       }
 
       function getArvTreatments() {
+        console.log("called getArvTreatments")
         PatientArvTreatment.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
+          console.log("Obtained treatments");
           vm.arvTreatments = results;
         }, function (err) {
           console.error(err);
@@ -137,6 +144,7 @@
 
       function getProfilaxis() {
         PatientMedication.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
+          console.log("Obtained profilaxis");
           vm.medications = results.filter( function (med) {  return med.medication.medicationType.name == "Profilaxis"; } );
         }, function (err) {
           console.error(err);
@@ -147,6 +155,7 @@
 
       function getGeneralTreatments() {
         PatientMedication.getForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
+          console.log("Obtained treatments");
           vm.generalMedications = results.filter( function(med) { return med.medication.medicationType.name != "Profilaxis";} );
         }, function (err) {
           console.error(err);

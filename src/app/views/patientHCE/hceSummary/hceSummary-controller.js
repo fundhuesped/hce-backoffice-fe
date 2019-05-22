@@ -19,35 +19,13 @@
             return vm.controllerForm.$valid && (vm.categories.evolutions||vm.categories.problems||vm.categories.arv||vm.categories.hiv||vm.categories.profilaxis||vm.categories.generalTreatment||vm.categories.laboratory||vm.categories.otherStudies||vm.categories.vaccines);
         }
 
-
-        function openTab() {
-            var booleanValue = vm.displayName == "pns";
-
-            var url = $state.href('summaryDetails', {
-                patientId: HCService.currentPacienteId,
-                showPNS: booleanValue,
-                showHIV: vm.categories.hiv,
-                showEvolutions: vm.categories.evolutions,
-                showProblems: vm.categories.problems,
-                showARV: vm.categories.arv,
-                showProfilaxis: vm.categories.profilaxis,
-                showGeneral: vm.categories.generalTreatment,
-                showLab: vm.categories.laboratory,
-                showOthers: vm.categories.otherStudies,
-                showVaccines: vm.categories.vaccines,
-                observations: vm.observations
-            });
-
-            $window.open(url,'_blank');
-        }
-
         function openModal() {
             var booleanValue = vm.displayName == "pns";
 
             var modalInstance = $uibModal.open({
                 backdrop: 'static',
                 templateUrl: 'app/views/patientHCE/hceSummary/summaryDetails.html',
-                size: 'md',
+                size: 'lg',
                 controller: 'SummaryDetailsController',
                 controllerAs: 'SummaryDetailsController',
                 resolve: {
