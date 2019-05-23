@@ -187,7 +187,7 @@
           return true;
         }
 
-        if(vm.filter.seenBy && vm.filter.visitFromDate && vm.filter.visitToDate){
+        if(vm.filter.seenBy || (vm.filter.visitFromDate && vm.filter.visitToDate)){
           return true;
         }
 
