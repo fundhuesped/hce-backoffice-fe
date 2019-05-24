@@ -306,11 +306,6 @@
                     reject('Debe guardar los cambios antes de continuar');
                 });
             }
-            if(srv.currentEvolution){
-                return $q(function(resolve, reject) {
-                    reject('Debe ingresar una nueva evolución');
-                });
-            }
             return Evolution.getEvolution(idEvolution, function (result) {
                     srv.currentEvolution = result;
             }, function (err) {
