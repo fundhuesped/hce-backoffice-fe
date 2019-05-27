@@ -98,6 +98,8 @@
         }, displayComunicationError);
         HCService.getPatientProblems();
         vm.patientMedication = angular.copy(patientMedication);
+        vm.patientMedication.quantityPerDay = Number(patientMedication.quantityPerDay);
+        vm.patientMedication.quantityPerMonth = Number(patientMedication.quantityPerMonth);
         vm.patientMedication.startDate = new Date(vm.patientMedication.startDate + 'T03:00:00');
         vm.endDateCalendar.options.minDate = vm.patientMedication.startDate;
 

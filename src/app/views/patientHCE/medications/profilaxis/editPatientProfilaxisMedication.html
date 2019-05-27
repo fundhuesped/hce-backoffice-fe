@@ -41,6 +41,28 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				    	<table class="table table-condensed">
+				    		<thead> 
+				    			<tr> 
+				    				<th><label class="control-label isnot-error" ng-class="{'is-error':EditPatientMedicationController.controllerForm.quantityPerDay.$invalid}">Cantidad por día(*)</th>
+				    				<th> <label class="control-label isnot-error" ng-class="{'is-error':EditPatientMedicationController.controllerForm.quantityPerMonth.$invalid}">Cantidad por mes(*)</th>
+				    			</tr> 
+				    		</thead>
+				    		<tbody>
+				    			<tr>
+			    					<td>
+			    						<input type="number" name="quantityPerDay" min="0" onkeypress="return event.charCode >= 48 || event.charCode == 44" ng-model="EditPatientMedicationController.patientMedication.quantityPerDay" ng-change="EditPatientMedicationController.patientMedication.quantityPerMonth=EditPatientMedicationController.roundNumber(EditPatientMedicationController.patientMedication.quantityPerDay*30)" ng-required="true" ng-pattern="/^[0-9]+(\.[0-9]{1,1})?$/" step="0.1" ng-disabled="!EditPatientMedicationController.canEdit();" />
+			    					</td> 
+			    					<td>
+			    						<input type="number" name="quantityPerMonth" min="0" onkeypress="return event.charCode >= 48 || event.charCode == 44" ng-model="EditPatientMedicationController.patientMedication.quantityPerMonth" ng-change="EditPatientMedicationController.patientMedication.quantityPerDay=EditPatientMedicationController.roundNumber(EditPatientMedicationController.patientMedication.quantityPerMonth/30)" ng-required="true" ng-pattern="/^[0-9]+(\.[0-9]{1,1})?$/" step="0.1" ng-disabled="!EditPatientMedicationController.canEdit();" />
+			    					</td> 
+		    					</tr>
+		    				</tbody>
+		    			</table>
+	    			</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					  	<abm-form-group>
 					    	<label abm-label type="static">Estado del medicamento</label>
 						    <div class="radio" abm-radio label="Activo"> 
