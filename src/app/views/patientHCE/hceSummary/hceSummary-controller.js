@@ -23,7 +23,7 @@
             var booleanValue = vm.displayName == "pns";
 
             var modalInstance = $uibModal.open({
-                backdrop: 'static',
+                backdrop: true,
                 templateUrl: 'app/views/patientHCE/hceSummary/summaryDetails.html',
                 size: 'lg',
                 controller: 'SummaryDetailsController',
