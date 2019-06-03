@@ -111,10 +111,8 @@
         PatientProblem.getAllForPaciente({pacienteId: HCService.currentPaciente.id, state:'Active', }, function (result) {
           vm.activeProblems = result;
         }, function (err) {
-          
-      });
-
-
+            
+        });
 	    }
       function changeStatus() {
         if(vm.patientMedication.state == 'Active'){

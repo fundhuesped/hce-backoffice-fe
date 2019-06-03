@@ -1,5 +1,6 @@
-<div class="do-print">
-	<div class="container-fluid hce-container-modal" id="export-this">
+<button  class="btn btn-success btn-raised btn-lg btn-block" ng-click="SummaryDetailsController.print()">Imprimir</button>
+<div class="do-print" id="section-to-copy">
+	<div class="container-fluid hce-container-modal">
 		<div class="container-fluid">
 			<div class="row">
 				<img src="{{SummaryDetailsController.headerImage}}" class="center-block">	
@@ -13,7 +14,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row" ng-if="!SummaryDetailsController.showPNS()">
+					<div class="row" ng-if="!SummaryDetailsController.canShowPNS()">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="">
 								Documento: {{SummaryDetailsController.patient_details.documentNumber}} 
@@ -35,7 +36,7 @@
 					</div>
 
 
-					<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.showEvolutions">
+					<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.canShowEvolutions">
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<label style="font-weight:bold;color:black;">
@@ -85,7 +86,7 @@
 					</div>
 
 
-					<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.showProblems">
+					<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.canShowProblems">
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<label style="font-weight:bold;color:black;">
@@ -135,7 +136,7 @@
 					</div>
 
 
-					<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.showARV">
+					<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.canShowARV">
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<label style="font-weight:bold;color:black;">
@@ -174,7 +175,7 @@
 					</div>
 
 
-					<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.showProfilaxis">
+					<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.canShowProfilaxis">
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<label style="font-weight:bold;color:black;">
@@ -215,7 +216,7 @@
 
 
 
-					<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.showGeneral">
+					<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.canShowGeneral">
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<label style="font-weight:bold;color:black;">
@@ -250,7 +251,7 @@
 
 
 
-					<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.showOthers">
+					<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.canShowOthers">
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<label style="font-weight:bold;color:black;">
@@ -285,7 +286,7 @@
 
 
 
-		<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.showLab">
+		<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.canShowLab">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<label style="font-weight:bold;color:black;">
@@ -318,7 +319,7 @@
 
 
 
-		<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.showVaccines">
+		<div class="prescriptionMedicationsList" ng-show="SummaryDetailsController.canShowVaccines">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<label style="font-weight:bold;color:black;">
@@ -357,7 +358,7 @@
 
 
 
-		<form name="SummaryDetailsController.controllerForm" ng-show="SummaryDetailsController.showHIV">
+		<form name="SummaryDetailsController.controllerForm" ng-show="SummaryDetailsController.canShowHIV">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div>
