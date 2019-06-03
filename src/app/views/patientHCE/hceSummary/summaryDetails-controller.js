@@ -36,6 +36,7 @@
       vm.issuedDate = new Date();
       vm.canShowPNS = canShowPNS;
       vm.getSchema = getSchema;
+      vm.print = print;
       init();
 
       function init() {
@@ -284,16 +285,16 @@
         return schema;
 
       }
+    }
 
-      setTimeout( ()=>{
+    function print(){      
       //Copy content to parent page (not modal one) so we can Print it
-        var contentToCopy = document.getElementById('section-to-copy');
-        console.log("--- copy ---");
-        console.log(contentToCopy);
-        //TODO FIXME this breaks the uimodal "focus" or similar, need to keep it visible, see backdrop maybe?
-        $( "#section-to-print" ).empty();
-        $( "#section-to-print" ).append( contentToCopy );
-        $( "#section-to-copy" ).focus();
-      }, 2000);
+      var contentToCopy = document.getElementById('section-to-copy');
+      console.log("--- copy ---");
+      console.log(contentToCopy);
+      $( "#section-to-print" ).empty();
+      $( "#section-to-copy" ).clone().appendTo( "#section-to-print" );
+      window.print();
+      this.cancel();
     }
 })();
