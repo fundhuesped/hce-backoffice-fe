@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('SummaryDetailsController', summaryDetailsController);
 
-  summaryDetailsController.$inject = ['toastr', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem', 'PatientArvTreatment', 'PatientMedication', 'PatientClinicalResult', 'PatientLaboratoryResult', 'PatientVaccine', '$scope', '$uibModalInstance', 'HCService', 'showPNS', 'showHIV', 'showEvolutions', 'showProblems', 'showARV', 'showProfilaxis', 'showGeneral', 'showLab', 'showOthers', 'showVaccines', 'observations'];
+  summaryDetailsController.$inject = ['toastr', 'HIVData', 'Paciente', 'Evolution', 'PatientProblem', 'PatientArvTreatment', 'PatientMedication', 'PatientClinicalResult', 'PatientLaboratoryResult', 'PatientVaccine', '$scope', '$uibModalInstance', 'HCService', 'showPNS', 'showHIV', 'showEvolutions', 'showProblems', 'showARV', 'showProfilaxis', 'showGeneral', 'showLab', 'showOthers', 'showVaccines', 'observations', 'Preference'];
 
-    function summaryDetailsController (toastr, HIVData, Paciente, Evolution, PatientProblem, PatientArvTreatment, PatientMedication, PatientClinicalResult, PatientLaboratoryResult, PatientVaccine, $scope, $uibModalInstance, HCService, showPNS, showHIV, showEvolutions, showProblems, showARV, showProfilaxis, showGeneral, showLab, showOthers, showVaccines, observations) {
+    function summaryDetailsController (toastr, HIVData, Paciente, Evolution, PatientProblem, PatientArvTreatment, PatientMedication, PatientClinicalResult, PatientLaboratoryResult, PatientVaccine, $scope, $uibModalInstance, HCService, showPNS, showHIV, showEvolutions, showProblems, showARV, showProfilaxis, showGeneral, showLab, showOthers, showVaccines, observations, Preference) {
       var vm = this;
       vm.cancel = cancel;
       vm.canBeClosed = canBeClosed;
