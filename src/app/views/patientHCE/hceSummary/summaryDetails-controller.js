@@ -44,8 +44,6 @@
           vm.headerImage = response.value;
         })
         getDetails();
-        toastr.info('Imprima dando click derecho -> "imprimir"', 'Instrucciones');
-        toastr.info('Por favor espere unos segundos antes de imprimir', 'Cargando información...');
       }
 
       function cancel() {
