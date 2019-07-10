@@ -15,6 +15,7 @@
       vm.canSaveEvolution = HCService.canSaveEvolution;
       vm.saveNewEvolution = saveNewEvolution;
       vm.closeEvolution = closeEvolution;
+      vm.openedNewEvolution = false;
       vm.newEvolutionFocused = false;
       vm.isOpened = isOpened;
       vm.show = null;
@@ -28,7 +29,9 @@
           enumerable: true,
           configurable: false,
           get: function () {
-              return HCService.currentEvolution;
+              var currEvo = HCService.currentEvolution;
+              if (currEvo != null) vm.openedNewEvolution = true;
+              return currEvo;
           },
           set: function (value) {
             if(!HCService.currentEvolution){
@@ -67,7 +70,7 @@
 	    }
 
       function isOpened() {
-        return vm.newEvolutionFocused || vm.currentEvolution || vm.show;
+        return vm.newEvolutionFocused || vm.openedNewEvolution || vm.show;
       }
 
       function showError(error) {
