@@ -74,7 +74,6 @@
           vm.patient_details = null;
         });
 
-        debugger;
         if(checkTrue(showHIV)) getHIVdetails();
         vm.canShowHIV = checkTrue(showHIV);
 

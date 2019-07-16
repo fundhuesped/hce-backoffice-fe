@@ -44,15 +44,6 @@
             prescriptionId: null
           }
       })
-      .state('arvPrescription', {
-          url: '/arvPrescription?prescriptionId',
-          templateUrl: 'app/views/patientHCE/prescriptions/arvPrescription.html',
-          controller: 'ArvMedicationRecetaController',
-          controllerAs: 'Ctrl',        
-          params: {
-              prescriptionId: null
-          }
-      })
       .state('vaccinePrescription', {
           url: '/vaccinePrescription?prescriptionId',
           templateUrl: 'app/views/patientHCE/prescriptions/vaccinePrescription.html',

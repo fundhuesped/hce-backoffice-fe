@@ -21,6 +21,7 @@
         Preference.get({section:'global', name: 'general__prescription_header_image'}, function (response) {
           vm.headerImage = response.value;
         })
+        //TODO support multiple prescriptionIDs
         if(!vm.prescriptions){
           vm.prescription = ARVReceta.get({id:$stateParams.prescriptionId}, function (argument) {
             setTimeout(function(){
