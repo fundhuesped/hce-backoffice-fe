@@ -6,14 +6,18 @@
       .module('hce.patientHCE')
       .controller('ArvMedicationRecetaController', arvMedicationRecetaController);
 
-    arvMedicationRecetaController.$inject = ['$state', '$stateParams', 'ARVReceta', 'Preference'];
+    arvMedicationRecetaController.$inject = ['$state', '$stateParams', 'ARVReceta', 'Preference', '$uibModalInstance'];
 
-    function arvMedicationRecetaController ($state, $stateParams, ARVReceta, Preference) {
+    function arvMedicationRecetaController ($state, $stateParams, ARVReceta, Preference, $uibModalInstance) {
       var vm = this;
-      vm.prescription = $stateParams.prescription;
+      vm.prescriptionsIDs = $stateParams.prescriptions;
+      vm.prescriptions = [];
       vm.numberToText = numberToText;
       vm.removeDecimals = removeDecimals;
       vm.headerImage = '';
+      vm.cancel = cancel;
+      vm.canBeClosed = canBeClosed;
+      vm.print = print;
 
       activate();
 
@@ -21,19 +25,32 @@
         Preference.get({section:'global', name: 'general__prescription_header_image'}, function (response) {
           vm.headerImage = response.value;
         })
-        //TODO support multiple prescriptionIDs
-        if(!vm.prescriptions){
-          vm.prescription = ARVReceta.get({id:$stateParams.prescriptionId}, function (argument) {
-            setTimeout(function(){
-              // window.print();
-            },2); 
-
+        vm.prescriptionsIDs.array.forEach(prescriptionID => {
+          const prescriptionFound = ARVReceta.get({id: prescriptionID}, function (argument) {
+            ; //Blank statement, dont delete
           });
-
-        }
-
+          vm.prescriptions.push(prescriptionFound);
+        });
       }
 
+      function cancel() {
+        $uibModalInstance.dismiss('cancel');
+      }
+
+      function canBeClosed() {
+        return true;
+      }
+
+      function print(){      
+        //Copy content to parent page (not modal one) so we can Print it
+        var contentToCopy = document.getElementById('section-to-copy');
+        console.log("--- copy ---");
+        console.log(contentToCopy);
+        $( "#section-to-print" ).empty();
+        $( "#section-to-copy" ).clone().appendTo( "#section-to-print" );
+        window.print();
+        this.cancel();
+      }
 
       function removeDecimals(number) {
         var splitted = number.split('.');

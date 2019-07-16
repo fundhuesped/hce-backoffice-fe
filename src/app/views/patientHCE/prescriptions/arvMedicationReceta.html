@@ -1,120 +1,44 @@
-<div class="do-print">
-	<div class="container-fluid">
-		<div class="row">
-			<img src="{{ArvMedicationRecetaController.headerImage}}" class="center-block">	
-		</div>
-		<div class="row">
-			<div class="pull-right" style="padding: 10px">Nro de receta: {{ArvMedicationRecetaController.prescription.id}}</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<div class="row prescriptionPatientName">
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<div class="hce-form-title">
-							{{ArvMedicationRecetaController.prescription.paciente.pns}}
-						</div>
-					</div>
-				</div>
-				<div class="row prescriptionPatientSocialService" ng-if="ArvMedicationRecetaController.prescription.paciente.socialService && ArvMedicationRecetaController.prescription.paciente.socialService.name !='No tiene'">
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<div class="">
-							{{ArvMedicationRecetaController.prescription.paciente.socialService.name}} 
-						</div>
-						<div class="">
-							{{ArvMedicationRecetaController.prescription.paciente.socialServiceNumber}}
-						</div>
-					</div>
-				</div>
-				<div class="prescriptionMedicationsList">
-					<div class="row">
-						<table class="table table-condensed">
-				    		<thead> 
-				    			<tr> 
-									<th>Medicamento</th>
-									<th>Cant x día</th>
-									<th>Cant x mes</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="prescriptedMedication in ArvMedicationRecetaController.prescription.prescriptedMedications">
-									<td>
-										<div class="">
-											{{prescriptedMedication.medication.recipeName + ' ' + (prescriptedMedication.medication.composition? prescriptedMedication.medication.composition:'') + 
-											(prescriptedMedication.medication.presentation?' ' +prescriptedMedication.medication.presentation:'' )}}
-										</div>
-									</td>
-									<td>{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerDay)}}</td>
-									<td>{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerMonth)}}</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>	    					
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-				Diagnóstico: B24 
-			</div>
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-				{{ArvMedicationRecetaController.prescription.observations}}
-			</div>
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-			</div>
-		</div>
-		<div class="row" style="margin-top: 300px">
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-				{{ArvMedicationRecetaController.prescription.issuedDate | date:"d/M/yy"}}
-			</div>
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-				Firma y sello
-			</div>
-		</div>
-	</div>
-	<div style="page-break-after: always!important;" ng-if="ArvMedicationRecetaController.prescription.duplicateRequired==true"></div>
-	<div ng-if="ArvMedicationRecetaController.prescription.duplicateRequired==true">
+<button  class="btn btn-success btn-raised btn-lg btn-block" ng-click="ArvMedicationRecetaController.print()">Imprimir</button>
+<div class="do-print" id="section-to-copy">
+	<div ng-repeat="prescription in ArvMedicationRecetaController.prescriptions">
 		<div class="container-fluid">
 			<div class="row">
 				<img src="{{ArvMedicationRecetaController.headerImage}}" class="center-block">	
 			</div>
 			<div class="row">
-				<div class="pull-right" style="padding: 10px">Nro de receta: {{ArvMedicationRecetaController.prescription.id}}</div>
+				<div class="pull-right" style="padding: 10px">Nro de receta: {{prescription.id}}</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="row prescriptionPatientName">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="hce-form-title">
-								{{ArvMedicationRecetaController.prescription.paciente.pns}}
+								{{prescription.paciente.pns}}
 							</div>
 						</div>
 					</div>
-					<div class="row prescriptionPatientSocialService" ng-if="ArvMedicationRecetaController.prescription.paciente.socialService && ArvMedicationRecetaController.prescription.paciente.socialService.name !='No tiene'">
+					<div class="row prescriptionPatientSocialService" ng-if="prescription.paciente.socialService && prescription.paciente.socialService.name !='No tiene'">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="">
-								{{ArvMedicationRecetaController.prescription.paciente.socialService.name}} 
+								{{prescription.paciente.socialService.name}} 
 							</div>
 							<div class="">
-								{{ArvMedicationRecetaController.prescription.paciente.socialServiceNumber}}
+								{{prescription.paciente.socialServiceNumber}}
 							</div>
 						</div>
 					</div>
 					<div class="prescriptionMedicationsList">
 						<div class="row">
 							<table class="table table-condensed">
-					    		<thead> 
-					    			<tr> 
+								<thead> 
+									<tr> 
 										<th>Medicamento</th>
 										<th>Cant x día</th>
 										<th>Cant x mes</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="prescriptedMedication in ArvMedicationRecetaController.prescription.prescriptedMedications">
+									<tr ng-repeat="prescriptedMedication in prescription.prescriptedMedications">
 										<td>
 											<div class="">
 												{{prescriptedMedication.medication.recipeName + ' ' + (prescriptedMedication.medication.composition? prescriptedMedication.medication.composition:'') + 
@@ -138,23 +62,102 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 hce-form-title">
-					DUPLICADO
-				</div>
-			</div>
-			<div class="row">
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-					{{ArvMedicationRecetaController.prescription.observations}}
+					{{prescription.observations}}
 				</div>
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				</div>
 			</div>
 			<div class="row" style="margin-top: 300px">
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-					{{ArvMedicationRecetaController.prescription.issuedDate | date:"d/M/yy"}}
+					{{prescription.issuedDate | date:"d/M/yy"}}
 				</div>
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 					Firma y sello
+				</div>
+			</div>
+		</div>
+		<div style="page-break-after: always!important;" ng-if="prescription.duplicateRequired==true"></div>
+		<div ng-if="prescription.duplicateRequired==true">
+			<div class="container-fluid">
+				<div class="row">
+					<img src="{{ArvMedicationRecetaController.headerImage}}" class="center-block">	
+				</div>
+				<div class="row">
+					<div class="pull-right" style="padding: 10px">Nro de receta: {{prescription.id}}</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="row prescriptionPatientName">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div class="hce-form-title">
+									{{prescription.paciente.pns}}
+								</div>
+							</div>
+						</div>
+						<div class="row prescriptionPatientSocialService" ng-if="prescription.paciente.socialService && prescription.paciente.socialService.name !='No tiene'">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div class="">
+									{{prescription.paciente.socialService.name}} 
+								</div>
+								<div class="">
+									{{prescription.paciente.socialServiceNumber}}
+								</div>
+							</div>
+						</div>
+						<div class="prescriptionMedicationsList">
+							<div class="row">
+								<table class="table table-condensed">
+									<thead> 
+										<tr> 
+											<th>Medicamento</th>
+											<th>Cant x día</th>
+											<th>Cant x mes</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="prescriptedMedication in prescription.prescriptedMedications">
+											<td>
+												<div class="">
+													{{prescriptedMedication.medication.recipeName + ' ' + (prescriptedMedication.medication.composition? prescriptedMedication.medication.composition:'') + 
+													(prescriptedMedication.medication.presentation?' ' +prescriptedMedication.medication.presentation:'' )}}
+												</div>
+											</td>
+											<td>{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerDay)}}</td>
+											<td>{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerMonth)}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>	    					
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						Diagnóstico: B24 
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 hce-form-title">
+						DUPLICADO
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						{{prescription.observations}}
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					</div>
+				</div>
+				<div class="row" style="margin-top: 300px">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						{{prescription.issuedDate | date:"d/M/yy"}}
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						Firma y sello
+					</div>
 				</div>
 			</div>
 		</div>
