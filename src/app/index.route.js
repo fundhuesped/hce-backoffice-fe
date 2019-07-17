@@ -25,15 +25,6 @@
             }
           },
       })
-      .state('generalPrescription', {
-          url: '/generalPrescription?prescriptionId',
-          templateUrl: 'app/views/patientHCE/prescriptions/generalPrescription.html',
-          controller: 'MedicationRecetaNuevaController',
-          controllerAs: 'Ctrl',        
-          params: {
-              prescription: null
-          }
-      })
       .state('vaccinePrescription', {
           url: '/vaccinePrescription?prescriptionId',
           templateUrl: 'app/views/patientHCE/prescriptions/vaccinePrescription.html',
