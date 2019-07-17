@@ -34,16 +34,6 @@
               prescription: null
           }
       })
-
-      .state('profilaxisPrescription', {
-          url: '/profilaxisPrescription?prescriptionId',
-          templateUrl: 'app/views/patientHCE/prescriptions/profilaxisPrescription.html',
-          controller: 'MedicationRecetaNuevaController',
-          controllerAs: 'Ctrl',        
-          params: {
-            prescriptionId: null
-          }
-      })
       .state('vaccinePrescription', {
           url: '/vaccinePrescription?prescriptionId',
           templateUrl: 'app/views/patientHCE/prescriptions/vaccinePrescription.html',

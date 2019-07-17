@@ -1,0 +1,167 @@
+<button  class="btn btn-success btn-raised btn-lg btn-block" ng-click="MedicationRecetaController.print()">Imprimir</button>
+<div class="do-print" id="section-to-copy">
+	<div ng-repeat="prescription in MedicationRecetaController.prescriptionsArray">
+		<div class="container-fluid">
+			<div class="row">
+				<img src="{{MedicationRecetaController.headerImage}}" class="center-block">	
+			</div>
+			<div class="row">
+				<div class="pull-right" style="padding: 10px">Nro de receta: {{prescription.id}}</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="row prescriptionPatientName">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="hce-form-title">
+								{{prescription.paciente.pns}}
+							</div>
+						</div>
+					</div>
+					<div class="row prescriptionPatientSocialService" ng-if="prescription.paciente.socialService && prescription.paciente.socialService.name !='No tiene'">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="">
+								{{prescription.paciente.socialService.name}} 
+							</div>
+							<div class="">
+								{{prescription.paciente.socialServiceNumber}}
+							</div>
+						</div>
+					</div>
+					<div class="prescriptionMedicationsList">
+						<div class="row">
+							<table class="table table-condensed">
+								<thead> 
+									<tr> 
+										<th>Medicamento</th>
+										<th>Cant x día</th>
+										<th>Cant x mes</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="prescriptedMedication in prescription.prescriptedMedications">
+										<td>
+											<div class="">
+												{{prescriptedMedication.patientMedication.medication.recipeName + ' ' + (prescriptedMedication.patientMedication.medication.composition? prescriptedMedication.patientMedication.medication.composition:'') + 
+													(prescriptedMedication.patientMedication.medication.presentation?' ' +prescriptedMedication.patientMedication.medication.presentation:'' )}}
+											</div>
+										</td>
+										<td>{{prescriptedMedication.quantityPerDay}}</td>
+										<td>{{prescriptedMedication.quantityPerMonth}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>	    					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					Diagnóstico: B24 
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					{{prescription.observations}}
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				</div>
+			</div>
+			<div class="row" style="margin-top: 300px">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					{{prescription.issuedDate | date:"d/M/yy"}}
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					Firma y sello
+				</div>
+			</div>
+		</div>
+		<div style="page-break-after: always;" ng-if="prescription.duplicateRequired==true"></div>
+		<div ng-if="prescription.duplicateRequired==true">
+			<div class="container-fluid">
+				<div class="row">
+					<img src="{{MedicationRecetaController.headerImage}}" class="center-block">	
+				</div>
+				<div class="row">
+					<div class="pull-right" style="padding: 10px">Nro de receta: {{prescription.id}}</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="row prescriptionPatientName">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div class="hce-form-title">
+									{{prescription.paciente.pns}}
+								</div>
+							</div>
+						</div>
+						<div class="row prescriptionPatientSocialService" ng-if="prescription.paciente.socialService && prescription.paciente.socialService.name !='No tiene'">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div class="">
+									{{prescription.paciente.socialService.name}} 
+								</div>
+								<div class="">
+									{{prescription.paciente.socialServiceNumber}}
+								</div>
+							</div>
+						</div>
+						<div class="prescriptionMedicationsList">
+							<div class="row">
+								<table class="table table-condensed">
+									<thead> 
+										<tr> 
+											<th>Medicamento</th>
+											<th>Cant x día</th>
+											<th>Cant x mes</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="prescriptedMedication in prescription.prescriptedMedications">
+											<td>
+												<div class="">
+												{{prescriptedMedication.patientMedication.medication.recipeName + ' ' + (prescriptedMedication.patientMedication.medication.composition? prescriptedMedication.patientMedication.medication.composition:'') + 
+													(prescriptedMedication.patientMedication.medication.presentation?' ' +prescriptedMedication.patientMedication.medication.presentation:'' )}}
+												</div>
+											</td>
+											<td>{{prescriptedMedication.quantityPerDay}}</td>
+											<td>{{prescriptedMedication.dayCount}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>	    					
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						Diagnóstico: B24 
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<div class="hce-form-title">
+							Duplicado
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						{{prescription.observations}}
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					</div>
+				</div>
+				<div class="row" style="margin-top: 300px">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						{{prescription.issuedDate | date:"d/M/yy"}}
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						Firma y sello
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
