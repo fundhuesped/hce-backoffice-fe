@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewProfilaxisMedicationRecetaController', newProfilaxisMedicationRecetaController);
 
-	  newProfilaxisMedicationRecetaController.$inject = ['$state', 'HCService', 'PatientMedication', 'Receta', 'toastr', 'moment', 'Medication', '$uibModalInstance', '$window'];
+	  newProfilaxisMedicationRecetaController.$inject = ['$state', 'HCService', 'PatientMedication', 'Receta', 'toastr', 'moment', 'Medication', '$uibModalInstance', '$window', '$uibModal'];
 
-    function newProfilaxisMedicationRecetaController ($state, HCService, PatientMedication, Receta, toastr, moment, Medication, $uibModalInstance, $window) {
+    function newProfilaxisMedicationRecetaController ($state, HCService, PatientMedication, Receta, toastr, moment, Medication, $uibModalInstance, $window, $uibModal) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.patientMedications = [];
@@ -46,10 +46,7 @@
 
         tmpNewReceta.$save({pacienteId:HCService.currentPaciente.id},function(prescription) {
           toastr.success('Receta generada con éxito');
-          var url = $state.href('profilaxisPrescription', {
-            prescriptionId: prescription.id
-          });
-          $window.open(url,'_blank');
+          openModal([prescription.id]);
           $uibModalInstance.close('created');
         }, showError);
       }
@@ -63,6 +60,22 @@
 
       function hasSelectedMedicationQuantity() {
         return true;
+      }
+
+      function openModal(prescriptions) {
+        vm.cancel();
+        var modalInstance = $uibModal.open({
+            backdrop: true, 
+            templateUrl: 'app/views/patientHCE/prescriptions/medicationReceta.html',
+            size: 'lg',
+            controller: 'MedicationRecetaController',
+            controllerAs: 'MedicationRecetaController',
+            resolve: {
+                prescriptions: function () {
+                    return prescriptions;
+                },
+            }
+        });
       }
 
 	    function activate(){
@@ -95,14 +108,21 @@
           if(error.data){
             if(error.data.detail){
               toastr.error(error.data.detail);
+              console.error(error.data.detail);
+              console.trace()
             }else{
-              toastr.error(error.data);
+              toastr.error(JSON.stringify(error.data));
+              console.error(error.data);
+              console.trace()
             }
           }else{
             toastr.error(error);
+            console.error(error);
+            console.trace()
           }
         }else{
           toastr.error('Ocurrio un error');
+          console.trace()
         }
       }
     }

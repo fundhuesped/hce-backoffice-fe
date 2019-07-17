@@ -45,8 +45,8 @@
 													(prescriptedMedication.patientMedication.medication.presentation?' ' +prescriptedMedication.patientMedication.medication.presentation:'' )}}
 											</div>
 										</td>
-										<td>{{prescriptedMedication.quantityPerDay}}</td>
-										<td>{{prescriptedMedication.quantityPerMonth}}</td>
+										<td>{{MedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerDay)}}</td>
+										<td>{{MedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerMonth)}}</td>
 									</tr>
 								</tbody>
 							</table>

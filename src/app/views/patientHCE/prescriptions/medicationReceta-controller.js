@@ -6,15 +6,16 @@
     	.module('hce.patientHCE')
     	.controller('MedicationRecetaController', medicationRecetaController);
 
-	  medicationRecetaController.$inject = ['$state', '$stateParams', 'Receta', 'Preference', 'prescriptionId', '$uibModalInstance', 'prescriptions'];
+	  medicationRecetaController.$inject = ['$state', '$stateParams', 'Receta', 'Preference', '$uibModalInstance', 'prescriptions'];
 
-    function medicationRecetaController ($state, $stateParams, Receta, Preference, prescriptionId, $uibModalInstance, prescriptions) {
+    function medicationRecetaController ($state, $stateParams, Receta, Preference, $uibModalInstance, prescriptions) {
 	    var vm = this;
       vm.prescriptionsIDs = prescriptions;
       vm.prescriptionsArray = [];
       vm.numberToText = numberToText;
       vm.headerImage = '';
       vm.cancel = cancel;
+      vm.removeDecimals = removeDecimals;
       vm.canBeClosed = canBeClosed;
       vm.print = print;
       activate();
@@ -48,6 +49,10 @@
         $( "#section-to-copy" ).clone().appendTo( "#section-to-print" );
         window.print();
         this.cancel();
+      }
+
+      function removeDecimals(number) {
+        return Math.round(number);
       }
 
       function numberToText(number) {
