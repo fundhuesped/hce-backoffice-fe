@@ -66,9 +66,10 @@
       }
 
       function openModal(prescriptions) {
+        vm.cancel();
         var modalInstance = $uibModal.open({
             backdrop: true,
-            templateUrl: 'app/views/patientHCE/medications/newARVReceta.html',
+            templateUrl: 'app/views/patientHCE/prescriptions/arvMedicationReceta.html',
             size: 'lg',
             controller: 'ArvMedicationRecetaController',
             controllerAs: 'ArvMedicationRecetaController',
@@ -78,16 +79,6 @@
                 },
             }
         });
-        
-        //TODO is this needed?
-        // modalInstance.result.then(function (resolution) {
-        // if(resolution==='markedError' || resolution==='edited'){
-        //     searchPatientProblems();
-        //     if(!HCService.currentEvolution){
-        //         HCService.getCurrentEvolution();
-        //     }
-        // }
-        // });
       }
 
 	    function activate(){

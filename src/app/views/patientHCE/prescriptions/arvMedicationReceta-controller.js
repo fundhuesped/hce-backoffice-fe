@@ -6,12 +6,12 @@
       .module('hce.patientHCE')
       .controller('ArvMedicationRecetaController', arvMedicationRecetaController);
 
-    arvMedicationRecetaController.$inject = ['$state', '$stateParams', 'ARVReceta', 'Preference', '$uibModalInstance'];
+    arvMedicationRecetaController.$inject = ['$state', '$stateParams', 'ARVReceta', 'Preference', '$uibModalInstance', 'prescriptions'];
 
-    function arvMedicationRecetaController ($state, $stateParams, ARVReceta, Preference, $uibModalInstance) {
+    function arvMedicationRecetaController ($state, $stateParams, ARVReceta, Preference, $uibModalInstance, prescriptions) {
       var vm = this;
-      vm.prescriptionsIDs = $stateParams.prescriptions;
-      vm.prescriptions = [];
+      vm.prescriptionsIDs = prescriptions;
+      vm.prescriptionsArray = [];
       vm.numberToText = numberToText;
       vm.removeDecimals = removeDecimals;
       vm.headerImage = '';
@@ -24,12 +24,12 @@
       function activate(){
         Preference.get({section:'global', name: 'general__prescription_header_image'}, function (response) {
           vm.headerImage = response.value;
-        })
-        vm.prescriptionsIDs.array.forEach(prescriptionID => {
+        });
+        vm.prescriptionsIDs.forEach( function(prescriptionID) {
           const prescriptionFound = ARVReceta.get({id: prescriptionID}, function (argument) {
             ; //Blank statement, dont delete
           });
-          vm.prescriptions.push(prescriptionFound);
+          vm.prescriptionsArray.push(prescriptionFound);
         });
       }
 
