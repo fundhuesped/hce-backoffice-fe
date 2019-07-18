@@ -45,25 +45,25 @@
 
         tmpNewReceta.$save({pacienteId:HCService.currentPaciente.id},function(prescription) {
           toastr.success('Receta generada con éxito');
-          var url = $state.href('generalPrescription', {prescriptionId: prescription.id});
-          $window.open(url,'_blank');
+          openModal([prescription.id]);
           $uibModalInstance.close('created');
         }, showError);
       }
 
-      function openRecetaModal(prescriptionId) {
+      function openModal(prescriptions) {
+        vm.cancel();
         var modalInstance = $uibModal.open({
-          backdrop: 'static',
-            templateUrl: 'app/views/patientHCE/prescriptions/generalPrescription.html',
-            size: 'md',
-            controller: 'MedicationRecetaController',
-            controllerAs: 'Ctrl',
+            backdrop: true,
+            templateUrl: 'app/views/patientHCE/prescriptions/medicationRecetaNueva.html',
+            size: 'lg',
+            controller: 'MedicationRecetaNuevaController',
+            controllerAs: 'MedicationRecetaNuevaController',
             resolve: {
-              prescriptionId: function () {
-                return prescriptionId;
-              }
+                prescriptions: function () {
+                    return prescriptions;
+                },
             }
-          });
+        });
       }
 
 

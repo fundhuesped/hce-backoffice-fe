@@ -6,7 +6,7 @@
     	.module('hce.patientHCE')
     	.controller('MedicationRecetaNuevaController', medicationRecetaNuevaController);
 
-	  medicationRecetaNuevaController.$inject = ['$state', '$stateParams', 'Preference', 'Receta', 'prescription', '$uibModalInstance'];
+	  medicationRecetaNuevaController.$inject = ['$state', '$stateParams', 'Preference', 'Receta', 'prescriptions', '$uibModalInstance'];
 
     function medicationRecetaNuevaController ($state, $stateParams, Preference, Receta, prescriptions, $uibModalInstance) {
 	    var vm = this;
