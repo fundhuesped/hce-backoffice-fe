@@ -121,7 +121,6 @@
 
 
       function editEvolution(evolution) {
-        debugger;
         if(evolution.profesional.id != SessionService.currentUser.id){
           toastr.error("No puede editar evoluciones de otros Profesionales");
           return;
