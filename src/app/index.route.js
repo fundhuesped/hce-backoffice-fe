@@ -25,34 +25,6 @@
             }
           },
       })
-      .state('generalPrescription', {
-          url: '/generalPrescription?prescriptionId',
-          templateUrl: 'app/views/patientHCE/prescriptions/generalPrescription.html',
-          controller: 'MedicationRecetaNuevaController',
-          controllerAs: 'Ctrl',        
-          params: {
-              prescription: null
-          }
-      })
-
-      .state('profilaxisPrescription', {
-          url: '/profilaxisPrescription?prescriptionId',
-          templateUrl: 'app/views/patientHCE/prescriptions/profilaxisPrescription.html',
-          controller: 'MedicationRecetaNuevaController',
-          controllerAs: 'Ctrl',        
-          params: {
-            prescriptionId: null
-          }
-      })
-      .state('arvPrescription', {
-          url: '/arvPrescription?prescriptionId',
-          templateUrl: 'app/views/patientHCE/prescriptions/arvPrescription.html',
-          controller: 'ArvMedicationRecetaController',
-          controllerAs: 'Ctrl',        
-          params: {
-              prescriptionId: null
-          }
-      })
       .state('vaccinePrescription', {
           url: '/vaccinePrescription?prescriptionId',
           templateUrl: 'app/views/patientHCE/prescriptions/vaccinePrescription.html',

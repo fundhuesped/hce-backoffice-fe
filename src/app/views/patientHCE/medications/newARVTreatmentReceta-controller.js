@@ -49,16 +49,11 @@
         tmpNewReceta.$save({pacienteId:HCService.currentPaciente.id},function(prescription) {
           toastr.success('Receta generada con éxito');
           if(prescription.prescriptionsIds){
-            for (var i = prescription.prescriptionsIds.length - 1; i >= 0; i--) {
-              var url = $state.href('arvPrescription', {prescriptionId: prescription.prescriptionsIds[i]});
-              $window.open(url,'_blank');                          
-            }
+            openModal(prescription.prescriptionsIds);
+            //TODO Close?  $uibModalInstance.close('created');                                     
           }else{
-            var url = $state.href('arvPrescription', {
-              prescriptionId: prescription.id
-            });
-            $window.open(url,'_blank');
-            $uibModalInstance.close('created');            
+            openModal([prescription.id]);
+            $uibModalInstance.close('created');
           }
         }, showError);
       }
@@ -68,6 +63,22 @@
           return true;
         }
         return false;
+      }
+
+      function openModal(prescriptions) {
+        vm.cancel();
+        var modalInstance = $uibModal.open({
+            backdrop: true,
+            templateUrl: 'app/views/patientHCE/prescriptions/arvMedicationReceta.html',
+            size: 'lg',
+            controller: 'ArvMedicationRecetaController',
+            controllerAs: 'ArvMedicationRecetaController',
+            resolve: {
+                prescriptions: function () {
+                    return prescriptions;
+                },
+            }
+        });
       }
 
 	    function activate(){

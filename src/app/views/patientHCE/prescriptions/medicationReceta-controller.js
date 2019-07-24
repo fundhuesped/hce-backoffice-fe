@@ -6,35 +6,54 @@
     	.module('hce.patientHCE')
     	.controller('MedicationRecetaController', medicationRecetaController);
 
-	  medicationRecetaController.$inject = ['$state', '$stateParams', 'Receta', 'Preference', 'prescriptionId', '$uibModalInstance'];
+	  medicationRecetaController.$inject = ['$state', '$stateParams', 'Receta', 'Preference', '$uibModalInstance', 'prescriptions'];
 
-    function medicationRecetaController ($state, $stateParams, Receta, Preference, prescriptionId, $uibModalInstance) {
+    function medicationRecetaController ($state, $stateParams, Receta, Preference, $uibModalInstance, prescriptions) {
 	    var vm = this;
-      vm.prescription = $stateParams.prescription;
+      vm.prescriptionsIDs = prescriptions;
+      vm.prescriptionsArray = [];
       vm.numberToText = numberToText;
       vm.headerImage = '';
+      vm.cancel = cancel;
+      vm.removeDecimals = removeDecimals;
+      vm.canBeClosed = canBeClosed;
+      vm.print = print;
       activate();
 
 	    function activate(){
         Preference.get({section:'global', name: 'general__prescription_header_image'}, function (response) {
           vm.headerImage = response.value;
-        })
-        if(!vm.prescriptions){
-          var id;
-          if(prescriptionId){
-            id = prescriptionId;
-          }else{
-            id = $stateParams.prescriptionId;
-          }
-          vm.prescription = Receta.get({id:id}, function (argument) {
-            setTimeout(function(){
-              window.print();
-              $uibModalInstance.close('created');
-            },2); 
+        });
+        vm.prescriptionsIDs.forEach( function(prescriptionID) {
+          const prescriptionFound = Receta.get({id: prescriptionID}, function (argument) {
+            ; //Blank statement, dont delete
           });
-        }
+          vm.prescriptionsArray.push(prescriptionFound);
+        });
+      }
+      
+      function cancel() {
+        $uibModalInstance.dismiss('cancel');
+      }
 
-	    }
+      function canBeClosed() {
+        return true;
+      }
+
+      function print(){      
+        //Copy content to parent page (not modal one) so we can Print it
+        var contentToCopy = document.getElementById('section-to-copy');
+        console.log("--- copy ---");
+        console.log(contentToCopy);
+        $( "#section-to-print" ).empty();
+        $( "#section-to-copy" ).clone().appendTo( "#section-to-print" );
+        window.print();
+        this.cancel();
+      }
+
+      function removeDecimals(number) {
+        return Math.round(number);
+      }
 
       function numberToText(number) {
         switch(number) {
