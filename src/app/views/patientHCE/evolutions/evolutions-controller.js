@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('EvolutionsController', evolutionsController);
 
-	evolutionsController.$inject = ['$state', 'HCService', 'toastr', 'moment'];
+	evolutionsController.$inject = ['$state', 'HCService', 'toastr', 'moment', 'SessionService'];
 
-    function evolutionsController ($state, HCService, toastr, moment) {
+    function evolutionsController ($state, HCService, toastr, moment, SessionService) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newEvolution = {};
@@ -121,6 +121,10 @@
 
 
       function editEvolution(evolution) {
+        if(evolution.profesional.id != SessionService.currentUser.id){
+          toastr.error("No puede editar evoluciones de otros Profesionales");
+          return;
+        }
         HCService.getEvolution({id:evolution.id}).then(function () {
         }, showError)
       }
