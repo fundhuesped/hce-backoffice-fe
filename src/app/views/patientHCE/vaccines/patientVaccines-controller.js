@@ -108,7 +108,7 @@
           templateUrl: 'app/views/patientHCE/vaccines/newVaccinePrescription.html',
           size: 'md',
           controller: 'NewVaccinePrescriptionController',
-          controllerAs: 'Ctrl'
+          controllerAs: 'NewVaccinePrescriptionController'
         });
       }
 

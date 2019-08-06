@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewVaccinePrescriptionController', newVaccinePrescriptionController);
 
-	  newVaccinePrescriptionController.$inject = ['$state', 'HCService', 'PatientVaccine', 'toastr', 'moment', 'Vaccine', 'Receta', '$uibModalInstance', '$window'];
+	  newVaccinePrescriptionController.$inject = ['$state', 'HCService', 'PatientVaccine', 'toastr', 'moment', 'Vaccine', 'Receta', '$uibModalInstance', '$window', '$uibModal'];
 
-    function newVaccinePrescriptionController ($state, HCService, PatientVaccine, toastr, moment, Vaccine, Receta, $uibModalInstance, $window) {
+    function newVaccinePrescriptionController ($state, HCService, PatientVaccine, toastr, moment, Vaccine, Receta, $uibModalInstance, $window, $uibModal) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newReceta = new Receta();
@@ -47,11 +47,25 @@
 
         tmpNewReceta.$save({pacienteId:HCService.currentPaciente.id},function(prescription) {
           toastr.success('Receta generada con éxito');
-          var url = $state.href('vaccinePrescription', {prescriptionId: prescription.id});
-          $window.open(url,'_blank');
-          openRecetaModal(prescription.id);
+          openModal([prescription.id]);
           $uibModalInstance.close('created');
         }, showError);
+      }
+
+      function openModal(prescriptions) {
+        vm.cancel();
+        var modalInstance = $uibModal.open({
+            backdrop: true,
+            templateUrl: 'app/views/patientHCE/prescriptions/vaccinePrescription.html',
+            size: 'lg',
+            controller: 'VaccinePrescriptionController',
+            controllerAs: 'VaccinePrescriptionController',
+            resolve: {
+                prescriptions: function () {
+                    return prescriptions;
+                },
+            }
+        });
       }
 
       function canSave() {
