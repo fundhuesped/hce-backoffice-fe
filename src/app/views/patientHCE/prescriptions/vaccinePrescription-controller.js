@@ -28,11 +28,9 @@
           vm.headerImage = response.value;
         });
         vm.prescriptionsIDs.forEach( function(prescriptionID) {
-          const prescriptionFound = VaccinePrescription.get({id: prescriptionID}, function (argument) {
-            ; //Blank statement, dont delete
+          VaccinePrescription.get({id: prescriptionID}, function (prescriptionFoundNow) {
+            vm.prescriptionsArray.push(prescriptionFoundNow);
           });
-          debugger;
-          vm.prescriptionsArray.push(prescriptionFound);
         });
       }
 

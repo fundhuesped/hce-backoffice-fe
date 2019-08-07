@@ -6,29 +6,29 @@
 				<img src="{{VaccinePrescriptionController.headerImage}}" class="center-block">	
 			</div>
 			<div class="row">
-				<div class="pull-right" style="padding: 10px">Nro de receta: {{VaccinePrescriptionController.prescription.id}}</div>
+				<div class="pull-right" style="padding: 10px">Nro de receta: {{prescription.id}}</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="row prescriptionPatientName">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="hce-form-title">
-								{{VaccinePrescriptionController.prescription.paciente.firstName}} {{VaccinePrescriptionController.prescription.paciente.otherNames}} {{VaccinePrescriptionController.prescription.paciente.fatherSurname}} {{VaccinePrescriptionController.prescription.paciente.motherSurname}}
+								{{prescription.paciente.firstName}} {{prescription.paciente.otherNames}} {{prescription.paciente.fatherSurname}} {{prescription.paciente.motherSurname}}
 							</div>
 						</div>
 					</div>
-					<div class="row prescriptionPatientSocialService" ng-if="VaccinePrescriptionController.prescription.paciente.socialService && VaccinePrescriptionController.prescription.paciente.socialService.name !='No tiene'">
+					<div class="row prescriptionPatientSocialService" ng-if="prescription.paciente.socialService && prescription.paciente.socialService.name !='No tiene'">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="">
-								{{VaccinePrescriptionController.prescription.paciente.socialService.name}} 
+								{{prescription.paciente.socialService.name}} 
 							</div>
 							<div class="">
-								{{VaccinePrescriptionController.prescription.paciente.socialServiceNumber}}
+								{{prescription.paciente.socialServiceNumber}}
 							</div>
 						</div>
 					</div>
 					<div class="prescriptionMedicationsList">
-						<div class="row prescriptionMedication" ng-repeat="prescriptedVaccine in VaccinePrescriptionController.prescription.prescriptedVaccines">
+						<div class="row prescriptionMedication" ng-repeat="prescriptedVaccine in prescription.prescriptedVaccines">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<div class="">
 									{{prescriptedVaccine.name}}
@@ -40,50 +40,50 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-					{{VaccinePrescriptionController.prescription.observations}}
+					{{prescription.observations}}
 				</div>
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				</div>
 			</div>
 			<div class="row" style="margin-top: 300px">
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-					{{VaccinePrescriptionController.prescription.issuedDate| date:"d/M/yy"}}
+					{{prescription.issuedDate| date:"d/M/yy"}}
 				</div>
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 					Firma y sello
 				</div>
 			</div>
 		</div>
-		<div style="page-break-after: always;" ng-if="VaccinePrescriptionController.prescription.duplicateRequired==true"></div>
-		<div ng-if="VaccinePrescriptionController.prescription.duplicateRequired==true">
+		<div style="page-break-after: always;" ng-if="prescription.duplicateRequired==true"></div>
+		<div ng-if="prescription.duplicateRequired==true">
 			<div class="container-fluid">
 				<div class="row">
 					<img src="{{VaccinePrescriptionController.headerImage}}" class="center-block">	
 				</div>
 				<div class="row">
-					<div class="pull-right" style="padding: 10px">Nro de receta: {{VaccinePrescriptionController.prescription.id}}</div>
+					<div class="pull-right" style="padding: 10px">Nro de receta: {{prescription.id}}</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="row prescriptionPatientName">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<div class="hce-form-title">
-								{{VaccinePrescriptionController.prescription.paciente.firstName}} {{VaccinePrescriptionController.prescription.paciente.otherNames}} {{VaccinePrescriptionController.prescription.paciente.fatherSurname}} {{VaccinePrescriptionController.prescription.paciente.motherSurname}}
+								{{prescription.paciente.firstName}} {{prescription.paciente.otherNames}} {{prescription.paciente.fatherSurname}} {{prescription.paciente.motherSurname}}
 								</div>
 							</div>
 						</div>
-						<div class="row prescriptionPatientSocialService" ng-if="VaccinePrescriptionController.prescription.paciente.socialService && VaccinePrescriptionController.prescription.paciente.socialService.name !='No tiene'">
+						<div class="row prescriptionPatientSocialService" ng-if="prescription.paciente.socialService && prescription.paciente.socialService.name !='No tiene'">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<div class="">
-									{{VaccinePrescriptionController.prescription.paciente.socialService.name}} 
+									{{prescription.paciente.socialService.name}} 
 								</div>
 								<div class="">
-									{{VaccinePrescriptionController.prescription.paciente.socialServiceNumber}}
+									{{prescription.paciente.socialServiceNumber}}
 								</div>
 							</div>
 						</div>
 						<div class="prescriptionMedicationsList">
-							<div class="row prescriptionMedication" ng-repeat="prescriptedVaccine in VaccinePrescriptionController.prescription.prescriptedVaccines">
+							<div class="row prescriptionMedication" ng-repeat="prescriptedVaccine in prescription.prescriptedVaccines">
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<div class="">
 										{{prescriptedVaccine.name}}
@@ -100,14 +100,14 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-						{{VaccinePrescriptionController.prescription.observations}}
+						{{prescription.observations}}
 					</div>
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 					</div>
 				</div>
-				<div class="row" style="margin-top: 200px">
+				<div class="row" style="margin-top: 100px">
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-						{{VaccinePrescriptionController.prescription.issuedDate| date:"d/M/yy"}}
+						{{prescription.issuedDate| date:"d/M/yy"}}
 					</div>
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 						Firma y sello

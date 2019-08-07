@@ -123,14 +123,21 @@
           if(error.data){
             if(error.data.detail){
               toastr.error(error.data.detail);
+              console.error(error.data.detail);
+              console.trace()
             }else{
-              toastr.error(error.data);
+              toastr.error(JSON.stringify(error.data));
+              console.error(error.data);
+              console.trace()
             }
           }else{
             toastr.error(error);
+            console.error(error);
+            console.trace()
           }
         }else{
           toastr.error('Ocurrio un error');
+          console.trace()
         }
       }
     }
