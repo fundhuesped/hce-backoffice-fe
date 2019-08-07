@@ -6,31 +6,51 @@
       .module('hce.patientHCE')
       .controller('VaccinePrescriptionController', vaccinePrescriptionController);
 
-    vaccinePrescriptionController.$inject = ['$state', '$stateParams', 'VaccinePrescription', 'Preference'];
+    vaccinePrescriptionController.$inject = ['$state', '$stateParams', 'VaccinePrescription', 'Preference', '$uibModalInstance', 'prescriptions'];
 
-    function vaccinePrescriptionController ($state, $stateParams, VaccinePrescription, Preference) {
+    function vaccinePrescriptionController ($state, $stateParams, VaccinePrescription, Preference, $uibModalInstance, prescriptions) {
       var vm = this;
-      vm.prescription = $stateParams.prescription;
+      vm.prescriptionsIDs = prescriptions;
+      vm.prescriptionsArray = [];
       vm.numberToText = numberToText;
       vm.removeDecimals = removeDecimals;
       vm.headerImage = '';
+      vm.cancel = cancel;
+      vm.canBeClosed = canBeClosed;
+      vm.print = print;vm.cancel = cancel;
+      vm.canBeClosed = canBeClosed;
+      vm.print = print;
       
       activate();
 
       function activate(){
         Preference.get({section:'global', name: 'general__prescription_header_image'}, function (response) {
           vm.headerImage = response.value;
-        })
-        if(!vm.prescriptions){
-          vm.prescription = VaccinePrescription.get({id:$stateParams.prescriptionId}, function (argument) {
-            setTimeout(function(){
-              // window.print();
-            },2); 
-
+        });
+        vm.prescriptionsIDs.forEach( function(prescriptionID) {
+          VaccinePrescription.get({id: prescriptionID}, function (prescriptionFoundNow) {
+            vm.prescriptionsArray.push(prescriptionFoundNow);
           });
+        });
+      }
 
-        }
+      function cancel() {
+        $uibModalInstance.dismiss('cancel');
+      }
 
+      function canBeClosed() {
+        return true;
+      }
+
+      function print(){      
+        //Copy content to parent page (not modal one) so we can Print it
+        var contentToCopy = document.getElementById('section-to-copy');
+        console.log("--- copy ---");
+        console.log(contentToCopy);
+        $( "#section-to-print" ).empty();
+        $( "#section-to-copy" ).clone().appendTo( "#section-to-print" );
+        window.print();
+        this.cancel();
       }
 
 
