@@ -36,22 +36,60 @@
 
       function openHivDetails() {
 
-        var url = $state.href('summaryDetails', {
-            patientId: HCService.currentPacienteId,
-            showPNS: false,
-            showHIV: true,
-            showEvolutions: false,
-            showProblems: false,
-            showARV: false,
-            showProfilaxis: false,
-            showGeneral: false,
-            showLab: false,
-            showOthers: false,
-            showVaccines: false,
-            observations: ""
+        var modalInstance = $uibModal.open({
+            backdrop: true,
+            templateUrl: 'app/views/patientHCE/hceSummary/summaryDetails.html',
+            size: 'lg',
+            controller: 'SummaryDetailsController',
+            controllerAs: 'SummaryDetailsController',
+            resolve: {
+                patientId: function () {
+                    return HCService.currentPacienteId;
+                },
+                showPNS: function () {
+                    return false;
+                },
+                showHIV: function () {
+                    return true;
+                },
+                showEvolutions: function () {
+                    return false;
+                },
+                showProblems: function () {
+                    return false;
+                },
+                showARV: function () {
+                    return false;
+                },
+                showProfilaxis: function () {
+                    return  false;
+                },
+                showGeneral: function () {
+                    return false;
+                },
+                showLab: function () {
+                    return false;
+                },
+                showOthers: function () {
+                    return false;
+                },
+                showVaccines: function () {
+                    return false;
+                },
+                observations: function () {
+                    return false;
+                },
+            }
         });
-
-        $window.open(url,'_blank');
+        
+        modalInstance.result.then(function (resolution) {
+          if(resolution==='markedError' || resolution==='edited'){
+              searchPatientProblems();
+              if(!HCService.currentEvolution){
+                  HCService.getCurrentEvolution();
+              }
+          }
+        });
       }
 
       
