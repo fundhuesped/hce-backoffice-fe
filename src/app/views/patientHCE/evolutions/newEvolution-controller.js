@@ -9,11 +9,13 @@
 	newEvolutionController.$inject = ['$state', 'HCService', 'toastr', 'moment'];
 
     function newEvolutionController ($state, HCService, toastr, moment) {
+      var LAST_EVOLUTION = "LAST_EVOLUTION";
 	    var vm = this;
       vm.hceService = HCService;
       vm.newEvolution = {};
       vm.canSaveEvolution = HCService.canSaveEvolution;
       vm.saveNewEvolution = saveNewEvolution;
+      vm.updateCurrentEvolution = updateCurrentEvolution;
       vm.closeEvolution = closeEvolution;
       vm.newEvolutionFocused = false;
       vm.isOpened = isOpened;
@@ -40,12 +42,20 @@
       activate();
 
       function saveNewEvolution() {
+        debugger;
         return HCService.saveNewEvolution().then(function() {
+          debugger;
           HCService.getEvolutions();
           toastr.success('Recargue la pagina para ver los datos guardados');
           toastr.success('Evolucion guardada con exito');
           vm.newEvolutionFocused = false;
+          window.localStorage.removeItem(LAST_EVOLUTION);
         }, showError);
+      }
+
+      function updateCurrentEvolution() {
+        window.localStorage.setItem(LAST_EVOLUTION, JSON.stringify(vm.currentEvolution) );
+        debugger;
       }
 
       function closeEvolution() {
@@ -64,6 +74,16 @@
 
 	    function activate(){
         HCService.getCurrentEvolution();
+        var lastEvolution = window.localStorage.getItem(LAST_EVOLUTION);
+        debugger;
+
+        if( angular.isDefined(lastEvolution) && lastEvolution ){
+          lastEvolution = JSON.parse( lastEvolution ); //Parse stringified object to JS object
+          if(!vm.currentEvolution) vm.currentEvolution = {};
+          vm.currentEvolution.reason = lastEvolution.reason;
+          vm.currentEvolution.visitType = lastEvolution.visitType;
+          vm.currentEvolution.notaClinica = lastEvolution.notaClinica;
+        };
 	    }
 
       function isOpened() {
@@ -71,6 +91,7 @@
       }
 
       function showError(error) {
+        debugger;
         if(error){
           if(error.data){
             if(error.data.detail){
