@@ -186,10 +186,22 @@
         Medication.getActiveList({medicationGroup:'ARV', medicationTypeCode: 'OTROS'},function(medications){
           vm.otherMedications = medications;
         }, displayComunicationError);
-        	// HCService.getPatientProblems();
+          // HCService.getPatientProblems();
+          
+          var noContains5arvProblems = function(problems){
+            return !(
+              problems.includes("Infección por HIV") || problems.includes("Profilaxis post exposición ocupacional") || problems.includes("Profilaxis post exposición sexual") || problems.includes("Profilaxis post exposición vertical") || problems.includes("Profilaxis pre exposición (PrEP)")
+            )
+          }
 
           PatientProblem.getForPaciente({pacienteId: HCService.currentPaciente.id, problemType:'HIV', state:'Active'}, function (result) {
               vm.patientProblems = result;
+              var currentProblemsString = result.map( function(element){
+                return element.problem.name
+              });
+              if( noContains5arvProblems(currentProblemsString) ){
+                toastr.info('Primero tiene que dar de alta alguno de estos 5 problemas: Infección por HIV, Profilaxis post exposición ocupacional, Profilaxis post exposición sexual, Profilaxis post exposición vertical, Profilaxis pre exposición (PrEP)');
+              }
           }, function (err) {
                
           });
