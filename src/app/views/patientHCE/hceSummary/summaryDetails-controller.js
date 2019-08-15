@@ -115,7 +115,10 @@
         console.log("called getEvolutionsDetails")
         Evolution.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
           console.log("Obtained getEvolutionsDetails");
-          vm.evolutions = results;
+          var filteredEvolutions = results.filter( function(evolution){
+            return (evolution.state !== 'Canceled') && (evolution.status !== 'Inactive')
+          });
+          vm.evolutions = filteredEvolutions;
         }, function (err) {
           console.error(err);
           vm.evolutions = [];
