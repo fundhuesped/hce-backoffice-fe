@@ -55,7 +55,6 @@
 
       function updateCurrentEvolution() {
         window.localStorage.setItem(LAST_EVOLUTION, JSON.stringify(vm.currentEvolution) );
-        debugger;
       }
 
       function closeEvolution() {
@@ -75,7 +74,6 @@
 	    function activate(){
         HCService.getCurrentEvolution();
         var lastEvolution = window.localStorage.getItem(LAST_EVOLUTION);
-        debugger;
 
         if( angular.isDefined(lastEvolution) && lastEvolution ){
           lastEvolution = JSON.parse( lastEvolution ); //Parse stringified object to JS object
@@ -91,7 +89,6 @@
       }
 
       function showError(error) {
-        debugger;
         if(error){
           if(error.data){
             if(error.data.detail){
