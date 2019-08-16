@@ -42,9 +42,7 @@
       activate();
 
       function saveNewEvolution() {
-        debugger;
         return HCService.saveNewEvolution().then(function() {
-          debugger;
           HCService.getEvolutions();
           toastr.success('Recargue la pagina para ver los datos guardados');
           toastr.success('Evolucion guardada con exito');
