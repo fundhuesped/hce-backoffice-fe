@@ -29,6 +29,7 @@
       vm.canClear = canClear;
       vm.categoriasDeterminaciones = [];
       vm.toggleCategoria = toggleCategoria;
+      vm.todayDate = new Date();
 
 
       vm.isLowerThanLimit = isLowerThanLimit;
@@ -133,7 +134,8 @@
             } 
           }
         }
-        return vm.newLab.date && hasValues;
+        var validDate = new Date(vm.newLab.date) <= vm.todayDate;
+        return (vm.newLab.date || hasValues)  && validDate;
       }
 
       function clear() {

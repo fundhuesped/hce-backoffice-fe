@@ -13,7 +13,7 @@
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<div class="input-group">
-									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="newLabDate" ng-model="Ctrl.newLab.date" is-open="Ctrl.newLabDateCalendar.opened" datepicker-options="Ctrl.newLabDateCalendar.options" close-text="Cerrar" alt-input-formats="Ctrl.newLabDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" />
+									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="newLabDate" ng-model="Ctrl.newLab.date" max={{todayDate}}  is-open="Ctrl.newLabDateCalendar.opened" datepicker-options="Ctrl.newLabDateCalendar.options" close-text="Cerrar" alt-input-formats="Ctrl.newLabDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" />
 									<div class="input-group-btn input-group-small">
 										<button type="button" class="btn btn-default btn-xs" style="margin: 0px;" ng-click="Ctrl.newLabDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
 									</div>
