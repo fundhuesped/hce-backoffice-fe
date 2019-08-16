@@ -36,7 +36,7 @@
                         return booleanValue;
                     },
                     showHIV: function () {
-                        return vm.categories.hiv;
+                        return false;
                     },
                     showEvolutions: function () {
                         return vm.categories.evolutions;
