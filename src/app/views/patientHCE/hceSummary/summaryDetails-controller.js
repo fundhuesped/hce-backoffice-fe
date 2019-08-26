@@ -111,11 +111,8 @@
       }
 
       function getEvolutionsDetails() {
-        Evolution.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
-          var filteredEvolutions = results.filter( function(evolution){
-            return (evolution.state !== 'Canceled') && (evolution.status !== 'Inactive')
-          });
-          vm.evolutions = filteredEvolutions;
+        Evolution.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error,Canceled',notStatus:'Inactive'}, function (results) {
+          vm.evolutions = results;
         }, function (err) {
           console.error(err);
           vm.evolutions = [];
