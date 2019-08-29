@@ -59,7 +59,6 @@
       }
       
       function canShowPNS(){
-        console.log("-- called canShowPNS --");
        return checkTrue(showPNS) 
       }
 
@@ -112,9 +111,7 @@
       }
 
       function getEvolutionsDetails() {
-        console.log("called getEvolutionsDetails")
-        Evolution.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
-          console.log("Obtained getEvolutionsDetails");
+        Evolution.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error,Canceled',notStatus:'Inactive'}, function (results) {
           vm.evolutions = results;
         }, function (err) {
           console.error(err);
@@ -124,7 +121,6 @@
 
       function getPatienProblems() {
         PatientProblem.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
-          console.log("Obtained problems");
           vm.problems = results;
         }, function (err) {
           console.error(err);
@@ -133,9 +129,7 @@
       }
 
       function getArvTreatments() {
-        console.log("called getArvTreatments")
         PatientArvTreatment.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
-          console.log("Obtained treatments");
           vm.arvTreatments = results;
         }, function (err) {
           console.error(err);
@@ -145,7 +139,6 @@
 
       function getProfilaxis() {
         PatientMedication.getAllForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
-          console.log("Obtained profilaxis");
           vm.medications = results.filter( function (med) {  return med.medication.medicationType.name == "Profilaxis"; } );
         }, function (err) {
           console.error(err);
@@ -156,7 +149,6 @@
 
       function getGeneralTreatments() {
         PatientMedication.getForPaciente({pacienteId: HCService.currentPacienteId, notState:'Error'}, function (results) {
-          console.log("Obtained treatments");
           vm.generalMedications = results.filter( function(med) { return med.medication.medicationType.name != "Profilaxis";} );
         }, function (err) {
           console.error(err);
@@ -290,8 +282,6 @@
     function print(){      
       //Copy content to parent page (not modal one) so we can Print it
       var contentToCopy = document.getElementById('section-to-copy');
-      console.log("--- copy ---");
-      console.log(contentToCopy);
       $( "#section-to-print" ).empty();
       $( "#section-to-copy" ).clone().appendTo( "#section-to-print" );
       window.print();
