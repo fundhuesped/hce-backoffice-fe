@@ -6,8 +6,8 @@
     "test": "gulp test"
   },
   "devDependencies": {
-    "browser-sync": "~2.9.11",
-    "browser-sync-spa": "~1.0.3",
+    "browser-sync": "2.26.7",
+    "browser-sync-spa": "1.0.3",
     "chalk": "~1.1.1",
     "del": "~2.0.2",
     "eslint-plugin-angular": "4.0.1",
@@ -24,7 +24,7 @@
     "gulp-inject": "~3.0.0",
     "gulp-load-plugins": "~0.10.0",
     "gulp-ng-annotate": "~1.1.0",
-    "gulp-protractor": "~2.1.0",
+    "gulp-protractor": "^4.1.1",
     "gulp-rename": "~1.2.2",
     "gulp-replace": "~0.5.4",
     "gulp-rev": "~6.0.1",
