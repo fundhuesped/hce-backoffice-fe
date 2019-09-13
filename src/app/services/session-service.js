@@ -17,13 +17,17 @@
         srv.changePassword = changePassword;
         srv.currentUserCan = currentUserCan;
         srv.currentUserPermissions = [];
+        var ADMINISTRATOR = 'administrador';
+        var MEDIC = 'medico';
+        var SECRETARY = 'secretaria';
         activate();
 
 
-
+        //TODO Delete this?
         var rolPermissions = {
-            'administrador' : [],
-            'secretaria'    : []                
+            ADMINISTRATOR : [],
+            MEDIC : [],
+            SECRETARY    : []                
         };
 
         function activate(){
@@ -46,6 +50,24 @@
             });
         }
 
+        function saveMaximumPermissionsGroup(groupName){
+            if( (groupName===ADMINISTRATOR) || (srv.maxPermissionsGroup===ADMINISTRATOR) ){
+                srv.maxPermissionsGroup = groupName;
+                return;
+            }
+
+            if( (groupName===MEDIC) || (srv.maxPermissionsGroup===MEDIC) ){
+                srv.maxPermissionsGroup = groupName;
+                return;
+            }
+
+            if( (groupName===SECRETARY) || (srv.maxPermissionsGroup===SECRETARY) ){
+                srv.maxPermissionsGroup = groupName;
+                return;
+            }
+            //Put New roles here
+        }
+
         function login(username, password, rememberMe, callOK, callNOK){
             Token.login(username, password).then(function(response){
                 srv.currentUser = response.data;
@@ -54,6 +76,7 @@
                 for (var i = srv.currentUser.groups.length - 1; i >= 0; i--) {
                     var groupPermissions = rolPermissions[srv.currentUser.groups[i].name];
                     srv.currentUserPermissions = srv.currentUserPermissions.concat(groupPermissions);
+                    saveMaximumPermissionsGroup(srv.currentUser.groups[i].name);
                 }
 
                 localStorageService.set('currentUser', srv.currentUser);
@@ -65,13 +88,9 @@
             });
         }
 
+        //TODO modify to ask backend for the permission to current user group ID from srv
         function currentUserCan(permission) {
-            for (var i = srv.currentUserPermissions.length - 1; i >= 0; i--) {
-                if(srv.currentUserPermissions[i]==permission){
-                    return true;
-                }
-            }
-            return false;
+            //TODO
         }
 
         function logout(){
