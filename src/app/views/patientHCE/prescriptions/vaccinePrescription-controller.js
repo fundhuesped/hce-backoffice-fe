@@ -45,8 +45,6 @@
       function print(){      
         //Copy content to parent page (not modal one) so we can Print it
         var contentToCopy = document.getElementById('section-to-copy');
-        console.log("--- copy ---");
-        console.log(contentToCopy);
         $( "#section-to-print" ).empty();
         $( "#section-to-copy" ).clone().appendTo( "#section-to-print" );
         window.print();

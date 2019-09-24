@@ -11,7 +11,6 @@
     function newMedicationRecetaController ($state, HCService, PatientMedication, Receta, toastr, moment, Medication, $uibModalInstance, $uibModal, $window) {
 	    var vm = this;
       vm.hceService = HCService;
-      vm.patientMedications = [];
       vm.newReceta = new Receta();
       vm.save = save;
       vm.cancel = cancel;
@@ -29,6 +28,16 @@
           this.opened = true;
         }
       };
+
+      Object.defineProperty(
+        vm,
+        'patientMedications', {
+        enumerable: true,
+        configurable: false,
+        get: function () {
+            return HCService.patientMedications;
+        }
+      });
 
       activate();
 
@@ -79,9 +88,6 @@
       }
 
 	    function activate(){
-        PatientMedication.getForPaciente({pacienteId:HCService.currentPacienteId, state: 'Active'}, function (results) {
-          vm.patientMedications = results;
-        });
 	    }
 
 
