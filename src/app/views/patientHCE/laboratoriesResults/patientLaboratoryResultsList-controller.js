@@ -75,7 +75,7 @@
           vm.categoriasDeterminaciones = lodash.orderBy(vm.categoriasDeterminaciones, 'order');
 
           vm.determinaciones = determinaciones;
-        }, displayComunicationError);
+        }, showError); //sino, displayComunicationError
         vm.newLabValues = [];
         vm.newLab = new PatientLaboratoryResult();
         searchPatientLaboratoryResults();
@@ -109,7 +109,7 @@
           toastr.success('Nuevo laboratorio ingresado con éxito.');
           HCService.getCurrentEvolution();
           activate();
-        },displayComunicationError);
+        },showError);
       }
 
       function searchPatientLaboratoryResults() {
@@ -121,7 +121,7 @@
           if(vm.currentPage===1){
             vm.totalItems = paginatedResult.count;
           }
-        },displayComunicationError);
+        },showError);//sino, displayComunicationError
       }
 
       function canSave() {
@@ -176,7 +176,34 @@
       }
 
 
-      function displayComunicationError(loading){
+      function parseError(errorData){
+        if(errorData.startsWith("AssertionError")){
+          var errorAuxArray = (errorData.split('\n'));
+          var errorToReturn = errorAuxArray[1];
+          return errorToReturn;
+        }
+        return errorData;
+      }
+    
+      function showError(error) {
+        if(error){
+          if(error.data){
+            var errorToShow = parseError(error.data);
+            if(errorToShow.detail){
+              toastr.error(errorToShow.detail);
+            }else{
+              toastr.error(errorToShow);
+            }
+          }else{
+            toastr.error(error);
+          }
+        }else{
+          toastr.error('Ocurrio un error');
+        }
+      }
+    
+
+      function displayComunicationError(loading){ //NOTA: Ya no se llama en el then de validacion
         if(!toastr.active()){
           toastr.warning('Ocurrió un error en la comunicación, por favor intente nuevamente.');
         }
