@@ -6,16 +6,16 @@
         .module('hce.services')
         .service('SessionService', SessionService );
 
-    SessionService.$inject = ['Token', 'User', '$state', 'localStorageService'];
+    SessionService.$inject = ['Token', 'User', '$state', 'localStorageService', 'Permission'];
 
-        function SessionService(Token, User, $state,localStorageService){
+        function SessionService(Token, User, $state,localStorageService, Permission){
         var srv = this;
         srv.login = login;
         srv.logout = logout;
         srv.currentUser = null;
         srv.currentToken = null;
         srv.changePassword = changePassword;
-        srv.currentUserCan = currentUserCan;
+        srv.canAddUsers = false;
         srv.currentUserPermissions = [];
         var ADMINISTRATOR = 'administrador';
         var MEDIC = 'medico';
@@ -36,6 +36,7 @@
                 srv.currentToken = localStorageService.get('currentToken');
                 srv.currentUserPermissions = localStorageService.get('currentUserPermissions');
             }
+            checkPermissions();
         }
 
         function changePassword(oldPassword, newPassword, repeatNewPassword, callOK, callNOK){
@@ -89,8 +90,16 @@
         }
 
         //TODO modify to ask backend for the permission to current user group ID from srv
-        function currentUserCan(permission) {
-            //TODO
+        function checkPermissions() {
+            return Permission.currentUserCan({ permission: 'add_user', group: srv.maxPermissionsGroup },
+            function(){
+                debugger;
+               srv.canAddUsers = true;
+            },function(error){
+                console.error("--- Error al verificar permisos ---");
+                if(error) console.error(error);
+                srv.canAddUsers = false;
+            });
         }
 
         function logout(){

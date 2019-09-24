@@ -10,7 +10,7 @@
 
     function appLayoutController (SessionService, HCService, $state) {
 	    var vm = this;
-        vm.currentUserCan = SessionService.currentUserCan;
+        vm.canAddUsers = SessionService.canAddUsers;
         vm.changeCollapsed = changedCollapsed;
         vm.drawerCollapsed = true;
         vm.logoBig = '/assets/images/logo-redclin.png';
