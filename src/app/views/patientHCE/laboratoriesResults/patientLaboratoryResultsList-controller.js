@@ -109,7 +109,7 @@
           toastr.success('Nuevo laboratorio ingresado con éxito.');
           HCService.getCurrentEvolution();
           activate();
-        },displayComunicationError);
+        },showError);
       }
 
       function searchPatientLaboratoryResults() {
@@ -175,6 +175,33 @@
         return determinacion.upperLimit&&parseFloat(determinacion.upperLimit)<parseFloat(getValueForDeterminacion(determinacion.code,result));
       }
 
+
+      function parseError(errorData){
+        if(errorData.startsWith("AssertionError")){
+          var errorAuxArray = (errorData.split('\n'));
+          var errorToReturn = errorAuxArray[1];
+          return errorToReturn;
+        }
+        return errorData;
+      }
+    
+      function showError(error) {
+        if(error){
+          if(error.data){
+            var errorToShow = parseError(error.data);
+            if(errorToShow.detail){
+              toastr.error(errorToShow.detail);
+            }else{
+              toastr.error(errorToShow);
+            }
+          }else{
+            toastr.error(error);
+          }
+        }else{
+          toastr.error('Ocurrio un error');
+        }
+      }
+    
 
       function displayComunicationError(loading){
         if(!toastr.active()){
