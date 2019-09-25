@@ -75,7 +75,7 @@
           vm.categoriasDeterminaciones = lodash.orderBy(vm.categoriasDeterminaciones, 'order');
 
           vm.determinaciones = determinaciones;
-        }, showError); //sino, displayComunicationError
+        }, displayComunicationError);
         vm.newLabValues = [];
         vm.newLab = new PatientLaboratoryResult();
         searchPatientLaboratoryResults();
@@ -121,7 +121,7 @@
           if(vm.currentPage===1){
             vm.totalItems = paginatedResult.count;
           }
-        },showError);//sino, displayComunicationError
+        },displayComunicationError);
       }
 
       function canSave() {
