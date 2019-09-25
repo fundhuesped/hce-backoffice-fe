@@ -203,7 +203,7 @@
       }
     
 
-      function displayComunicationError(loading){ //NOTA: Ya no se llama en el then de validacion
+      function displayComunicationError(loading){
         if(!toastr.active()){
           toastr.warning('Ocurrió un error en la comunicación, por favor intente nuevamente.');
         }
