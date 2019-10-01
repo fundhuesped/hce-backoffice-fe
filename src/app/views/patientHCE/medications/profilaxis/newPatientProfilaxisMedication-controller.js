@@ -115,6 +115,10 @@
       }
 
       function getMedications($viewValue) {
+        if($viewValue.includes(";")){
+          toastr.warning("No se permite el uso de \';\' en el buscador");
+          return;
+        }
         if(vm.loading==false){
           toastr.info('Cargando..');
           vm.loading = true;
@@ -162,13 +166,23 @@
         $uibModalInstance.dismiss('cancel');
       }
 
+      function parseError(errorData){
+        if(errorData.startsWith("AssertionError")){
+          var errorAuxArray = (errorData.split('\n'));
+          var errorToReturn = errorAuxArray[1];
+          return errorToReturn;
+        }
+        return errorData;
+      }
+
       function showError(error) {
         if(error){
           if(error.data){
-            if(error.data.detail){
-              toastr.error(error.data.detail);
+            var errorToShow = parseError(error.data);
+            if(errorToShow.detail){
+              toastr.error(errorToShow.detail);
             }else{
-              toastr.error(error.data);
+              toastr.error(errorToShow);
             }
           }else{
             toastr.error(error);

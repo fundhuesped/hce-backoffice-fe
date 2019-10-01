@@ -26,7 +26,7 @@
           vm.headerImage = response.value;
         });
         vm.prescriptionsIDs.forEach( function(prescriptionID) {
-          const prescriptionFound = ARVReceta.get({id: prescriptionID}, function (argument) {
+          var prescriptionFound = ARVReceta.get({id: prescriptionID}, function (argument) {
             ; //Blank statement, dont delete
           });
           vm.prescriptionsArray.push(prescriptionFound);
