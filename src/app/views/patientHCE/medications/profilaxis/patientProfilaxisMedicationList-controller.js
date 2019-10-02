@@ -12,7 +12,8 @@
                                                           'Medication',
                                                           'toastr',
                                                           'moment',
-                                                          '$uibModal'];
+                                                          '$uibModal',
+                                                          'SessionService'];
 
     function patientProfilaxisMedicationListController ($state,
                                                         HCService,
@@ -20,7 +21,8 @@
                                                         Medication,
                                                         toastr,
                                                         moment,
-                                                        $uibModal) {
+                                                        $uibModal,
+                                                        SessionService) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.searchPatientProfilaxisMedications = searchPatientProfilaxisMedications;
@@ -31,6 +33,7 @@
       vm.filters = {};
       vm.medications = [];
       vm.pageChanged = pageChanged;
+      vm.hasPermissions = false;
       vm.openNewPatientMedicationModal = openNewPatientMedicationModal;
       vm.openEditPatientMedicationModal = openEditPatientMedicationModal;
       vm.patientProxilaxisMedications = [];
@@ -53,6 +56,16 @@
 
 	    function activate(){
         searchPatientProfilaxisMedications();
+
+        SessionService.checkPermission('hc_hce.add_patientprescription')
+            .then( function(hasPerm){
+                vm.hasPermissions = hasPerm;
+            }, function(error){
+                vm.hasPermissions = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
 	    }
 
       function pageChanged() {
@@ -140,7 +153,7 @@
       }
 
       function hasActiveMedications() {
-        return vm.activePatientProfilaxisMedicationsCount > 0;
+        return vm.hasPermissions && vm.activePatientProfilaxisMedicationsCount > 0;
       }
 
       function displayComunicationError(loading){
