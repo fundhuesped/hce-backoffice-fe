@@ -6,13 +6,14 @@
     	.module('hce.patientHCE')
     	.controller('NewEvolutionController', newEvolutionController);
 
-	newEvolutionController.$inject = ['$state', 'HCService', 'toastr', 'moment'];
+	newEvolutionController.$inject = ['$state', 'HCService', 'toastr', 'moment', 'SessionService'];
 
-    function newEvolutionController ($state, HCService, toastr, moment) {
+    function newEvolutionController ($state, HCService, toastr, moment, SessionService) {
       var LAST_EVOLUTION = "LAST_EVOLUTION";
 	    var vm = this;
       vm.hceService = HCService;
       vm.newEvolution = {};
+      vm.hasPermissions = false;
       vm.canSaveEvolution = HCService.canSaveEvolution;
       vm.saveNewEvolution = saveNewEvolution;
       vm.updateCurrentEvolution = updateCurrentEvolution;
@@ -80,10 +81,20 @@
           vm.currentEvolution.visitType = lastEvolution.visitType;
           vm.currentEvolution.notaClinica = lastEvolution.notaClinica;
         };
+
+        SessionService.checkPermission('hc_hce.add_visit')
+            .then( function(hasPerm){
+                vm.hasPermissions = hasPerm;
+            }, function(error){
+                vm.hasPermissions = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
 	    }
 
       function isOpened() {
-        return vm.newEvolutionFocused || vm.currentEvolution || vm.show;
+        return vm.hasPermissions && (vm.newEvolutionFocused || vm.currentEvolution || vm.show);
       }
 
       function showError(error) {
