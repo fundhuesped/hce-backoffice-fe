@@ -10,7 +10,7 @@
 
     function appLayoutController (SessionService, HCService, $state) {
 	    var vm = this;
-        vm.canAddUsers = SessionService.canAddUsers;
+        vm.canAddUsers = false;
         vm.changeCollapsed = changedCollapsed;
         vm.drawerCollapsed = true;
         vm.logoBig = '/assets/images/logo-redclin.png';
@@ -40,6 +40,15 @@
         }
 
 	    function activate(){
+            SessionService.checkPermission('auth.add_user')
+            .then( function(hasPerm){
+                vm.canAddUsers = hasPerm;
+            }, function(error){
+                vm.canAddUsers = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
 	    }
     }
 })();
