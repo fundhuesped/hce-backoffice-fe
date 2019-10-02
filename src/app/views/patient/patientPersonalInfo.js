@@ -3,13 +3,15 @@
     /* jshint validthis: true */
     /*jshint latedef: nofunc */
 
-    function patientPersonalInfoCtrl ($loading, $uibModalInstance, $filter, $uibModal, $location, moment, paciente, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Paciente, Country, toastr) {
+    
+    function patientPersonalInfoCtrl ($loading, $uibModalInstance, $filter, $uibModal, $location, moment, paciente, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Paciente, Country, toastr, SessionService) {
         var vm = this;
 
         vm.paciente = {};
         vm.editing = true;
         vm.errorMessage = null;
         vm.confirm = confirm;
+        vm.hasPermissions = false;
         vm.confirmDelete = confirmDelete;
         vm.confirmReactivate = confirmReactivate;
         vm.changeStatus = changeStatus;
@@ -101,6 +103,16 @@
                 vm.paciente.primaryPhoneMessage = (vm.paciente.primaryPhoneMessage?vm.paciente.primaryPhoneMessage:false);
 
             },function(){displayComunicationError('app');});
+
+            SessionService.checkPermission('auth.change_user')
+            .then( function(hasPerm){
+                vm.hasPermissions = hasPerm;
+            }, function(error){
+                vm.hasPermissions = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
         }
 
         function confirm () {
@@ -221,5 +233,5 @@
             }
         }
     }
-    angular.module('hce.patient').controller('PatientPersonalInfoCtrl',['$loading','$uibModalInstance','$filter', '$uibModal', '$location', 'moment', 'paciente','Document', 'Sex', 'Province', 'District', 'Location', 'SocialService', 'CivilStatus', 'Education', 'Paciente', 'Country', 'toastr', patientPersonalInfoCtrl]);
+    angular.module('hce.patient').controller('PatientPersonalInfoCtrl',['$loading','$uibModalInstance','$filter', '$uibModal', '$location', 'moment', 'paciente','Document', 'Sex', 'Province', 'District', 'Location', 'SocialService', 'CivilStatus', 'Education', 'Paciente', 'Country', 'toastr', 'SessionService', patientPersonalInfoCtrl]);
 })();

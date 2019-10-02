@@ -89,6 +89,7 @@
         }
 
         function checkPermission(perm) {
+            console.debug("--- Going to check permission ", perm);
             return $q(function(resolve, reject) {
                 return Permission.currentUserCan({ permission: perm },
                     function(response){
