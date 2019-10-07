@@ -17,14 +17,14 @@
 			    			</tr> 
 			    		</thead>
 			    		<tbody>
-			    			<tr ng-repeat="patientMedication in Ctrl.patientMedications | filter:{medication:{medicationType:{code:'!PROF'},status:'Active'}}" ng-class="{success:patientMedication.medication.selected}">
+			    			<tr ng-repeat="recipePatientMedication in Ctrl.recipePatientMedications | filter:{medication:{medicationType:{code:'!PROF'}},state:'Active'}" ng-class="{success:patientMedication.medication.selected}">
 		    					<td style="text-transform: capitalize;" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">    
-		    						<div class="checkbox" abm-checkbox label="{{patientMedication.medication.name}}{{patientMedication.medicationPresentation?' ('+patientMedication.medicationPresentation.name+')':''}}">
-								      <input type="checkbox" ng-disabled="!patientMedication.medication.selected &&Ctrl.selectedMedications.length>1" ng-model="patientMedication.medication.selected" ng-change="Ctrl.toggleMedicationSelection(patientMedication)">
+		    						<div class="checkbox" abm-checkbox label="{{recipePatientMedication.medication.name}}{{recipePatientMedication.medicationPresentation?' ('+recipePatientMedication.medicationPresentation.name+')':''}}">
+								      <input type="checkbox" ng-disabled="!recipePatientMedication.medication.selected &&Ctrl.selectedMedications.length>1" ng-model="recipePatientMedication.medication.selected" ng-change="Ctrl.toggleMedicationSelection(recipePatientMedicationMedication)">
 								    </div>
 								</td> 
 								<td class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-									<input type="number" onkeypress="return event.charCode >= 48" min="0" ng-model="patientMedication.quantityPerMonth"/>
+									<input type="number" onkeypress="return event.charCode >= 48" min="0" ng-model="recipePatientMedication.quantityPerMonth"/>
 								</td>
 							</tr>
 		    			</tbody>

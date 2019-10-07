@@ -31,6 +31,7 @@
       vm.totalItems = null;
       vm.problems = [];
       vm.filters = {};
+      vm.recipeFilters = {};
       vm.pageChanged = pageChanged;
       vm.showArv = showArv;
       vm.openNewPatientMedicationModal = openNewPatientMedicationModal;
@@ -38,7 +39,7 @@
       vm.openNewRecetaModal = openNewRecetaModal;
       vm.hasActiveMedications = hasActiveMedications;
       vm.isSearching = false;
-
+      
       Object.defineProperty(
           vm,
           'patientMedications', {
@@ -48,6 +49,7 @@
               return HCService.patientMedications;
           }
       });
+      
       Object.defineProperty(
           vm,
           'activePatientMedicationsCount', {
@@ -58,14 +60,26 @@
           }
       });
 
+      Object.defineProperty(
+        vm,
+        'recipePatientMedications', {
+        enumerable: true,
+        configurable: false,
+        get: function () {
+            return HCService.recipePatientMedications;
+        }
+    });
+
       activate();
 
 	    function activate(){
         searchPatientMedications();
+        searchRecipePatientMedications();
 	    }
 
       function pageChanged() {
         searchPatientMedications();
+        searchRecipePatientMedications();
       }
 
       function searchPatientMedications() {
@@ -75,6 +89,22 @@
         vm.filters.notMedicationTypeCode = 'PROF';
         HCService.getPatientMedications(vm.filters).$promise.then(function (paginatedResult) {
           vm.isSearching = false;
+          if(vm.currentPage===1){
+            vm.totalItems = paginatedResult.count;
+          }
+        }, function (err) {
+          vm.isSearching = false;
+          if(err.status !== 403 && err.status !== 401){
+            displayComunicationError();
+          }
+        });
+      }
+
+      function searchRecipePatientMedications(){
+        vm.recipeFilters.notMedicationTypeCode = 'PROF';
+        HCService.getPatientMedicationsForRecipe(vm.recipeFilters).$promise.then(function (paginatedResult) {
+          vm.isSearching = false;
+          //vm.recipePatientMedications = paginatedResult.results;
           if(vm.currentPage===1){
             vm.totalItems = paginatedResult.count;
           }
@@ -102,6 +132,7 @@
         modalInstance.result.then(function (resolution) {
           if(resolution==='markedError' || resolution==='edited'){
             searchPatientMedications();
+            searchRecipePatientMedications();
             if(!HCService.currentEvolution){
               HCService.getCurrentEvolution();
             }
@@ -120,6 +151,7 @@
         modalInstance.result.then(function (resolution) {
           if(resolution==='created'){
             searchPatientMedications();
+            searchRecipePatientMedications();
             if(!HCService.currentEvolution){
               HCService.getCurrentEvolution();
             }
