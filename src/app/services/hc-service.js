@@ -467,34 +467,23 @@
         }
 
         function getPatientMedicationsForRecipe(filters) {
-            //getActivePatientMedications();
-            getRecipePatientMedications();
             if(filters){
                 var localFilters = angular.copy(filters);
                 localFilters.pacienteId = srv.currentPacienteId;
-                localFilters.page_size = srv.activeRecipePatientMedicationsCount;
+                localFilters.page_size = srv.activePatientMedicationsCount;
                 return PatientMedication.getPaginatedForPaciente(localFilters, function (paginatedResult) {
                     srv.recipePatientMedications = paginatedResult.results;
                 }, function (err) {
                      
                 });                
             }else{
-                return PatientMedication.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, page_size:srv.activeRecipePatientMedicationsCount}, function (paginatedResult) {
+                return PatientMedication.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, page_size:srv.activePatientMedicationsCount}, function (paginatedResult) {
                     srv.recipePatientMedications = paginatedResult.results;
                 }, function (err) {
                      
                 });
 
             }
-        }
-
-        function getRecipePatientMedications() {
-            return PatientMedication.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, state:'Active',  notMedicationTypeCode : 'PROF'}, function (paginatedResult) {
-                srv.activeRecipePatientMedicationsCount = paginatedResult.count;
-                srv.recipePatientMedications = paginatedResult.results;
-            }, function (err) {
-                 
-            });
         }
 
         function getActivePatientProfilaxisMedications() {

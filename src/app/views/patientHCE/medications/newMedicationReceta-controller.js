@@ -43,6 +43,7 @@
 
       function searchRecipePatientMedications(){
         vm.recipeFilters.notMedicationTypeCode = 'PROF';
+        vm.recipeFilters.state = 'Active';
         HCService.getPatientMedicationsForRecipe(vm.recipeFilters).$promise.then(function (paginatedResult) {
           vm.recipePatientMedications = paginatedResult.results;
         }, function (err) {
