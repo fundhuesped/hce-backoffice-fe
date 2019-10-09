@@ -44,6 +44,7 @@
       vm.iiMedications = [];
       vm.comboMedications = [];
       vm.otherMedications = [];
+      vm.error = false;
 
       vm.changeReasons = ['Toxicidad', 
                           'Abandono',
@@ -200,7 +201,7 @@
                 return element.problem.name
               });
               if( noContains5arvProblems(currentProblemsString) ){
-                toastr.info('Primero tiene que dar de alta alguno de estos 5 problemas: Infección por HIV, Profilaxis post exposición ocupacional, Profilaxis post exposición sexual, Profilaxis post exposición vertical, Profilaxis pre exposición (PrEP)');
+                vm.error = true;
               }
           }, function (err) {
                

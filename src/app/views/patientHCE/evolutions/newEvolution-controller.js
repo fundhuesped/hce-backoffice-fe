@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewEvolutionController', newEvolutionController);
 
-	newEvolutionController.$inject = ['$state', 'HCService', 'toastr', 'moment'];
+	newEvolutionController.$inject = ['$state', 'HCService', 'toastr', 'moment','$timeout'];
 
-    function newEvolutionController ($state, HCService, toastr, moment) {
+    function newEvolutionController ($state, HCService, toastr, moment, $timeout) {
       var LAST_EVOLUTION = "LAST_EVOLUTION";
 	    var vm = this;
       vm.hceService = HCService;
@@ -74,11 +74,12 @@
         var lastEvolution = window.localStorage.getItem(LAST_EVOLUTION);
 
         if( angular.isDefined(lastEvolution) && lastEvolution ){
-          lastEvolution = JSON.parse( lastEvolution ); //Parse stringified object to JS object
-          if(!vm.currentEvolution) vm.currentEvolution = {};
-          vm.currentEvolution.reason = lastEvolution.reason;
-          vm.currentEvolution.visitType = lastEvolution.visitType;
-          vm.currentEvolution.notaClinica = lastEvolution.notaClinica;
+          lastEvolution = JSON.parse( lastEvolution ); //Parse stringified object to JS objec
+          $timeout(function (){
+            vm.currentEvolution.reason = lastEvolution.reason;
+            vm.currentEvolution.visitType = lastEvolution.visitType;
+            vm.currentEvolution.notaClinica = lastEvolution.notaClinica
+          } ,0);
         };
 	    }
 
