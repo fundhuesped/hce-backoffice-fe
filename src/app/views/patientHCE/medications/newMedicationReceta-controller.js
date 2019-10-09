@@ -44,15 +44,11 @@
       function searchRecipePatientMedications(){
         vm.recipeFilters.notMedicationTypeCode = 'PROF';
         HCService.getPatientMedicationsForRecipe(vm.recipeFilters).$promise.then(function (paginatedResult) {
-          vm.isSearching = false;
           vm.recipePatientMedications = paginatedResult.results;
-          if(vm.currentPage===1){
-            vm.totalItems = paginatedResult.count;
-          }
         }, function (err) {
-          vm.isSearching = false;
           if(err.status !== 403 && err.status !== 401){
             displayComunicationError();
+            showError(err);
           }
         });
       }
@@ -136,12 +132,11 @@
 	    }
 
 
-      function displayComunicationError(loading){
+      function displayComunicationError(){
         if(!toastr.active()){
           toastr.warning('Ocurrió un error en la comunicación, por favor intente nuevamente.');
         }
-        if(loading){
-        }
+
       }
 
       function cancel() {

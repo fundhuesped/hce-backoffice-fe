@@ -31,7 +31,6 @@
       vm.totalItems = null;
       vm.problems = [];
       vm.filters = {};
-      vm.recipeFilters = {};
       vm.pageChanged = pageChanged;
       vm.showArv = showArv;
       vm.openNewPatientMedicationModal = openNewPatientMedicationModal;
@@ -39,7 +38,6 @@
       vm.openNewRecetaModal = openNewRecetaModal;
       vm.hasActiveMedications = hasActiveMedications;
       vm.isSearching = false;
-      vm.recipePatientMedications = [];
 
       Object.defineProperty(
           vm,
@@ -65,12 +63,10 @@
 
 	    function activate(){
         searchPatientMedications();
-        searchRecipePatientMedications();
 	    }
 
       function pageChanged() {
         searchPatientMedications();
-        searchRecipePatientMedications();
       }
 
       function searchPatientMedications() {
@@ -87,22 +83,7 @@
           vm.isSearching = false;
           if(err.status !== 403 && err.status !== 401){
             displayComunicationError();
-          }
-        });
-      }
-
-      function searchRecipePatientMedications(){
-        vm.recipeFilters.notMedicationTypeCode = 'PROF';
-        HCService.getPatientMedicationsForRecipe(vm.recipeFilters).$promise.then(function (paginatedResult) {
-          vm.isSearching = false;
-          vm.recipePatientMedications = paginatedResult.results;
-          if(vm.currentPage===1){
-            vm.totalItems = paginatedResult.count;
-          }
-        }, function (err) {
-          vm.isSearching = false;
-          if(err.status !== 403 && err.status !== 401){
-            displayComunicationError();
+            showError(err);
           }
         });
       }
@@ -123,7 +104,6 @@
         modalInstance.result.then(function (resolution) {
           if(resolution==='markedError' || resolution==='edited'){
             searchPatientMedications();
-            searchRecipePatientMedications();
             if(!HCService.currentEvolution){
               HCService.getCurrentEvolution();
             }
@@ -142,7 +122,6 @@
         modalInstance.result.then(function (resolution) {
           if(resolution==='created'){
             searchPatientMedications();
-            searchRecipePatientMedications();
             if(!HCService.currentEvolution){
               HCService.getCurrentEvolution();
             }
@@ -157,7 +136,7 @@
           templateUrl: 'app/views/patientHCE/medications/newMedicationReceta.html',
           size: 'md',
           controller: 'NewMedicationRecetaController',
-          controllerAs: 'Ctrl'
+          controllerAs: 'NewMedicationRecetaController'
         });
         modalInstance.result.then(function (resolution) {
           if(resolution==='markedError' || resolution==='edited'){
@@ -173,11 +152,9 @@
         return vm.activePatientMedicationsCount > 0;
       }
 
-      function displayComunicationError(loading){
+      function displayComunicationError(){
         if(!toastr.active()){
           toastr.warning('Ocurrió un error en la comunicación, por favor intente nuevamente.');
-        }
-        if(loading){
         }
       }
 
