@@ -48,6 +48,7 @@
               return HCService.patientMedications;
           }
       });
+      
       Object.defineProperty(
           vm,
           'activePatientMedicationsCount', {
@@ -82,6 +83,7 @@
           vm.isSearching = false;
           if(err.status !== 403 && err.status !== 401){
             displayComunicationError();
+            showError(err);
           }
         });
       }
@@ -134,7 +136,7 @@
           templateUrl: 'app/views/patientHCE/medications/newMedicationReceta.html',
           size: 'md',
           controller: 'NewMedicationRecetaController',
-          controllerAs: 'Ctrl'
+          controllerAs: 'NewMedicationRecetaController'
         });
         modalInstance.result.then(function (resolution) {
           if(resolution==='markedError' || resolution==='edited'){
@@ -150,11 +152,9 @@
         return vm.activePatientMedicationsCount > 0;
       }
 
-      function displayComunicationError(loading){
+      function displayComunicationError(){
         if(!toastr.active()){
           toastr.warning('Ocurrió un error en la comunicación, por favor intente nuevamente.');
-        }
-        if(loading){
         }
       }
 
