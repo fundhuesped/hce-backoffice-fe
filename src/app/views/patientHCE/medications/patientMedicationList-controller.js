@@ -39,7 +39,8 @@
       vm.openNewRecetaModal = openNewRecetaModal;
       vm.hasActiveMedications = hasActiveMedications;
       vm.isSearching = false;
-      
+      vm.recipePatientMedications = [];
+
       Object.defineProperty(
           vm,
           'patientMedications', {
@@ -59,16 +60,6 @@
               return HCService.activePatientMedicationsCount;
           }
       });
-
-      Object.defineProperty(
-        vm,
-        'recipePatientMedications', {
-        enumerable: true,
-        configurable: false,
-        get: function () {
-            return HCService.recipePatientMedications;
-        }
-    });
 
       activate();
 
@@ -104,7 +95,7 @@
         vm.recipeFilters.notMedicationTypeCode = 'PROF';
         HCService.getPatientMedicationsForRecipe(vm.recipeFilters).$promise.then(function (paginatedResult) {
           vm.isSearching = false;
-          //vm.recipePatientMedications = paginatedResult.results;
+          vm.recipePatientMedications = paginatedResult.results;
           if(vm.currentPage===1){
             vm.totalItems = paginatedResult.count;
           }
