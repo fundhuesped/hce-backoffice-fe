@@ -16,25 +16,15 @@
         srv.currentToken = null;
         srv.changePassword = changePassword;
         srv.checkPermission = checkPermission;
-        srv.currentUserPermissions = [];
         var ADMINISTRATOR = 'administrador';
         var MEDIC = 'medico';
         var SECRETARY = 'secretaria';
         activate();
 
-
-        //TODO Delete this?
-        var rolPermissions = {
-            ADMINISTRATOR : [],
-            MEDIC : [],
-            SECRETARY    : []                
-        };
-
         function activate(){
             if(localStorageService.get('currentUser')){
                 srv.currentUser = localStorageService.get('currentUser');
                 srv.currentToken = localStorageService.get('currentToken');
-                srv.currentUserPermissions = localStorageService.get('currentUserPermissions');
             }
         }
 
@@ -74,14 +64,11 @@
                 var headers = response.headers();
                 srv.currentToken = headers['auth-token'];
                 for (var i = srv.currentUser.groups.length - 1; i >= 0; i--) {
-                    var groupPermissions = rolPermissions[srv.currentUser.groups[i].name];
-                    srv.currentUserPermissions = srv.currentUserPermissions.concat(groupPermissions);
                     saveMaximumPermissionsGroup(srv.currentUser.groups[i].name);
                 }
 
                 localStorageService.set('currentUser', srv.currentUser);
                 localStorageService.set('currentToken', srv.currentToken);
-                localStorageService.set('currentUserPermissions', srv.currentUserPermissions);
                 callOK(response.data);   
             },function(error){
                 callNOK(error);
@@ -106,7 +93,6 @@
         function logout(){
             srv.currentUser = null;
             srv.token = null;
-            srv.currentUserPermissions = [];
             srv.currentUser = localStorageService.remove('currentUser');
             $state.transitionTo('login');
         }
