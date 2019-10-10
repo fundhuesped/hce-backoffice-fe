@@ -6,15 +6,16 @@
     	.module('hce.patientHCE')
     	.controller('EditPatientVaccineController', editPatientVaccineController);
 
-	  editPatientVaccineController.$inject = ['$state', 'HCService', 'PatientVaccine', 'toastr', 'moment', 'Vaccine', '$uibModalInstance', 'patientVaccine'];
+	  editPatientVaccineController.$inject = ['$state', 'HCService', 'PatientVaccine', 'toastr', 'moment', 'Vaccine', '$uibModalInstance', 'patientVaccine', 'SessionService'];
 
-    function editPatientVaccineController ($state, HCService, PatientVaccine, toastr, moment, Vaccine, $uibModalInstance, patientVaccine) {
+    function editPatientVaccineController ($state, HCService, PatientVaccine, toastr, moment, Vaccine, $uibModalInstance, patientVaccine, SessionService) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.save = save;
       vm.patientVaccine = {};
       vm.getVaccines = getVaccines;
       vm.cancel = cancel;
+      vm.hasPermissions = false;
       vm.canSave = canSave;
       vm.markAsError = markAsError;
       vm.error = null;
@@ -62,6 +63,16 @@
         }, displayComunicationError);
         vm.patientVaccine = angular.copy(patientVaccine);
         vm.patientVaccine.appliedDate = new Date(vm.patientVaccine.appliedDate + 'T03:00:00');
+
+        SessionService.checkPermission('hc_hce.add_patientvaccine')
+            .then( function(hasPerm){
+                vm.hasPermissions = hasPerm;
+            }, function(error){
+                vm.hasPermissions = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
 	    }
 
       function displayComunicationError(loading){
