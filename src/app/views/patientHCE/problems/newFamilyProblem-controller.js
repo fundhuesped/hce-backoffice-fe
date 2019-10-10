@@ -53,6 +53,10 @@
       }
 
       function getProblems($viewValue) {
+        if($viewValue.includes(";")){
+          toastr.warning("No se permite el uso de \';\' en el buscador");
+          return;
+        }
         if(vm.loading==false){
           toastr.info('Cargando..');
           vm.loading = true;

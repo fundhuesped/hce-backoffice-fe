@@ -62,6 +62,9 @@
         srv.patientMedications = null;
         srv.summaryPatientMedications = null;
         srv.activePatientMedicationsCount = null;
+        srv.getPatientMedicationsForRecipe = getPatientMedicationsForRecipe;
+        srv.recipePatientMedications = null;
+        srv.activeRecipePatientMedicationsCount = null;
 
         //Profilaxis Medications
         srv.activePatientProfilaxisMedicationsCount = null;
@@ -463,6 +466,25 @@
             });
         }
 
+        function getPatientMedicationsForRecipe(filters) {
+            if(filters){
+                var localFilters = angular.copy(filters);
+                localFilters.pacienteId = srv.currentPacienteId;
+                localFilters.page_size = srv.activePatientMedicationsCount;
+                return PatientMedication.getPaginatedForPaciente(localFilters, function (paginatedResult) {
+                    srv.recipePatientMedications = paginatedResult.results;
+                }, function (err) {
+                     
+                });                
+            }else{
+                return PatientMedication.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, page_size:srv.activePatientMedicationsCount}, function (paginatedResult) {
+                    srv.recipePatientMedications = paginatedResult.results;
+                }, function (err) {
+                     
+                });
+
+            }
+        }
 
         function getActivePatientProfilaxisMedications() {
             return PatientMedication.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, page_size:3, state:'Active', medicationTypeCode : 'PROF'}, function (paginatedResult) {
