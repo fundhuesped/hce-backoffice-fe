@@ -1,7 +1,7 @@
 <button  class="btn btn-success btn-raised btn-lg btn-block" ng-click="ArvMedicationRecetaController.print()">Imprimir</button>
 <div class="do-print" id="section-to-copy">
 	<div ng-repeat="prescription in ArvMedicationRecetaController.prescriptionsArray">
-		<div class="container-fluid">
+		<div class="container-fluid pagebreak">
 			<div class="row">
 				<img src="{{ArvMedicationRecetaController.headerImage}}" class="center-block">	
 			</div>
@@ -77,9 +77,8 @@
 				</div>
 			</div>
 		</div>
-		<div style="page-break-after: always!important;" ng-if="prescription.duplicateRequired==true"></div>
 		<div ng-if="prescription.duplicateRequired==true">
-			<div class="container-fluid">
+			<div class="container-fluid pagebreak">
 				<div class="row">
 					<img src="{{ArvMedicationRecetaController.headerImage}}" class="center-block">	
 				</div>
