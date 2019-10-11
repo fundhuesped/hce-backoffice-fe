@@ -5,7 +5,7 @@
 			    <div class="row">
 					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8"><h2>Otros estudios</h2></div>
 					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-							<button class="btn btn-success btn-raised pull-right" ng-click="PatientClinicalResultsListController.openNewPatientClinicalResultModal()">Nuevo estudio</button>
+							<button class="btn btn-success btn-raised pull-right" ng-click="PatientClinicalResultsListController.openNewPatientClinicalResultModal()" ng-disabled="!PatientClinicalResultsListController.hasPermissions">Nuevo estudio</button>
 					</div>
 				</div>
 		    	<table class="table Medication table-condensed">

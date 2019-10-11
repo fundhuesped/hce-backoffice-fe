@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('PatientClinicalResultsListController', patientClinicalResultsListController);
 
-	   patientClinicalResultsListController.$inject = ['$state', 'HCService', 'PatientClinicalResult', 'toastr', 'moment', '$uibModal'];
+	   patientClinicalResultsListController.$inject = ['$state', 'HCService', 'PatientClinicalResult', 'toastr', 'moment', '$uibModal','SessionService'];
 
-    function patientClinicalResultsListController ($state, HCService, PatientClinicalResult, toastr, moment, $uibModal) {
+    function patientClinicalResultsListController ($state, HCService, PatientClinicalResult, toastr, moment, $uibModal, SessionService) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.searchPatientClinicalResults = searchPatientClinicalResults;
@@ -17,6 +17,7 @@
       vm.totalItems = null;
       vm.problems = [];
       vm.filters = {};
+      vm.hasPermissions = false;
       vm.pageChanged = pageChanged;
       vm.patientClinicalResults = [];
       vm.isSearching = false;
@@ -28,6 +29,16 @@
 
 	    function activate(){
         searchPatientClinicalResults();
+
+        SessionService.checkPermission('hc_masters.add_clinicalstudy')
+            .then( function(hasPerm){
+                vm.hasPermissions = hasPerm;
+            }, function(error){
+                vm.hasPermissions = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
 	    }
 
       function pageChanged() {

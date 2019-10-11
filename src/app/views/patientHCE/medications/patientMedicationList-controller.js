@@ -13,7 +13,8 @@
                                                 'toastr',
                                                 'moment',
                                                 '$uibModal',
-                                                'lodash'];
+                                                'lodash',
+                                                'SessionService'];
 
     function patientMedicationListController ($state,
                                               HCService,
@@ -22,7 +23,8 @@
                                               toastr,
                                               moment,
                                               $uibModal,
-                                              lodash) {
+                                              lodash,
+                                              SessionService) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.searchPatientMedications = searchPatientMedications;
@@ -33,6 +35,7 @@
       vm.filters = {};
       vm.pageChanged = pageChanged;
       vm.showArv = showArv;
+      vm.hasPermissions = false;
       vm.openNewPatientMedicationModal = openNewPatientMedicationModal;
       vm.openEditPatientMedicationModal = openEditPatientMedicationModal;
       vm.openNewRecetaModal = openNewRecetaModal;
@@ -63,6 +66,16 @@
 
 	    function activate(){
         searchPatientMedications();
+
+        SessionService.checkPermission('hc_hce.add_patientmedication')
+            .then( function(hasPerm){
+                vm.hasPermissions = hasPerm;
+            }, function(error){
+                vm.hasPermissions = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
 	    }
 
       function pageChanged() {
@@ -149,7 +162,7 @@
       }
 
       function hasActiveMedications() {
-        return vm.activePatientMedicationsCount > 0;
+        return vm.hasPermissions && vm.activePatientMedicationsCount > 0;
       }
 
       function displayComunicationError(){
