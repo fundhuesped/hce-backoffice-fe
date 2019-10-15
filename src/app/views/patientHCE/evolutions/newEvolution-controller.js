@@ -70,17 +70,15 @@
       }
 
 	    function activate(){
-        HCService.getCurrentEvolution();
         var lastEvolution = window.localStorage.getItem(LAST_EVOLUTION);
-
-        if( angular.isDefined(lastEvolution) && lastEvolution ){
-          lastEvolution = JSON.parse( lastEvolution ); //Parse stringified object to JS objec
-          $timeout(function (){
+        HCService.getCurrentEvolution().$promise.then(function(){
+          if( angular.isDefined(lastEvolution) && lastEvolution ){
+            lastEvolution = JSON.parse( lastEvolution ); //Parse stringified object to JS objec
             vm.currentEvolution.reason = lastEvolution.reason;
             vm.currentEvolution.visitType = lastEvolution.visitType;
-            vm.currentEvolution.notaClinica = lastEvolution.notaClinica
-          } ,0);
-        };
+            vm.currentEvolution.notaClinica = lastEvolution.notaClinica;
+          }
+        });
 	    }
 
       function isOpened() {
