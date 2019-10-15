@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('PatientLaboratoryResultsListController', patientLaboratoryResultsListController);
 
-	   patientLaboratoryResultsListController.$inject = ['$state', 'HCService', 'PatientLaboratoryResult', 'Determinacion', 'toastr', 'moment', '$uibModal', 'lodash'];
+	   patientLaboratoryResultsListController.$inject = ['$state', 'HCService', 'PatientLaboratoryResult', 'Determinacion', 'toastr', 'moment', '$uibModal', 'lodash', 'SessionService'];
 
-    function patientLaboratoryResultsListController ($state, HCService, PatientLaboratoryResult, Determinacion, toastr, moment, $uibModal, lodash) {
+    function patientLaboratoryResultsListController ($state, HCService, PatientLaboratoryResult, Determinacion, toastr, moment, $uibModal, lodash, SessionService) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.searchPatientLaboratoryResults = searchPatientLaboratoryResults;
@@ -24,6 +24,7 @@
       vm.newLabValues = [];
       vm.getValueForDeterminacion = getValueForDeterminacion;
       vm.save = save;
+      vm.hasPermissions = false;
       vm.canSave = canSave;
       vm.clear = clear;
       vm.canClear = canClear;
@@ -79,6 +80,17 @@
         vm.newLabValues = [];
         vm.newLab = new PatientLaboratoryResult();
         searchPatientLaboratoryResults();
+
+
+        SessionService.checkPermission('hc_laboratory.add_labresult')
+            .then( function(hasPerm){
+                vm.hasPermissions = hasPerm;
+            }, function(error){
+                vm.hasPermissions = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
 	    }
 
       function pageChanged() {
@@ -126,6 +138,7 @@
 
       function canSave() {
         var hasValues = false;
+        if(vm.hasPermissions == false) return false;
         for (var determinacionCod in vm.newLabValues){
           if (typeof vm.newLabValues[determinacionCod] !== 'function') {
             if(vm.newLabValues[determinacionCod] && vm.newLabValues[determinacionCod] !== ""){

@@ -6,9 +6,9 @@
     	.module('hce.patient')
     	.controller('PatientSearchController', patientSearchController);
 
-	patientSearchController.$inject = ['Paciente', 'Document', 'toastr', 'HCService', '$state', 'moment', 'Profesional', 'SocialService', '$loading', '$uibModal'];
+	patientSearchController.$inject = ['Paciente', 'Document', 'toastr', 'HCService', '$state', 'moment', 'Profesional', 'SocialService', '$loading', '$uibModal', 'SessionService'];
 
-    function patientSearchController (Paciente, Document, toastr, HCService, $state, moment,  Profesional, SocialService, $loading, $uibModal) {
+    function patientSearchController (Paciente, Document, toastr, HCService, $state, moment,  Profesional, SocialService, $loading, $uibModal, SessionService) {
 	    var vm = this;
       vm.openPatient = openPatient;
       vm.patients = null;

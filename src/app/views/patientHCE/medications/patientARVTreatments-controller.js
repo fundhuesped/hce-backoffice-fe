@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('PatientARVTreatmentListController', patientARVTreatmentListController);
 
-	   patientARVTreatmentListController.$inject = ['$state', 'HCService', 'PatientArvTreatment', 'Medication', 'toastr', 'moment', '$uibModal'];
+	   patientARVTreatmentListController.$inject = ['$state', 'HCService', 'PatientArvTreatment', 'Medication', 'toastr', 'moment', '$uibModal', 'SessionService'];
 
-    function patientARVTreatmentListController ($state, HCService, PatientArvTreatment, Medication, toastr, moment, $uibModal) {
+    function patientARVTreatmentListController ($state, HCService, PatientArvTreatment, Medication, toastr, moment, $uibModal, SessionService) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.searchPatientTreatments = searchPatientTreatments;
@@ -20,6 +20,7 @@
       vm.pageChanged = pageChanged;
       vm.patientTreatments = [];
       vm.getSchema = getSchema;
+      vm.hasPermissions = false;
       vm.openNewPatientARVTreatmentModal = openNewPatientARVTreatmentModal;
       vm.openEditPatientMedicationModal = openEditPatientMedicationModal;
       vm.openChangePatientArvTreatmentModal = openChangePatientArvTreatmentModal;
@@ -41,6 +42,16 @@
 
 	    function activate(){
         searchPatientTreatments();
+
+        SessionService.checkPermission('hc_hce.add_patientarvtreatment')
+            .then( function(hasPerm){
+                vm.hasPermissions = hasPerm;
+            }, function(error){
+                vm.hasPermissions = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
 	    }
 
       function pageChanged() {
