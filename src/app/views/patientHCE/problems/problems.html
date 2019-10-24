@@ -7,7 +7,7 @@
 			    <div class="row">
 					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8"><h2>Problemas activos y resueltos</h2></div>
 					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-							<button class="btn btn-success btn-raised pull-right" ng-click="PatientProblemsController.openNewProblemModal()">Agregar problema</button>
+							<button class="btn btn-success btn-raised pull-right" ng-click="PatientProblemsController.openNewProblemModal()" ng-disabled="!PatientProblemsController.hasPermissions">Agregar problema</button>
 					</div>
 				</div>
 		    	<table class="table Medication table-condensed">
@@ -27,7 +27,7 @@
 	    					<td>{{(problem.closeDate | date: "dd/MM/yyyy") || '-'}}</td> 
 	    					<td>{{problem.observations}}</td> 
 	    					<td>
-		    					<button class="btn btn-info" type="button" ng-show="PatientProblemsController.canEditProblem(problem)" ng-click="PatientProblemsController.openEditProblemModal(problem)" style="padding: 6px 12px; margin:0px; text-transform: none;"><i class="fa fa-pencil"></i> Editar</button>
+		    					<button class="btn btn-info" type="button" ng-click="PatientProblemsController.openEditProblemModal(problem)" style="padding: 6px 12px; margin:0px; text-transform: none;"><i class="fa fa-pencil"></i> Editar</button>
 	    					</td> 
     					</tr>
     				</tbody>
@@ -49,7 +49,7 @@
 			    <div class="row">
 					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8"><h2>Antecedentes familiares</h2></div>
 					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-							<button class="btn btn-success btn-raised pull-right" ng-click="PatientProblemsController.openNewFamilyProblemModal()">Agregar antecedente</button>
+							<button class="btn btn-success btn-raised pull-right" ng-click="PatientProblemsController.openNewFamilyProblemModal()" ng-disabled="!PatientProblemsController.hasPermissions">Agregar antecedente</button>
 					</div>
 				</div>
 		    	<table class="table Medication table-condensed">

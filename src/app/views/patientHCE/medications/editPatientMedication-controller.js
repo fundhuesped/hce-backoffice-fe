@@ -19,6 +19,7 @@
       vm.markAsError = markAsError;
       vm.changeStatus = changeStatus;
       vm.canEdit = canEdit;
+      vm.hasPermissions = false;
 
       Object.defineProperty(
           vm,
@@ -107,6 +108,15 @@
 
         }
 
+        SessionService.checkPermission('hc_hce.edit_patientmedication')
+            .then( function(hasPerm){
+                vm.hasPermissions = hasPerm;
+            }, function(error){
+                vm.hasPermissions = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
 	    }
 
       function displayComunicationError(loading){

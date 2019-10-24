@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('EditFamilyProblemController', editFamilyProblemController);
 
-	   editFamilyProblemController.$inject = ['familyProblem', 'toastr', 'FamilyPatientProblem', '$uibModalInstance'];
+	   editFamilyProblemController.$inject = ['familyProblem', 'toastr', 'FamilyPatientProblem', '$uibModalInstance', 'SessionService'];
 
-    function editFamilyProblemController (familyProblem, toastr, FamilyPatientProblem, $uibModalInstance) {
+    function editFamilyProblemController (familyProblem, toastr, FamilyPatientProblem, $uibModalInstance, SessionService) {
 	    var vm = this;
       vm.familyProblem = {};
       vm.save = save;
@@ -17,10 +17,22 @@
       vm.markAsError = markAsError;
       vm.canEdit = canEdit;
       vm.canSave = canSave;
+      vm.hasPermissions = false;
+
       activate();
 
       function activate(){
         vm.familyProblem = angular.copy(familyProblem);
+
+        SessionService.checkPermission('hc_hce.edit_familyproblem')
+            .then( function(hasPerm){
+                vm.hasPermissions = hasPerm;
+            }, function(error){
+                vm.hasPermissions = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
 	    }
 
 
