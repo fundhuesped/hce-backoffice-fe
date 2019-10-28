@@ -24,7 +24,7 @@
       function activate(){
         vm.familyProblem = angular.copy(familyProblem);
 
-        SessionService.checkPermission('hc_hce.edit_familyproblem')
+        SessionService.checkPermission('hc_hce.add_patientfamilyhistoryproblem')
             .then( function(hasPerm){
                 vm.hasPermissions = hasPerm;
             }, function(error){
