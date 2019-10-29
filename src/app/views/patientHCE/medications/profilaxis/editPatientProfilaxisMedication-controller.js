@@ -15,6 +15,7 @@
       vm.patientMedication = {};
       vm.getMedications = getMedications;
       vm.cancel = cancel;
+      vm.hasPermissions = false;
       vm.canSave = canSave;
       vm.markAsError = markAsError;
       vm.changeStatus = changeStatus;
@@ -113,7 +114,18 @@
         }, function (err) {
             
         });
-	    }
+
+        SessionService.checkPermission('hc_hce.add_patientmedication')
+          .then( function(hasPerm){
+              vm.hasPermissions = hasPerm;
+          }, function(error){
+              vm.hasPermissions = false;
+              console.error("=== Error al verificar permisos en controlador ===");
+              console.error(error);
+              console.trace();
+          });
+      }
+      
       function changeStatus() {
         if(vm.patientMedication.state == 'Active'){
           vm.patientMedication.endDate = null;

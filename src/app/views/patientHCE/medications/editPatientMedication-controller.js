@@ -108,7 +108,7 @@
 
         }
 
-        SessionService.checkPermission('hc_hce.edit_patientmedication')
+        SessionService.checkPermission('hc_hce.add_patientmedication')
             .then( function(hasPerm){
                 vm.hasPermissions = hasPerm;
             }, function(error){

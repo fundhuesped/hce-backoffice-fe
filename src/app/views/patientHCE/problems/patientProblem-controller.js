@@ -20,6 +20,7 @@
       vm.canEdit = canEdit;
       vm.canBeClosed = canBeClosed;
       vm.canBeMarkedAsError = canBeMarkedAsError;
+      vm.hasPermissions = false;
 
       vm.startDateCalendarPopup = {
         opened: false,
@@ -61,6 +62,16 @@
         if (vm.problem.closeDate) {
           vm.problem.closeDate = new Date(vm.problem.closeDate + 'T03:00:00');;
         }
+
+        SessionService.checkPermission('hc_hce.add_patientproblem')
+          .then( function(hasPerm){
+              vm.hasPermissions = hasPerm;
+          }, function(error){
+              vm.hasPermissions = false;
+              console.error("=== Error al verificar permisos en controlador ===");
+              console.error(error);
+              console.trace();
+          });
     	}
 
 
@@ -82,17 +93,6 @@
           toastr.error('Ocurrio un error');
         });
       }
-
-
-        function canSaveNewProblem() {
-          if(vm.controllerForm.$valid){
-            return true;
-          }
-  		    return false;
-        }
-
-
-
       	function markAsError() {
       		var tmpProblem = angular.copy(vm.problem);
       		tmpProblem.state = PatientProblem.stateChoices.STATE_ERROR;
@@ -120,6 +120,13 @@
           return false;
         }
         return true;
+      }
+
+      function canSaveNewProblem() {
+        if(vm.controllerForm.$valid){
+          return true;
+        }
+        return false;
       }
 
       function canBeMarkedAsError(argument) {
