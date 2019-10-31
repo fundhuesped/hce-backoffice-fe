@@ -45,7 +45,7 @@
 					  	<abm-form-group>
 						    <label abm-label type="static">Estado del problema(*) </label>
 						    <div class="radio" abm-radio label="Activo" >
-						      <input type="radio" name="activo" value="Active" ng-model="PatientProblemController.problem.state" ng-change="PatientProblemController.changeStatus()" ng-disabled="!PatientProblemController.hasPermissions" ng-required="true">
+						      <input type="radio" name="activo" value="Active" ng-model="PatientProblemController.problem.state" ng-change="PatientProblemController.changeStatus()" ng-disabled="!PatientProblemController.hasPermissions || !PatientProblemController.canBeClosed()" ng-required="true">
 						    </div>
 						    <div class="radio" abm-radio label="Resuelto">
 						      <input type="radio" name="cerrado" value="Closed" ng-model="PatientProblemController.problem.state" ng-disabled="!PatientProblemController.canEdit() || !PatientProblemController.canBeClosed()" ng-required="true" >
