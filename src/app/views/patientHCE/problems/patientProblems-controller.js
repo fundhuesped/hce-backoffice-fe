@@ -144,14 +144,14 @@
         }
 
         SessionService.checkPermission('hc_hce.add_patientproblem')
-            .then( function(hasPerm){
-                vm.hasPermissions = hasPerm;
-            }, function(error){
-                vm.hasPermissions = false;
-                console.error("=== Error al verificar permisos en controlador ===");
-                console.error(error);
-                console.trace();
-            });
+          .then( function(hasPerm){
+              vm.hasPermissions = hasPerm;
+          }, function(error){
+              vm.hasPermissions = false;
+              console.error("=== Error al verificar permisos en controlador ===");
+              console.error(error);
+              console.trace();
+          });
 	    }
 
       function pageChanged() {
@@ -161,7 +161,6 @@
       function familyPagerChanged() {
         searchFamilyPatientProblems();
       }
-
 
       function searchFamilyPatientProblems() {
         var filters = {};

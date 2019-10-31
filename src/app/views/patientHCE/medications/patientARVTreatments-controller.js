@@ -44,14 +44,14 @@
         searchPatientTreatments();
 
         SessionService.checkPermission('hc_hce.add_patientarvtreatment')
-            .then( function(hasPerm){
-                vm.hasPermissions = hasPerm;
-            }, function(error){
-                vm.hasPermissions = false;
-                console.error("=== Error al verificar permisos en controlador ===");
-                console.error(error);
-                console.trace();
-            });
+          .then( function(hasPerm){
+              vm.hasPermissions = hasPerm;
+          }, function(error){
+              vm.hasPermissions = false;
+              console.error("=== Error al verificar permisos en controlador ===");
+              console.error(error);
+              console.trace();
+          });
 	    }
 
       function pageChanged() {
@@ -176,7 +176,7 @@
           templateUrl: 'app/views/patientHCE/medications/editPatientARVTreatment.html',
           size: 'lg',
           controller: 'EditPatientARVTreatmentController',
-          controllerAs: 'Ctrl',
+          controllerAs: 'EditPatientARVTreatmentController',
           resolve: {
             patientArvTreatment: function () {
               return selectedTreatment;
