@@ -52,6 +52,7 @@
       activate();
 
 	    function activate(){
+        toastr.info('Cargando..');
         Determinacion.getFullActiveList(function(determinaciones){
           for (var i = vm.categoriasDeterminaciones.length - 1; i >= 0; i--) {
             vm.categoriasDeterminaciones[i].determinaciones = [];
@@ -60,13 +61,13 @@
           for (var i = 0; i < determinaciones.length; i++) {
             found = false;
             for (var j = vm.categoriasDeterminaciones.length - 1; j >= 0; j--) {
-              if( vm.categoriasDeterminaciones[j].id == determinaciones[i].category.id){
+              if( determinaciones[i].category && (vm.categoriasDeterminaciones[j].id == determinaciones[i].category.id)){
                 vm.categoriasDeterminaciones[j].determinaciones.push(determinaciones[i]);
                 found = true;
                 break;
               }
             }
-            if(!found){
+            if(!found && determinaciones[i].category){
               var tmpCategory = angular.copy(determinaciones[i].category);
               tmpCategory.determinaciones = [determinaciones[i]];
               tmpCategory.show = false;
@@ -74,7 +75,12 @@
             }
           }
           vm.categoriasDeterminaciones = lodash.orderBy(vm.categoriasDeterminaciones, 'order');
-
+          
+          vm.categoriasDeterminaciones = vm.categoriasDeterminaciones.map( function(elem){
+            var temp_elem = angular.copy(elem);
+            temp_elem.determinaciones = lodash.orderBy(elem.determinaciones, ['order', 'label']);
+            return temp_elem;
+          });
           vm.determinaciones = determinaciones;
         }, displayComunicationError);
         vm.newLabValues = [];
