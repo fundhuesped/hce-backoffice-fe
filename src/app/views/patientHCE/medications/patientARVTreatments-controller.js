@@ -199,7 +199,7 @@
           templateUrl: 'app/views/patientHCE/medications/newARVReceta.html',
           size: 'lg',
           controller: 'NewARVTreatmentRecetaController',
-          controllerAs: 'Ctrl'
+          controllerAs: 'NewARVTreatmentRecetaController'
         });
         modalInstance.result.then(function (resolution) {
           if(resolution==='markedError' || resolution==='edited'){

@@ -5,53 +5,45 @@
 			<div class="row">
 				<img src="{{ArvMedicationRecetaController.headerImage}}" class="center-block">	
 			</div>
-			<div class="row">
-				<div class="pull-right" style="padding: 10px">Nro de receta: {{prescription.id}}</div>
+			<div class="row justify-content-end">
+				<div class="col-xs-4 pull-right" style="padding: 15px;">Nro de receta: {{prescription.id}}</div>
 			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="row prescriptionPatientName">
-						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div class="hce-form-title">
-								{{prescription.paciente.pns}}
-							</div>
-						</div>
+			<div class="row prescriptionPatientName">
+				<div class="col-12">
+					<div class="hce-form-title">
+						{{prescription.paciente.pns}}
 					</div>
-					<div class="row prescriptionPatientSocialService" ng-if="prescription.paciente.socialService && prescription.paciente.socialService.name !='No tiene'">
-						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div class="">
-								{{prescription.paciente.socialService.name}} 
-							</div>
-							<div class="">
-								{{prescription.paciente.socialServiceNumber}}
-							</div>
-						</div>
+				</div>
+			</div>
+			<div class="row prescriptionPatientSocialService" ng-if="prescription.paciente.socialService && prescription.paciente.socialService.name !='No tiene'">
+				<div class="col-12">
+					<div>
+						{{prescription.paciente.socialService.name}} 
 					</div>
-					<div class="prescriptionMedicationsList">
-						<div class="row">
-							<table class="table table-condensed">
-								<thead> 
-									<tr> 
-										<th>Medicamento</th>
-										<th>Cant x día</th>
-										<th>Cant x mes</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="prescriptedMedication in prescription.prescriptedMedications">
-										<td>
-											<div class="">
-												{{prescriptedMedication.medication.recipeName + ' ' + (prescriptedMedication.medication.composition? prescriptedMedication.medication.composition:'') + 
-												(prescriptedMedication.medication.presentation?' ' +prescriptedMedication.medication.presentation:'' )}}
-											</div>
-										</td>
-										<td>{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerDay)}}</td>
-										<td>{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerMonth)}}</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>	    					
+					<div>
+						{{prescription.paciente.socialServiceNumber}}
+					</div>
+				</div>
+			</div>
+			<div class="prescriptionMedicationsList">
+				<div class="row">
+					<table class="table table-condensed">
+						<thead> 
+							<tr> 
+								<th>Medicamento</th>
+								<th>Cant x día</th>
+								<th>Cant x mes</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="prescriptedMedication in prescription.prescriptedMedications">
+								<td>{{prescriptedMedication.medication.recipeName + ' ' + (prescriptedMedication.medication.composition? prescriptedMedication.medication.composition:'') + (prescriptedMedication.medication.presentation?' ' +prescriptedMedication.medication.presentation:'' )}}
+								</td>
+								<td>{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerDay)}}</td>
+								<td>{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerMonth)}}</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			<div class="row">
@@ -68,7 +60,7 @@
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				</div>
 			</div>
-			<div class="row" style="margin-top: 300px">
+			<div class="row justify-content-around" style="margin-top: 300px">
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 					{{prescription.issuedDate | date:"d/M/yy"}}
 				</div>
@@ -82,53 +74,43 @@
 				<div class="row">
 					<img src="{{ArvMedicationRecetaController.headerImage}}" class="center-block">	
 				</div>
-				<div class="row">
-					<div class="pull-right" style="padding: 10px">Nro de receta: {{prescription.id}}</div>
+				<div class="row justify-content-end">
+					<div class="col-xs-4">Nro de receta: {{prescription.id}}</div>
 				</div>
-				<div class="row">
+				<div class="row prescriptionPatientName">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<div class="row prescriptionPatientName">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<div class="hce-form-title">
-									{{prescription.paciente.pns}}
-								</div>
-							</div>
+						<div class="hce-form-title">
+							{{prescription.paciente.pns}}
 						</div>
-						<div class="row prescriptionPatientSocialService" ng-if="prescription.paciente.socialService && prescription.paciente.socialService.name !='No tiene'">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<div class="">
-									{{prescription.paciente.socialService.name}} 
-								</div>
-								<div class="">
-									{{prescription.paciente.socialServiceNumber}}
-								</div>
-							</div>
+					</div>
+				</div>
+				<div class="row prescriptionPatientSocialService" ng-if="prescription.paciente.socialService && prescription.paciente.socialService.name !='No tiene'">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="">
+							{{prescription.paciente.socialService.name}} 
 						</div>
-						<div class="prescriptionMedicationsList">
-							<div class="row">
-								<table class="table table-condensed">
-									<thead> 
-										<tr> 
-											<th>Medicamento</th>
-											<th>Cant x día</th>
-											<th>Cant x mes</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="prescriptedMedication in prescription.prescriptedMedications">
-											<td>
-												<div class="">
-													{{prescriptedMedication.medication.recipeName + ' ' + (prescriptedMedication.medication.composition? prescriptedMedication.medication.composition:'') + 
-													(prescriptedMedication.medication.presentation?' ' +prescriptedMedication.medication.presentation:'' )}}
-												</div>
-											</td>
-											<td>{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerDay)}}</td>
-											<td>{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerMonth)}}</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>	    					
+						<div class="">
+							{{prescription.paciente.socialServiceNumber}}
+						</div>
+					</div>
+				</div>
+				<div class="prescriptionMedicationsList">
+					<div class="row">
+						<!-- <table class="table table-condensed"> -->
+						<div class="col-6">Medicamento</div>
+						<div class="col-3">Cant x dia</div>
+						<div class="col-3">Cant x mes</div>
+					</div>
+					<div class="row" ng-repeat="prescriptedMedication in prescription.prescriptedMedications">
+						<div class="col-6">
+							{{prescriptedMedication.medication.recipeName + ' ' + (prescriptedMedication.medication.composition? prescriptedMedication.medication.composition:'') + (prescriptedMedication.medication.presentation?' ' +prescriptedMedication.medication.presentation:'' )}}
+						</div>
+						<div class="col-3">
+							{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerDay)}}
+						</div>
+						<div class="col-3">
+							{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerMonth)}}
+						</div>
 					</div>
 				</div>
 				<div class="row">
