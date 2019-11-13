@@ -140,7 +140,7 @@
           templateUrl: 'app/views/patientHCE/medications/profilaxis/newProfilaxisMedicationReceta.html',
           size: 'lg',
           controller: 'NewProfilaxisMedicationRecetaController',
-          controllerAs: 'Ctrl'
+          controllerAs: 'NewProfilaxisMedicationRecetaController'
         });
         modalInstance.result.then(function (resolution) {
           if(resolution==='markedError' || resolution==='edited'){
