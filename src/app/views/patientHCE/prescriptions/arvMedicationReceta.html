@@ -36,10 +36,10 @@
 						{{prescriptedMedication.medication.recipeName + ' ' + (prescriptedMedication.medication.composition? prescriptedMedication.medication.composition:'') + (prescriptedMedication.medication.presentation?' ' +prescriptedMedication.medication.presentation:'' )}}
 					</div>
 					<div class="col-xs-3 center-text">
-						{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerDay)}}
+						{{prescriptedMedication.quantityPerDay}}
 					</div>
 					<div class="col-xs-3 center-text">
-						{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerMonth)}}
+						{{prescriptedMedication.quantityPerMonth}}
 					</div>
 				</div>
 			</div>
@@ -98,10 +98,10 @@
 							{{prescriptedMedication.medication.recipeName + ' ' + (prescriptedMedication.medication.composition? prescriptedMedication.medication.composition:'') + (prescriptedMedication.medication.presentation?' ' +prescriptedMedication.medication.presentation:'' )}}
 						</div>
 						<div class="col-xs-3 center-text">
-							{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerDay)}}
+							{{prescriptedMedication.quantityPerDay}}	
 						</div>
 						<div class="col-xs-3 center-text">
-							{{ArvMedicationRecetaController.removeDecimals(prescriptedMedication.quantityPerMonth)}}
+							{{prescriptedMedication.quantityPerMonth}}	
 						</div>
 					</div>
 				</div>
