@@ -95,7 +95,7 @@
           templateUrl: 'app/components/navbar/closeEvolution-modal.html',
           size: 'md',
           controller: 'CloseEvolutionController',
-          controllerAs: 'Ctrl',
+          controllerAs: 'CloseEvolutionController',
           resolve: {
             canDiscardChanges: function () {
               return HCService.isDirty();
