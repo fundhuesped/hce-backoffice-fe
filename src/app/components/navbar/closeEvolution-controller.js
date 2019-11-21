@@ -14,11 +14,13 @@
       vm.saveChanges = saveChanges;
       vm.cancel = cancel;
       vm.canDiscardChanges = canDiscardChanges;
+
       function saveChanges() {
         $uibModalInstance.close('save');
       }
+
       function discardChanges() {
-        $uibModalInstance.close('discard');
+        $uibModalInstance.close('discard');   // VER: evolution-resource.js, hc-service.js, navbar.directive.js, llamados en closeEvolution-modal.html
       }
 
       function cancel() {

@@ -125,11 +125,10 @@
                   showError(error);
                 });
               }
-              if(resolution=='discard'){
+              if(resolution=='discard'){//ACA CAE EN EL DISCARD CHANGES!!
                 HCService.discardChanges();
-                  closeEvolution(function () {
-                    // body...
-                  },
+                  //TODO: revertHistory();
+                  }, 
                   function (error) {
                     showError(error);
                   });

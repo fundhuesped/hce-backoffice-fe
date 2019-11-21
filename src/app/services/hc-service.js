@@ -1,4 +1,3 @@
-
 (function(){
     'use strict';
     /* jshint validthis: true */
@@ -35,6 +34,8 @@
         srv.cleanAll = cleanAll;
         srv.cleanEvolution = cleanEvolution;
         srv.discardChanges = discardChanges;
+        srv.revertHistory = revertHistory;
+
         //Problems
         srv.getActivePatientProblems = getActivePatientProblems;
         srv.getPatientProblems = getPatientProblems;
@@ -147,6 +148,12 @@
             }
         }
 
+        function revertHistory(){
+                //TODO: Levantar la pila de funciones de reversion -> de donde? -> pensar que debe llenarse cada vez que se agrega,mdodifica y pasa a error -> Servicio??
+                //TODO: Recorrerla (pop + ejecutar todas)
+                //TODO: Instanciar nueva evolucion??
+        }
+
         function getCurrentEvolution(){
             return Evolution.getCurrentVisit({pacienteId:srv.currentPacienteId}, function (evolution) {
                 srv.currentEvolution = evolution;
@@ -219,7 +226,7 @@
             return null;
         }
 
-        function closeEvolution(force) {
+        function closeEvolution(force) { //TODO: Ver si se puede usar esta funcion para llamar a revertHistory
             var evolution = angular.copy(srv.currentEvolution);
             if(isDirty()){
                 return $q(function(resolve, reject) {
