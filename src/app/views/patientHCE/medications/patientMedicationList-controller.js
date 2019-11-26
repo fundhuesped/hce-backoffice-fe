@@ -41,7 +41,6 @@
       vm.openNewRecetaModal = openNewRecetaModal;
       vm.hasActiveMedications = hasActiveMedications;
       vm.isSearching = false;
-      vm.deleteChange = deleteChange;
 
       Object.defineProperty(
           vm,
@@ -82,17 +81,7 @@
       function pageChanged() {
         searchPatientMedications();
       }
-
-      /*
-      // Prueba del delete
-      function deleteChange(treatment){
-        treatment.$delete({pacienteId:HCService.currentPaciente.id},function() {
-          toastr.success('Tratamiento eliminado con exito');
-          $uibModalInstance.close('created');
-        }, showError););
-        searchPatientMedications();
-      }
-      */
+      
 
       function searchPatientMedications() {
         vm.isSearching = true;

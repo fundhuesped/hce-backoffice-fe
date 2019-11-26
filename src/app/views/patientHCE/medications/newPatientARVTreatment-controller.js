@@ -45,7 +45,6 @@
       vm.comboMedications = [];
       vm.otherMedications = [];
       vm.error = false;
-      vm.deleteChange = deleteChange;
 
       vm.changeReasons = ['Toxicidad', 
                           'Abandono',
@@ -140,20 +139,6 @@
           $uibModalInstance.close('created');
         }, showError);
       }
-
-      /*function deleteChange(){
-        var tmpPatientArvTreatment = angular.copy(vm.newPatientArvTreatment);
-        tmpPatientArvTreatment.paciente = HCService.currentPaciente.id;
-        tmpPatientArvTreatment.startDate = moment(tmpPatientArvTreatment.startDate).format('YYYY-MM-DD');
-        if(tmpPatientArvTreatment.endDate && tmpPatientArvTreatment.state == 'Closed'){
-          tmpPatientArvTreatment.endDate = moment(tmpPatientArvTreatment.endDate).format('YYYY-MM-DD');
-        }
-
-        tmpPatientArvTreatment.$delete({pacienteId:HCService.currentPaciente.id},function() {
-          toastr.success('Tratamiento eliminado con exito');
-          $uibModalInstance.close('created');
-        }, showError);
-      }*/
 
       function canSave() {
         if(vm.controllerForm.$valid && vm.newPatientArvTreatment &&vm.newPatientArvTreatment.patientARVTreatmentMedications && vm.newPatientArvTreatment.patientARVTreatmentMedications.length > 0){

@@ -26,6 +26,7 @@
       vm.openChangePatientArvTreatmentModal = openChangePatientArvTreatmentModal;
       vm.openNewRecetaModal = openNewRecetaModal;
       vm.isSearching = false;
+      vm.deleteChange = deleteChange;
       activate();
 
 
@@ -39,6 +40,16 @@
               return HCService.currentARVTreatment;
           }
       });
+
+      function deleteChange(treatment){
+        console.log("DElete has een called!")
+        var tmpTreatment = new PatientArvTreatment();
+        tmpTreatment.id = treatment.id;
+        tmpTreatment.$delete({pacienteId:HCService.currentPaciente.id},function() {
+          toastr.success('Tratamiento eliminado con exito');
+          searchPatientTreatments();
+        }, showError);
+      }
 
 	    function activate(){
         searchPatientTreatments();
