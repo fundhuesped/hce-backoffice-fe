@@ -45,7 +45,7 @@
         console.log("DElete has een called!")
         var tmpTreatment = new PatientArvTreatment();
         tmpTreatment.id = treatment.id;
-        tmpTreatment.$delete({pacienteId:HCService.currentPaciente.id},function() {
+        tmpTreatment.$delete(function(){
           toastr.success('Tratamiento eliminado con exito');
           searchPatientTreatments();
         }, showError);
