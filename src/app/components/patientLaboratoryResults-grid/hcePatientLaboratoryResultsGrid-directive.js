@@ -11,7 +11,7 @@
       restrict: 'EA',
       templateUrl: 'app/views/patientHCE/laboratoriesResults/laboratoriesResults.html',
       controller: 'PatientLaboratoryResultsListController',
-      controllerAs: 'Ctrl',
+      controllerAs: 'PatientLaboratoryResultsListController',
       scope: true,
     };
 

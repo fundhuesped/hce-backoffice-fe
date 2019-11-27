@@ -96,7 +96,7 @@
             'detail': {
               templateUrl: 'app/views/patientHCE/laboratoriesResults/laboratoriesResults.html',
               controller: 'PatientLaboratoryResultsListController',
-              controllerAs: 'Ctrl',
+              controllerAs: 'PatientLaboratoryResultsListController',
             }
           },
       })
