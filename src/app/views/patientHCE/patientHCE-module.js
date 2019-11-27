@@ -76,7 +76,7 @@
             'detail': {
               templateUrl: 'app/views/patientHCE/medications/patientARVTreatmentList.html',
               controller: 'PatientARVTreatmentListController',
-              controllerAs: 'PMLController',
+              controllerAs: 'PatientARVTreatmentListController',
             }
           },
       })

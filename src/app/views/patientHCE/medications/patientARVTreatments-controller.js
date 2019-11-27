@@ -42,7 +42,6 @@
       });
 
       function deleteChange(treatment){
-        console.log("DElete has een called!")
         var tmpTreatment = new PatientArvTreatment();
         tmpTreatment.id = treatment.id;
         tmpTreatment.$delete(function(){
