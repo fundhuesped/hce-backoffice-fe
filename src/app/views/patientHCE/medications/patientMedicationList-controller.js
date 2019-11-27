@@ -41,6 +41,7 @@
       vm.openNewRecetaModal = openNewRecetaModal;
       vm.hasActiveMedications = hasActiveMedications;
       vm.isSearching = false;
+      vm.deleteChanges = deleteChanges;
 
       Object.defineProperty(
           vm,
@@ -80,6 +81,15 @@
 
       function pageChanged() {
         searchPatientMedications();
+      }
+
+      function deleteChanges(patientMedication){
+        var tmpPatientMedication = new PatientMedication();
+        tmpPatientMedication.id = patientMedication.id;
+        tmpPatientMedication.$delete(function(){
+          toastr.success('Medicamento eliminado con exito');
+          searchPatientMedications();
+        }, showError);
       }
       
 
