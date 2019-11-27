@@ -23,6 +23,7 @@
       vm.openNewPatientVaccineModal = openNewPatientVaccineModal;
       vm.openEditPatientVaccineModal = openEditPatientVaccineModal;
       vm.isSearching = false;
+      vm.deleteChanges = deleteChanges;
 
       Object.defineProperty(
           vm,
@@ -52,6 +53,15 @@
 
       function pageChanged() {
         searchPatientVaccines();
+      }
+
+      function deleteChanges(patientVaccine){
+        var tmpPatientVaccine = new PatientVaccine();
+        tmpPatientVaccine = patientVaccine.id;
+        tmpPatientVaccine.$delete(function(){
+          toastr.success('Vacuna eliminado con éxito');
+          searchPatientVaccines();
+        },showError());
       }
 
       function searchPatientVaccines() {
