@@ -34,6 +34,7 @@
         srv.cleanAll = cleanAll;
         srv.cleanEvolution = cleanEvolution;
         srv.discardChanges = discardChanges;
+        srv.historyStack = null;
         srv.revertHistory = revertHistory;
 
         //Problems
@@ -142,16 +143,19 @@
         }
 
         function discardChanges(cbOk, cbNok) {
+            console.log('Entra a discardChanges dentro de HCService');
             srv.currentEvolution = srv.currentEvolutionCopy;
+            revertHistory();
             if(cbOk){
                 cbOk();
             }
         }
 
         function revertHistory(){
-                //TODO: Levantar la pila de funciones de reversion -> de donde? -> pensar que debe llenarse cada vez que se agrega,mdodifica y pasa a error -> Servicio??
-                //TODO: Recorrerla (pop + ejecutar todas)
-                //TODO: Instanciar nueva evolucion??
+            console.log('Entra a revertHistory dentro de HCService');
+            //TODO: Levantar la pila de funciones de reversion -> de donde? -> pensar que debe llenarse cada vez que se agrega,mdodifica y pasa a error -> Servicio??
+            //TODO: Recorrerla (pop + ejecutar todas)
+            //TODO: Instanciar nueva evolucion??
         }
 
         function getCurrentEvolution(){
