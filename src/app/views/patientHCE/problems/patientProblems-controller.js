@@ -31,6 +31,7 @@
       vm.hasPermissions = false;
       vm.isSearching = false;
       vm.isSearchingFamilyProblems = false;
+      vm.deleteChanges = deleteChanges;
 
       vm.translateRelationship = FamilyPatientProblem.translateRelationship;
 
@@ -132,6 +133,17 @@
           toastr.success('Visita cerrada con exito');
         }, showError);
       }
+
+      function deleteChanges(problem) {
+        console.log("Delete has been called!")
+        var tmpProblem = new PatientProblem();
+        tmpProblem.id = problem.id;
+        tmpProblem.$delete(function(){
+          toastr.success('Problema eliminado con exito');
+          searchPatientProblems();
+        }, showError);
+      }
+
 
 	    function activate(){
         Problem.getActiveList(function(problems){
