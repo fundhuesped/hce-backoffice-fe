@@ -108,16 +108,13 @@
         return (vm.currentPaciente?moment(vm.currentPaciente.birthDate, "YYYY-MM-DD").format('DDMMYYYY'):"");
       }
       function closeEvolution() {
-        console.log('Entra a closeEvolution en navbarDirective');
         HCService.closeEvolution().then(function() {
           toastr.success('Visita cerrada con exito');
           $state.go('app.patientSearch');
         }, function (error) {
-          console.log('Entra al error de closeEvolution de navbar');
           if(error=='ISDIRTY'){
             openLeaveHCEModal().result.then(function (resolution) {
               if(resolution==='save'){
-                console.log('Entra al save en navbar');
                 HCService.saveNewEvolution(function () {
                   closeEvolution(function () {
                   },
@@ -129,10 +126,8 @@
                 });
               }
               if(resolution=='discard'){
-                console.log('Entra al discard en navbar')
                 HCService.discardChanges();
                   closeEvolution(function () {
-                    console.log('Entra al closeEvolution DENTRO del closeEvolution de navbar');
                     // body...
                   },
                   function (error) {

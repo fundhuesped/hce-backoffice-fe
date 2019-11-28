@@ -34,7 +34,9 @@
         srv.cleanAll = cleanAll;
         srv.cleanEvolution = cleanEvolution;
         srv.discardChanges = discardChanges;
-        srv.historyStack = null;
+        srv.historyDeletingFunctionStack = null;
+        srv.historyChangesStack = null;
+        srv.agregarAlHistorial = agregarAlHistorial;
         srv.revertHistory = revertHistory;
 
         //Problems
@@ -143,7 +145,6 @@
         }
 
         function discardChanges(cbOk, cbNok) {
-            console.log('Entra a discardChanges dentro de HCService');
             srv.currentEvolution = srv.currentEvolutionCopy;
             revertHistory();
             if(cbOk){
@@ -152,10 +153,26 @@
         }
 
         function revertHistory(){
-            console.log('Entra a revertHistory dentro de HCService');
-            //TODO: Levantar la pila de funciones de reversion -> de donde? -> pensar que debe llenarse cada vez que se agrega,mdodifica y pasa a error -> Servicio??
-            //TODO: Recorrerla (pop + ejecutar todas)
-            //TODO: Instanciar nueva evolucion??
+            var revertChange = null;
+            var change = null;
+            while(historyDeletingFunctionStack.length() && historyChangesStack.length()){
+                revertChange = historyDeletingFunctionStack.pop();
+                change = historyChangesStack.pop();
+                revertChange(change);
+            }
+            historyDeletingFunctionStack = null;
+            historyChangesStack = null;
+        }
+
+        function agregarAlHistorial(changedFeature,deletingFunction){
+            if(!historyDeletingFunctionStack){
+                historyDeletingFunctionStack = new Array();
+            }
+            if(!historyChangesStack){
+                historyChangesStack = new Array();
+            }
+            historyChangesStack.push(changedFeature);
+            historyDeletingFunctionStack.push(deletingFunction);
         }
 
         function getCurrentEvolution(){
@@ -230,7 +247,7 @@
             return null;
         }
 
-        function closeEvolution(force) { //TODO: Ver si se puede usar esta funcion para llamar a revertHistory
+        function closeEvolution(force) { //TODO: Revisar esta funcion para ver el tema del funcionamiento de la app cno los nuevos cambios
             var evolution = angular.copy(srv.currentEvolution);
             if(isDirty()){
                 return $q(function(resolve, reject) {

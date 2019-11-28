@@ -20,7 +20,6 @@
       }
 
       function discardChanges() {
-        console.log('Se llama a discardChanges en el closeEvolutionController');
         $uibModalInstance.close('discard');   // VER: evolution-resource.js, hc-service.js, navbar.directive.js, llamados en closeEvolution-modal.html
       }
 
