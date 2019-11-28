@@ -122,7 +122,15 @@
           vm.error = 'La fecha de fin no puede ser mayor a la fecha de inicio';
           return;
         }
+
         HCService.saveNewPatientProblem().then(function() {
+          var problemToDelete = vm.newPatientProblem;
+          HCService.agregarAlHistorial(function(){
+            problemToDelete.$delete(function(){
+              console.debug('Pudo borrar problema creado');
+            }, console.error);
+          })
+          
           toastr.success('Problema guardado con exito');
           $uibModalInstance.close('created');
 

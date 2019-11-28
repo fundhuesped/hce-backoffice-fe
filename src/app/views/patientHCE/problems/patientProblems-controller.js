@@ -152,7 +152,6 @@
         }, showError);
       }
 
-
 	    function activate(){
         Problem.getActiveList(function(problems){
           vm.problems = problems;

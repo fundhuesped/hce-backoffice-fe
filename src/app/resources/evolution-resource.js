@@ -43,8 +43,8 @@
             method: 'POST',
             params:{pacienteId:'@pacienteId'}
           },
-          delete: { //TODO: va a haber que ponerlo en los resources de cada uno de los features (ARVTreatment, problema, etc etc) en los que se quiera utilizar
-            url: apiBase+'hce/paciente/:pacienteId/visits',
+          delete: {
+            url: apiBase+'hce/visit/:id/',
             method: 'DELETE',
             params:{pacienteId:'@pacienteId'}
           },

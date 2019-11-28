@@ -20,7 +20,7 @@
       }
 
       function discardChanges() {
-        $uibModalInstance.close('discard');   // VER: evolution-resource.js, hc-service.js, navbar.directive.js, llamados en closeEvolution-modal.html
+        $uibModalInstance.close('discard');
       }
 
       function cancel() {

@@ -34,8 +34,8 @@
         srv.cleanAll = cleanAll;
         srv.cleanEvolution = cleanEvolution;
         srv.discardChanges = discardChanges;
-        srv.historyDeletingFunctionStack = null;
-        srv.historyChangesStack = null;
+        srv.historyStack = null;
+        srv.initializeHistory = initializeHistory;
         srv.agregarAlHistorial = agregarAlHistorial;
         srv.revertHistory = revertHistory;
 
@@ -154,26 +154,23 @@
 
         function revertHistory(){
             var revertChange = null;
-            var change = null;
-            while(historyDeletingFunctionStack.length() && historyChangesStack.length()){
-                revertChange = historyDeletingFunctionStack.pop();
-                change = historyChangesStack.pop();
-                revertChange(change);
+            while(srv.historyStack.length){
+                revertChange = srv.historyStack.pop();
+                revertChange();
             }
-            historyDeletingFunctionStack = null;
-            historyChangesStack = null;
         }
 
-        function agregarAlHistorial(changedFeature,deletingFunction){
-            if(!historyDeletingFunctionStack){
-                historyDeletingFunctionStack = new Array();
-            }
-            if(!historyChangesStack){
-                historyChangesStack = new Array();
-            }
-            historyChangesStack.push(changedFeature);
-            historyDeletingFunctionStack.push(deletingFunction);
+        function agregarAlHistorial(revertingFunction){
+            // if(!srv.historyStack){
+            //     historyStack = new Array();
+            // }
+            srv.historyStack.push(revertingFunction);
         }
+
+        function initializeHistory(){
+            srv.historyStack = new Array();
+        }
+
 
         function getCurrentEvolution(){
             return Evolution.getCurrentVisit({pacienteId:srv.currentPacienteId}, function (evolution) {

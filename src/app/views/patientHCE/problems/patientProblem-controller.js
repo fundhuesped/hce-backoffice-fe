@@ -93,6 +93,7 @@
           toastr.error('Ocurrio un error');
         });
       }
+      
       	function markAsError() {
       		var tmpProblem = angular.copy(vm.problem);
       		tmpProblem.state = PatientProblem.stateChoices.STATE_ERROR;
