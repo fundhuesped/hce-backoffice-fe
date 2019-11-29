@@ -147,6 +147,7 @@
         function discardChanges(cbOk, cbNok) {
             srv.currentEvolution = srv.currentEvolutionCopy;
             revertHistory();
+            console.log("Esto es despues de revertHistory()");
             if(cbOk){
                 cbOk();
             }
@@ -157,18 +158,23 @@
             while(srv.historyStack.length){
                 revertChange = srv.historyStack.pop();
                 revertChange();
+                console.log("Se revirtio una accion guardada en el historial");
+                console.log(srv.historyStack)
             }
         }
 
         function agregarAlHistorial(revertingFunction){
             // if(!srv.historyStack){
-            //     historyStack = new Array();
+            //     srv.historyStack = new Array();
             // }
             srv.historyStack.push(revertingFunction);
+            console.log("Se pusheo una funcion al historial!");
+            console.log(srv.historyStack);
         }
 
         function initializeHistory(){
             srv.historyStack = new Array();
+            console.log("Se inicializo historyStack exitosamente!");
         }
 
 
@@ -348,7 +354,7 @@
         }
 
 
-        function saveNewPatientProblem() {
+        function saveNewPatientProblem() { //TODO: Y SI SE HACE ACA??
 
             var patientProblem = angular.copy(srv.newPatientProblem);
             patientProblem.startDate = moment(srv.newPatientProblem.startDate).format('YYYY-MM-DD');
