@@ -124,13 +124,13 @@
         }
 
         HCService.saveNewPatientProblem().then(function() {
-          var problemToDelete = new PatientProblem(); 
-          problemToDelete.id = vm.newPatientProblem.id; //dice que no se puede leer el id de newPatientProblem ( parece que ni siquiera tiene id... -> ver hc-service newPatientProblem!!!)
-          HCService.agregarAlHistorial(function(){
-            problemToDelete.$delete(function(){
-              console.debug('Pudo borrar problema creado');
-            }, console.error);
-          });
+          // var problemToDelete = new PatientProblem(); 
+          // problemToDelete.id = vm.newPatientProblem.id; //dice que no se puede leer el id de newPatientProblem ( parece que ni siquiera tiene id... -> ver hc-service newPatientProblem!!!)
+          // HCService.agregarAlHistorial(function(){
+          //   problemToDelete.$delete(function(){
+          //     console.debug('Pudo borrar problema creado');
+          //   }, console.error);
+          // });
           
           toastr.success('Problema guardado con exito');
           $uibModalInstance.close('created');

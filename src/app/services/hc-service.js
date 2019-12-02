@@ -164,17 +164,18 @@
         }
 
         function agregarAlHistorial(revertingFunction){
-            // if(!srv.historyStack){
-            //     srv.historyStack = new Array();
-            // }
+            if(!srv.historyStack){
+                srv.historyStack = new Array();
+                console.log("Se inicializo historyStack exitosamente!");
+            }
             srv.historyStack.push(revertingFunction);
             console.log("Se pusheo una funcion al historial!");
             console.log(srv.historyStack);
         }
 
         function initializeHistory(){
-            srv.historyStack = new Array();
-            console.log("Se inicializo historyStack exitosamente!");
+            // srv.historyStack = new Array(); -> Se llama mas de una vez, borrando todo lo que se guardo!
+            console.log("Se llamo a initializeHistory() exitosamente!");
         }
 
 
@@ -354,13 +355,21 @@
         }
 
 
-        function saveNewPatientProblem() { //TODO: Y SI SE HACE ACA??
+        function saveNewPatientProblem() {
 
             var patientProblem = angular.copy(srv.newPatientProblem);
             patientProblem.startDate = moment(srv.newPatientProblem.startDate).format('YYYY-MM-DD');
             if (srv.newPatientProblem.closeDate) {
                 patientProblem.closeDate = moment(srv.newPatientProblem.closeDate).format('YYYY-MM-DD');
             }
+
+            var problemToDelete = new PatientProblem(); 
+            problemToDelete.id = patientProblem.id;
+            agregarAlHistorial(function(){
+                problemToDelete.$delete(function(){
+                console.debug('Pudo borrar problema creado');
+            },  console.error);
+            });
 
             return patientProblem.$save({pacienteId:srv.currentPaciente.id}, function (patientProblem) {
                 getActivePatientProblems();
