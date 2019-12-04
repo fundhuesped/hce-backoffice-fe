@@ -145,6 +145,7 @@
         }
 
         function discardChanges(cbOk, cbNok) {
+            console.log("Entra a discardChanges");
             srv.currentEvolution = srv.currentEvolutionCopy;
             revertHistory();
             console.log("Esto es despues de revertHistory()");
@@ -159,7 +160,7 @@
                 revertChange = srv.historyStack.pop();
                 revertChange();
                 console.log("Se revirtio una accion guardada en el historial");
-                console.log(srv.historyStack)
+                console.log(srv.historyStack);
             }
         }
 
@@ -364,10 +365,16 @@
             }
 
             var problemToDelete = new PatientProblem(); 
-            problemToDelete.id = patientProblem.id;
+            problemToDelete.problem = patientProblem.problem;
+            problemToDelete.startDate = patientProblem.startDate;
+            problemToDelete.state = patientProblem.state;
+            problemToDelete.closeDate = patientProblem.closedate;
+            problemToDelete.observations = patientProblem.observations;
+            debugger;
             agregarAlHistorial(function(){
+                console.log("Entra a la función de borrado");
                 problemToDelete.$delete(function(){
-                console.debug('Pudo borrar problema creado');
+                console.log('Supuestamente pudo borrar problema creado');
             },  console.error);
             });
 
