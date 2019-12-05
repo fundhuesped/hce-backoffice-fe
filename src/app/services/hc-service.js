@@ -185,7 +185,8 @@
                 srv.currentEvolution = evolution;
                 srv.currentEvolutionCopy = angular.copy(evolution);
             }, function (err) {
-                
+                openNewEvolution();
+                console.error(err);
             });
         }
 
