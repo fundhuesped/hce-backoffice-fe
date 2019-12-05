@@ -370,13 +370,8 @@
                 srv.newPatientProblem = null;
                 var problemToDelete = new PatientProblem();
                 problemToDelete.id = patientProblem.id;
-                // problemToDelete.id = patientProblem.problem.id;
-                // problemToDelete.startDate = patientProblem.startDate;
-                // problemToDelete.state = patientProblem.state;
-                // problemToDelete.closeDate = patientProblem.closedate;
-                // problemToDelete.observations = patientProblem.observations;
                 agregarAlHistorial(function(){
-                    console.log("Entra a la función de borrado");
+                    console.log("Entra a la función de borrado de un problema");
                     problemToDelete.$delete(function(){
                     console.log('Supuestamente pudo borrar problema creado');
                 },  console.error);

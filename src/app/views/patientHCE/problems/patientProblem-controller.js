@@ -86,6 +86,21 @@
         if (tmpProblem.closeDate) {
             tmpProblem.closeDate = moment(tmpProblem.closeDate).format('YYYY-MM-DD');
         }
+
+        var currentPacienteId = HCService.currentPacienteId;
+        var problemToUnedit = new PatientProblem();
+        problemToUnedit.id = tmpProblem.id;
+        problemToUnmarkAsError.paciente = tmpProblem.paciente;
+        problemToUnmarkAsError.profesional = tmpProblem.profesional;
+        HCService.agregarAlHistorial(function(){
+          problemToUnedit.$update({pacienteId:currentPacienteId}, function () {
+            console.log("Entra a la función de desahcer edición de un problema");
+            console.log('Supuestamente se revirtió la edición de un problema con éxito');
+          }, function (err) {
+            console.error('Ocurrio un error al deshacer edicion de un problema');
+          });
+        })
+
         PatientProblem.update(tmpProblem, function (response) {
           toastr.success('Problema editado con éxito');
           $uibModalInstance.close('edited');
@@ -102,6 +117,19 @@
               tmpProblem.closeDate = moment(tmpProblem.closeDate).format('YYYY-MM-DD');
 
           }
+          var currentPacienteId = HCService.currentPacienteId;
+          var problemToUnmarkAsError = new PatientProblem();
+          problemToUnmarkAsError.id = tmpProblem.id;
+          problemToUnmarkAsError.paciente = tmpProblem.paciente;
+          problemToUnmarkAsError.profesional = tmpProblem.profesional;
+          HCService.agregarAlHistorial(function(){
+            problemToUnmarkAsError.$update({pacienteId:currentPacienteId}, function (response) {
+              console.log("Entra a la función de desahcer pasaje a error de un problema");
+              console.log('Supuestamente se revirtió el pasaje a error de un problema con éxito');
+            }, function (err) {
+              console.error('Ocurrio un error al deshacer pasaje a error de un problema');
+            });
+          })
 
       		PatientProblem.update(tmpProblem, function (response) {
           	toastr.success('Problema marcado como error');
