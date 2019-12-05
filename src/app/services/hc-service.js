@@ -253,7 +253,7 @@
             return null;
         }
 
-        function closeEvolution(force) { //TODO: Revisar esta funcion para ver el tema del funcionamiento de la app cno los nuevos cambios
+        function closeEvolution(force) {
             var evolution = angular.copy(srv.currentEvolution);
             if(isDirty()){
                 return $q(function(resolve, reject) {
@@ -363,25 +363,24 @@
             patientProblem.startDate = moment(srv.newPatientProblem.startDate).format('YYYY-MM-DD');
             if (srv.newPatientProblem.closeDate) {
                 patientProblem.closeDate = moment(srv.newPatientProblem.closeDate).format('YYYY-MM-DD');
-            }
-
-            var problemToDelete = new PatientProblem(); 
-            problemToDelete.problem = patientProblem.problem;
-            problemToDelete.startDate = patientProblem.startDate;
-            problemToDelete.state = patientProblem.state;
-            problemToDelete.closeDate = patientProblem.closedate;
-            problemToDelete.observations = patientProblem.observations;
-            debugger;
-            agregarAlHistorial(function(){
-                console.log("Entra a la función de borrado");
-                problemToDelete.$delete(function(){
-                console.log('Supuestamente pudo borrar problema creado');
-            },  console.error);
-            });
+            }        
 
             return patientProblem.$save({pacienteId:srv.currentPaciente.id}, function (patientProblem) {
                 getActivePatientProblems();
                 srv.newPatientProblem = null;
+                var problemToDelete = new PatientProblem();
+                problemToDelete.id = patientProblem.id;
+                // problemToDelete.id = patientProblem.problem.id;
+                // problemToDelete.startDate = patientProblem.startDate;
+                // problemToDelete.state = patientProblem.state;
+                // problemToDelete.closeDate = patientProblem.closedate;
+                // problemToDelete.observations = patientProblem.observations;
+                agregarAlHistorial(function(){
+                    console.log("Entra a la función de borrado");
+                    problemToDelete.$delete(function(){
+                    console.log('Supuestamente pudo borrar problema creado');
+                },  console.error);
+                });
             }, function (err) {
                 console.log(err);
             });
