@@ -111,12 +111,12 @@
       
       	function markAsError() {
       		var tmpProblem = angular.copy(vm.problem);
-      		tmpProblem.state = PatientProblem.stateChoices.STATE_ERROR;
           tmpProblem.startDate = moment(tmpProblem.startDate).format('YYYY-MM-DD');
           if (tmpProblem.closeDate) {
               tmpProblem.closeDate = moment(tmpProblem.closeDate).format('YYYY-MM-DD');
 
           }
+        
           var currentPacienteId = HCService.currentPacienteId;
           var problemToUnmarkAsError = new PatientProblem();
           problemToUnmarkAsError.id = tmpProblem.id;
@@ -130,6 +130,9 @@
               console.error('Ocurrio un error al deshacer pasaje a error de un problema');
             });
           })
+
+          
+      		tmpProblem.state = PatientProblem.stateChoices.STATE_ERROR;
 
       		PatientProblem.update(tmpProblem, function (response) {
           	toastr.success('Problema marcado como error');
