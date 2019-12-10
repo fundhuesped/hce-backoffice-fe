@@ -90,8 +90,8 @@
         var currentPacienteId = HCService.currentPacienteId;
         var problemToUnedit = new PatientProblem();
         problemToUnedit.id = tmpProblem.id;
-        problemToUnmarkAsError.paciente = tmpProblem.paciente;
-        problemToUnmarkAsError.profesional = tmpProblem.profesional;
+        problemToUnedit.paciente = tmpProblem.paciente;
+        problemToUnedit.profesional = tmpProblem.profesional;
         HCService.agregarAlHistorial(function(){
           problemToUnedit.$update({pacienteId:currentPacienteId}, function () {
             console.log("Entra a la función de desahcer edición de un problema");
