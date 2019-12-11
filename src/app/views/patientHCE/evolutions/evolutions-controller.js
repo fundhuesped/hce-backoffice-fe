@@ -71,7 +71,6 @@
 
 	    function activate(){
         HCService.getCurrentEvolution();
-        // HCService.initializeHistory();
         searchEvolutions();
 	    }
 

@@ -181,13 +181,20 @@
 
 
         function getCurrentEvolution(){
-            return Evolution.getCurrentVisit({pacienteId:srv.currentPacienteId}, function (evolution) {
-                srv.currentEvolution = evolution;
-                srv.currentEvolutionCopy = angular.copy(evolution);
-            }, function (err) {
+            try{
+                return Evolution.getCurrentVisit({pacienteId:srv.currentPacienteId}, function (evolution) {
+                    srv.currentEvolution = evolution;
+                    srv.currentEvolutionCopy = angular.copy(evolution);
+                }, function (err) {
+                    openNewEvolution();
+                    console.error(err);
+                });
+            }catch(e){
+                console.error("Entra en el catch de getCurrentVisit");
+                console.error(e.name);
+                console.error(e.messaje);
                 openNewEvolution();
-                console.error(err);
-            });
+            }
         }
 
         function openNewEvolution() {
