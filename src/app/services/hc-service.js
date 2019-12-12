@@ -38,6 +38,8 @@
         srv.initializeHistory = initializeHistory;
         srv.agregarAlHistorial = agregarAlHistorial;
         srv.revertHistory = revertHistory;
+        srv.hasBeenModified = false;
+        srv.markAsDirty = markAsDirty;
 
         //Problems
         srv.getActivePatientProblems = getActivePatientProblems;
@@ -97,7 +99,12 @@
             if(srv.currentEvolution && srv.currentEvolution.reason != srv.currentEvolutionCopy.reason){
                 return true;
             }
+            if(srv.hasBeenModified) return true;
             return false;
+        }
+
+        function markAsDirty(){
+            srv.hasBeenModified = true;
         }
 
         function canOpenPatient(patient) {
@@ -175,7 +182,6 @@
         }
 
         function initializeHistory(){
-            // srv.historyStack = new Array(); -> Se llama mas de una vez, borrando todo lo que se guardo!
             console.log("Se llamo a initializeHistory() exitosamente!");
         }
 
@@ -191,8 +197,8 @@
                 });
             }catch(e){
                 console.error("Entra en el catch de getCurrentVisit");
-                console.error(e.name);
-                console.error(e.messaje);
+                console.error(e.name || e || "");
+                console.error(e.message || e || "");
                 openNewEvolution();
             }
         }
@@ -374,6 +380,7 @@
 
             return patientProblem.$save({pacienteId:srv.currentPaciente.id}, function (patientProblem) {
                 getActivePatientProblems();
+                markAsDirty();
                 srv.newPatientProblem = null;
                 var problemToDelete = new PatientProblem();
                 problemToDelete.id = patientProblem.id;

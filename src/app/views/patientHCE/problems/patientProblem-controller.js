@@ -93,17 +93,19 @@
         problemToUnedit.paciente = tmpProblem.paciente;
         problemToUnedit.profesional = tmpProblem.profesional;
         HCService.agregarAlHistorial(function(){
-          problemToUnedit.$update({pacienteId:currentPacienteId}, function () {
+          problemToUnedit.$update({id:currentPacienteId}, function () {
             console.log("Entra a la función de desahcer edición de un problema");
             console.log('Supuestamente se revirtió la edición de un problema con éxito');
           }, function (err) {
             console.error('Ocurrio un error al deshacer edicion de un problema');
           });
-        })
+        });
 
         PatientProblem.update(tmpProblem, function (response) {
+          HCService.markAsDirty();
           toastr.success('Problema editado con éxito');
           $uibModalInstance.close('edited');
+          HCService.getCurrentEvolution();
         }, function (err) {
           toastr.error('Ocurrio un error');
         });
@@ -123,20 +125,21 @@
           problemToUnmarkAsError.paciente = tmpProblem.paciente;
           problemToUnmarkAsError.profesional = tmpProblem.profesional;
           HCService.agregarAlHistorial(function(){
-            problemToUnmarkAsError.$update({pacienteId:currentPacienteId}, function (response) {
+            problemToUnmarkAsError.$update({id:currentPacienteId}, function (response) {
               console.log("Entra a la función de desahcer pasaje a error de un problema");
               console.log('Supuestamente se revirtió el pasaje a error de un problema con éxito');
             }, function (err) {
               console.error('Ocurrio un error al deshacer pasaje a error de un problema');
             });
-          })
-
+          });
           
       		tmpProblem.state = PatientProblem.stateChoices.STATE_ERROR;
 
       		PatientProblem.update(tmpProblem, function (response) {
+            HCService.markAsDirty();
           	toastr.success('Problema marcado como error');
-			      $uibModalInstance.close('markedError');
+            $uibModalInstance.close('markedError');
+            HCService.getCurrentEvolution();
       		}, function (err) {
               console.error(err);            
 		          toastr.error('Ocurrio un error');
