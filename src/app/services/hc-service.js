@@ -155,6 +155,7 @@
             console.log("Entra a discardChanges");
             srv.currentEvolution = srv.currentEvolutionCopy;
             revertHistory();
+            // srv.hasBeenModified = false;
             console.log("Esto es despues de revertHistory()");
             if(cbOk){
                 cbOk();
@@ -267,6 +268,7 @@
         }
 
         function closeEvolution(force) {
+            srv.hasBeenModified = false;
             var evolution = angular.copy(srv.currentEvolution);
             if(isDirty()){
                 return $q(function(resolve, reject) {
