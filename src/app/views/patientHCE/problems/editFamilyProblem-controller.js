@@ -6,11 +6,12 @@
     	.module('hce.patientHCE')
     	.controller('EditFamilyProblemController', editFamilyProblemController);
 
-	   editFamilyProblemController.$inject = ['familyProblem', 'toastr', 'FamilyPatientProblem', '$uibModalInstance', 'SessionService'];
+	   editFamilyProblemController.$inject = ['familyProblem', 'toastr', 'FamilyPatientProblem', '$uibModalInstance', 'SessionService','HCService'];
 
-    function editFamilyProblemController (familyProblem, toastr, FamilyPatientProblem, $uibModalInstance, SessionService) {
+    function editFamilyProblemController (familyProblem, toastr, FamilyPatientProblem, $uibModalInstance, SessionService, HCService) {
 	    var vm = this;
       vm.familyProblem = {};
+      vm.originalFamilyProblem = familyProblem;
       vm.save = save;
 	    vm.cancel = cancel;
       vm.relationshipChoices = FamilyPatientProblem.relationshipChoices;
@@ -42,10 +43,24 @@
 
       function markAsError() {
         var tmpProblem = angular.copy(vm.familyProblem);
+
+        var problemToUnmarkAsError = new FamilyPatientProblem();
+        Object.assign(problemToUnmarkAsError, tmpProblem);
+
+        HCService.agregarAlHistorial(function(){
+          problemToUnmarkAsError.$delete(function(){
+            console.log('Supuestamente pudo borrar problema update');
+            problemToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+              console.log('Supuestamente pudo crear problema update');
+            },  console.error);
+          },  console.error);
+        });
+
         tmpProblem.state = FamilyPatientProblem.stateChoices.STATE_ERROR;
         tmpProblem.observations = vm.familyProblem.observations;
         FamilyPatientProblem.update(tmpProblem, function (response) {
-            toastr.success('Problema marcado como error');
+          HCService.markAsDirty();
+          toastr.success('Problema marcado como error');
           $uibModalInstance.close('markedError');
         }, function (err) {
           console.error(err);
@@ -58,7 +73,21 @@
       }
 
       function save() {
+        var problemToUnedit = new FamilyPatientProblem();
+        Object.assign(problemToUnedit, vm.originalFamilyProblem );
+
+        HCService.agregarAlHistorial(function(){
+          problemToUnedit.$delete(function(){
+            console.log('Supuestamente pudo borrar problema update');
+            
+            problemToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+              console.log('Supuestamente pudo crear problema update');
+            },  console.error);
+          },  console.error);
+        });
+
         FamilyPatientProblem.update(vm.familyProblem, function (response) {
+          HCService.markAsDirty();
           toastr.success('Problema editado con éxito');
           $uibModalInstance.close('familyProblemEdited');
         }, function (err) {

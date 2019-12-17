@@ -31,6 +31,7 @@
       vm.categoriasDeterminaciones = [];
       vm.toggleCategoria = toggleCategoria;
       vm.todayDate = new Date();
+      vm.deleteChanges = deleteChanges;
 
 
       vm.isLowerThanLimit = isLowerThanLimit;
@@ -101,6 +102,15 @@
 
       function pageChanged() {
         searchPatientLaboratoryResults();
+      }
+
+      function deleteChanges(laboratoryResult){
+        var tmpLaboratoryResult = new PatientLaboratoryResult();
+        tmpLaboratoryResult.id = laboratoryResult.id;
+        tmpLaboratoryResult.$delete(function(){
+          toastr.success('Laboratorio eliminado con éxito');
+          searchPatientLaboratoryResults();
+        },showError());
       }
 
       function save() {

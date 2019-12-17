@@ -26,6 +26,11 @@
             method: 'POST',
             params:{pacienteId:'@pacienteId'}
           },
+          delete: {
+            url: apiBase+'hce/familyProblem/:id/',
+            method: 'DELETE',
+            params:{id:'@id'}
+          },
           getForPaciente: {
             url: apiBase+'hce/paciente/:pacienteId/familyProblems',
             params:{pacienteId:'@pacienteId'},

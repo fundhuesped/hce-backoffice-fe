@@ -76,7 +76,7 @@
             'detail': {
               templateUrl: 'app/views/patientHCE/medications/patientARVTreatmentList.html',
               controller: 'PatientARVTreatmentListController',
-              controllerAs: 'PMLController',
+              controllerAs: 'PatientARVTreatmentListController',
             }
           },
       })
@@ -96,7 +96,7 @@
             'detail': {
               templateUrl: 'app/views/patientHCE/laboratoriesResults/laboratoriesResults.html',
               controller: 'PatientLaboratoryResultsListController',
-              controllerAs: 'Ctrl',
+              controllerAs: 'PatientLaboratoryResultsListController',
             }
           },
       })

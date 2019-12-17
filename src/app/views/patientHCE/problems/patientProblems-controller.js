@@ -34,7 +34,6 @@
 
       vm.translateRelationship = FamilyPatientProblem.translateRelationship;
 
-
       vm.openNewFamilyProblemModal = openNewFamilyProblemModal;
       vm.openEditFamilyProblemModal = openEditFamilyProblemModal;
       vm.familyPager = {
@@ -132,6 +131,7 @@
           toastr.success('Visita cerrada con exito');
         }, showError);
       }
+
 
 	    function activate(){
         Problem.getActiveList(function(problems){

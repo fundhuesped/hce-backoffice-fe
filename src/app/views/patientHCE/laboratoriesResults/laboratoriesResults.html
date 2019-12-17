@@ -13,9 +13,9 @@
 							</div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 								<div class="input-group">
-									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="newLabDate" ng-model="Ctrl.newLab.date" max={{todayDate}}  is-open="Ctrl.newLabDateCalendar.opened" datepicker-options="Ctrl.newLabDateCalendar.options" close-text="Cerrar" alt-input-formats="Ctrl.newLabDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" />
+									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="newLabDate" ng-model="PatientLaboratoryResultsListController.newLab.date" max={{todayDate}}  is-open="PatientLaboratoryResultsListController.newLabDateCalendar.opened" datepicker-options="PatientLaboratoryResultsListController.newLabDateCalendar.options" close-text="Cerrar" alt-input-formats="PatientLaboratoryResultsListController.newLabDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" />
 									<div class="input-group-btn input-group-small">
-										<button type="button" class="btn btn-default btn-xs" style="margin: 0px;" ng-click="Ctrl.newLabDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+										<button type="button" class="btn btn-default btn-xs" style="margin: 0px;" ng-click="PatientLaboratoryResultsListController.newLabDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
 									</div>
 								</div>
 							</div>
@@ -25,11 +25,11 @@
 								Determinacion
 							</div>
 						</div>
-						<div class="row hce-labResult-row" ng-repeat-start="categoriaDeterminacion in Ctrl.categoriasDeterminaciones">
-							<div ng-click="Ctrl.toggleCategoria(categoriaDeterminacion);" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell" style="text-align: left;">
+						<div class="row hce-labResult-row" ng-repeat-start="categoriaDeterminacion in PatientLaboratoryResultsListController.categoriasDeterminaciones">
+							<div ng-click="PatientLaboratoryResultsListController.toggleCategoria(categoriaDeterminacion);" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell" style="text-align: left;">
 								<b>{{categoriaDeterminacion.name}}</b>
 							</div>
-							<div ng-click="Ctrl.toggleCategoria(categoriaDeterminacion);" 	class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
+							<div ng-click="PatientLaboratoryResultsListController.toggleCategoria(categoriaDeterminacion);" 	class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
 							</div>
 						</div>
 						<div ng-repeat-end class="row hce-labResult-row" ng-repeat="determinacion in categoriaDeterminacion.determinaciones" ng-show="categoriaDeterminacion.show">
@@ -38,19 +38,19 @@
 							</div>
 							<div ng-if="categoriaDeterminacion.name!=='CARGA VIRAL HIV'">
 								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
-									<input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="Ctrl.newLabValues[determinacion.code]">
+									<input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="PatientLaboratoryResultsListController.newLabValues[determinacion.code]">
 								</div>
 							</div>
 							<div ng-if="categoriaDeterminacion.name==='CARGA VIRAL HIV'">
 								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
-									<input type="text" ng-model="Ctrl.newLabValues[determinacion.code]">
+									<input type="text" ng-model="PatientLaboratoryResultsListController.newLabValues[determinacion.code]">
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<div class="row">
-							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" ng-repeat="labResult in Ctrl.labResults">
+							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" ng-repeat="labResult in PatientLaboratoryResultsListController.labResults">
 								<div class="row hce-labResult-row hce-labResult-header" ng-class="{'registry-error':labResult.status=='Error' }">
 									<div class="">
 										{{labResult.date|date:'dd/MM/yyyy'}}
@@ -59,15 +59,15 @@
 								<div class="row hce-labResult-header">
 									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"></div>
 								</div>
-								<div class="row hce-labResult-row" ng-repeat-start="categoriaDeterminacion in Ctrl.categoriasDeterminaciones">
-									<div ng-click="Ctrl.toggleCategoria(categoriaDeterminacion);" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell" style="text-align: left;">
+								<div class="row hce-labResult-row" ng-repeat-start="categoriaDeterminacion in PatientLaboratoryResultsListController.categoriasDeterminaciones">
+									<div ng-click="PatientLaboratoryResultsListController.toggleCategoria(categoriaDeterminacion);" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell" style="text-align: left;">
 									</div>
-									<div ng-click="Ctrl.toggleCategoria(categoriaDeterminacion);" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
+									<div ng-click="PatientLaboratoryResultsListController.toggleCategoria(categoriaDeterminacion);" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hce-labResult-cell">
 									</div>
 								</div>
 								<div ng-repeat-end class="row hce-labResult-row" ng-repeat="determinacion in categoriaDeterminacion.determinaciones" ng-show="categoriaDeterminacion.show">
-									<div class="hce-labResult-cell" ng-class="{'registry-error':labResult.status=='Error', 'result-ltlimit': Ctrl.isLowerThanLimit(determinacion,labResult),'result-btlimit': Ctrl.isBiggerThanLimit(determinacion,labResult)}">
-										{{Ctrl.getValueForDeterminacion(determinacion.code,labResult)}}
+									<div class="hce-labResult-cell" ng-class="{'registry-error':labResult.status=='Error', 'result-ltlimit': PatientLaboratoryResultsListController.isLowerThanLimit(determinacion,labResult),'result-btlimit': PatientLaboratoryResultsListController.isBiggerThanLimit(determinacion,labResult)}">
+										{{PatientLaboratoryResultsListController.getValueForDeterminacion(determinacion.code,labResult)}}
 									</div>
 								</div>
 							</div>
@@ -76,11 +76,11 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-				  		<div uib-pagination previous-text="Anterior" next-text="Siguiente" total-items="Ctrl.totalItems" items-per-page="Ctrl.pageSize" ng-model="Ctrl.currentPage" ng-change="Ctrl.pageChanged()" class="pagination-sm" ng-show="Ctrl.totalItems"></div>
+				  		<div uib-pagination previous-text="Anterior" next-text="Siguiente" total-items="PatientLaboratoryResultsListController.totalItems" items-per-page="PatientLaboratoryResultsListController.pageSize" ng-model="PatientLaboratoryResultsListController.currentPage" ng-change="PatientLaboratoryResultsListController.pageChanged()" class="pagination-sm" ng-show="PatientLaboratoryResultsListController.totalItems"></div>
 				  	</div>
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-						<button ng-click="Ctrl.save()" ng-disabled="!Ctrl.canSave();" class="btn btn-success btn-raised pull-right">Guardar nuevo</button>
-						<button ng-click="Ctrl.clear()" ng-disabled="!Ctrl.canClear();" class="btn btn-warning pull-right">Limpiar</button>
+						<button ng-click="PatientLaboratoryResultsListController.save()" ng-disabled="!PatientLaboratoryResultsListController.canSave();" class="btn btn-success btn-raised pull-right">Guardar nuevo</button>
+						<button ng-click="PatientLaboratoryResultsListController.clear()" ng-disabled="!PatientLaboratoryResultsListController.canClear();" class="btn btn-warning pull-right">Limpiar</button>
 					</div>
 				</div>
 			</div>

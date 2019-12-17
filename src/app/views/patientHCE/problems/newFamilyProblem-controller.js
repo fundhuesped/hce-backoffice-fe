@@ -28,9 +28,19 @@
 
       function saveNewFamilyProblem() {
         vm.newFamilyProblem.paciente = HCService.currentPaciente.id;
-        vm.newFamilyProblem.$save({pacienteId:HCService.currentPaciente.id},function() {
+        
+        vm.newFamilyProblem.$save({pacienteId:HCService.currentPaciente.id},function(newProblem) {
           toastr.success('Problema guardado con exito');
           $uibModalInstance.close('familyProblemCreated');
+          HCService.markAsDirty();
+          var problemToDelete = new FamilyPatientProblem();
+          problemToDelete.id = newProblem.id;
+          HCService.agregarAlHistorial(function(){
+              console.log("Entra a la función de borrado de un problema");
+              problemToDelete.$delete(function(){
+                console.log('Supuestamente pudo borrar problema creado');
+            },  console.error);
+          });
         }, showError);
       }
 

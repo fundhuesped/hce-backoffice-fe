@@ -101,14 +101,7 @@
       };
 
       function saveNewPatientProblem() {
-
-        // if(vm.newProblemDateOption == 'today'){
-        //   vm.newPatientProblem.startDate = moment().format('YYYY-MM-DD');
-        // }else{
-        //   if(vm.newProblemDateOption == 'otherDate'){
-        //     vm.newPatientProblem.startDate = moment(vm.newProblemDate).format('YYYY-MM-DD');
-        //   }
-        // }
+        
         vm.error = null;
         if(moment(vm.newPatientProblem.startDate).diff(moment())>0){
           vm.error = 'La fecha de inicio no puede ser mayor a hoy';
@@ -122,7 +115,9 @@
           vm.error = 'La fecha de fin no puede ser mayor a la fecha de inicio';
           return;
         }
+
         HCService.saveNewPatientProblem().then(function() {
+          
           toastr.success('Problema guardado con exito');
           $uibModalInstance.close('created');
 
@@ -130,9 +125,7 @@
       }
 
       function hasSelectedTransmission() {
-        return vm.newPatientProblem.aditionalData.vertical || vm.newPatientProblem.aditionalData.mujeres || vm.newPatientProblem.aditionalData.hombres || vm.newPatientProblem.aditionalData.trans || vm.newPatientProblem.aditionalData.inyeccion || vm.newPatientProblem.aditionalData.accidente || vm.newPatientProblem.aditionalData.transfusion ||
-        vm.newPatientProblem.aditionalData.otraCheck ||
-        vm.newPatientProblem.aditionalData.desconocida
+        return vm.newPatientProblem.aditionalData.vertical || vm.newPatientProblem.aditionalData.mujeres || vm.newPatientProblem.aditionalData.hombres || vm.newPatientProblem.aditionalData.trans || vm.newPatientProblem.aditionalData.inyeccion || vm.newPatientProblem.aditionalData.accidente || vm.newPatientProblem.aditionalData.transfusion || vm.newPatientProblem.aditionalData.otraCheck || vm.newPatientProblem.aditionalData.desconocida;
       }
 
       function canSaveNewProblem() {

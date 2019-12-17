@@ -21,6 +21,7 @@
       vm.pageChanged = pageChanged;
       vm.patientClinicalResults = [];
       vm.isSearching = false;
+      vm.deleteChanges = deleteChanges;
 
       vm.openNewPatientClinicalResultModal = openNewPatientClinicalResultModal;
       vm.openEditPatientClinicalResultModal = openEditPatientClinicalResultModal;
@@ -43,6 +44,15 @@
 
       function pageChanged() {
         searchPatientClinicalResults();
+      }
+
+      function deleteChanges(patientClinicalResult){
+        var tmpPatientClinicalResult = new PatientClinicalResult();
+        tmpPatientClinicalResult = patientClinicalResult.id;
+        tmpPatientClinicalResult.$delete(function(){
+          toastr.success('Estudio clínico eliminado con éxito');
+          searchPatientClinicalResults();
+        },showError());
       }
 
       function searchPatientClinicalResults() {

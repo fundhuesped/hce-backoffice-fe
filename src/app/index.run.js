@@ -8,7 +8,7 @@
   /** @ngInject */
   function runBlock($rootScope, $location, $cookieStore, $http, $state, lodash, HCService, $uibModal, toastr) {
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){ 
-      if(!lodash.startsWith(toState.name, 'app.patientHCE') && !(toState.name=='home' && options.custom.loggedOut) && ((HCService.currentEvolution && HCService.currentEvolution.id) || HCService.isDirty())){
+      if(!lodash.startsWith(toState.name, 'app.patientHCE') && !(toState.name=='home' && options.custom && options.custom.loggedOut) && ((HCService.currentEvolution && HCService.currentEvolution.id) || HCService.isDirty())){
         event.preventDefault(); 
 
         openLeaveHCEModal().result.then(function (resolution) {
