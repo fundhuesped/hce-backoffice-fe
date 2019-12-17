@@ -6,9 +6,9 @@
         .module('hce.services')
         .service('HCService', HCService );
 
-    HCService.$inject = ['$q', 'Paciente', 'Evolution', 'PatientProblem', 'PatientVaccine', 'PatientMedication', 'PatientArvTreatment', 'localStorageService', 'moment', 'lodash'];
+    HCService.$inject = ['$q', 'Paciente', 'Evolution', 'PatientProblem', 'PatientVaccine', 'PatientMedication', 'PatientArvTreatment', 'localStorageService', 'moment', 'lodash', '$state'];
 
-    function HCService($q, Paciente, Evolution, PatientProblem, PatientVaccine, PatientMedication, PatientArvTreatment, localStorageService, moment, lodash){
+    function HCService($q, Paciente, Evolution, PatientProblem, PatientVaccine, PatientMedication, PatientArvTreatment, localStorageService, moment, lodash, $state){
         var srv = this;
 
         //Common
@@ -40,6 +40,7 @@
         srv.revertHistory = revertHistory;
         srv.hasBeenModified = false;
         srv.markAsDirty = markAsDirty;
+        srv.unmarkAsDirty = unmarkAsDirty;
 
         //Problems
         srv.getActivePatientProblems = getActivePatientProblems;
@@ -105,6 +106,12 @@
 
         function markAsDirty(){
             srv.hasBeenModified = true;
+            $state.reload();
+        }
+
+        function unmarkAsDirty(){
+            srv.hasBeenModified = false;
+            $state.reload();
         }
 
         function canOpenPatient(patient) {
@@ -152,13 +159,19 @@
         }
 
         function discardChanges(cbOk, cbNok) {
-            console.log("Entra a discardChanges");
-            srv.currentEvolution = srv.currentEvolutionCopy;
-            revertHistory();
-            // srv.hasBeenModified = false;
-            console.log("Esto es despues de revertHistory()");
-            if(cbOk){
-                cbOk();
+            try{
+                console.log("Entra a discardChanges");
+                srv.currentEvolution = srv.currentEvolutionCopy;
+                revertHistory();
+                console.log("Esto es despues de revertHistory()");
+                if(cbOk){
+                    cbOk();
+                }
+            }catch (error){
+                console.error(error);
+                if(cbNok){
+                    cbNok();
+                }
             }
         }
 
@@ -268,7 +281,6 @@
         }
 
         function closeEvolution(force) {
-            srv.hasBeenModified = false;
             var evolution = angular.copy(srv.currentEvolution);
             if(isDirty()){
                 return $q(function(resolve, reject) {
@@ -296,6 +308,7 @@
             return evolution.$update(function () {
                 srv.currentEvolution = null;
                 srv.getEvolutions();
+                srv.hasBeenModified = false;
             }, function (err) {
                 if(err.status == 400 && err.data == 'Solo se pueden modificar dentro de las 8 horas'){
                     srv.currentEvolution = null;

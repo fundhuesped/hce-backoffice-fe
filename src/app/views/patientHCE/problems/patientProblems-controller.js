@@ -31,8 +31,6 @@
       vm.hasPermissions = false;
       vm.isSearching = false;
       vm.isSearchingFamilyProblems = false;
-      vm.deletePatientProblemChanges = deletePatientProblemChanges;
-      vm.deleteFamilyPatientProblemChanges = deleteFamilyPatientProblemChanges;
 
       vm.translateRelationship = FamilyPatientProblem.translateRelationship;
 
@@ -134,23 +132,6 @@
         }, showError);
       }
 
-      function deletePatientProblemChanges(patientProblem) {
-        var tmpPatientProblem = new PatientProblem();
-        tmpPatientProblem.id = patientProblem.id;
-        tmpPatientProblem.$delete(function(){
-          toastr.success('Problema eliminado con exito');
-          searchPatientProblems();
-        }, showError);
-      }
-
-      function deleteFamilyPatientProblemChanges(familyPatientProblem) {
-        var tmpFamilyProblem = new FamilyPatientProblem();
-        tmpFamilyProblem.id = familyPatientProblem.id;
-        tmpFamilyProblem.$delete(function(){
-          toastr.success('Antecedente familiar eliminado con exito');
-          searchFamilyPatientProblems();
-        }, showError);
-      }
 
 	    function activate(){
         Problem.getActiveList(function(problems){

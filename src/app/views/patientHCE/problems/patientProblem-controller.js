@@ -87,18 +87,17 @@
             tmpProblem.closeDate = moment(tmpProblem.closeDate).format('YYYY-MM-DD');
         }
 
-        var currentPacienteId = HCService.currentPacienteId;
         var problemToUnedit = new PatientProblem();
-        problemToUnedit.id = tmpProblem.id;
-        problemToUnedit.paciente = tmpProblem.paciente;
-        problemToUnedit.profesional = tmpProblem.profesional;
+        Object.assign(problemToUnedit, vm.originalProblem );
+
         HCService.agregarAlHistorial(function(){
-          problemToUnedit.$update({id:currentPacienteId}, function () {
-            console.log("Entra a la función de desahcer edición de un problema");
-            console.log('Supuestamente se revirtió la edición de un problema con éxito');
-          }, function (err) {
-            console.error('Ocurrio un error al deshacer edicion de un problema');
-          });
+          problemToUnedit.$delete(function(){
+            console.log('Supuestamente pudo borrar problema update');
+            
+            problemToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+              console.log('Supuestamente pudo crear problema update');
+            },  console.error);
+          },  console.error);
         });
 
         PatientProblem.update(tmpProblem, function (response) {
@@ -119,18 +118,16 @@
 
           }
         
-          var currentPacienteId = HCService.currentPacienteId;
           var problemToUnmarkAsError = new PatientProblem();
-          problemToUnmarkAsError.id = tmpProblem.id;
-          problemToUnmarkAsError.paciente = tmpProblem.paciente;
-          problemToUnmarkAsError.profesional = tmpProblem.profesional;
+          Object.assign(problemToUnmarkAsError, tmpProblem);
+
           HCService.agregarAlHistorial(function(){
-            problemToUnmarkAsError.$update({id:currentPacienteId}, function (response) {
-              console.log("Entra a la función de desahcer pasaje a error de un problema");
-              console.log('Supuestamente se revirtió el pasaje a error de un problema con éxito');
-            }, function (err) {
-              console.error('Ocurrio un error al deshacer pasaje a error de un problema');
-            });
+            problemToUnmarkAsError.$delete(function(){
+              console.log('Supuestamente pudo borrar problema update');
+              problemToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo crear problema update');
+              },  console.error);
+            },  console.error);
           });
           
       		tmpProblem.state = PatientProblem.stateChoices.STATE_ERROR;

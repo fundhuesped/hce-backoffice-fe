@@ -113,9 +113,11 @@
           $state.go('app.patientSearch');
         }, function (error) {
           if(error=='ISDIRTY'){
-            openLeaveHCEModal().result.then(function (resolution) {
+            openLeaveHCEModal().result
+            .then(function (resolution) {
               if(resolution==='save'){
                 HCService.saveNewEvolution(function () {
+                  HCService.unmarkAsDirty();
                   closeEvolution(function () {
                   },
                   function (error) {
@@ -126,15 +128,18 @@
                 });
               }
               if(resolution=='discard'){
-                HCService.discardChanges();
+                HCService.discardChanges().then(function () {
+                  HCService.unmarkAsDirty();
                   closeEvolution(function () {
                     // body...
                   },
                   function (error) {
                     showError(error);
                   });
+                }, showError);
               }
             }, function () {
+              console.error("No se pudo abrir el modal")
             })
           }else{
             showError(error);

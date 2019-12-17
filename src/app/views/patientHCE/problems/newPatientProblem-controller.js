@@ -101,14 +101,7 @@
       };
 
       function saveNewPatientProblem() {
-
-        // if(vm.newProblemDateOption == 'today'){
-        //   vm.newPatientProblem.startDate = moment().format('YYYY-MM-DD');
-        // }else{
-        //   if(vm.newProblemDateOption == 'otherDate'){
-        //     vm.newPatientProblem.startDate = moment(vm.newProblemDate).format('YYYY-MM-DD');
-        //   }
-        // }
+        
         vm.error = null;
         if(moment(vm.newPatientProblem.startDate).diff(moment())>0){
           vm.error = 'La fecha de inicio no puede ser mayor a hoy';
@@ -124,13 +117,6 @@
         }
 
         HCService.saveNewPatientProblem().then(function() {
-          // var problemToDelete = new PatientProblem(); 
-          // problemToDelete.id = vm.newPatientProblem.id; //dice que no se puede leer el id de newPatientProblem ( parece que ni siquiera tiene id... -> ver hc-service newPatientProblem!!!)
-          // HCService.agregarAlHistorial(function(){
-          //   problemToDelete.$delete(function(){
-          //     console.debug('Pudo borrar problema creado');
-          //   }, console.error);
-          // });
           
           toastr.success('Problema guardado con exito');
           $uibModalInstance.close('created');
