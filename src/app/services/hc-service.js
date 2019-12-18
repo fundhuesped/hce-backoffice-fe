@@ -6,9 +6,9 @@
         .module('hce.services')
         .service('HCService', HCService );
 
-    HCService.$inject = ['$q', 'Paciente', 'Evolution', 'PatientProblem', 'PatientVaccine', 'PatientMedication', 'PatientArvTreatment', 'localStorageService', 'moment', 'lodash', '$state'];
+    HCService.$inject = ['$q', 'Paciente', 'Evolution', 'PatientProblem', 'PatientVaccine', 'PatientMedication', 'PatientArvTreatment', 'localStorageService', 'moment', 'lodash', '$state', 'toastr'];
 
-    function HCService($q, Paciente, Evolution, PatientProblem, PatientVaccine, PatientMedication, PatientArvTreatment, localStorageService, moment, lodash, $state){
+    function HCService($q, Paciente, Evolution, PatientProblem, PatientVaccine, PatientMedication, PatientArvTreatment, localStorageService, moment, lodash, $state, toastr){
         var srv = this;
 
         //Common
@@ -164,6 +164,7 @@
                 srv.currentEvolution = srv.currentEvolutionCopy;
                 revertHistory();
                 console.log("Esto es despues de revertHistory()");
+                toastr.success("Se revirtieron los cambios con éxito");
                 if(cbOk){
                     cbOk();
                 }

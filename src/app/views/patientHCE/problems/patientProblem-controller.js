@@ -92,10 +92,10 @@
 
         HCService.agregarAlHistorial(function(){
           problemToUnedit.$delete(function(){
-            console.log('Supuestamente pudo borrar problema update');
+            console.log('Supuestamente pudo borrar el problema actualizado');
             
             problemToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
-              console.log('Supuestamente pudo crear problema update');
+              console.log('Supuestamente pudo volver a crear el problema antes de ser editado');
             },  console.error);
           },  console.error);
         });
@@ -123,9 +123,9 @@
 
           HCService.agregarAlHistorial(function(){
             problemToUnmarkAsError.$delete(function(){
-              console.log('Supuestamente pudo borrar problema update');
+              console.log('Supuestamente pudo borrar problema marcado como error');
               problemToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
-                console.log('Supuestamente pudo crear problema update');
+                console.log('Supuestamente pudo volver a crear el problema que se habia marcado como error');
               },  console.error);
             },  console.error);
           });
