@@ -128,7 +128,7 @@
                 });
               }
               if(resolution=='discard'){
-                HCService.discardChanges().then(function () {
+                HCService.discardChanges(function () {
                   HCService.unmarkAsDirty();
                   closeEvolution(function () {
                     // body...
