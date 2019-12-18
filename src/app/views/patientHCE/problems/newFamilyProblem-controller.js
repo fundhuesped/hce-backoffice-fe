@@ -38,7 +38,7 @@
           HCService.agregarAlHistorial(function(){
               console.log("Entra a la función de borrado de un problema");
               problemToDelete.$delete(function(){
-                console.log('Supuestamente pudo borrar problema creado');
+                console.log('Supuestamente pudo borrar el familyProblem creado');
             },  console.error);
           });
         }, showError);

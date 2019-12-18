@@ -204,7 +204,7 @@
       }
 
       function parseError(errorData){
-        if(errorData.startsWith("AssertionError")){
+        if(errorData && errorData.startsWith("AssertionError")){
           var errorAuxArray = (errorData.split('\n'));
           var errorToReturn = errorAuxArray[1];
           return errorToReturn;
