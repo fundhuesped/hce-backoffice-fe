@@ -134,7 +134,17 @@
           tmpPatientArvTreatment.endDate = moment(tmpPatientArvTreatment.endDate).format('YYYY-MM-DD');
         }
 
+        var treatmentToDelete = new PatientArvTreatment();
+        Object.assign(treatmentToDelete, tmpPatientArvTreatment);
+        HCService.agregarAlHistorial(function(){
+          console.log("Entra a la función de borrado de un tratamiento");
+          treatmentToDelete.$delete({id:treatmentToDelete.patientProblem.id}, function() {
+          console.log('Supuestamente pudo borrar el tratamiento ARV creado');
+        },  console.error);
+        });
+      
         tmpPatientArvTreatment.$save({pacienteId:HCService.currentPaciente.id},function() {
+          HCService.markAsDirty();
           toastr.success('Tratamiento guardado con exito');
           $uibModalInstance.close('created');
         }, showError);
