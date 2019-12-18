@@ -17,6 +17,7 @@
       vm.cancel = cancel;
       vm.canBeClosed = canBeClosed;
       vm.print = print;
+      vm.removeDecimals = removeDecimals;
 
       activate();
 
@@ -39,6 +40,10 @@
 
       function canBeClosed() {
         return true;
+      }
+
+      function removeDecimals(number) {
+        return Math.round(number);
       }
 
       function print(){      
