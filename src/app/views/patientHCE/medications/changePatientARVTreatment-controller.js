@@ -42,6 +42,18 @@
         var tmpPatientArvTreatment = angular.copy(vm.patientArvTreatment);
         tmpPatientArvTreatment.endDate = moment(tmpPatientArvTreatment.endDate).format('YYYY-MM-DD');
         tmpPatientArvTreatment.startDate = patientArvTreatment.startDate;
+        
+        var treatmentToUnedit = new PatientArvTreatment();
+        Object.assign(treatmentToUnedit, tmpPatientArvTreatment);
+        HCService.agregarAlHistorial(function(){
+          treatmentToUnedit.$delete(function(){
+            console.log('Supuestamente pudo borrar el arvTreatment editado');
+            treatmentToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+              console.log('Supuestamente pudo volver a crear el arvTreatment antes de ser editado');
+            },  console.error);
+          },  console.error);
+        });
+
         tmpPatientArvTreatment.state = 'Closed';
         PatientArvTreatment.update(tmpPatientArvTreatment, function (response) {
           toastr.success('Cambio guardado con éxito');

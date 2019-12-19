@@ -171,11 +171,23 @@
 
       function markAsError() {
         var tmpPatientArvTreatment = angular.copy(vm.patientArvTreatment);
-        tmpPatientArvTreatment.state = PatientArvTreatment.stateChoices.STATE_ERROR;
         tmpPatientArvTreatment.startDate = moment(tmpPatientArvTreatment.startDate).format('YYYY-MM-DD');
         if(tmpPatientArvTreatment.endDate){
           tmpPatientArvTreatment.endDate = moment(tmpPatientArvTreatment.endDate).format('YYYY-MM-DD');
         }
+
+        var treatmentToUnmarkAsError = new PatientArvTreatment();
+        Object.assign(treatmentToUnmarkAsError, tmpPatientArvTreatment);
+        HCService.agregarAlHistorial(function(){
+          treatmentToUnmarkAsError.$delete(function(){
+            console.log('Supuestamente pudo borrar el arvTreatment marcado como error');
+            treatmentToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+              console.log('Supuestamente pudo volver a crear el arvTreatment antes de ser marcado como error');
+            },  console.error);
+          },  console.error);
+        });
+
+        tmpPatientArvTreatment.state = PatientArvTreatment.stateChoices.STATE_ERROR;
         PatientArvTreatment.update(tmpPatientArvTreatment, function (response) {
             toastr.success('Medicación marcada como error');
           $uibModalInstance.close('markedError');

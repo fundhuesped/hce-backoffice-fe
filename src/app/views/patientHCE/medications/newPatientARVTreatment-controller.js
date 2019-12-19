@@ -134,16 +134,15 @@
           tmpPatientArvTreatment.endDate = moment(tmpPatientArvTreatment.endDate).format('YYYY-MM-DD');
         }
 
-        var treatmentToDelete = new PatientArvTreatment();
-        Object.assign(treatmentToDelete, tmpPatientArvTreatment);
-        HCService.agregarAlHistorial(function(){
-          console.log("Entra a la función de borrado de un tratamiento");
-          treatmentToDelete.$delete({id:treatmentToDelete.patientProblem.id}, function() {
-          console.log('Supuestamente pudo borrar el tratamiento ARV creado');
-        },  console.error);
-        });
-      
         tmpPatientArvTreatment.$save({pacienteId:HCService.currentPaciente.id},function() {
+          var treatmentToDelete = new PatientArvTreatment();
+          Object.assign(treatmentToDelete, tmpPatientArvTreatment);
+          HCService.agregarAlHistorial(function(){
+            console.log("Entra a la función de borrado de un tratamiento");
+            treatmentToDelete.$delete({id:treatmentToDelete.id}, function() {
+            console.log('Supuestamente pudo borrar el tratamiento ARV creado');
+          },  console.error);
+          });
           HCService.markAsDirty();
           toastr.success('Tratamiento guardado con exito');
           $uibModalInstance.close('created');
@@ -226,18 +225,18 @@
 	    function toggleMedicationSelection(medication) {
 	    	if(vm.newPatientArvTreatment.patientARVTreatmentMedications){
 	    		if(vm.newPatientArvTreatment.patientARVTreatmentMedications.length==0){
-	    			vm.newPatientArvTreatment.patientARVTreatmentMedications.push({medication:medication});
+            vm.newPatientArvTreatment.patientARVTreatmentMedications.push({medication:medication});
 	    			return;
 	    		}
 		    	for (var i = vm.newPatientArvTreatment.patientARVTreatmentMedications.length - 1; i >= 0; i--) {
 		    		if(vm.newPatientArvTreatment.patientARVTreatmentMedications[i].medication.id == medication.id){
-	    			    vm.newPatientArvTreatment.patientARVTreatmentMedications.splice(i, 1);
+                vm.newPatientArvTreatment.patientARVTreatmentMedications.splice(i, 1);
 		    			return;
 		    		}
 		    	}
-    			vm.newPatientArvTreatment.patientARVTreatmentMedications.push({medication:medication});
+          vm.newPatientArvTreatment.patientARVTreatmentMedications.push({medication:medication});
 	    	}else{
-	    		vm.newPatientArvTreatment.patientARVTreatmentMedications = [{medication:medication}];
+          vm.newPatientArvTreatment.patientARVTreatmentMedications = [{medication:medication}];
 	    	}
 	    }
 
@@ -260,7 +259,7 @@
       }
 
       function parseError(errorData){
-        if(errorData.startsWith("AssertionError")){
+        if(errorData && errorData.startsWith("AssertionError")){
           var errorAuxArray = (errorData.split('\n'));
           var errorToReturn = errorAuxArray[1];
           return errorToReturn;
