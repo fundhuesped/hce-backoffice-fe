@@ -189,7 +189,8 @@
 
         tmpPatientArvTreatment.state = PatientArvTreatment.stateChoices.STATE_ERROR;
         PatientArvTreatment.update(tmpPatientArvTreatment, function (response) {
-            toastr.success('Medicación marcada como error');
+          HCService.markAsDirty();
+          toastr.success('Medicación marcada como error');
           $uibModalInstance.close('markedError');
         }, function (err) {
             console.error(err);

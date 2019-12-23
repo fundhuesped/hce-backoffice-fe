@@ -73,7 +73,20 @@
         if(tmpPatientMedication.endDate && tmpPatientMedication.state == 'Closed'){
           tmpPatientMedication.endDate = moment(tmpPatientMedication.endDate).format('YYYY-MM-DD');
         }
+
+        var medicationToUnedit = new PatientMedication();
+        Object.assign(medicationToUnedit, tmpPatientMedication);
+        HCService.agregarAlHistorial(function(){
+          medicationToUnedit.$delete(function(){
+            console.log('Supuestamente pudo borrar el tratamiento de profilaxis editado');
+            medicationToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+              console.log('Supuestamente pudo volver a crear el tratamiento de profilaxis previo a ser editado');
+            },  console.error);
+          },  console.error);
+        });
+
         PatientMedication.update(tmpPatientMedication, function (response) {
+          HCService.markAsDirty();
           toastr.success('Medicación guardada con exito');
           $uibModalInstance.close('edited');
         }, showError);
@@ -145,13 +158,26 @@
 
       function markAsError() {
         var tmpPatientMedication = angular.copy(vm.patientMedication);
-        tmpPatientMedication.state = PatientMedication.stateChoices.STATE_ERROR;
         tmpPatientMedication.startDate = moment(tmpPatientMedication.startDate).format('YYYY-MM-DD');
         if(tmpPatientMedication.endDate){
           tmpPatientMedication.endDate = moment(tmpPatientMedication.endDate).format('YYYY-MM-DD');
         }
+
+        var medicationToUnmarkAsError = new PatientMedication();
+        Object.assign(medicationToUnmarkAsError, tmpPatientMedication);
+        HCService.agregarAlHistorial(function(){
+          medicationToUnmarkAsError.$delete(function(){
+            console.log('Supuestamente pudo borrar el tratamiento de profilaxis marcado como error');
+            medicationToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+              console.log('Supuestamente pudo volver a crear el tratamiento de profilaxis previo a ser marcado como error');
+            },  console.error);
+          },  console.error);
+        });
+
+        tmpPatientMedication.state = PatientMedication.stateChoices.STATE_ERROR;
         PatientMedication.update(tmpPatientMedication, function (response) {
-            toastr.success('Medicación marcada como error');
+          HCService.markAsDirty();
+          toastr.success('Medicación marcada como error');
           $uibModalInstance.close('markedError');
         }, function (err) {
             console.error(err);

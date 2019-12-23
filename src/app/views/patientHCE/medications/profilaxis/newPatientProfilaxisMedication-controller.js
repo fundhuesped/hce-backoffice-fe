@@ -76,7 +76,17 @@
         if(tmpPatientMedication.endDate && tmpPatientMedication.state == 'Closed'){
           tmpPatientMedication.endDate = moment(tmpPatientMedication.endDate).format('YYYY-MM-DD');
         }
+
         tmpPatientMedication.$save({pacienteId:HCService.currentPaciente.id},function() {
+          HCService.markAsDirty();
+          var medicationToDelete = new PatientMedication();
+          Object.assign(medicationToDelete, tmpPatientMedication);
+          HCService.agregarAlHistorial(function(){
+            console.log("Entra a la función de borrado de un tratamiento de profilaxis");
+            medicationToDelete.$delete(function(){
+            console.log('Supuestamente pudo borrar tratamiento de profilaxis creado');
+        },  console.error);
+        });
           toastr.success('Medicación guardada con exito');
           $uibModalInstance.close('created');
         }, showError);

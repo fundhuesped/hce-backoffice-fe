@@ -56,6 +56,7 @@
 
         tmpPatientArvTreatment.state = 'Closed';
         PatientArvTreatment.update(tmpPatientArvTreatment, function (response) {
+          HCService.markAsDirty();
           toastr.success('Cambio guardado con éxito');
           $uibModalInstance.close('edited');
         }, showError);
