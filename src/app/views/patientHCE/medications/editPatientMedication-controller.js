@@ -19,6 +19,7 @@
       vm.markAsError = markAsError;
       vm.changeStatus = changeStatus;
       vm.canEdit = canEdit;
+      vm.uneditedPatientMedication = patientMedication;
       vm.hasPermissions = false;
 
       Object.defineProperty(
@@ -75,12 +76,16 @@
         }
 
         var medicationToUnedit = new PatientMedication();
-        Object.assign(medicationToUnedit, tmpPatientMedication);
+        Object.assign(medicationToUnedit, vm.uneditedPatientMedication);
+        medicationToUnedit.startDate = moment(medicationToUnedit.startDate).format('YYYY-MM-DD');
+        if(medicationToUnedit.endDate && medicationToUnedit.state == 'Closed'){
+          medicationToUnedit.endDate = moment(medicationToUnedit.endDate).format('YYYY-MM-DD');
+        }
         HCService.agregarAlHistorial(function(){
           medicationToUnedit.$delete(function(){
-            console.log('Supuestamente pudo borrar el tratamiento de profilaxis editado');
+            console.log('Supuestamente pudo borrar la medicacion general creada');
             medicationToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
-              console.log('Supuestamente pudo volver a crear el tratamiento de profilaxis previo a ser editado');
+              console.log('Supuestamente pudo volver a crear la medicacion general previo a ser editada');
             },  console.error);
           },  console.error);
         });
@@ -165,11 +170,12 @@
 
         var medicationToUnmarkAsError = new PatientMedication();
         Object.assign(medicationToUnmarkAsError, tmpPatientMedication);
+        debugger;
         HCService.agregarAlHistorial(function(){
           medicationToUnmarkAsError.$delete(function(){
-            console.log('Supuestamente pudo borrar el tratamiento de profilaxis marcado como error');
+            console.log('Supuestamente pudo borrar la medicacion general marcada como error');
             medicationToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
-              console.log('Supuestamente pudo volver a crear el tratamiento de profilaxis previo a ser marcado como error');
+              console.log('Supuestamente pudo volver a crear la medicacion general previo a ser marcada como error');
             },  console.error);
           },  console.error);
         });

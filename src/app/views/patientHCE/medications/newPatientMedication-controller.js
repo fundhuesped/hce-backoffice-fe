@@ -69,7 +69,6 @@
           vm.error = 'La fecha de fin no puede ser menor a la fecha de inicio';
           return;
         }
-
         var tmpPatientMedication = angular.copy(vm.newPatientMedication);
         tmpPatientMedication.paciente = HCService.currentPaciente.id;
         tmpPatientMedication.startDate = moment(tmpPatientMedication.startDate).format('YYYY-MM-DD');
@@ -78,6 +77,15 @@
         }
 
         tmpPatientMedication.$save({pacienteId:HCService.currentPaciente.id},function() {
+          HCService.markAsDirty();
+          var medicationToDelete = new PatientMedication();
+          Object.assign(medicationToDelete, tmpPatientMedication);
+          HCService.agregarAlHistorial(function(){
+              console.log("Entra a la función de borrado de un medicamento general");
+              medicationToDelete.$delete(function(){
+              console.log('Supuestamente pudo borrar medicamento general creado');
+          },  console.error);
+          });
           toastr.success('Medicación guardada con exito');
           $uibModalInstance.close('created');
         }, showError);
