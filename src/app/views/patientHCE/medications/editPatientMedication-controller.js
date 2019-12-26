@@ -170,7 +170,6 @@
 
         var medicationToUnmarkAsError = new PatientMedication();
         Object.assign(medicationToUnmarkAsError, tmpPatientMedication);
-        debugger;
         HCService.agregarAlHistorial(function(){
           medicationToUnmarkAsError.$delete(function(){
             console.log('Supuestamente pudo borrar la medicacion general marcada como error');

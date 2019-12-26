@@ -31,8 +31,6 @@
       vm.categoriasDeterminaciones = [];
       vm.toggleCategoria = toggleCategoria;
       vm.todayDate = new Date();
-      vm.deleteChanges = deleteChanges;
-
 
       vm.isLowerThanLimit = isLowerThanLimit;
       vm.isBiggerThanLimit = isBiggerThanLimit;
@@ -104,15 +102,6 @@
         searchPatientLaboratoryResults();
       }
 
-      function deleteChanges(laboratoryResult){
-        var tmpLaboratoryResult = new PatientLaboratoryResult();
-        tmpLaboratoryResult.id = laboratoryResult.id;
-        tmpLaboratoryResult.$delete(function(){
-          toastr.success('Laboratorio eliminado con éxito');
-          searchPatientLaboratoryResults();
-        },showError());
-      }
-
       function save() {
         var tmpNewLab = angular.copy(vm.newLab);
         var determinacionValor;
@@ -133,7 +122,17 @@
               tmpNewLab.values.push(determinacionValor);
             }
         }
+
         tmpNewLab.$save({pacienteId:HCService.currentPaciente.id}, function () {
+          HCService.markAsDirty();
+          var laboratoryToDelete = new PatientLaboratoryResult();
+          Object.assign(laboratoryToDelete, tmpNewLab);
+          HCService.agregarAlHistorial(function(){
+            console.log("Entra a la función de borrado de un laboratorio");
+            laboratoryToDelete.$delete(function(){
+            console.log('Supuestamente pudo borrar el nuevo laboratorio creado');
+            }, console.error);
+          });
           toastr.success('Nuevo laboratorio ingresado con éxito.');
           HCService.getCurrentEvolution();
           activate();
