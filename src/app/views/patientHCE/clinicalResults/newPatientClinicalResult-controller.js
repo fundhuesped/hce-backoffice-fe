@@ -40,6 +40,15 @@
         tmpPatientClinicalResult.studyDate = moment(tmpPatientClinicalResult.studyDate).format('YYYY-MM-DD');
 
         tmpPatientClinicalResult.$save({pacienteId:HCService.currentPaciente.id},function() {
+          HCService.markAsDirty();
+          var clinicalResultToDelete = new PatientClinicalResult();
+          Object.assign(clinicalResultToDelete, tmpPatientClinicalResult);
+          HCService.agregarAlHistorial(function(){
+            clinicalResultToDelete.$delete(function(){
+              console.log('Supuestamente pudo eliminar el estudio clinico creado');
+              toastr.success('Supuestamente pudo eliminar el estudio clinico creado');
+          },  console.error);
+          });
           toastr.success('Resultado guardado con exito');
           $uibModalInstance.close('created');
         }, showError);
