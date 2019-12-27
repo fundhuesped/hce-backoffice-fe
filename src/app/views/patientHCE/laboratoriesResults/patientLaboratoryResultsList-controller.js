@@ -127,11 +127,12 @@
           HCService.markAsDirty();
           var laboratoryToDelete = new PatientLaboratoryResult();
           Object.assign(laboratoryToDelete, tmpNewLab);
+          debugger;
           HCService.agregarAlHistorial(function(){
             console.log("Entra a la función de borrado de un laboratorio");
-            laboratoryToDelete.$delete(function(){
+            laboratoryToDelete.$delete({id:laboratoryToDelete.id}, function(){
             console.log('Supuestamente pudo borrar el nuevo laboratorio creado');
-            }, console.error);
+            }, console.error('No se pudo eliminar el laboratorio creado'));
           });
           toastr.success('Nuevo laboratorio ingresado con éxito.');
           HCService.getCurrentEvolution();

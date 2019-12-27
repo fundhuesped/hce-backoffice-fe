@@ -58,6 +58,7 @@
         });
 
         PatientVaccine.update(tmpPatientVaccine,function() {
+          HCService.markAsDirty();
           toastr.success('Aplicación guardada con exito');
           $uibModalInstance.close('edited');
         }, showError);
@@ -124,7 +125,8 @@
 
         tmpVaccine.state = PatientVaccine.stateChoices.STATE_ERROR;
         PatientVaccine.update(tmpVaccine, function (response) {
-            toastr.success('Aplicación marcada como error');
+          HCService.markAsDirty();
+          toastr.success('Aplicación marcada como error');
           $uibModalInstance.close('markedError');
         }, function (err) {
             console.error(err);
