@@ -47,6 +47,15 @@
         }
 
         tmpPatientVaccine.$save({pacienteId:HCService.currentPaciente.id},function() {
+          HCService.markAsDirty();
+          var vaccineToDelete = new PatientVaccine();
+          Object.assign(vaccineToDelete, tmpPatientVaccine);
+          HCService.agregarAlHistorial(function(){
+            console.log("Entra a la función de borrado de una vacuna");
+            vaccineToDelete.$delete(function(){
+            console.log('Supuestamente pudo borrar la vacuna creada');
+        },  console.error);
+        });
           toastr.success('Aplicación guardada con exito');
           $uibModalInstance.close('created');
         }, showError);

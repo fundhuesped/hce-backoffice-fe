@@ -19,6 +19,7 @@
       vm.canSave = canSave;
       vm.markAsError = markAsError;
       vm.error = null;
+      vm.uneditedVaccine = patientVaccine;
 
       vm.applicationDateCalendar = {
         altInputFormats: ['d!-M!-yyyy'],
@@ -43,6 +44,18 @@
           vm.error = 'La fecha de aplicación no puede ser mayor a hoy';
           return;
         }
+
+        var vaccineToUnedit = new PatientVaccine();
+        vaccineToUnedit.appliedDate = moment(vaccineToUnedit.appliedDate).format('YYYY-MM-DD');
+        Object.assign(vaccineToUnedit, tmpVaccine);
+        HCService.agregarAlHistorial(function(){
+          vaccineToUnedit.$delete(function(){
+            console.log('Supuestamente pudo borrar la vacuna editada');
+            vaccineToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+              console.log('Supuestamente pudo volver a crear la vacuna previo a ser editada');
+            },  console.error);
+          },  console.error);
+        });
 
         PatientVaccine.update(tmpPatientVaccine,function() {
           toastr.success('Aplicación guardada con exito');
@@ -96,8 +109,20 @@
 
       function markAsError() {
         var tmpVaccine = angular.copy(vm.patientVaccine);
-        tmpVaccine.state = PatientVaccine.stateChoices.STATE_ERROR;
         tmpVaccine.appliedDate = moment(tmpVaccine.appliedDate).format('YYYY-MM-DD');
+
+        var vaccineToUnmarkAsError = new PatientVaccine();
+        Object.assign(vaccineToUnmarkAsError, tmpVaccine);
+        HCService.agregarAlHistorial(function(){
+          vaccineToUnmarkAsError.$delete(function(){
+            console.log('Supuestamente pudo borrar la vacuna marcada como error');
+            vaccineToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+              console.log('Supuestamente pudo volver a crear la vacuna previo a ser marcada como error');
+            },  console.error);
+          },  console.error);
+        });
+
+        tmpVaccine.state = PatientVaccine.stateChoices.STATE_ERROR;
         PatientVaccine.update(tmpVaccine, function (response) {
             toastr.success('Aplicación marcada como error');
           $uibModalInstance.close('markedError');
