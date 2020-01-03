@@ -22,6 +22,11 @@
           save: {
             method: 'POST',
           },
+          delete: {
+            url: apiBase+'laboratory/labResult/:id/',
+            method: 'DELETE',
+            params:{id:'@id'}
+          },
           getAllForPaciente:{
             params:{pacienteId:'@pacienteId', all:"True"},
             method: 'GET',

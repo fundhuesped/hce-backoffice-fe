@@ -13,7 +13,8 @@
                                                 'toastr',
                                                 'moment',
                                                 '$uibModal',
-                                                'lodash'];
+                                                'lodash',
+                                                'SessionService'];
 
     function patientMedicationListController ($state,
                                               HCService,
@@ -22,7 +23,8 @@
                                               toastr,
                                               moment,
                                               $uibModal,
-                                              lodash) {
+                                              lodash,
+                                              SessionService) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.searchPatientMedications = searchPatientMedications;
@@ -33,11 +35,13 @@
       vm.filters = {};
       vm.pageChanged = pageChanged;
       vm.showArv = showArv;
+      vm.hasPermissions = false;
       vm.openNewPatientMedicationModal = openNewPatientMedicationModal;
       vm.openEditPatientMedicationModal = openEditPatientMedicationModal;
       vm.openNewRecetaModal = openNewRecetaModal;
       vm.hasActiveMedications = hasActiveMedications;
       vm.isSearching = false;
+      vm.deleteChanges = deleteChanges;
 
       Object.defineProperty(
           vm,
@@ -48,6 +52,7 @@
               return HCService.patientMedications;
           }
       });
+      
       Object.defineProperty(
           vm,
           'activePatientMedicationsCount', {
@@ -62,11 +67,31 @@
 
 	    function activate(){
         searchPatientMedications();
+
+        SessionService.checkPermission('hc_hce.add_patientmedication')
+            .then( function(hasPerm){
+                vm.hasPermissions = hasPerm;
+            }, function(error){
+                vm.hasPermissions = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
 	    }
 
       function pageChanged() {
         searchPatientMedications();
       }
+
+      function deleteChanges(patientMedication){
+        var tmpPatientMedication = new PatientMedication();
+        tmpPatientMedication.id = patientMedication.id;
+        tmpPatientMedication.$delete(function(){
+          toastr.success('Medicamento eliminado con exito');
+          searchPatientMedications();
+        }, showError);
+      }
+      
 
       function searchPatientMedications() {
         vm.isSearching = true;
@@ -82,6 +107,7 @@
           vm.isSearching = false;
           if(err.status !== 403 && err.status !== 401){
             displayComunicationError();
+            showError(err);
           }
         });
       }
@@ -134,7 +160,7 @@
           templateUrl: 'app/views/patientHCE/medications/newMedicationReceta.html',
           size: 'md',
           controller: 'NewMedicationRecetaController',
-          controllerAs: 'Ctrl'
+          controllerAs: 'NewMedicationRecetaController'
         });
         modalInstance.result.then(function (resolution) {
           if(resolution==='markedError' || resolution==='edited'){
@@ -147,14 +173,12 @@
       }
 
       function hasActiveMedications() {
-        return vm.activePatientMedicationsCount > 0;
+        return vm.hasPermissions && vm.activePatientMedicationsCount > 0;
       }
 
-      function displayComunicationError(loading){
+      function displayComunicationError(){
         if(!toastr.active()){
           toastr.warning('Ocurrió un error en la comunicación, por favor intente nuevamente.');
-        }
-        if(loading){
         }
       }
 

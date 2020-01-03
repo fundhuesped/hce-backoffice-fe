@@ -17,14 +17,14 @@
 			    			</tr> 
 			    		</thead>
 			    		<tbody>
-			    			<tr ng-repeat="patientMedication in Ctrl.patientMedications | filter:{medication:{medicationType:{code:'!PROF'}}}" ng-class="{success:patientMedication.medication.selected}">
+			    			<tr ng-repeat="recipePatientMedication in NewMedicationRecetaController.recipePatientMedications" ng-class="{success:recipePatientMedication.medication.selected}">
 		    					<td style="text-transform: capitalize;" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">    
-		    						<div class="checkbox" abm-checkbox label="{{patientMedication.medication.name}}{{patientMedication.medicationPresentation?' ('+patientMedication.medicationPresentation.name+')':''}}">
-								      <input type="checkbox" ng-disabled="!patientMedication.medication.selected &&Ctrl.selectedMedications.length>1" ng-model="patientMedication.medication.selected" ng-change="Ctrl.toggleMedicationSelection(patientMedication)">
+		    						<div class="checkbox" abm-checkbox label="{{recipePatientMedication.medication.name}}{{recipePatientMedication.medicationPresentation?' ('+recipePatientMedication.medicationPresentation.name+')':''}}">
+								      <input type="checkbox" ng-disabled="!recipePatientMedication.medication.selected &&NewMedicationRecetaController.selectedMedications.length>1" ng-model="recipePatientMedication.medication.selected" ng-change="NewMedicationRecetaController.toggleMedicationSelection(recipePatientMedication)">
 								    </div>
 								</td> 
 								<td class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-									<input type="number" onkeypress="return event.charCode >= 48" min="0" ng-model="patientMedication.quantityPerMonth"/>
+									<input type="number" onkeypress="return event.charCode >= 48" min="0" ng-model="recipePatientMedication.quantityPerMonth"/>
 								</td>
 							</tr>
 		    			</tbody>
@@ -36,9 +36,9 @@
 				  	<abm-form-group>
 					    <label data-abm-label type="static">Fecha de emisión(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
 							<div class="input-group">
-								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="issuedDate" ng-model="Ctrl.newReceta.issuedDate" is-open="Ctrl.startDateCalendar.opened" datepicker-options="Ctrl.startDateCalendar.options" close-text="Cerrar" alt-input-formats="Ctrl.startDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
+								<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="issuedDate" ng-model="NewMedicationRecetaController.newReceta.issuedDate" is-open="NewMedicationRecetaController.startDateCalendar.opened" datepicker-options="NewMedicationRecetaController.startDateCalendar.options" close-text="Cerrar" alt-input-formats="NewMedicationRecetaController.startDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar"/>
 		                        <div class="input-group-btn">
-		                          <button type="button" class="btn btn-default" ng-click="Ctrl.startDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+		                          <button type="button" class="btn btn-default" ng-click="NewMedicationRecetaController.startDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
 		                        </div>
 						    </div>
 				  	</abm-form-group>
@@ -47,7 +47,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="checkbox" abm-checkbox label="Requiere duplicado">
-				      	<input type="checkbox" ng-model="Ctrl.newReceta.duplicateRequired">
+				      	<input type="checkbox" ng-model="NewMedicationRecetaController.newReceta.duplicateRequired">
 				    </div>
 				</div>
 			</div>
@@ -55,7 +55,7 @@
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<abm-form-group>
 				    	<label data-abm-label type="static">Observaciones</label>
-				    	<textarea type="text" abm-form-control ng-model="Ctrl.newReceta.observations"></textarea>
+				    	<textarea type="text" abm-form-control ng-model="NewMedicationRecetaController.newReceta.observations"></textarea>
 				  	</abm-form-group>
 		  		</div>
 		  	</div>
@@ -63,8 +63,8 @@
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="row" >
 					  	<div>
-					  		<button class="btn btn-success btn-raised pull-right" ng-click="Ctrl.save()"  ng-disabled="!Ctrl.canSave()">Generar receta</button>
-					  		<button class="btn btn-default pull-right" ng-click="Ctrl.cancel()">Cancelar</button>
+					  		<button class="btn btn-success btn-raised pull-right" ng-click="NewMedicationRecetaController.save()"  ng-disabled="!NewMedicationRecetaController.canSave()">Generar receta</button>
+					  		<button class="btn btn-default pull-right" ng-click="NewMedicationRecetaController.cancel()">Cancelar</button>
 					  	</div>
 				  	</div>
 			  	</div>

@@ -14,9 +14,11 @@
       vm.saveChanges = saveChanges;
       vm.cancel = cancel;
       vm.canDiscardChanges = canDiscardChanges;
+
       function saveChanges() {
         $uibModalInstance.close('save');
       }
+
       function discardChanges() {
         $uibModalInstance.close('discard');
       }

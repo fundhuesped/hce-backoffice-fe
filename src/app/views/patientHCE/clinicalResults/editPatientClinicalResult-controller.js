@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('EditPatientClinicalResultController', editPatientClinicalResultController);
 
-	  editPatientClinicalResultController.$inject = ['$state', 'HCService', 'PatientClinicalResult', 'toastr', 'moment', 'ClinicalStudy', '$uibModalInstance', 'patientClinicalResult'];
+	  editPatientClinicalResultController.$inject = ['$state', 'HCService', 'PatientClinicalResult', 'toastr', 'moment', 'ClinicalStudy', '$uibModalInstance', 'patientClinicalResult', 'SessionService'];
 
-    function editPatientClinicalResultController ($state, HCService, PatientClinicalResult, toastr, moment, ClinicalStudy, $uibModalInstance, patientClinicalResult) {
+    function editPatientClinicalResultController ($state, HCService, PatientClinicalResult, toastr, moment, ClinicalStudy, $uibModalInstance, patientClinicalResult, SessionService) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.save = save;
@@ -17,8 +17,10 @@
       vm.getClinicalStudies = getClinicalStudies;
       vm.cancel = cancel;
       vm.canSave = canSave;
+      vm.canSavePermission = false;
       vm.markAsError = markAsError;
       vm.canEdit = canEdit;
+      vm.canEditPermission = false;
       vm.studyDateCalendar = {
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
@@ -44,6 +46,8 @@
       }
 
       function canSave() {
+        if(!vm.canSavePermission) return false;
+
         if(vm.patientClinicalResult &&vm.patientClinicalResult.clinicalStudy && vm.patientClinicalResult.studyDate){
           return true;
         }
@@ -56,6 +60,18 @@
         }, displayComunicationError);
         vm.patientClinicalResult = angular.copy(patientClinicalResult);
         vm.patientClinicalResult.studyDate = new Date(vm.patientClinicalResult.studyDate + 'T03:00:00');
+
+        SessionService.checkPermission('auth.change_user')
+            .then( function(hasPerm){
+                vm.canEditPermission = hasPerm;
+                vm.canSavePermission = hasPerm;
+            }, function(error){
+                vm.canEditPermission = false;
+                vm.canSavePermission = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
 	    }
 
       function displayComunicationError(loading){
@@ -78,7 +94,7 @@
       }
 
       function canEdit() {
-        return moment().diff(moment(patientClinicalResult.createdOn), 'hours') <= 8;
+        return vm.canEditPermission && (moment().diff(moment(patientClinicalResult.createdOn), 'hours') <= 8);
       }
 
       function markAsError() {

@@ -6,21 +6,34 @@
     	.module('hce.patientHCE')
     	.controller('EditFamilyProblemController', editFamilyProblemController);
 
-	   editFamilyProblemController.$inject = ['familyProblem', 'toastr', 'FamilyPatientProblem', '$uibModalInstance'];
+	   editFamilyProblemController.$inject = ['familyProblem', 'toastr', 'FamilyPatientProblem', '$uibModalInstance', 'SessionService','HCService'];
 
-    function editFamilyProblemController (familyProblem, toastr, FamilyPatientProblem, $uibModalInstance) {
+    function editFamilyProblemController (familyProblem, toastr, FamilyPatientProblem, $uibModalInstance, SessionService, HCService) {
 	    var vm = this;
       vm.familyProblem = {};
+      vm.originalFamilyProblem = familyProblem;
       vm.save = save;
 	    vm.cancel = cancel;
       vm.relationshipChoices = FamilyPatientProblem.relationshipChoices;
       vm.markAsError = markAsError;
       vm.canEdit = canEdit;
       vm.canSave = canSave;
+      vm.hasPermissions = false;
+
       activate();
 
       function activate(){
         vm.familyProblem = angular.copy(familyProblem);
+
+        SessionService.checkPermission('hc_hce.add_patientfamilyhistoryproblem')
+            .then( function(hasPerm){
+                vm.hasPermissions = hasPerm;
+            }, function(error){
+                vm.hasPermissions = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
 	    }
 
 
@@ -30,10 +43,24 @@
 
       function markAsError() {
         var tmpProblem = angular.copy(vm.familyProblem);
+
+        var problemToUnmarkAsError = new FamilyPatientProblem();
+        Object.assign(problemToUnmarkAsError, tmpProblem);
+
+        HCService.agregarAlHistorial(function(){
+          problemToUnmarkAsError.$delete(function(){
+            console.log('Supuestamente pudo borrar el familyProblem marcado como error');
+            problemToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+              console.log('Supuestamente pudo volver a crear el familyProblem antes de ser marcado como error');
+            },  console.error);
+          },  console.error);
+        });
+
         tmpProblem.state = FamilyPatientProblem.stateChoices.STATE_ERROR;
         tmpProblem.observations = vm.familyProblem.observations;
         FamilyPatientProblem.update(tmpProblem, function (response) {
-            toastr.success('Problema marcado como error');
+          HCService.markAsDirty();
+          toastr.success('Problema marcado como error');
           $uibModalInstance.close('markedError');
         }, function (err) {
           console.error(err);
@@ -46,7 +73,21 @@
       }
 
       function save() {
+        var problemToUnedit = new FamilyPatientProblem();
+        Object.assign(problemToUnedit, vm.originalFamilyProblem );
+
+        HCService.agregarAlHistorial(function(){
+          problemToUnedit.$delete(function(){
+            console.log('Supuestamente pudo borrar el familyProblem editado');
+            
+            problemToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+              console.log('Supuestamente pudo volver a crear el familyProblem antes de ser editado');
+            },  console.error);
+          },  console.error);
+        });
+
         FamilyPatientProblem.update(vm.familyProblem, function (response) {
+          HCService.markAsDirty();
           toastr.success('Problema editado con éxito');
           $uibModalInstance.close('familyProblemEdited');
         }, function (err) {

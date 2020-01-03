@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('PatientProblemsController', patientProblemsController);
 
-	patientProblemsController.$inject = ['$state', 'HCService', 'PatientProblem', 'FamilyPatientProblem', 'toastr', 'moment', 'Problem', '$uibModal'];
+	patientProblemsController.$inject = ['$state', 'HCService', 'PatientProblem', 'FamilyPatientProblem', 'toastr', 'moment', 'Problem', '$uibModal', 'SessionService'];
 
-    function patientProblemsController ($state, HCService, PatientProblem, FamilyPatientProblem, toastr, moment, Problem, $uibModal) {
+    function patientProblemsController ($state, HCService, PatientProblem, FamilyPatientProblem, toastr, moment, Problem, $uibModal, SessionService) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newPatientProblem = {};
@@ -28,11 +28,11 @@
       vm.newProblemDate = null;
       vm.canSaveNewProblem = canSaveNewProblem;
       vm.canEditProblem = canEditProblem;
+      vm.hasPermissions = false;
       vm.isSearching = false;
       vm.isSearchingFamilyProblems = false;
 
       vm.translateRelationship = FamilyPatientProblem.translateRelationship;
-
 
       vm.openNewFamilyProblemModal = openNewFamilyProblemModal;
       vm.openEditFamilyProblemModal = openEditFamilyProblemModal;
@@ -114,6 +114,8 @@
       };
 
       function canSaveNewProblem() {
+        if(!vm.hasPermissions) return false;
+
         if(vm.newPatientProblem && vm.newPatientProblem.startDate&&vm.newPatientProblem.state&&vm.newPatientProblem.state=='Active'&&vm.newPatientProblem.problem){
           return true;
         }
@@ -130,6 +132,7 @@
         }, showError);
       }
 
+
 	    function activate(){
         Problem.getActiveList(function(problems){
           vm.problems = problems;
@@ -139,6 +142,16 @@
         if(vm.newPatientProblem){
           vm.showNewPatientProblem = true;
         }
+
+        SessionService.checkPermission('hc_hce.add_patientproblem')
+          .then( function(hasPerm){
+              vm.hasPermissions = hasPerm;
+          }, function(error){
+              vm.hasPermissions = false;
+              console.error("=== Error al verificar permisos en controlador ===");
+              console.error(error);
+              console.trace();
+          });
 	    }
 
       function pageChanged() {
@@ -148,7 +161,6 @@
       function familyPagerChanged() {
         searchFamilyPatientProblems();
       }
-
 
       function searchFamilyPatientProblems() {
         var filters = {};
@@ -300,7 +312,7 @@
       }
 
       function canEditProblem(problem) {
-        if(problem.state == PatientProblem.stateChoices.STATE_ERROR){
+        if(!vm.hasPermissions || (problem.state == PatientProblem.stateChoices.STATE_ERROR)){
           return false;
         }
         return true;

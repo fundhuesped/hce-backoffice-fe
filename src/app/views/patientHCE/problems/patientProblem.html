@@ -45,10 +45,10 @@
 					  	<abm-form-group>
 						    <label abm-label type="static">Estado del problema(*) </label>
 						    <div class="radio" abm-radio label="Activo" >
-						      <input type="radio" name="activo" value="Active" ng-model="PatientProblemController.problem.state" ng-change="PatientProblemController.changeStatus()" ng-disabled="!PatientProblemController.canEdit() && !PatientProblemController.canBeClosed()" ng-required="true">
+						      <input type="radio" name="activo" value="Active" ng-model="PatientProblemController.problem.state" ng-change="PatientProblemController.changeStatus()" ng-disabled="!PatientProblemController.hasPermissions || !PatientProblemController.canBeClosed()" ng-required="true">
 						    </div>
 						    <div class="radio" abm-radio label="Resuelto">
-						      <input type="radio" name="cerrado" value="Closed" ng-model="PatientProblemController.problem.state" ng-disabled="!PatientProblemController.canEdit() && !PatientProblemController.canBeClosed()" ng-required="true" >
+						      <input type="radio" name="cerrado" value="Closed" ng-model="PatientProblemController.problem.state" ng-disabled="!PatientProblemController.canEdit() || !PatientProblemController.canBeClosed()" ng-required="true" >
 						    </div>					    
 					  	</abm-form-group>
 					</div>
@@ -66,8 +66,8 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="row" >
 						  	<div>
-						  		<button class="btn btn-danger pull-left" ng-click="PatientProblemController.markAsError()" ng-show="PatientProblemController.canBeMarkedAsError()">Pasar a error</button>
-						  		<button class="btn btn-success btn-raised pull-right" ng-click="PatientProblemController.save()" ng-show="PatientProblemController.canEdit() || PatientProblemController.canBeClosed()" ng-disabled="!PatientProblemController.canSaveNewProblem() && !PatientProblemController.canBeClosed()">Guardar problema</button>
+						  		<button class="btn btn-danger pull-left" ng-click="PatientProblemController.markAsError()" ng-show="PatientProblemController.canBeMarkedAsError()" ng-disabled="!PatientProblemController.hasPermissions">Pasar a error</button>
+						  		<button class="btn btn-success btn-raised pull-right" ng-click="PatientProblemController.save()" ng-show="PatientProblemController.canSaveNewProblem() && PatientProblemController.canBeClosed()" ng-disabled="!PatientProblemController.hasPermissions">Guardar problema</button>
 						  		<button class="btn btn-default pull-right" ng-click="PatientProblemController.cancel()">Cancelar</button>
 						  	</div>
 					  	</div>

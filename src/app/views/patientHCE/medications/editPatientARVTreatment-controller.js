@@ -6,14 +6,15 @@
     	.module('hce.patientHCE')
     	.controller('EditPatientARVTreatmentController', editPatientARVTreatmentController);
 
-	  editPatientARVTreatmentController.$inject = ['$state', 'HCService', 'PatientArvTreatment', 'toastr', 'moment', 'Medication', '$uibModalInstance', '$filter', 'patientArvTreatment'];
+	  editPatientARVTreatmentController.$inject = ['$state', 'HCService', 'PatientArvTreatment', 'toastr', 'moment', 'Medication', '$uibModalInstance', '$filter', 'patientArvTreatment','SessionService'];
 
-    function editPatientARVTreatmentController ($state, HCService, PatientArvTreatment, toastr, moment, Medication, $uibModalInstance, $filter, patientArvTreatment) {
+    function editPatientARVTreatmentController ($state, HCService, PatientArvTreatment, toastr, moment, Medication, $uibModalInstance, $filter, patientArvTreatment, SessionService) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.patientArvTreatment = angular.copy(patientArvTreatment);
       vm.markAsError = markAsError;
       vm.cancel = cancel;
+      vm.hasPermissions = false;
 
 
       vm.nrtiMedications = [];
@@ -64,7 +65,7 @@
       };
       activate();
 
-	    function activate(){
+	    function activate(){        
         Medication.getActiveList({medicationTypeCode:'NRTI'},function(medications){
           for (var i = patientArvTreatment.patientARVTreatmentMedications.length - 1; i >= 0; i--) {
             for (var j = medications.length - 1; j >= 0; j--) {
@@ -143,6 +144,16 @@
         if(vm.patientArvTreatment.endDate && (vm.patientArvTreatment.state == 'Closed' || vm.patientArvTreatment.state == 'Error') ){
           vm.patientArvTreatment.endDate = new Date(vm.patientArvTreatment.endDate + 'T03:00:00');
         }
+
+        SessionService.checkPermission('hc_hce.add_patientarvtreatment')
+          .then( function(hasPerm){
+              vm.hasPermissions = hasPerm;
+          }, function(error){
+              vm.hasPermissions = false;
+              console.error("=== Error al verificar permisos en controlador ===");
+              console.error(error);
+              console.trace();
+          });
 
 	    }
 

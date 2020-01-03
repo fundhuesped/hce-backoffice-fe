@@ -1,4 +1,3 @@
-
 (function(){
     'use strict';
     /* jshint validthis: true */
@@ -7,9 +6,9 @@
         .module('hce.services')
         .service('HCService', HCService );
 
-    HCService.$inject = ['$q', 'Paciente', 'Evolution', 'PatientProblem', 'PatientVaccine', 'PatientMedication', 'PatientArvTreatment', 'localStorageService', 'moment', 'lodash'];
+    HCService.$inject = ['$q', 'Paciente', 'Evolution', 'PatientProblem', 'PatientVaccine', 'PatientMedication', 'PatientArvTreatment', 'localStorageService', 'moment', 'lodash', '$state', 'toastr'];
 
-    function HCService($q, Paciente, Evolution, PatientProblem, PatientVaccine, PatientMedication, PatientArvTreatment, localStorageService, moment, lodash){
+    function HCService($q, Paciente, Evolution, PatientProblem, PatientVaccine, PatientMedication, PatientArvTreatment, localStorageService, moment, lodash, $state, toastr){
         var srv = this;
 
         //Common
@@ -35,6 +34,14 @@
         srv.cleanAll = cleanAll;
         srv.cleanEvolution = cleanEvolution;
         srv.discardChanges = discardChanges;
+        srv.historyStack = null;
+        srv.initializeHistory = initializeHistory;
+        srv.agregarAlHistorial = agregarAlHistorial;
+        srv.revertHistory = revertHistory;
+        srv.hasBeenModified = false;
+        srv.markAsDirty = markAsDirty;
+        srv.unmarkAsDirty = unmarkAsDirty;
+
         //Problems
         srv.getActivePatientProblems = getActivePatientProblems;
         srv.getPatientProblems = getPatientProblems;
@@ -62,6 +69,9 @@
         srv.patientMedications = null;
         srv.summaryPatientMedications = null;
         srv.activePatientMedicationsCount = null;
+        srv.getPatientMedicationsForRecipe = getPatientMedicationsForRecipe;
+        srv.recipePatientMedications = null;
+        srv.activeRecipePatientMedicationsCount = null;
 
         //Profilaxis Medications
         srv.activePatientProfilaxisMedicationsCount = null;
@@ -90,7 +100,18 @@
             if(srv.currentEvolution && srv.currentEvolution.reason != srv.currentEvolutionCopy.reason){
                 return true;
             }
+            if(srv.hasBeenModified) return true;
             return false;
+        }
+
+        function markAsDirty(){
+            srv.hasBeenModified = true;
+            $state.reload();
+        }
+
+        function unmarkAsDirty(){
+            srv.hasBeenModified = false;
+            $state.reload();
         }
 
         function canOpenPatient(patient) {
@@ -138,19 +159,63 @@
         }
 
         function discardChanges(cbOk, cbNok) {
-            srv.currentEvolution = srv.currentEvolutionCopy;
-            if(cbOk){
-                cbOk();
+            try{
+                console.log("Entra a discardChanges");
+                srv.currentEvolution = srv.currentEvolutionCopy;
+                revertHistory();
+                console.log("Esto es despues de revertHistory()");
+                toastr.success("Se revirtieron los cambios con éxito");
+                if(cbOk){
+                    cbOk();
+                }
+            }catch (error){
+                console.error(error);
+                if(cbNok){
+                    cbNok();
+                }
             }
         }
 
+        function revertHistory(){
+            var revertChange = null;
+            while(srv.historyStack.length){
+                revertChange = srv.historyStack.pop();
+                revertChange();
+                console.log("Se revirtio una accion guardada en el historial");
+                console.log(srv.historyStack);
+            }
+        }
+
+        function agregarAlHistorial(revertingFunction){
+            if(!srv.historyStack){
+                srv.historyStack = new Array();
+                console.log("Se inicializo historyStack exitosamente!");
+            }
+            srv.historyStack.push(revertingFunction);
+            console.log("Se pusheo una funcion al historial!");
+            console.log(srv.historyStack);
+        }
+
+        function initializeHistory(){
+            console.log("Se llamo a initializeHistory() exitosamente!");
+        }
+
+
         function getCurrentEvolution(){
-            return Evolution.getCurrentVisit({pacienteId:srv.currentPacienteId}, function (evolution) {
-                srv.currentEvolution = evolution;
-                srv.currentEvolutionCopy = angular.copy(evolution);
-            }, function (err) {
-                
-            });
+            try{
+                return Evolution.getCurrentVisit({pacienteId:srv.currentPacienteId}, function (evolution) {
+                    srv.currentEvolution = evolution;
+                    srv.currentEvolutionCopy = angular.copy(evolution);
+                }, function (err) {
+                    openNewEvolution();
+                    console.error(err);
+                });
+            }catch(e){
+                console.error("Entra en el catch de getCurrentVisit");
+                console.error(e.name || e || "");
+                console.error(e.message || e || "");
+                openNewEvolution();
+            }
         }
 
         function openNewEvolution() {
@@ -244,6 +309,7 @@
             return evolution.$update(function () {
                 srv.currentEvolution = null;
                 srv.getEvolutions();
+                srv.hasBeenModified = false;
             }, function (err) {
                 if(err.status == 400 && err.data == 'Solo se pueden modificar dentro de las 8 horas'){
                     srv.currentEvolution = null;
@@ -326,11 +392,20 @@
             patientProblem.startDate = moment(srv.newPatientProblem.startDate).format('YYYY-MM-DD');
             if (srv.newPatientProblem.closeDate) {
                 patientProblem.closeDate = moment(srv.newPatientProblem.closeDate).format('YYYY-MM-DD');
-            }
+            }        
 
             return patientProblem.$save({pacienteId:srv.currentPaciente.id}, function (patientProblem) {
                 getActivePatientProblems();
+                markAsDirty();
                 srv.newPatientProblem = null;
+                var problemToDelete = new PatientProblem();
+                problemToDelete.id = patientProblem.id;
+                agregarAlHistorial(function(){
+                    console.log("Entra a la función de borrado de un problema");
+                    problemToDelete.$delete(function(){
+                    console.log('Supuestamente pudo borrar problema creado');
+                },  console.error);
+                });
             }, function (err) {
                 console.log(err);
             });
@@ -463,6 +538,25 @@
             });
         }
 
+        function getPatientMedicationsForRecipe(filters) {
+            if(filters){
+                var localFilters = angular.copy(filters);
+                localFilters.pacienteId = srv.currentPacienteId;
+                localFilters.page_size = srv.activePatientMedicationsCount;
+                return PatientMedication.getPaginatedForPaciente(localFilters, function (paginatedResult) {
+                    srv.recipePatientMedications = paginatedResult.results;
+                }, function (err) {
+                     
+                });                
+            }else{
+                return PatientMedication.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, page_size:srv.activePatientMedicationsCount}, function (paginatedResult) {
+                    srv.recipePatientMedications = paginatedResult.results;
+                }, function (err) {
+                     
+                });
+
+            }
+        }
 
         function getActivePatientProfilaxisMedications() {
             return PatientMedication.getPaginatedForPaciente({pacienteId:srv.currentPacienteId, page_size:3, state:'Active', medicationTypeCode : 'PROF'}, function (paginatedResult) {

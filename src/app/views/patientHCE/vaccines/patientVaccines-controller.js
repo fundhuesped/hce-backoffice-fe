@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('PatientVaccinesController', patientVaccinesController);
 
-	patientVaccinesController.$inject = ['$state', 'HCService', 'PatientVaccine', 'Vaccine', 'toastr', 'moment', '$uibModal', 'lodash'];
+	patientVaccinesController.$inject = ['$state', 'HCService', 'PatientVaccine', 'Vaccine', 'toastr', 'moment', '$uibModal', 'lodash', 'SessionService'];
 
-    function patientVaccinesController ($state, HCService, PatientVaccine, Vaccine, toastr, moment, $uibModal, lodash) {
+    function patientVaccinesController ($state, HCService, PatientVaccine, Vaccine, toastr, moment, $uibModal, lodash, SessionService) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.searchPatientVaccines = searchPatientVaccines;
@@ -19,9 +19,11 @@
       vm.openNewRecetaModal = openNewRecetaModal;
       vm.hasVaccines = hasVaccines;
       vm.vaccinesList = [];
+      vm.hasPermissions = false;
       vm.openNewPatientVaccineModal = openNewPatientVaccineModal;
       vm.openEditPatientVaccineModal = openEditPatientVaccineModal;
       vm.isSearching = false;
+      vm.deleteChanges = deleteChanges;
 
       Object.defineProperty(
           vm,
@@ -37,10 +39,29 @@
 
 	    function activate(){
         searchPatientVaccines();
+        
+        SessionService.checkPermission('hc_hce.add_patientvaccine')
+            .then( function(hasPerm){
+                vm.hasPermissions = hasPerm;
+            }, function(error){
+                vm.hasPermissions = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
 	    }
 
       function pageChanged() {
         searchPatientVaccines();
+      }
+
+      function deleteChanges(patientVaccine){
+        var tmpPatientVaccine = new PatientVaccine();
+        tmpPatientVaccine = patientVaccine.id;
+        tmpPatientVaccine.$delete(function(){
+          toastr.success('Vacuna eliminado con éxito');
+          searchPatientVaccines();
+        },showError());
       }
 
       function searchPatientVaccines() {

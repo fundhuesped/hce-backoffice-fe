@@ -17,6 +17,8 @@
       vm.canSave = canSave;
       vm.toggleMedicationSelection = toggleMedicationSelection;
       vm.selectedMedications = [];
+      vm.recipePatientMedications = [];
+      vm.recipeFilters = {};
       vm.startDateCalendar = {
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
@@ -38,6 +40,19 @@
             return HCService.patientMedications;
         }
       });
+
+      function searchRecipePatientMedications(){
+        vm.recipeFilters.notMedicationTypeCode = 'PROF';
+        vm.recipeFilters.state = 'Active';
+        HCService.getPatientMedicationsForRecipe(vm.recipeFilters).$promise.then(function (paginatedResult) {
+          vm.recipePatientMedications = paginatedResult.results;
+        }, function (err) {
+          if(err.status !== 403 && err.status !== 401){
+            displayComunicationError();
+            showError(err);
+          }
+        });
+      }
 
       activate();
 
@@ -88,6 +103,7 @@
       }
 
 	    function activate(){
+        searchRecipePatientMedications();
 	    }
 
 
@@ -117,12 +133,11 @@
 	    }
 
 
-      function displayComunicationError(loading){
+      function displayComunicationError(){
         if(!toastr.active()){
           toastr.warning('Ocurrió un error en la comunicación, por favor intente nuevamente.');
         }
-        if(loading){
-        }
+
       }
 
       function cancel() {

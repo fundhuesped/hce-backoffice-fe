@@ -20,6 +20,7 @@
       vm.canEdit = canEdit;
       vm.canBeClosed = canBeClosed;
       vm.canBeMarkedAsError = canBeMarkedAsError;
+      vm.hasPermissions = false;
 
       vm.startDateCalendarPopup = {
         opened: false,
@@ -61,6 +62,16 @@
         if (vm.problem.closeDate) {
           vm.problem.closeDate = new Date(vm.problem.closeDate + 'T03:00:00');;
         }
+
+        SessionService.checkPermission('hc_hce.add_patientproblem')
+          .then( function(hasPerm){
+              vm.hasPermissions = hasPerm;
+          }, function(error){
+              vm.hasPermissions = false;
+              console.error("=== Error al verificar permisos en controlador ===");
+              console.error(error);
+              console.trace();
+          });
     	}
 
 
@@ -75,36 +86,57 @@
         if (tmpProblem.closeDate) {
             tmpProblem.closeDate = moment(tmpProblem.closeDate).format('YYYY-MM-DD');
         }
+
+        var problemToUnedit = new PatientProblem();
+        Object.assign(problemToUnedit, vm.originalProblem );
+
+        HCService.agregarAlHistorial(function(){
+          problemToUnedit.$delete(function(){
+            console.log('Supuestamente pudo borrar el problema actualizado');
+            
+            problemToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+              console.log('Supuestamente pudo volver a crear el problema antes de ser editado');
+            },  console.error);
+          },  console.error);
+        });
+
         PatientProblem.update(tmpProblem, function (response) {
+          HCService.markAsDirty();
           toastr.success('Problema editado con éxito');
           $uibModalInstance.close('edited');
+          HCService.getCurrentEvolution();
         }, function (err) {
           toastr.error('Ocurrio un error');
         });
       }
-
-
-        function canSaveNewProblem() {
-          if(vm.controllerForm.$valid){
-            return true;
-          }
-  		    return false;
-        }
-
-
-
+      
       	function markAsError() {
       		var tmpProblem = angular.copy(vm.problem);
-      		tmpProblem.state = PatientProblem.stateChoices.STATE_ERROR;
           tmpProblem.startDate = moment(tmpProblem.startDate).format('YYYY-MM-DD');
           if (tmpProblem.closeDate) {
               tmpProblem.closeDate = moment(tmpProblem.closeDate).format('YYYY-MM-DD');
 
           }
+        
+          var problemToUnmarkAsError = new PatientProblem();
+          Object.assign(problemToUnmarkAsError, tmpProblem);
+
+          HCService.agregarAlHistorial(function(){
+            problemToUnmarkAsError.$delete(function(){
+              console.log('Supuestamente pudo borrar problema marcado como error');
+              problemToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear el problema que se habia marcado como error');
+              },  console.error);
+            },  console.error);
+          });
+          
+      		tmpProblem.state = PatientProblem.stateChoices.STATE_ERROR;
 
       		PatientProblem.update(tmpProblem, function (response) {
+            HCService.markAsDirty();
           	toastr.success('Problema marcado como error');
-			      $uibModalInstance.close('markedError');
+            $uibModalInstance.close('markedError');
+            HCService.getCurrentEvolution();
       		}, function (err) {
               console.error(err);            
 		          toastr.error('Ocurrio un error');
@@ -120,6 +152,13 @@
           return false;
         }
         return true;
+      }
+
+      function canSaveNewProblem() {
+        if(vm.controllerForm.$valid){
+          return true;
+        }
+        return false;
       }
 
       function canBeMarkedAsError(argument) {

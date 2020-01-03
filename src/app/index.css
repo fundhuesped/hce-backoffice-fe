@@ -430,10 +430,12 @@
 .prescriptionPatientName{
   margin-top: 20px;
   margin-bottom: 10px;
+  margin-left: 0;
 }
 .prescriptionPatientSocialService{
   margin-top: 20px;
   margin-bottom: 10px;
+  margin-left: 0;
 }
 .prescriptionMedicationsList{
   margin-top: 40px;
@@ -442,6 +444,13 @@
   margin-top: 20px;
   margin-bottom: 20px;
 }
+.prescripionSpecifications{
+  margin-left: 0px;
+}
+
+.receta-table-header{
+  border-bottom: 2px solid grey;
+} 
 
  @media print
  {
@@ -455,16 +464,20 @@
 
  
 @media print {
-   body * { visibility: hidden; } 
+  body * { visibility: hidden; } 
 
   #hide-print * {
     display:none;
   }
    
-   #section-to-print, #section-to-print * { visibility: visible !important; height: auto !important; }
+  #section-to-print, #section-to-print * { visibility: visible !important; height: auto !important; display: inherit !important }
    
-   #section-to-print { position: absolute; left: 0; top: 0;  height:300vw;  } 
+  #section-to-print { /*position: absolute;*/ left: 0; top: 0;  height:300vw;  } 
+
+  .pagebreak{
+    page-break-after: always !important;
   }
+}
 
 
 .hce-labResult-row{
