@@ -127,7 +127,6 @@
           HCService.markAsDirty();
           var laboratoryToDelete = new PatientLaboratoryResult();
           Object.assign(laboratoryToDelete, tmpNewLab);
-          debugger;
           HCService.agregarAlHistorial(function(){
             console.log("Entra a la función de borrado de un laboratorio");
             laboratoryToDelete.$delete({id:laboratoryToDelete.id}, function(){
