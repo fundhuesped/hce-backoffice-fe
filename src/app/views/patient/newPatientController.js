@@ -7,9 +7,9 @@
         .module('hce.patient')
         .controller('NewPatientController',newPatientController);
 
-    newPatientController.$inject = ['$loading', '$filter', 'moment', 'Document', 'Sex', 'Province', 'District', 'Location', 'SocialService', 'CivilStatus', 'Education', 'Paciente', 'Country', 'toastr', '$state'];
+    newPatientController.$inject = ['$loading', '$filter', 'moment', 'Document', 'Sex', 'Province', 'District', 'Location', 'SocialService', 'CivilStatus', 'Education', 'Protocol', 'Paciente', 'Country', 'toastr', '$state'];
 
-    function newPatientController ($loading, $filter, moment, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Paciente, Country, toastr, $state) {
+    function newPatientController ($loading, $filter, moment, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Protocol, Paciente, Country, toastr, $state) {
         var vm = this;
         vm.paciente = new Paciente();
         vm.errorMessage = null;
@@ -73,6 +73,10 @@
             
             Education.getFullActiveList(function(educationTypes){
                 vm.educationTypes = educationTypes;
+            }, function(){displayComunicationError('app');});
+
+            Protocol.getFullActiveList(function(protocols){
+                vm.protocols = protocols;
             }, function(){displayComunicationError('app');});
 
             vm.paciente.consent = 'Not asked';

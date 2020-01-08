@@ -4,7 +4,7 @@
     /*jshint latedef: nofunc */
 
     
-    function patientPersonalInfoCtrl ($loading, $uibModalInstance, $filter, $uibModal, $location, moment, paciente, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Paciente, Country, toastr, SessionService) {
+    function patientPersonalInfoCtrl ($loading, $uibModalInstance, $filter, $uibModal, $location, moment, paciente, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Protocol, Paciente, Country, toastr, SessionService) {
         var vm = this;
         vm.paciente = {};
         vm.editing = true;
@@ -82,6 +82,10 @@
                 
                 Education.getFullActiveList(function(educationTypes){
                     vm.educationTypes = educationTypes;
+                }, function(){displayComunicationError('app');});
+
+                Protocol.getFullActiveList(function(protocols){
+                    vm.protocols = protocols;
                 }, function(){displayComunicationError('app');});
                 
 
@@ -232,5 +236,5 @@
             }
         }
     }
-    angular.module('hce.patient').controller('PatientPersonalInfoCtrl',['$loading','$uibModalInstance','$filter', '$uibModal', '$location', 'moment', 'paciente','Document', 'Sex', 'Province', 'District', 'Location', 'SocialService', 'CivilStatus', 'Education', 'Paciente', 'Country', 'toastr', 'SessionService', patientPersonalInfoCtrl]);
+    angular.module('hce.patient').controller('PatientPersonalInfoCtrl',['$loading','$uibModalInstance','$filter', '$uibModal', '$location', 'moment', 'paciente','Document', 'Sex', 'Province', 'District', 'Location', 'SocialService', 'CivilStatus', 'Education', 'Paciente', 'Country', 'toastr', 'SessionService', 'Protocol', patientPersonalInfoCtrl]);
 })();
