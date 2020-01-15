@@ -14,7 +14,8 @@
                                                 'Medication',
                                                 'PatientProblem',
                                                 '$uibModalInstance',
-                                                '$filter'];
+                                                '$filter',
+                                                '$q'];
 
     function newPatientArvTreatmentController ($state,
                                                HCService,
@@ -24,7 +25,8 @@
                                                Medication,
                                                PatientProblem,
                                                $uibModalInstance,
-                                               $filter) {
+                                               $filter,
+                                               $q) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newPatientArvTreatment = new PatientArvTreatment();
@@ -137,12 +139,20 @@
         tmpPatientArvTreatment.$save({pacienteId:HCService.currentPaciente.id},function() {
           var treatmentToDelete = new PatientArvTreatment();
           Object.assign(treatmentToDelete, tmpPatientArvTreatment);
+
           HCService.agregarAlHistorial(function(){
-            console.log("Entra a la función de borrado de un tratamiento");
-            treatmentToDelete.$delete({id:treatmentToDelete.id}, function() {
-            console.log('Supuestamente pudo borrar el tratamiento ARV creado');
-          },  console.error);
+            return $q(function(resolve, reject){
+              console.log("Entra a la función de borrado de un tratamiento");
+              treatmentToDelete.$delete({id:treatmentToDelete.id}, function() {
+                console.log('Supuestamente pudo borrar el tratamiento ARV creado');
+                resolve();
+              },  function(err){
+                console.error(err);
+                reject();
+              });
+            })
           });
+          
           HCService.markAsDirty();
           toastr.success('Tratamiento guardado con exito');
           $uibModalInstance.close('created');
@@ -259,7 +269,7 @@
       }
 
       function parseError(errorData){
-        if(errorData && errorData.startsWith("AssertionError")){
+        if(errorData && (typeof errorData === 'string' || errorData instanceof String) && errorData.startsWith("AssertionError")){
           var errorAuxArray = (errorData.split('\n'));
           var errorToReturn = errorAuxArray[1];
           return errorToReturn;

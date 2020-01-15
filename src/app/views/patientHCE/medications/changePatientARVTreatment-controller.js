@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('ChangePatientArvTreatmentController', changePatientArvTreatmentController);
 
-	  changePatientArvTreatmentController.$inject = ['$state', 'HCService', 'PatientArvTreatment', 'toastr', 'moment', '$uibModalInstance', 'patientArvTreatment'];
+	  changePatientArvTreatmentController.$inject = ['$state', 'HCService', 'PatientArvTreatment', 'toastr', 'moment', '$uibModalInstance', 'patientArvTreatment', '$q'];
 
-    function changePatientArvTreatmentController ($state, HCService, PatientArvTreatment, toastr, moment, $uibModalInstance, patientArvTreatment) {
+    function changePatientArvTreatmentController ($state, HCService, PatientArvTreatment, toastr, moment, $uibModalInstance, patientArvTreatment, $q) {
 	    var vm = this;
       vm.save = save;
       vm.patientArvTreatment = {};
@@ -45,13 +45,21 @@
         
         var treatmentToUnedit = new PatientArvTreatment();
         Object.assign(treatmentToUnedit, tmpPatientArvTreatment);
+
         HCService.agregarAlHistorial(function(){
-          treatmentToUnedit.$delete(function(){
-            console.log('Supuestamente pudo borrar el arvTreatment editado');
-            treatmentToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
-              console.log('Supuestamente pudo volver a crear el arvTreatment antes de ser editado');
-            },  console.error);
-          },  console.error);
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer edicion de un arvTreatmente");
+            treatmentToUnedit.$delete(function(){
+              console.log('Supuestamente pudo borrar el arvTreatment editado');
+              treatmentToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear el arvTreatment antes de ser editado');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
         });
 
         tmpPatientArvTreatment.state = 'Closed';
@@ -89,7 +97,7 @@
       }
 
       function parseError(errorData){
-        if(errorData.startsWith("AssertionError")){
+        if(errorData && (typeof errorData === 'string' || errorData instanceof String) && errorData.startsWith("AssertionError")){
           var errorAuxArray = (errorData.split('\n'));
           var errorToReturn = errorAuxArray[1];
           return errorToReturn;

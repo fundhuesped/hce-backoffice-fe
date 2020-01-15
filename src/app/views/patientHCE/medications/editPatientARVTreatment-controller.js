@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('EditPatientARVTreatmentController', editPatientARVTreatmentController);
 
-	  editPatientARVTreatmentController.$inject = ['$state', 'HCService', 'PatientArvTreatment', 'toastr', 'moment', 'Medication', '$uibModalInstance', '$filter', 'patientArvTreatment','SessionService'];
+	  editPatientARVTreatmentController.$inject = ['$state', 'HCService', 'PatientArvTreatment', 'toastr', 'moment', 'Medication', '$uibModalInstance', '$filter', 'patientArvTreatment','SessionService', '$q'];
 
-    function editPatientARVTreatmentController ($state, HCService, PatientArvTreatment, toastr, moment, Medication, $uibModalInstance, $filter, patientArvTreatment, SessionService) {
+    function editPatientARVTreatmentController ($state, HCService, PatientArvTreatment, toastr, moment, Medication, $uibModalInstance, $filter, patientArvTreatment, SessionService, $q) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.patientArvTreatment = angular.copy(patientArvTreatment);
@@ -178,13 +178,21 @@
 
         var treatmentToUnmarkAsError = new PatientArvTreatment();
         Object.assign(treatmentToUnmarkAsError, tmpPatientArvTreatment);
+        
         HCService.agregarAlHistorial(function(){
-          treatmentToUnmarkAsError.$delete(function(){
-            console.log('Supuestamente pudo borrar el arvTreatment marcado como error');
-            treatmentToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
-              console.log('Supuestamente pudo volver a crear el arvTreatment antes de ser marcado como error');
-            },  console.error);
-          },  console.error);
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer marcado de error de un arvTreatmente");
+            treatmentToUnmarkAsError.$delete(function(){
+              console.log('Supuestamente pudo borrar el arvTreatment marcado como error');
+              treatmentToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear el arvTreatment antes de ser marcado como error');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
         });
 
         tmpPatientArvTreatment.state = PatientArvTreatment.stateChoices.STATE_ERROR;

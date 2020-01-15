@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('EditFamilyProblemController', editFamilyProblemController);
 
-	   editFamilyProblemController.$inject = ['familyProblem', 'toastr', 'FamilyPatientProblem', '$uibModalInstance', 'SessionService','HCService'];
+	   editFamilyProblemController.$inject = ['familyProblem', 'toastr', 'FamilyPatientProblem', '$uibModalInstance', 'SessionService','HCService', '$q'];
 
-    function editFamilyProblemController (familyProblem, toastr, FamilyPatientProblem, $uibModalInstance, SessionService, HCService) {
+    function editFamilyProblemController (familyProblem, toastr, FamilyPatientProblem, $uibModalInstance, SessionService, HCService, $q) {
 	    var vm = this;
       vm.familyProblem = {};
       vm.originalFamilyProblem = familyProblem;
@@ -48,12 +48,19 @@
         Object.assign(problemToUnmarkAsError, tmpProblem);
 
         HCService.agregarAlHistorial(function(){
-          problemToUnmarkAsError.$delete(function(){
-            console.log('Supuestamente pudo borrar el familyProblem marcado como error');
-            problemToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
-              console.log('Supuestamente pudo volver a crear el familyProblem antes de ser marcado como error');
-            },  console.error);
-          },  console.error);
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer marcado de error de un familyProblem");
+            problemToUnmarkAsError.$delete(function(){
+              console.log('Supuestamente pudo borrar el familyProblem marcado como error');
+              problemToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear el familyProblem antes de ser marcado como error');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
         });
 
         tmpProblem.state = FamilyPatientProblem.stateChoices.STATE_ERROR;
@@ -77,13 +84,19 @@
         Object.assign(problemToUnedit, vm.originalFamilyProblem );
 
         HCService.agregarAlHistorial(function(){
-          problemToUnedit.$delete(function(){
-            console.log('Supuestamente pudo borrar el familyProblem editado');
-            
-            problemToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
-              console.log('Supuestamente pudo volver a crear el familyProblem antes de ser editado');
-            },  console.error);
-          },  console.error);
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer edicion de un familyProblem");
+            problemToUnedit.$delete(function(){
+              console.log('Supuestamente pudo borrar el familyProblem editado');
+              problemToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear el familyProblem antes de ser editado');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
         });
 
         FamilyPatientProblem.update(vm.familyProblem, function (response) {

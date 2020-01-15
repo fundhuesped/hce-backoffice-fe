@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewFamilyProblemController', newFamilyProblemController);
 
-	  newFamilyProblemController.$inject = ['$state', 'HCService', 'FamilyPatientProblem', 'toastr', 'moment', 'Problem', '$uibModalInstance', '$timeout'];
+	  newFamilyProblemController.$inject = ['$state', 'HCService', 'FamilyPatientProblem', 'toastr', 'moment', 'Problem', '$uibModalInstance', '$timeout', '$q'];
 
-    function newFamilyProblemController ($state, HCService, FamilyPatientProblem, toastr, moment, Problem, $uibModalInstance, $timeout) {
+    function newFamilyProblemController ($state, HCService, FamilyPatientProblem, toastr, moment, Problem, $uibModalInstance, $timeout, $q) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newFamilyProblem = new FamilyPatientProblem();
@@ -36,10 +36,16 @@
           var problemToDelete = new FamilyPatientProblem();
           problemToDelete.id = newProblem.id;
           HCService.agregarAlHistorial(function(){
-              console.log("Entra a la función de borrado de un problema");
-              problemToDelete.$delete(function(){
+            return $q(function(resolve, reject){
+              console.log("Entra a la función de borrado de un familyProblem");
+              problemToDelete.$delete({id:treatmentToDelete.id}, function() {
                 console.log('Supuestamente pudo borrar el familyProblem creado');
-            },  console.error);
+                resolve();
+              },  function(err){
+                console.error(err);
+                reject();
+              });
+            })
           });
         }, showError);
       }

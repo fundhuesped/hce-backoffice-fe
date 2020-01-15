@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewPatientVaccineController', newPatientVaccineController);
 
-	  newPatientVaccineController.$inject = ['$state', 'HCService', 'PatientVaccine', 'toastr', 'moment', 'Vaccine', '$uibModalInstance', '$timeout'];
+	  newPatientVaccineController.$inject = ['$state', 'HCService', 'PatientVaccine', 'toastr', 'moment', 'Vaccine', '$uibModalInstance', '$timeout', '$q'];
 
-    function newPatientVaccineController ($state, HCService, PatientVaccine, toastr, moment, Vaccine, $uibModalInstance, $timeout) {
+    function newPatientVaccineController ($state, HCService, PatientVaccine, toastr, moment, Vaccine, $uibModalInstance, $timeout, $q) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newPatientVaccine = new PatientVaccine();
@@ -50,12 +50,20 @@
           HCService.markAsDirty();
           var vaccineToDelete = new PatientVaccine();
           Object.assign(vaccineToDelete, tmpPatientVaccine);
+
           HCService.agregarAlHistorial(function(){
-            console.log("Entra a la función de borrado de una vacuna");
-            vaccineToDelete.$delete(function(){
-            console.log('Supuestamente pudo borrar la vacuna creada');
-        },  console.error);
-        });
+            return $q(function(resolve, reject){
+              console.log("Entra a la función de borrado de una vacuna");
+              vaccineToDelete.$delete(function(){
+                console.log('Supuestamente pudo borrar la vacuna creada');
+                resolve();
+              },  function(err){
+                console.error(err);
+                reject();
+              });
+            })
+          });
+
           toastr.success('Aplicación guardada con exito');
           $uibModalInstance.close('created');
         }, showError);
@@ -120,7 +128,7 @@
       }
 
       function parseError(errorData){
-        if(errorData.startsWith("AssertionError")){
+        if(errorData && (typeof errorData === 'string' || errorData instanceof String) && errorData.startsWith("AssertionError")){
           var errorAuxArray = (errorData.split('\n'));
           var errorToReturn = errorAuxArray[1];
           return errorToReturn;

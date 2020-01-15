@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('EditPatientClinicalResultController', editPatientClinicalResultController);
 
-	  editPatientClinicalResultController.$inject = ['$state', 'HCService', 'PatientClinicalResult', 'toastr', 'moment', 'ClinicalStudy', '$uibModalInstance', 'patientClinicalResult', 'SessionService'];
+	  editPatientClinicalResultController.$inject = ['$state', 'HCService', 'PatientClinicalResult', 'toastr', 'moment', 'ClinicalStudy', '$uibModalInstance', 'patientClinicalResult', 'SessionService', '$q'];
 
-    function editPatientClinicalResultController ($state, HCService, PatientClinicalResult, toastr, moment, ClinicalStudy, $uibModalInstance, patientClinicalResult, SessionService) {
+    function editPatientClinicalResultController ($state, HCService, PatientClinicalResult, toastr, moment, ClinicalStudy, $uibModalInstance, patientClinicalResult, SessionService, $q) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.save = save;
@@ -43,13 +43,21 @@
         var clinicalResultToUniedit = new PatientClinicalResult();
         Object.assign(clinicalResultToUniedit, vm.uneditedClinicalResult);
         clinicalResultToUniedit.studyDate = moment(clinicalResultToUniedit.studyDate).format('YYYY-MM-DD');
+
         HCService.agregarAlHistorial(function(){
-          clinicalResultToUniedit.$delete(function(){
-            console.log('Supuestamente pudo borrar el resultado clinico editado');
-            clinicalResultToUniedit.$save({pacienteId:HCService.currentPacienteId}, function(){
-              console.log('Supuestamente pudo volver a crear el resultado clinico previo a ser editado');
-            },  console.error);
-          },  console.error);
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer marcado de error de un estudio clinico");
+            clinicalResultToUniedit.$delete(function(){
+              console.log('Supuestamente pudo borrar el resultado clinico editado');
+              clinicalResultToUniedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear el resultado clinico previo a ser editado');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
         });
 
         PatientClinicalResult.update(tmpPatientClinicalResult, function (response) {
@@ -117,13 +125,21 @@
 
         var clinicalResultToUnmarkAsError = new PatientClinicalResult();
         Object.assign(clinicalResultToUnmarkAsError, tmpPatientClinicalResult);
+
         HCService.agregarAlHistorial(function(){
-          clinicalResultToUnmarkAsError.$delete(function(){
-            console.log('Supuestamente pudo borrar el resultado clinico marcado como error');
-            clinicalResultToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
-              console.log('Supuestamente pudo volver a crear el resultado clinico previo a ser marcado como error');
-            },  console.error);
-          },  console.error);
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer marcado de error de un estudio clinico");
+            clinicalResultToUnmarkAsError.$delete(function(){
+              console.log('Supuestamente pudo borrar el resultado clinico marcado como error');
+              clinicalResultToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear el resultado clinico previo a ser marcado como error');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
         });
 
         tmpPatientClinicalResult.state = PatientClinicalResult.stateChoices.STATE_ERROR;

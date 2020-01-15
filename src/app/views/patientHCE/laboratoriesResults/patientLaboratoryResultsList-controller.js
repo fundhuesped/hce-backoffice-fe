@@ -127,12 +127,17 @@
           HCService.markAsDirty();
           var laboratoryToDelete = new PatientLaboratoryResult();
           Object.assign(laboratoryToDelete, tmpNewLab);
-          HCService.agregarAlHistorial(function(){
+          HCService.agregarAlHistorial( function(){
+            return $q(function(resolve, reject){
             console.log("Entra a la función de borrado de un laboratorio");
-            laboratoryToDelete.$delete({id:laboratoryToDelete.id}, function(){
-            console.log('Supuestamente pudo borrar el nuevo laboratorio creado');
-            }, console.error('No se pudo eliminar el laboratorio creado'));
-          });
+            laboratoryToDelete.$delete({id:laboratoryToDelete.id}, function() {
+              console.log('Supuestamente pudo borrar el laboratorio creado');
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })});
           toastr.success('Nuevo laboratorio ingresado con éxito.');
           HCService.getCurrentEvolution();
           activate();
@@ -205,7 +210,7 @@
 
 
       function parseError(errorData){
-        if(errorData.startsWith("AssertionError")){
+        if(errorData && (typeof errorData === 'string' || errorData instanceof String) && errorData.startsWith("AssertionError")){
           var errorAuxArray = (errorData.split('\n'));
           var errorToReturn = errorAuxArray[1];
           return errorToReturn;

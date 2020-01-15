@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewPatientProfilaxisMedicationController', newPatientProfilaxisMedicationController);
 
-	  newPatientProfilaxisMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication', 'PatientProblem', '$uibModalInstance', '$timeout'];
+	  newPatientProfilaxisMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication', 'PatientProblem', '$uibModalInstance', '$timeout', '$q'];
 
-    function newPatientProfilaxisMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication, PatientProblem, $uibModalInstance, $timeout) {
+    function newPatientProfilaxisMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication, PatientProblem, $uibModalInstance, $timeout, $q) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newPatientMedication = new PatientMedication();
@@ -82,11 +82,17 @@
           var medicationToDelete = new PatientMedication();
           Object.assign(medicationToDelete, tmpPatientMedication);
           HCService.agregarAlHistorial(function(){
-            console.log("Entra a la función de borrado de un tratamiento de profilaxis");
-            medicationToDelete.$delete(function(){
-            console.log('Supuestamente pudo borrar tratamiento de profilaxis creado');
-        },  console.error);
-        });
+            return $q(function(resolve, reject){
+              console.log("Entra a la función de borrado de un tratamiento de profilaxis");
+              medicationToDelete.$delete({id:treatmentToDelete.id}, function() {
+                console.log('Supuestamente pudo borrar el tratamiento de profilaxis creado');
+                resolve();
+              },  function(err){
+                console.error(err);
+                reject();
+              });
+            })
+          });
           toastr.success('Medicación guardada con exito');
           $uibModalInstance.close('created');
         }, showError);
@@ -177,7 +183,7 @@
       }
 
       function parseError(errorData){
-        if(errorData.startsWith("AssertionError")){
+        if(errorData && (typeof errorData === 'string' || errorData instanceof String) && errorData.startsWith("AssertionError")){
           var errorAuxArray = (errorData.split('\n'));
           var errorToReturn = errorAuxArray[1];
           return errorToReturn;

@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('EditPatientProfilaxisMedicationController', editPatientProfilaxisMedicationController);
 
-	  editPatientProfilaxisMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication', 'PatientProblem', '$uibModalInstance', 'patientMedication', 'SessionService'];
+	  editPatientProfilaxisMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication', 'PatientProblem', '$uibModalInstance', 'patientMedication', 'SessionService', '$q'];
 
-    function editPatientProfilaxisMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication, PatientProblem, $uibModalInstance, patientMedication, SessionService ) {
+    function editPatientProfilaxisMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication, PatientProblem, $uibModalInstance, patientMedication, SessionService, $q ) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.save = save;
@@ -89,13 +89,21 @@
           medicationToUnedit.endDate = null; 
         }
         delete medicationToUnedit.medicationPresentation;
+
         HCService.agregarAlHistorial(function(){
-          medicationToUnedit.$delete(function(){
-            console.log('Supuestamente pudo borrar el tratamiento de profilaxis editado');
-            medicationToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
-              console.log('Supuestamente pudo volver a crear el tratamiento de profilaxis previo a ser editado');
-            },  console.error);
-          },  console.error);
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer edicion de un tratamiento de profilaxis");
+            medicationToUnedit.$delete(function(){
+              console.log('Supuestamente pudo borrar el tratamiento de profilaxis editado');
+              medicationToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear el tratamiento de profilaxis previo a ser editado');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
         });
 
         PatientMedication.update(tmpPatientMedication, function (response) {
@@ -185,13 +193,21 @@
 
         var medicationToUnmarkAsError = new PatientMedication();
         Object.assign(medicationToUnmarkAsError, tmpPatientMedication);
+
         HCService.agregarAlHistorial(function(){
-          medicationToUnmarkAsError.$delete(function(){
-            console.log('Supuestamente pudo borrar el tratamiento de profilaxis marcado como error');
-            medicationToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
-              console.log('Supuestamente pudo volver a crear el tratamiento de profilaxis previo a ser marcado como error');
-            },  console.error);
-          },  console.error);
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer marcado de error de un tratamiento de profilaxis");
+            medicationToUnmarkAsError.$delete(function(){
+              console.log('Supuestamente pudo borrar el tratamiento de profilaxis marcado como error');
+              medicationToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear el tratamiento de profilaxis previo a ser marcado como error');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
         });
 
         tmpPatientMedication.state = PatientMedication.stateChoices.STATE_ERROR;

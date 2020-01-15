@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('EditPatientVaccineController', editPatientVaccineController);
 
-	  editPatientVaccineController.$inject = ['$state', 'HCService', 'PatientVaccine', 'toastr', 'moment', 'Vaccine', '$uibModalInstance', 'patientVaccine', 'SessionService'];
+	  editPatientVaccineController.$inject = ['$state', 'HCService', 'PatientVaccine', 'toastr', 'moment', 'Vaccine', '$uibModalInstance', 'patientVaccine', 'SessionService', '$q'];
 
-    function editPatientVaccineController ($state, HCService, PatientVaccine, toastr, moment, Vaccine, $uibModalInstance, patientVaccine, SessionService) {
+    function editPatientVaccineController ($state, HCService, PatientVaccine, toastr, moment, Vaccine, $uibModalInstance, patientVaccine, SessionService, $q) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.save = save;
@@ -48,13 +48,21 @@
         var vaccineToUnedit = new PatientVaccine();
         vaccineToUnedit.appliedDate = moment(vaccineToUnedit.appliedDate).format('YYYY-MM-DD');
         Object.assign(vaccineToUnedit, tmpVaccine);
+
         HCService.agregarAlHistorial(function(){
-          vaccineToUnedit.$delete(function(){
-            console.log('Supuestamente pudo borrar la vacuna editada');
-            vaccineToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
-              console.log('Supuestamente pudo volver a crear la vacuna previo a ser editada');
-            },  console.error);
-          },  console.error);
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer edicion de una vacuna");
+            vaccineToUnedit.$delete(function(){
+              console.log('Supuestamente pudo borrar la vacuna editada');
+              vaccineToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear la vacuna previo a ser editada');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
         });
 
         PatientVaccine.update(tmpPatientVaccine,function() {
@@ -114,13 +122,21 @@
 
         var vaccineToUnmarkAsError = new PatientVaccine();
         Object.assign(vaccineToUnmarkAsError, tmpVaccine);
+
         HCService.agregarAlHistorial(function(){
-          vaccineToUnmarkAsError.$delete(function(){
-            console.log('Supuestamente pudo borrar la vacuna marcada como error');
-            vaccineToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
-              console.log('Supuestamente pudo volver a crear la vacuna previo a ser marcada como error');
-            },  console.error);
-          },  console.error);
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer marcado de error de una vacuna");
+            vaccineToUnmarkAsError.$delete(function(){
+              console.log('Supuestamente pudo borrar la vacuna marcada como error');
+              vaccineToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear la vacuna previo a ser marcada como error');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
         });
 
         tmpVaccine.state = PatientVaccine.stateChoices.STATE_ERROR;
