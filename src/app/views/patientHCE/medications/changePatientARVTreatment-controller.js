@@ -14,7 +14,7 @@
       vm.patientArvTreatment = {};
       vm.cancel = cancel;
       vm.canSave = canSave;
-
+      vm.originalObservations = patientArvTreatment.observations;
 
       vm.changeReasons = ['Toxicidad', 
                           'Abandono',
@@ -45,12 +45,14 @@
         
         var treatmentToUnedit = new PatientArvTreatment();
         Object.assign(treatmentToUnedit, tmpPatientArvTreatment);
-
         HCService.agregarAlHistorial(function(){
           return $q(function(resolve, reject){
             console.log("Entra a la función de deshacer edicion de un arvTreatmente");
             treatmentToUnedit.$delete(function(){
               console.log('Supuestamente pudo borrar el arvTreatment editado');
+              treatmentToUnedit.changeReason = null;
+              treatmentToUnedit.endDate = null;
+              treatmentToUnedit.observations = vm.originalObservations;
               treatmentToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
                 console.log('Supuestamente pudo volver a crear el arvTreatment antes de ser editado');
               },  console.error);

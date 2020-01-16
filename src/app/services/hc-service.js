@@ -397,7 +397,7 @@
                 srv.newPatientProblem = null;
                 var problemToDelete = new PatientProblem();
                 problemToDelete.id = patientProblem.id;
-                HCService.agregarAlHistorial(function(){
+                agregarAlHistorial(function(){
                     return $q(function(resolve, reject){
                         console.log("Entra a la función de borrado de un problema");
                         problemToDelete.$delete(function() {

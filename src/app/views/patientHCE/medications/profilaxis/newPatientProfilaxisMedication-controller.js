@@ -84,7 +84,7 @@
           HCService.agregarAlHistorial(function(){
             return $q(function(resolve, reject){
               console.log("Entra a la función de borrado de un tratamiento de profilaxis");
-              medicationToDelete.$delete({id:treatmentToDelete.id}, function() {
+              medicationToDelete.$delete({id:medicationToDelete.id}, function() {
                 console.log('Supuestamente pudo borrar el tratamiento de profilaxis creado');
                 resolve();
               },  function(err){

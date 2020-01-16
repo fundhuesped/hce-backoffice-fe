@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('PatientLaboratoryResultsListController', patientLaboratoryResultsListController);
 
-	   patientLaboratoryResultsListController.$inject = ['$state', 'HCService', 'PatientLaboratoryResult', 'Determinacion', 'toastr', 'moment', '$uibModal', 'lodash', 'SessionService'];
+	   patientLaboratoryResultsListController.$inject = ['$state', 'HCService', 'PatientLaboratoryResult', 'Determinacion', 'toastr', 'moment', '$uibModal', 'lodash', 'SessionService', '$q'];
 
-    function patientLaboratoryResultsListController ($state, HCService, PatientLaboratoryResult, Determinacion, toastr, moment, $uibModal, lodash, SessionService) {
+    function patientLaboratoryResultsListController ($state, HCService, PatientLaboratoryResult, Determinacion, toastr, moment, $uibModal, lodash, SessionService, $q) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.searchPatientLaboratoryResults = searchPatientLaboratoryResults;
