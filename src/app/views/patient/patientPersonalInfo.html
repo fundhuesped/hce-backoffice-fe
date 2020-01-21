@@ -174,7 +174,9 @@
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <abm-form-group>
                                     <label abm-label for="protocol">Protocolo</label>
-                                    <input abm-form-control name="protocol" class="form-control" ng-model="PacienteCtrl.paciente.protocol" ng-options="protocol as protocol.name for protocol in PacienteCtrl.protocols track by protocol.id">
+                                    <select abm-form-control class="form-control" name="protocol" ng-model="PacienteCtrl.paciente.protocol" ng-options="protocol as protocol.name for protocol in PacienteCtrl.protocols track by protocol.id">
+                                        <option value="" selected="selected">---Seleccione---</option>
+                                    </select>
                                 </abm-form-group>
                             </div>
                         </div>

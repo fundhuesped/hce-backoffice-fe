@@ -4,7 +4,7 @@
     /*jshint latedef: nofunc */
 
     
-    function patientPersonalInfoCtrl ($loading, $uibModalInstance, $filter, $uibModal, $location, moment, paciente, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Protocol, Paciente, Country, toastr, SessionService) {
+    function patientPersonalInfoCtrl ($loading, $uibModalInstance, $filter, $uibModal, $location, moment, paciente, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Paciente, Country, toastr, SessionService, Protocol) {
         var vm = this;
         vm.paciente = {};
         vm.editing = true;
