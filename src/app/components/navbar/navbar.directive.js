@@ -31,6 +31,7 @@
       vm.years = null;
       vm.formatedBirthDate = formatedBirthDate;
       vm.openPacientePersonalInfoModal = openPacientePersonalInfoModal;
+      vm.isDirty = HCService.isDirty();
 
       Object.defineProperty(
           vm,
