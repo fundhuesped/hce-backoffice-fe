@@ -104,6 +104,8 @@
                 vm.selectedDistrict = (vm.paciente.location?vm.paciente.location.district:null);
 
                 vm.paciente.primaryPhoneMessage = (vm.paciente.primaryPhoneMessage?vm.paciente.primaryPhoneMessage:false);
+                
+                vm.paciente.protocol = (vm.paciente.protocol?vm.paciente.protocol:null);
 
             },function(){displayComunicationError('app');});
 
