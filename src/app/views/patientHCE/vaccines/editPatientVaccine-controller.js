@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('EditPatientVaccineController', editPatientVaccineController);
 
-	  editPatientVaccineController.$inject = ['$state', 'HCService', 'PatientVaccine', 'toastr', 'moment', 'Vaccine', '$uibModalInstance', 'patientVaccine', 'SessionService'];
+	  editPatientVaccineController.$inject = ['$state', 'HCService', 'PatientVaccine', 'toastr', 'moment', 'Vaccine', '$uibModalInstance', 'patientVaccine', 'SessionService', '$q'];
 
-    function editPatientVaccineController ($state, HCService, PatientVaccine, toastr, moment, Vaccine, $uibModalInstance, patientVaccine, SessionService) {
+    function editPatientVaccineController ($state, HCService, PatientVaccine, toastr, moment, Vaccine, $uibModalInstance, patientVaccine, SessionService, $q) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.save = save;
@@ -19,6 +19,7 @@
       vm.canSave = canSave;
       vm.markAsError = markAsError;
       vm.error = null;
+      vm.uneditedVaccine = patientVaccine;
 
       vm.applicationDateCalendar = {
         altInputFormats: ['d!-M!-yyyy'],
@@ -44,7 +45,28 @@
           return;
         }
 
+        var vaccineToUnedit = new PatientVaccine();
+        vaccineToUnedit.appliedDate = moment(vaccineToUnedit.appliedDate).format('YYYY-MM-DD');
+        Object.assign(vaccineToUnedit, tmpVaccine);
+
+        HCService.agregarAlHistorial(function(){
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer edicion de una vacuna");
+            vaccineToUnedit.$delete(function(){
+              console.log('Supuestamente pudo borrar la vacuna editada');
+              vaccineToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear la vacuna previo a ser editada');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
+        });
+
         PatientVaccine.update(tmpPatientVaccine,function() {
+          HCService.markAsDirty();
           toastr.success('Aplicación guardada con exito');
           $uibModalInstance.close('edited');
         }, showError);
@@ -96,10 +118,31 @@
 
       function markAsError() {
         var tmpVaccine = angular.copy(vm.patientVaccine);
-        tmpVaccine.state = PatientVaccine.stateChoices.STATE_ERROR;
         tmpVaccine.appliedDate = moment(tmpVaccine.appliedDate).format('YYYY-MM-DD');
+
+        var vaccineToUnmarkAsError = new PatientVaccine();
+        Object.assign(vaccineToUnmarkAsError, tmpVaccine);
+
+        HCService.agregarAlHistorial(function(){
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer marcado de error de una vacuna");
+            vaccineToUnmarkAsError.$delete(function(){
+              console.log('Supuestamente pudo borrar la vacuna marcada como error');
+              vaccineToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear la vacuna previo a ser marcada como error');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
+        });
+
+        tmpVaccine.state = PatientVaccine.stateChoices.STATE_ERROR;
         PatientVaccine.update(tmpVaccine, function (response) {
-            toastr.success('Aplicación marcada como error');
+          HCService.markAsDirty();
+          toastr.success('Aplicación marcada como error');
           $uibModalInstance.close('markedError');
         }, function (err) {
             console.error(err);

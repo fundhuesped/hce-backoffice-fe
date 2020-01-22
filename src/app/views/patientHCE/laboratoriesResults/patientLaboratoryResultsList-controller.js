@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('PatientLaboratoryResultsListController', patientLaboratoryResultsListController);
 
-	   patientLaboratoryResultsListController.$inject = ['$state', 'HCService', 'PatientLaboratoryResult', 'Determinacion', 'toastr', 'moment', '$uibModal', 'lodash', 'SessionService'];
+	   patientLaboratoryResultsListController.$inject = ['$state', 'HCService', 'PatientLaboratoryResult', 'Determinacion', 'toastr', 'moment', '$uibModal', 'lodash', 'SessionService', '$q'];
 
-    function patientLaboratoryResultsListController ($state, HCService, PatientLaboratoryResult, Determinacion, toastr, moment, $uibModal, lodash, SessionService) {
+    function patientLaboratoryResultsListController ($state, HCService, PatientLaboratoryResult, Determinacion, toastr, moment, $uibModal, lodash, SessionService, $q) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.searchPatientLaboratoryResults = searchPatientLaboratoryResults;
@@ -31,8 +31,6 @@
       vm.categoriasDeterminaciones = [];
       vm.toggleCategoria = toggleCategoria;
       vm.todayDate = new Date();
-      vm.deleteChanges = deleteChanges;
-
 
       vm.isLowerThanLimit = isLowerThanLimit;
       vm.isBiggerThanLimit = isBiggerThanLimit;
@@ -104,15 +102,6 @@
         searchPatientLaboratoryResults();
       }
 
-      function deleteChanges(laboratoryResult){
-        var tmpLaboratoryResult = new PatientLaboratoryResult();
-        tmpLaboratoryResult.id = laboratoryResult.id;
-        tmpLaboratoryResult.$delete(function(){
-          toastr.success('Laboratorio eliminado con éxito');
-          searchPatientLaboratoryResults();
-        },showError());
-      }
-
       function save() {
         var tmpNewLab = angular.copy(vm.newLab);
         var determinacionValor;
@@ -133,7 +122,22 @@
               tmpNewLab.values.push(determinacionValor);
             }
         }
+
         tmpNewLab.$save({pacienteId:HCService.currentPaciente.id}, function () {
+          HCService.markAsDirty();
+          var laboratoryToDelete = new PatientLaboratoryResult();
+          Object.assign(laboratoryToDelete, tmpNewLab);
+          HCService.agregarAlHistorial( function(){
+            return $q(function(resolve, reject){
+            console.log("Entra a la función de borrado de un laboratorio");
+            laboratoryToDelete.$delete({id:laboratoryToDelete.id}, function() {
+              console.log('Supuestamente pudo borrar el laboratorio creado');
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })});
           toastr.success('Nuevo laboratorio ingresado con éxito.');
           HCService.getCurrentEvolution();
           activate();
@@ -206,7 +210,7 @@
 
 
       function parseError(errorData){
-        if(errorData.startsWith("AssertionError")){
+        if(errorData && (typeof errorData === 'string' || errorData instanceof String) && errorData.startsWith("AssertionError")){
           var errorAuxArray = (errorData.split('\n'));
           var errorToReturn = errorAuxArray[1];
           return errorToReturn;

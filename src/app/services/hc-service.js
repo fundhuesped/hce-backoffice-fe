@@ -35,7 +35,6 @@
         srv.cleanEvolution = cleanEvolution;
         srv.discardChanges = discardChanges;
         srv.historyStack = null;
-        srv.initializeHistory = initializeHistory;
         srv.agregarAlHistorial = agregarAlHistorial;
         srv.revertHistory = revertHistory;
         srv.hasBeenModified = false;
@@ -177,13 +176,16 @@
         }
 
         function revertHistory(){
+            if(!srv.historyStack.length){
+                return;
+            }
             var revertChange = null;
-            while(srv.historyStack.length){
-                revertChange = srv.historyStack.pop();
-                revertChange();
+            revertChange = srv.historyStack.pop();
+            revertChange().then(function(){
                 console.log("Se revirtio una accion guardada en el historial");
                 console.log(srv.historyStack);
-            }
+                revertHistory();
+            }).catch(console.trace);
         }
 
         function agregarAlHistorial(revertingFunction){
@@ -195,11 +197,6 @@
             console.log("Se pusheo una funcion al historial!");
             console.log(srv.historyStack);
         }
-
-        function initializeHistory(){
-            console.log("Se llamo a initializeHistory() exitosamente!");
-        }
-
 
         function getCurrentEvolution(){
             try{
@@ -401,10 +398,16 @@
                 var problemToDelete = new PatientProblem();
                 problemToDelete.id = patientProblem.id;
                 agregarAlHistorial(function(){
-                    console.log("Entra a la función de borrado de un problema");
-                    problemToDelete.$delete(function(){
-                    console.log('Supuestamente pudo borrar problema creado');
-                },  console.error);
+                    return $q(function(resolve, reject){
+                        console.log("Entra a la función de borrado de un problema");
+                        problemToDelete.$delete(function() {
+                            console.log('Supuestamente pudo borrar el problema creado');
+                            resolve();
+                        },  function(err){
+                            console.error(err);
+                            reject();
+                        });
+                    })
                 });
             }, function (err) {
                 console.log(err);

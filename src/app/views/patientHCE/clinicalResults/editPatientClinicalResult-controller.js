@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('EditPatientClinicalResultController', editPatientClinicalResultController);
 
-	  editPatientClinicalResultController.$inject = ['$state', 'HCService', 'PatientClinicalResult', 'toastr', 'moment', 'ClinicalStudy', '$uibModalInstance', 'patientClinicalResult', 'SessionService'];
+	  editPatientClinicalResultController.$inject = ['$state', 'HCService', 'PatientClinicalResult', 'toastr', 'moment', 'ClinicalStudy', '$uibModalInstance', 'patientClinicalResult', 'SessionService', '$q'];
 
-    function editPatientClinicalResultController ($state, HCService, PatientClinicalResult, toastr, moment, ClinicalStudy, $uibModalInstance, patientClinicalResult, SessionService) {
+    function editPatientClinicalResultController ($state, HCService, PatientClinicalResult, toastr, moment, ClinicalStudy, $uibModalInstance, patientClinicalResult, SessionService, $q) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.save = save;
@@ -21,6 +21,7 @@
       vm.markAsError = markAsError;
       vm.canEdit = canEdit;
       vm.canEditPermission = false;
+      vm.uneditedClinicalResult = patientClinicalResult;
       vm.studyDateCalendar = {
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
@@ -36,10 +37,31 @@
       activate();
 
       function save() {
-
         var tmpPatientClinicalResult = angular.copy(vm.patientClinicalResult);
         tmpPatientClinicalResult.studyDate = moment(tmpPatientClinicalResult.studyDate).format('YYYY-MM-DD');
+
+        var clinicalResultToUniedit = new PatientClinicalResult();
+        Object.assign(clinicalResultToUniedit, vm.uneditedClinicalResult);
+        clinicalResultToUniedit.studyDate = moment(clinicalResultToUniedit.studyDate).format('YYYY-MM-DD');
+
+        HCService.agregarAlHistorial(function(){
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer marcado de error de un estudio clinico");
+            clinicalResultToUniedit.$delete(function(){
+              console.log('Supuestamente pudo borrar el resultado clinico editado');
+              clinicalResultToUniedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear el resultado clinico previo a ser editado');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
+        });
+
         PatientClinicalResult.update(tmpPatientClinicalResult, function (response) {
+          HCService.markAsDirty();
           toastr.success('Resultado guardado con éxito');
           $uibModalInstance.close('edited');
         }, showError);
@@ -99,10 +121,31 @@
 
       function markAsError() {
         var tmpPatientClinicalResult = angular.copy(vm.patientClinicalResult);
-        tmpPatientClinicalResult.state = PatientClinicalResult.stateChoices.STATE_ERROR;
         tmpPatientClinicalResult.studyDate = moment(tmpPatientClinicalResult.studyDate).format('YYYY-MM-DD');
+
+        var clinicalResultToUnmarkAsError = new PatientClinicalResult();
+        Object.assign(clinicalResultToUnmarkAsError, tmpPatientClinicalResult);
+
+        HCService.agregarAlHistorial(function(){
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer marcado de error de un estudio clinico");
+            clinicalResultToUnmarkAsError.$delete(function(){
+              console.log('Supuestamente pudo borrar el resultado clinico marcado como error');
+              clinicalResultToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear el resultado clinico previo a ser marcado como error');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
+        });
+
+        tmpPatientClinicalResult.state = PatientClinicalResult.stateChoices.STATE_ERROR;
         PatientClinicalResult.update(tmpPatientClinicalResult, function (response) {
-            toastr.success('Resultado marcado como error');
+          HCService.markAsDirty();
+          toastr.success('Resultado marcado como error');
           $uibModalInstance.close('markedError');
         }, function (err) {
             console.error(err);
