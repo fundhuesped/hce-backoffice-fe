@@ -111,6 +111,8 @@
       function closeEvolution() {
         HCService.closeEvolution().then(function() {
           toastr.success('Visita cerrada con exito');
+          HCService.unmarkAsDirty();
+          HCService.cleanHistoryStack();
           $state.go('app.patientSearch');
         }, function (error) {
           if(error=='ISDIRTY'){
@@ -118,7 +120,6 @@
             .then(function (resolution) {
               if(resolution==='save'){
                 HCService.saveNewEvolution(function () {
-                  HCService.unmarkAsDirty();
                   closeEvolution(function () {
                   },
                   function (error) {
@@ -130,7 +131,6 @@
               }
               if(resolution=='discard'){
                 HCService.discardChanges(function () {
-                  HCService.unmarkAsDirty();
                   closeEvolution(function () {
                     // body...
                   },
