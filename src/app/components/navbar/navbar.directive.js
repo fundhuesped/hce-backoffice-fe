@@ -120,6 +120,7 @@
             .then(function (resolution) {
               if(resolution==='save'){
                 HCService.saveNewEvolution(function () {
+                  HCService.unmarkAsDirty();
                   closeEvolution(function () {
                   },
                   function (error) {
@@ -131,6 +132,7 @@
               }
               if(resolution=='discard'){
                 HCService.discardChanges(function () {
+                  HCService.unmarkAsDirty();
                   closeEvolution(function () {
                     // body...
                   },
