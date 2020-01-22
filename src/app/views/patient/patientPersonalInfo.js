@@ -4,9 +4,8 @@
     /*jshint latedef: nofunc */
 
     
-    function patientPersonalInfoCtrl ($loading, $uibModalInstance, $filter, $uibModal, $location, moment, paciente, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Paciente, Country, toastr, SessionService) {
+    function patientPersonalInfoCtrl ($loading, $uibModalInstance, $filter, $uibModal, $location, moment, paciente, Document, Sex, Province, District, Location, SocialService, CivilStatus, Education, Paciente, Country, toastr, SessionService, Protocol) {
         var vm = this;
-
         vm.paciente = {};
         vm.editing = true;
         vm.errorMessage = null;
@@ -84,6 +83,10 @@
                 Education.getFullActiveList(function(educationTypes){
                     vm.educationTypes = educationTypes;
                 }, function(){displayComunicationError('app');});
+
+                Protocol.getFullActiveList(function(protocols){
+                    vm.protocols = protocols;
+                }, function(){displayComunicationError('app');});
                 
 
                 vm.selectedProvince = (vm.paciente.location?{id:vm.paciente.location.district.province.id}:null);
@@ -101,6 +104,8 @@
                 vm.selectedDistrict = (vm.paciente.location?vm.paciente.location.district:null);
 
                 vm.paciente.primaryPhoneMessage = (vm.paciente.primaryPhoneMessage?vm.paciente.primaryPhoneMessage:false);
+                
+                vm.paciente.protocol = (vm.paciente.protocol?vm.paciente.protocol:null);
 
             },function(){displayComunicationError('app');});
 
@@ -233,5 +238,5 @@
             }
         }
     }
-    angular.module('hce.patient').controller('PatientPersonalInfoCtrl',['$loading','$uibModalInstance','$filter', '$uibModal', '$location', 'moment', 'paciente','Document', 'Sex', 'Province', 'District', 'Location', 'SocialService', 'CivilStatus', 'Education', 'Paciente', 'Country', 'toastr', 'SessionService', patientPersonalInfoCtrl]);
+    angular.module('hce.patient').controller('PatientPersonalInfoCtrl',['$loading','$uibModalInstance','$filter', '$uibModal', '$location', 'moment', 'paciente','Document', 'Sex', 'Province', 'District', 'Location', 'SocialService', 'CivilStatus', 'Education', 'Paciente', 'Country', 'toastr', 'SessionService', 'Protocol', patientPersonalInfoCtrl]);
 })();
