@@ -31,6 +31,7 @@
       vm.years = null;
       vm.formatedBirthDate = formatedBirthDate;
       vm.openPacientePersonalInfoModal = openPacientePersonalInfoModal;
+      vm.isDirty = HCService.isDirty();
 
       Object.defineProperty(
           vm,
@@ -110,6 +111,8 @@
       function closeEvolution() {
         HCService.closeEvolution().then(function() {
           toastr.success('Visita cerrada con exito');
+          HCService.unmarkAsDirty();
+          HCService.cleanHistoryStack();
           $state.go('app.patientSearch');
         }, function (error) {
           if(error=='ISDIRTY'){

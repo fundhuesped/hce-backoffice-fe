@@ -40,6 +40,7 @@
         srv.hasBeenModified = false;
         srv.markAsDirty = markAsDirty;
         srv.unmarkAsDirty = unmarkAsDirty;
+        srv.cleanHistoryStack = cleanHistoryStack;
 
         //Problems
         srv.getActivePatientProblems = getActivePatientProblems;
@@ -186,6 +187,10 @@
                 console.log(srv.historyStack);
                 revertHistory();
             }).catch(console.trace);
+        }
+
+        function cleanHistoryStack(){
+            srv.historyStack = null;
         }
 
         function agregarAlHistorial(revertingFunction){
