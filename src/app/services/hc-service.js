@@ -177,7 +177,7 @@
         }
 
         function revertHistory(){
-            if(!srv.historyStack.length){
+            if(!srv.historyStack || !srv.historyStack.length){
                 return;
             }
             var revertChange = null;
