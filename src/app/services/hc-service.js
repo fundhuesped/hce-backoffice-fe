@@ -41,6 +41,7 @@
         srv.markAsDirty = markAsDirty;
         srv.unmarkAsDirty = unmarkAsDirty;
         srv.cleanHistoryStack = cleanHistoryStack;
+        srv.finishDiscardChanges = finishDiscardChanges;
 
         //Problems
         srv.getActivePatientProblems = getActivePatientProblems;
@@ -55,7 +56,6 @@
         srv.activeProblemsCount = null;
         srv.summaryActiveProblems = null;
         srv.clearNewPatientProblem = clearNewPatientProblem;
-
 
         //Vaccines
         srv.getPatientVaccines = getPatientVaccines;
@@ -91,6 +91,7 @@
         }
 
         function isDirty() {
+            if(srv.hasBeenModified) return true;
             if( srv.currentEvolution && !srv.currentEvolution.id ){
                 return true;
             }
@@ -100,7 +101,6 @@
             if(srv.currentEvolution && srv.currentEvolution.reason != srv.currentEvolutionCopy.reason){
                 return true;
             }
-            if(srv.hasBeenModified) return true;
             return false;
         }
 
@@ -319,6 +319,13 @@
                 }
                 console.log(err);
             });
+        }
+
+        function finishDiscardChanges() {
+            srv.currentEvolution = null;
+            srv.getEvolutions();
+            srv.hasBeenModified = false;
+            srv.historyStack = null;
         }
 
         function cancelEvolution(evolution) {
