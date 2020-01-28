@@ -40,7 +40,6 @@
       vm.openNewRecetaModal = openNewRecetaModal;
       vm.hasActiveMedications = hasActiveMedications;
       vm.isSearching = false;
-      vm.deleteChanges = deleteChanges;
       activate();
 
 
@@ -71,15 +70,6 @@
 
       function pageChanged() {
         searchPatientProfilaxisMedications();
-      }
-
-      function deleteChanges(profilaxisMedication){
-        var tmpProfilaxisMedication = new PatientMedication();
-        tmpProfilaxisMedication.id = profilaxisMedication.id;
-        tmpProfilaxisMedication.$delete(function(){
-          toastr.success('Medicación eliminada con exito');
-          searchPatientProfilaxisMedications();
-        }, showError);
       }
 
       function searchPatientProfilaxisMedications() {

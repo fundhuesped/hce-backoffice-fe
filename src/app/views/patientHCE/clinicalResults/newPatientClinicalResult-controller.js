@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewPatientClinicalResultsController', newPatientClinicalResultsController);
 
-	  newPatientClinicalResultsController.$inject = ['$state', 'HCService', 'PatientClinicalResult', 'toastr', 'moment', 'ClinicalStudy', '$uibModalInstance', '$timeout'];
+	  newPatientClinicalResultsController.$inject = ['$state', 'HCService', 'PatientClinicalResult', 'toastr', 'moment', 'ClinicalStudy', '$uibModalInstance', '$timeout', '$q'];
 
-    function newPatientClinicalResultsController ($state, HCService, PatientClinicalResult, toastr, moment, ClinicalStudy, $uibModalInstance, $timeout) {
+    function newPatientClinicalResultsController ($state, HCService, PatientClinicalResult, toastr, moment, ClinicalStudy, $uibModalInstance, $timeout, $q) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.save = save;
@@ -40,6 +40,23 @@
         tmpPatientClinicalResult.studyDate = moment(tmpPatientClinicalResult.studyDate).format('YYYY-MM-DD');
 
         tmpPatientClinicalResult.$save({pacienteId:HCService.currentPaciente.id},function() {
+          HCService.markAsDirty();
+          var clinicalResultToDelete = new PatientClinicalResult();
+          Object.assign(clinicalResultToDelete, tmpPatientClinicalResult);
+
+          HCService.agregarAlHistorial(function(){
+            return $q(function(resolve, reject){
+              console.log("Entra a la función de borrado de un estudio clinico");
+              clinicalResultToDelete.$delete(function(){
+                console.log('Supuestamente pudo eliminar el estudio clinico creado');
+                resolve();
+              },  function(err){
+                console.error(err);
+                reject();
+              });
+            })
+          });
+
           toastr.success('Resultado guardado con exito');
           $uibModalInstance.close('created');
         }, showError);
@@ -105,7 +122,7 @@
       }
 
       function parseError(errorData){
-        if(errorData.startsWith("AssertionError")){
+        if(errorData && (typeof errorData === 'string' || errorData instanceof String) && errorData.startsWith("AssertionError")){
           var errorAuxArray = (errorData.split('\n'));
           var errorToReturn = errorAuxArray[1];
           return errorToReturn;

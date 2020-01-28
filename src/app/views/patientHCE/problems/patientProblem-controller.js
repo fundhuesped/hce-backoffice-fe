@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('PatientProblemController', patientProblemController);
 
-	patientProblemController.$inject = ['$state', 'HCService', 'toastr', 'moment', 'Problem', '$uibModal', '$uibModalInstance', 'PatientProblem', 'SessionService','patientProblem'];
+	patientProblemController.$inject = ['$state', 'HCService', 'toastr', 'moment', 'Problem', '$uibModal', '$uibModalInstance', 'PatientProblem', 'SessionService','patientProblem', '$q'];
 
-    function patientProblemController ($state, HCService, toastr, moment, Problem, $uibModal, $uibModalInstance, PatientProblem, SessionService, patientProblem) {
+    function patientProblemController ($state, HCService, toastr, moment, Problem, $uibModal, $uibModalInstance, PatientProblem, SessionService, patientProblem, $q) {
     	var vm = this;
     	vm.cancel = cancel;
     	vm.problem = null;
@@ -91,13 +91,19 @@
         Object.assign(problemToUnedit, vm.originalProblem );
 
         HCService.agregarAlHistorial(function(){
-          problemToUnedit.$delete(function(){
-            console.log('Supuestamente pudo borrar el problema actualizado');
-            
-            problemToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
-              console.log('Supuestamente pudo volver a crear el problema antes de ser editado');
-            },  console.error);
-          },  console.error);
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer edicion de un problema");
+            problemToUnedit.$delete(function(){
+              console.log('Supuestamente pudo borrar el problema editado');
+              problemToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear el problema antes de ser editado');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
         });
 
         PatientProblem.update(tmpProblem, function (response) {
@@ -122,12 +128,19 @@
           Object.assign(problemToUnmarkAsError, tmpProblem);
 
           HCService.agregarAlHistorial(function(){
-            problemToUnmarkAsError.$delete(function(){
-              console.log('Supuestamente pudo borrar problema marcado como error');
-              problemToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
-                console.log('Supuestamente pudo volver a crear el problema que se habia marcado como error');
-              },  console.error);
-            },  console.error);
+            return $q(function(resolve, reject){
+              console.log("Entra a la función de deshacer marcado de error de un problema");
+              problemToUnmarkAsError.$delete(function(){
+                console.log('Supuestamente pudo borrar problema marcado como error');
+                problemToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+                  console.log('Supuestamente pudo volver a crear el problema que se habia marcado como error');
+                },  console.error);
+                resolve();
+              },  function(err){
+                console.error(err);
+                reject();
+              });
+            })
           });
           
       		tmpProblem.state = PatientProblem.stateChoices.STATE_ERROR;

@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('EditPatientMedicationController', editPatientMedicationController);
 
-	  editPatientMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication', '$uibModalInstance', 'patientMedication', 'SessionService'];
+	  editPatientMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication', '$uibModalInstance', 'patientMedication', 'SessionService', '$q'];
 
-    function editPatientMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication, $uibModalInstance, patientMedication, SessionService) {
+    function editPatientMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication, $uibModalInstance, patientMedication, SessionService, $q) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.save = save;
@@ -19,6 +19,7 @@
       vm.markAsError = markAsError;
       vm.changeStatus = changeStatus;
       vm.canEdit = canEdit;
+      vm.uneditedPatientMedication = patientMedication;
       vm.hasPermissions = false;
 
       Object.defineProperty(
@@ -73,7 +74,32 @@
         if(tmpPatientMedication.endDate && tmpPatientMedication.state == 'Closed'){
           tmpPatientMedication.endDate = moment(tmpPatientMedication.endDate).format('YYYY-MM-DD');
         }
+
+        var medicationToUnedit = new PatientMedication();
+        Object.assign(medicationToUnedit, vm.uneditedPatientMedication);
+        medicationToUnedit.startDate = moment(medicationToUnedit.startDate).format('YYYY-MM-DD');
+        if(medicationToUnedit.endDate && medicationToUnedit.state == 'Closed'){
+          medicationToUnedit.endDate = moment(medicationToUnedit.endDate).format('YYYY-MM-DD');
+        }
+
+        HCService.agregarAlHistorial(function(){
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer edicion de un medicamento general");
+            medicationToUnedit.$delete(function(){
+              console.log('Supuestamente pudo borrar la medicacion general creada');
+              medicationToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear la medicacion general previo a ser editada');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
+        });
+
         PatientMedication.update(tmpPatientMedication, function (response) {
+          HCService.markAsDirty();
           toastr.success('Medicación guardada con exito');
           $uibModalInstance.close('edited');
         }, showError);
@@ -145,13 +171,34 @@
 
       function markAsError() {
         var tmpPatientMedication = angular.copy(vm.patientMedication);
-        tmpPatientMedication.state = PatientMedication.stateChoices.STATE_ERROR;
         tmpPatientMedication.startDate = moment(tmpPatientMedication.startDate).format('YYYY-MM-DD');
         if(tmpPatientMedication.endDate){
           tmpPatientMedication.endDate = moment(tmpPatientMedication.endDate).format('YYYY-MM-DD');
         }
+
+        var medicationToUnmarkAsError = new PatientMedication();
+        Object.assign(medicationToUnmarkAsError, tmpPatientMedication);
+
+        HCService.agregarAlHistorial(function(){
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer marcado de error de un medicamento general");
+            medicationToUnmarkAsError.$delete(function(){
+              console.log('Supuestamente pudo borrar la medicacion general marcada como error');
+              medicationToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear la medicacion general previo a ser marcada como error');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
+        });
+
+        tmpPatientMedication.state = PatientMedication.stateChoices.STATE_ERROR;
         PatientMedication.update(tmpPatientMedication, function (response) {
-            toastr.success('Medicación marcada como error');
+          HCService.markAsDirty();
+          toastr.success('Medicación marcada como error');
           $uibModalInstance.close('markedError');
         }, function (err) {
             console.error(err);

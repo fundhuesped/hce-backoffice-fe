@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('NewPatientMedicationController', newPatientMedicationController);
 
-	  newPatientMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication','PatientProblem', '$uibModalInstance', '$timeout'];
+	  newPatientMedicationController.$inject = ['$state', 'HCService', 'PatientMedication', 'toastr', 'moment', 'Medication','PatientProblem', '$uibModalInstance', '$timeout', '$q'];
 
-    function newPatientMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication,PatientProblem, $uibModalInstance, $timeout) {
+    function newPatientMedicationController ($state, HCService, PatientMedication, toastr, moment, Medication,PatientProblem, $uibModalInstance, $timeout, $q) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.newPatientMedication = new PatientMedication();
@@ -69,7 +69,6 @@
           vm.error = 'La fecha de fin no puede ser menor a la fecha de inicio';
           return;
         }
-
         var tmpPatientMedication = angular.copy(vm.newPatientMedication);
         tmpPatientMedication.paciente = HCService.currentPaciente.id;
         tmpPatientMedication.startDate = moment(tmpPatientMedication.startDate).format('YYYY-MM-DD');
@@ -78,6 +77,23 @@
         }
 
         tmpPatientMedication.$save({pacienteId:HCService.currentPaciente.id},function() {
+          HCService.markAsDirty();
+          var medicationToDelete = new PatientMedication();
+          Object.assign(medicationToDelete, tmpPatientMedication);
+
+          HCService.agregarAlHistorial(function(){
+            return $q(function(resolve, reject){
+              console.log("Entra a la función de borrado de un medicamento general");
+              medicationToDelete.$delete(function(){
+              console.log('Supuestamente pudo borrar medicamento general creado');
+                resolve();
+              },  function(err){
+                console.error(err);
+                reject();
+              });
+            })
+          });
+          
           toastr.success('Medicación guardada con exito');
           $uibModalInstance.close('created');
         }, showError);
@@ -162,7 +178,7 @@
       }
 
       function parseError(errorData){
-        if(errorData.startsWith("AssertionError")){
+        if(errorData && (typeof errorData === 'string' || errorData instanceof String) && errorData.startsWith("AssertionError")){
           var errorAuxArray = (errorData.split('\n'));
           var errorToReturn = errorAuxArray[1];
           return errorToReturn;
