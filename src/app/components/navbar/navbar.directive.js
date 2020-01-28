@@ -132,13 +132,8 @@
               }
               if(resolution=='discard'){
                 HCService.discardChanges(function () {
-                  HCService.unmarkAsDirty();
-                  closeEvolution(function () {
-                    // body...
-                  },
-                  function (error) {
-                    showError(error);
-                  });
+                  HCService.finishDiscardChanges();
+                  $state.go('app.patientSearch');
                 }, showError);
               }
             }, function () {
