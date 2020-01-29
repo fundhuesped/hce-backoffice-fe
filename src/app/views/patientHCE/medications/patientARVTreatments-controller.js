@@ -21,6 +21,8 @@
       vm.patientTreatments = [];
       vm.getSchema = getSchema;
       vm.hasPermissions = false;
+      vm.hasReceiptPermissions = false;
+      vm.canPrintRecepits = canPrintRecepits;
       vm.openNewPatientARVTreatmentModal = openNewPatientARVTreatmentModal;
       vm.openEditPatientMedicationModal = openEditPatientMedicationModal;
       vm.openChangePatientArvTreatmentModal = openChangePatientArvTreatmentModal;
@@ -62,7 +64,21 @@
               console.error(error);
               console.trace();
           });
+        
+        SessionService.checkPermission('hc_hce.add_patientarvprescriptionmedication')
+          .then( function(hasPerm){
+              vm.hasReceiptPermissions = hasPerm;
+          }, function(error){
+              vm.hasReceiptPermissions = false;
+              console.error("=== Error al verificar permisos en controlador ===");
+              console.error(error);
+              console.trace();
+          });
 	    }
+
+      function canPrintRecepits() {
+        return vm.hasReceiptPermissions && vm.activePatientProfilaxisMedicationsCount > 0;
+      }
 
       function pageChanged() {
         searchPatientVaccines();

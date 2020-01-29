@@ -39,6 +39,8 @@
       vm.patientProxilaxisMedications = [];
       vm.openNewRecetaModal = openNewRecetaModal;
       vm.hasActiveMedications = hasActiveMedications;
+      vm.hasReceiptPermissions = false;
+      vm.canPrintRecepits = canPrintRecepits;
       vm.isSearching = false;
       activate();
 
@@ -62,6 +64,16 @@
                 vm.hasPermissions = hasPerm;
             }, function(error){
                 vm.hasPermissions = false;
+                console.error("=== Error al verificar permisos en controlador ===");
+                console.error(error);
+                console.trace();
+            });
+
+        SessionService.checkPermission('hc_hce.add_patientprescriptionmedication')
+            .then( function(hasPerm){
+                vm.hasReceiptPermissions = hasPerm;
+            }, function(error){
+                vm.hasReceiptPermissions = false;
                 console.error("=== Error al verificar permisos en controlador ===");
                 console.error(error);
                 console.trace();
@@ -154,6 +166,10 @@
 
       function hasActiveMedications() {
         return vm.hasPermissions && vm.activePatientProfilaxisMedicationsCount > 0;
+      }
+
+      function canPrintRecepits() {
+        return vm.hasReceiptPermissions && vm.activePatientProfilaxisMedicationsCount > 0;
       }
 
       function displayComunicationError(loading){
