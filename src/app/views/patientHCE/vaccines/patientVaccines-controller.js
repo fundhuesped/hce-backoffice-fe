@@ -20,6 +20,8 @@
       vm.hasVaccines = hasVaccines;
       vm.vaccinesList = [];
       vm.hasPermissions = false;
+      vm.canPrintRecepits = canPrintRecepits;
+      vm.isSearching = false;
       vm.openNewPatientVaccineModal = openNewPatientVaccineModal;
       vm.openEditPatientVaccineModal = openEditPatientVaccineModal;
       vm.isSearching = false;
@@ -48,7 +50,22 @@
                 console.error(error);
                 console.trace();
             });
+        
+
+        SessionService.checkPermission('hc_hce.add_patientvaccineprescription')
+          .then( function(hasPerm){
+              vm.hasReceiptPermissions = hasPerm;
+          }, function(error){
+              vm.hasReceiptPermissions = false;
+              console.error("=== Error al verificar permisos en controlador ===");
+              console.error(error);
+              console.trace();
+          });
 	    }
+
+      function canPrintRecepits() {
+        return vm.hasReceiptPermissions && vm.patientMedications.length > 0;
+      }
 
       function pageChanged() {
         searchPatientVaccines();

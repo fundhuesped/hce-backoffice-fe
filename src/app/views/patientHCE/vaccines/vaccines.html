@@ -7,7 +7,7 @@
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><h2>Vacunas</h2></div>
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 							<button class="btn btn-success btn-raised pull-right" ng-click="PatientVaccinesController.openNewPatientVaccineModal()" ng-disabled="!PatientVaccinesController.hasPermissions">Agregar vacuna</button>
-							<button class="btn btn-success btn-raised pull-right" ng-click="PatientVaccinesController.openNewRecetaModal()" ng-disabled="!PatientVaccinesController.hasPermissions">Imprimir receta</button>
+							<button class="btn btn-success btn-raised pull-right" ng-click="PatientVaccinesController.openNewRecetaModal()" ng-disabled="PatientVaccinesController.canPrintRecepits()">Imprimir receta</button>
 					</div>
 				</div>
 		    	<table class="table Medication table-condensed">
