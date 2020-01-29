@@ -6,7 +6,7 @@
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><h2>ARV</h2></div>
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 							<button class="btn btn-success btn-raised pull-right" ng-click="PatientARVTreatmentListController.openNewPatientARVTreatmentModal()"  ng-disabled="!PatientARVTreatmentListController.hasPermissions">Agregar tratamiento</button>
-							<button class="btn btn-success btn-raised pull-right" ng-click="PatientARVTreatmentListController.openNewRecetaModal()" ng-disabled="!PatientARVTreatmentListController.hasPermissions || !PatientARVTreatmentListController.currentARVTreatment">Generar receta</button>
+							<button class="btn btn-success btn-raised pull-right" ng-click="PatientARVTreatmentListController.openNewRecetaModal()" ng-disabled="PatientARVTreatmentListController.canPrintRecepits()">Generar receta</button>
 					</div>
 				</div>
 		    	<table class="table Medication table-condensed">
