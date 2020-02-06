@@ -11,7 +11,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<abm-form-group>
 			    			<label data-abm-label type="static">Escriba el medicamento(*)</label>
-	                		<input type="text" abm-form-control ng-model="EditPatientMedicationController.patientMedication.medication" uib-typeahead="medication as medication.name for medication in EditPatientMedicationController.getMedications($viewValue)" class="form-control" typeahead-min-length="3" ng-disabled="true">
+	                		<input type="text" abm-form-control ng-model="EditPatientMedicationController.patientMedication.medication" uib-typeahead="medication as medication.name for medication in EditPatientMedicationController.getMedications($viewValue)" class="form-control" typeahead-min-length="3">
 	                	</abm-form-group>
 	                </div>
 				</div>
@@ -19,7 +19,7 @@
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<abm-form-group class="form-group-lg">
 						    	<label abm-label for="presentationType" type="static">Tipo de presentación(*)</label>
-	                			<input type="text" abm-form-control ng-model="EditPatientMedicationController.patientMedication.medicationPresentation.administrationType" class="form-control" ng-disabled="true">
+	                			<input type="text" abm-form-control ng-model="EditPatientMedicationController.patientMedication.medicationPresentation.administrationType" class="form-control">
 						    	</select>
 						  	</abm-form-group>
 				  		</div>
@@ -28,7 +28,7 @@
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<abm-form-group class="form-group-lg">
 						    	<label abm-label for="presentation" type="static">Presentacion(*)</label>
-	                			<input type="text" abm-form-control ng-model="EditPatientMedicationController.patientMedication.medicationPresentation.name" class="form-control" ng-disabled="true">
+	                			<input type="text" abm-form-control ng-model="EditPatientMedicationController.patientMedication.medicationPresentation.name" class="form-control">
 						    	</select>
 						  	</abm-form-group>
 				  		</div>
