@@ -50,7 +50,7 @@
 					  	<abm-form-group ng-class="{'has-error':EditPatientMedicationController.controllerForm.endDate.$invalid}" name="endDate">
 						    <label data-abm-label type="static">Fecha de fin(*)</br><small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
 								<div class="input-group">
-									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="EditPatientMedicationController.patientMedication.endDate" is-open="EditPatientMedicationController.endDateCalendar.opened" datepicker-options="EditPatientMedicationController.endDateCalendar.options" close-text="Cerrar" alt-input-formats="EditPatientMedicationController.endDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="EditPatientMedicationController.patientMedication.state=='Closed'" ng-disabled="!EditPatientMedicationController.canEdit() || !EditPatientMedicationController.hasPermissions"/>
+									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="EditPatientMedicationController.patientMedication.endDate" is-open="EditPatientMedicationController.endDateCalendar.opened" datepicker-options="EditPatientMedicationController.endDateCalendar.options" close-text="Cerrar" alt-input-formats="EditPatientMedicationController.endDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="EditPatientMedicationController.patientMedication.state=='Closed'" ng-disabled="!EditPatientMedicationController.hasPermissions"/>
 			                        <div class="input-group-btn">
 			                          <button type="button" class="btn btn-default" ng-click="EditPatientMedicationController.endDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
 			                        </div>
@@ -64,10 +64,10 @@
 					    	<label abm-label type="static">Estado del medicamento(*)</label>
 						    <div class="radio" abm-radio label="Activo">
 							  <input type="radio" name="activo" value="Active" ng-model="EditPatientMedicationController.patientMedication.state" ng-required="true" ng-change="EditPatientMedicationController.changeStatus()" 
-							  ng-disabled="!EditPatientMedicationController.canEdit() || !EditPatientMedicationController.hasPermissions" >
+							  ng-disabled="!EditPatientMedicationController.hasPermissions" >
 						    </div>
 						    <div class="radio" abm-radio label="Inactivo">
-						      <input type="radio" name="inactivo" value="Closed" ng-model="EditPatientMedicationController.patientMedication.state"ng-required="true" ng-disabled="!EditPatientMedicationController.canEdit() || !EditPatientMedicationController.hasPermissions" >
+						      <input type="radio" name="inactivo" value="Closed" ng-model="EditPatientMedicationController.patientMedication.state"ng-required="true" ng-disabled="!EditPatientMedicationController.hasPermissions" >
 						    </div>					    
 					  	</abm-form-group>
 					</div>

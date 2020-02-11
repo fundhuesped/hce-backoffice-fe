@@ -15,8 +15,7 @@
       vm.markAsError = markAsError;
       vm.cancel = cancel;
       vm.hasPermissions = false;
-
-
+      vm.canEdit = canEdit;
       vm.nrtiMedications = [];
       vm.nnrtiMedications = [];
       vm.ipMedications = [];
@@ -163,6 +162,10 @@
         }
         if(loading){
         }
+      }
+
+      function canEdit() {
+        return patientArvTreatment.profesional.id == SessionService.currentUser.id && (moment().diff(moment(patientArvTreatment.createdOn), 'hours') <= 8);
       }
 
       function cancel() {
