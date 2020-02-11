@@ -13,7 +13,9 @@
       vm.hceService = HCService;
       vm.patientArvTreatment = angular.copy(patientArvTreatment);
       vm.markAsError = markAsError;
+      vm.save = save;
       vm.cancel = cancel;
+      vm.canSave = canSave;
       vm.hasPermissions = false;
       vm.canEdit = canEdit;
       vm.nrtiMedications = [];
@@ -22,6 +24,8 @@
       vm.iiMedications = [];
       vm.comboMedications = [];
       vm.otherMedications = [];
+      vm.roundNumber = roundNumber;
+      vm.getPatientARVProblems = getPatientARVProblems;
 
       vm.changeReasons = ['Toxicidad', 
                           'Abandono',
@@ -63,6 +67,10 @@
         }
       };
       activate();
+
+      function getPatientARVProblems() {
+        return HCService.activeProblems;
+      }
 
 	    function activate(){        
         Medication.getActiveList({medicationTypeCode:'NRTI'},function(medications){
@@ -172,6 +180,52 @@
         $uibModalInstance.dismiss('cancel');
       }
 
+      function roundNumber(number) {
+        return (Math.round(number*10)/10);
+      }
+
+      function canSave() {
+        if(vm.finalizeTreatmentForm.$valid){
+          return true;
+        }
+        return false;
+      }
+
+      function save() {
+
+        var tmpPatientArvTreatment = angular.copy(vm.patientArvTreatment);
+        tmpPatientArvTreatment.endDate = moment(tmpPatientArvTreatment.endDate).format('YYYY-MM-DD');
+        tmpPatientArvTreatment.startDate = patientArvTreatment.startDate;
+        
+        var treatmentToUnedit = new PatientArvTreatment();
+        Object.assign(treatmentToUnedit, tmpPatientArvTreatment);
+        HCService.agregarAlHistorial(function(){
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer edicion de un arvTreatmente");
+            treatmentToUnedit.$delete(function(){
+              console.log('Supuestamente pudo borrar el arvTreatment editado');
+              treatmentToUnedit.changeReason = null;
+              treatmentToUnedit.endDate = null;
+              treatmentToUnedit.observations = vm.originalObservations;
+              treatmentToUnedit.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear el arvTreatment antes de ser editado');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
+        });
+
+        tmpPatientArvTreatment.state = 'Closed';
+        PatientArvTreatment.update(tmpPatientArvTreatment, function (response) {
+          HCService.markAsDirty();
+          toastr.success('Cambio guardado con éxito');
+          $uibModalInstance.close('edited');
+        }, showError);
+      }
+
       function markAsError() {
         var tmpPatientArvTreatment = angular.copy(vm.patientArvTreatment);
         tmpPatientArvTreatment.startDate = moment(tmpPatientArvTreatment.startDate).format('YYYY-MM-DD');
@@ -209,4 +263,22 @@
         });
       }
     }
+
+    function showError(error) {
+      if(error){
+        if(error.data){
+          var errorToShow = parseError(error.data);
+          if(errorToShow.detail){
+            toastr.error(errorToShow.detail);
+          }else{
+            toastr.error(errorToShow);
+          }
+        }else{
+          toastr.error(error);
+        }
+      }else{
+        toastr.error('Ocurrio un error');
+      }
+    }
+
 })();
