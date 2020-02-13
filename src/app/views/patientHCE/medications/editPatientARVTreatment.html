@@ -140,8 +140,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<abm-form-group class="form-group-lg">
 							<label abm-label for="problem" type="static">Problema del paciente(*)</label>
-							<select class="form-control" name="problem" ng-options="problem for problem in EditPatientARVTreatmentController.getPatientARVProblems track by problem.problem" ng-model="EditPatientARVTreatmentController.patientArvTreatment.patientProblem.problem.name" abm-form-control ng-requiered="true" ng-disabled="!EditPatientARVTreatmentController.canEdit() || !EditPatientARVTreatmentController.hasPermissions">
-								<option value="">{{EditPatientARVTreatmentController.patientArvTreatment.patientProblem.problem.name}}</option>
+							<select class="form-control" name="problem" ng-options="problem as problem.problem.name for problem in EditPatientARVTreatmentController.patientARVProblemList"ng-model="EditPatientARVTreatmentController.patientArvTreatment.patientProblem.problem.name" abm-form-control ng-requiered="true" ng-disabled="!EditPatientARVTreatmentController.canEdit() || !EditPatientARVTreatmentController.hasPermissions">
 							</select>
 						</abm-form-group>
 					</div>

@@ -64,7 +64,7 @@
 	    }
 
       function canPrintRecepits() {
-        return vm.hasReceiptPermissions && vm.patientMedications.length > 0;
+        return vm.hasReceiptPermissions && vm.vaccinesList.length > 0;
       }
 
       function pageChanged() {

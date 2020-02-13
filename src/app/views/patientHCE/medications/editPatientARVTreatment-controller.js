@@ -6,9 +6,9 @@
     	.module('hce.patientHCE')
     	.controller('EditPatientARVTreatmentController', editPatientARVTreatmentController);
 
-	  editPatientARVTreatmentController.$inject = ['$state', 'HCService', 'PatientArvTreatment', 'toastr', 'moment', 'Medication', '$uibModalInstance', '$filter', 'patientArvTreatment','SessionService', '$q'];
+	  editPatientARVTreatmentController.$inject = ['$state', 'HCService', 'PatientArvTreatment', 'toastr', 'moment', 'Medication', '$uibModalInstance', '$filter', 'patientArvTreatment','SessionService', '$q', 'PatientProblem'];
 
-    function editPatientARVTreatmentController ($state, HCService, PatientArvTreatment, toastr, moment, Medication, $uibModalInstance, $filter, patientArvTreatment, SessionService, $q) {
+    function editPatientARVTreatmentController ($state, HCService, PatientArvTreatment, toastr, moment, Medication, $uibModalInstance, $filter, patientArvTreatment, SessionService, $q, PatientProblem) {
 	    var vm = this;
       vm.hceService = HCService;
       vm.patientArvTreatment = angular.copy(patientArvTreatment);
@@ -25,7 +25,7 @@
       vm.comboMedications = [];
       vm.otherMedications = [];
       vm.roundNumber = roundNumber;
-      vm.getPatientARVProblems = getPatientARVProblems;
+      vm.patientARVProblemList = [];
 
       vm.changeReasons = ['Toxicidad', 
                           'Abandono',
@@ -67,10 +67,6 @@
         }
       };
       activate();
-
-      function getPatientARVProblems() {
-        return HCService.activeProblems;
-      }
 
 	    function activate(){        
         Medication.getActiveList({medicationTypeCode:'NRTI'},function(medications){
@@ -145,6 +141,15 @@
           }
           vm.otherMedications = medications;
         }, displayComunicationError);
+
+        PatientProblem.getForPaciente({pacienteId: HCService.currentPaciente.id, problemType:'HIV', state:'Active'}, function (result) {
+          vm.patientARVProblemList = result;
+          var currentProblemsString = result.map( function(element){
+            return element.problem.name
+          });
+        }, function(){
+
+        });
 
         vm.patientArvTreatment.startDate = new Date(vm.patientArvTreatment.startDate + 'T03:00:00');
 
