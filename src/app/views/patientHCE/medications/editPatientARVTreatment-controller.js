@@ -144,9 +144,6 @@
 
         PatientProblem.getForPaciente({pacienteId: HCService.currentPaciente.id, problemType:'HIV', state:'Active'}, function (result) {
           vm.patientARVProblemList = result;
-          var currentProblemsString = result.map( function(element){
-            return element.problem.name
-          });
         }, function(){
 
         });
