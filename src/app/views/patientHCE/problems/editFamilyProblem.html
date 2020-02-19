@@ -12,7 +12,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<abm-form-group>
 			    			<label data-abm-label type="static">Escriba el problema(*)</label>
-	                		<input type="text" abm-form-control ng-model="EditFamilyProblemController.familyProblem.problem"  class="form-control" uib-typeahead="problem as problem.name for problem in EditFamilyProblemController.getProblems($viewValue)" ng-disabled="true" ng-required="true"  typeahead-min-length="3" disabled="true">
+	                		<input type="text" abm-form-control ng-model="EditFamilyProblemController.familyProblem.problem"  class="form-control" uib-typeahead="problem as problem.name for problem in EditFamilyProblemController.getProblems($viewValue)" ng-required="true"  typeahead-min-length="3" ng-disabled="!EditFamilyProblemController.canEdit() || !EditFamilyProblemController.hasPermissions" />
 	                	</abm-form-group>
 	                </div>
 				</div>

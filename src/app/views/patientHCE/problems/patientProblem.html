@@ -11,7 +11,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<abm-form-group>
 			    			<label data-abm-label type="static">Escriba el problema</label>
-	                		<input type="text" abm-form-control ng-model="PatientProblemController.problem.problem" uib-typeahead="problem as problem.name for problem in PatientProblemController.getProblems($viewValue)" class="form-control" typeahead-min-length="3" disabled="true">
+	                		<input type="text" abm-form-control ng-model="PatientProblemController.problem.problem" uib-typeahead="problem as problem.name for problem in PatientProblemController.getProblems($viewValue)" class="form-control" typeahead-min-length="3" ng-required="true" ng-disabled="!PatientProblemController.canEdit() || !PatientProblemController.hasPermissions"/>
 	                	</abm-form-group>
 	                </div>
 				</div>

@@ -11,7 +11,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<abm-form-group>
 			    			<label data-abm-label type="static">Seleccione el estudio(*)</label>
-	                		<input type="text" abm-form-control ng-model="EditPatientClinicalResultController.patientClinicalResult.clinicalStudy" uib-typeahead="clinicalStudy as clinicalStudy.name for clinicalStudy in EditPatientClinicalResultController.getClinicalStudies($viewValue)" class="form-control" typeahead-min-length="2" disabled="true" placeholder="Escriba tres o mas letras para buscar">
+	                		<input type="text" abm-form-control ng-model="EditPatientClinicalResultController.patientClinicalResult.clinicalStudy" uib-typeahead="clinicalStudy as clinicalStudy.name for clinicalStudy in EditPatientClinicalResultController.getClinicalStudies($viewValue)" class="form-control" typeahead-min-length="2" ng-required="true" ng-disabled="!EditPatientClinicalResultController.canEdit()" placeholder="Escriba tres o mas letras para buscar" />
 	                	</abm-form-group>
 	                </div>
 				</div>
