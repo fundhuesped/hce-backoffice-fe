@@ -17,7 +17,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<abm-form-group>
 			    			<label data-abm-label type="static">Seleccione la vacuna(*)</label>
-	                		<input type="text" abm-form-control ng-model="EditPatientVaccineController.patientVaccine.vaccine" uib-typeahead="vaccine as vaccine.name for vaccine in EditPatientVaccineController.getVaccines($viewValue)" class="form-control" typeahead-min-length="3" disabled="true" placeholder="Escriba tres o mas letras para buscar">
+	                		<input type="text" abm-form-control ng-model="EditPatientVaccineController.patientVaccine.vaccine" uib-typeahead="vaccine as vaccine.name for vaccine in EditPatientVaccineController.getVaccines($viewValue)" class="form-control" typeahead-min-length="3" ng-required="true" ng-disabled="!EditPatientVaccineController.canEdit() || !EditPatientVaccineController.hasPermissions" placeholder="Escriba tres o mas letras para buscar"/>
 	                	</abm-form-group>
 	                </div>
 				</div>
@@ -26,7 +26,7 @@
 					  	<abm-form-group ng-class="{'has-error':EditPatientVaccineController.controllerForm.startDate.$invalid}" name="startDate">
 						    <label data-abm-label type="static">Fecha de aplicación(*) <small><em>(dd/mm/aaaa o dd-mm-aaaa)</em></small></label>
 								<div class="input-group">
-									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="EditPatientVaccineController.patientVaccine.appliedDate" is-open="EditPatientVaccineController.applicationDateCalendar.opened" datepicker-options="EditPatientVaccineController.applicationDateCalendar.options" close-text="Cerrar" alt-input-formats="EditPatientVaccineController.applicationDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-disabled="!EditPatientVaccineController.canEdit() || !EditPatientVaccineController.hasPermissions"/>
+									<input type="text" class="form-control" uib-datepicker-popup="d!/M!/yyyy" name="startDate" ng-model="EditPatientVaccineController.patientVaccine.appliedDate" is-open="EditPatientVaccineController.applicationDateCalendar.opened" datepicker-options="EditPatientVaccineController.applicationDateCalendar.options" close-text="Cerrar" alt-input-formats="EditPatientVaccineController.applicationDateCalendar.altInputFormats" current-text="Hoy" clear-text="Limpiar" ng-required="true" ng-disabled="!EditPatientVaccineController.canEdit() || !EditPatientVaccineController.hasPermissions"/>
 			                        <div class="input-group-btn">
 			                          <button type="button" class="btn btn-default" ng-click="EditPatientVaccineController.applicationDateCalendar.open()"><i class="glyphicon glyphicon-calendar"></i></button>
 			                        </div>
@@ -47,7 +47,6 @@
 						<div class="row" >
 						  	<div>
 						  		<button class="btn btn-danger pull-left" ng-show="EditPatientVaccineController.hasPermissions" ng-click="EditPatientVaccineController.markAsError()" ng-disabled="!EditPatientVaccineController.hasPermissions">Pasar a error</button>
-
 						  		<button class="btn btn-success btn-raised pull-right" ng-show="EditPatientVaccineController.hasPermissions" ng-click="EditPatientVaccineController.save()"  ng-disabled="!EditPatientVaccineController.canSave() || !EditPatientVaccineController.hasPermissions">Guardar vacuna</button>
 						  		<button class="btn btn-default pull-right" ng-click="EditPatientVaccineController.cancel()">Cancelar</button>
 						  	</div>

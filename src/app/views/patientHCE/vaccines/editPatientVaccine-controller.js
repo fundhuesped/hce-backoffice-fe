@@ -81,7 +81,7 @@
       }
 
       function canEdit() {
-        return vm.patientVaccine.profesional.id == SessionService.currentUser.id && (moment().diff(moment(patientVaccine.createdOn), 'hours') <= 8);
+        return vm.patientVaccine.profesional.id == SessionService.currentUser.id && (moment().diff(moment(patientVaccine.createdOn), 'hours') < 8);
       }
 
 	    function activate(){
