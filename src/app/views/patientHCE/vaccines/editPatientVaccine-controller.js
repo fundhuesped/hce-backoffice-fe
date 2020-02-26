@@ -17,6 +17,7 @@
       vm.cancel = cancel;
       vm.hasPermissions = false;
       vm.canSave = canSave;
+      vm.canEdit = canEdit;
       vm.markAsError = markAsError;
       vm.error = null;
       vm.uneditedVaccine = patientVaccine;
@@ -46,8 +47,8 @@
         }
 
         var vaccineToUnedit = new PatientVaccine();
+        Object.assign(vaccineToUnedit, vm.patientVaccine);        
         vaccineToUnedit.appliedDate = moment(vaccineToUnedit.appliedDate).format('YYYY-MM-DD');
-        Object.assign(vaccineToUnedit, tmpVaccine);
 
         HCService.agregarAlHistorial(function(){
           return $q(function(resolve, reject){
@@ -77,6 +78,10 @@
           return true;
         }
         return false;
+      }
+
+      function canEdit() {
+        return vm.patientVaccine.profesional.id == SessionService.currentUser.id && (moment().diff(moment(patientVaccine.createdOn), 'hours') < 8);
       }
 
 	    function activate(){
