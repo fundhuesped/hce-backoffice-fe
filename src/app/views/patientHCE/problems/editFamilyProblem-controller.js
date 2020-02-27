@@ -6,23 +6,30 @@
     	.module('hce.patientHCE')
     	.controller('EditFamilyProblemController', editFamilyProblemController);
 
-	   editFamilyProblemController.$inject = ['familyProblem', 'toastr', 'FamilyPatientProblem', '$uibModalInstance', 'SessionService','HCService', '$q'];
+	   editFamilyProblemController.$inject = ['familyProblem', 'toastr', 'FamilyPatientProblem', '$uibModalInstance', 'SessionService','HCService', '$q', 'Problem'];
 
-    function editFamilyProblemController (familyProblem, toastr, FamilyPatientProblem, $uibModalInstance, SessionService, HCService, $q) {
+    function editFamilyProblemController (familyProblem, toastr, FamilyPatientProblem, $uibModalInstance, SessionService, HCService, $q, Problem) {
 	    var vm = this;
       vm.familyProblem = {};
       vm.originalFamilyProblem = familyProblem;
       vm.save = save;
-	    vm.cancel = cancel;
+      vm.cancel = cancel;
+      vm.getProblems = getProblems;
       vm.relationshipChoices = FamilyPatientProblem.relationshipChoices;
       vm.markAsError = markAsError;
       vm.canEdit = canEdit;
       vm.canSave = canSave;
       vm.hasPermissions = false;
+      vm.loading = false;
+      vm.waitingToShowError = false;
 
       activate();
 
       function activate(){
+        Problem.getActiveList(function(problems){
+          vm.problems = problems;
+        }, displayComunicationError);
+
         vm.familyProblem = angular.copy(familyProblem);
 
         SessionService.checkPermission('hc_hce.add_patientfamilyhistoryproblem')
@@ -112,6 +119,46 @@
         return moment().diff(moment(vm.familyProblem.createdOn), 'hours') <= 8;
       }
 
+      function getProblems($viewValue) {
+        if($viewValue.includes(";")){
+          toastr.warning("No se permite el uso de \';\' en el buscador");
+          return;
+        }
+        if(vm.loading==false){
+          toastr.info('Cargando..');
+          vm.loading = true;
+          $timeout(
+            function() {
+              vm.loading = false;
+            }, 1500);
+        }
+
+        var filters = {
+          name : $viewValue
+        };
+
+        return Problem.getFullActiveList(filters, function(problems){
+          vm.problems = problems;
+          vm.loading = false;
+          if (problems.length <= 0 && !vm.waitingToShowError){
+            toastr.warning('No se han encontrado resultados');
+            vm.waitingToShowError = true;
+            $timeout(
+              function() {
+                vm.waitingToShowError = false;
+              }, 1500);
+          }
+        }, displayComunicationError).$promise;
+
+      }
+
+      function displayComunicationError(loading){
+        if(!toastr.active()){
+          toastr.warning('Ocurrió un error en la comunicación, por favor intente nuevamente.');
+        }
+        if(loading){
+        }
+      }
 
       function showError(error) {
         if(error){

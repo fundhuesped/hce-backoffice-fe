@@ -11,7 +11,7 @@
     function patientProblemController ($state, HCService, toastr, moment, Problem, $uibModal, $uibModalInstance, PatientProblem, SessionService, patientProblem, $q) {
     	var vm = this;
     	vm.cancel = cancel;
-    	vm.problem = null;
+      vm.problem = null;
     	vm.canSaveNewProblem = canSaveNewProblem;
     	vm.markAsError = markAsError;
       vm.save = save;
@@ -21,6 +21,9 @@
       vm.canBeClosed = canBeClosed;
       vm.canBeMarkedAsError = canBeMarkedAsError;
       vm.hasPermissions = false;
+      vm.getProblems = getProblems;
+      vm.loading = false;
+      vm.waitingToShowError = false;
 
       vm.startDateCalendarPopup = {
         opened: false,
@@ -55,6 +58,10 @@
     	activate();
 
     	function activate() {
+        Problem.getActiveList(function(problems){
+          vm.problems = problems;
+        }, displayComunicationError);
+
     		vm.problem = angular.copy(patientProblem);
 
         vm.closeDateCalendarPopup.options.minDate = vm.problem.startDate;
@@ -116,45 +123,79 @@
         });
       }
       
-      	function markAsError() {
-      		var tmpProblem = angular.copy(vm.problem);
-          tmpProblem.startDate = moment(tmpProblem.startDate).format('YYYY-MM-DD');
-          if (tmpProblem.closeDate) {
-              tmpProblem.closeDate = moment(tmpProblem.closeDate).format('YYYY-MM-DD');
+      function markAsError() {
+        var tmpProblem = angular.copy(vm.problem);
+        tmpProblem.startDate = moment(tmpProblem.startDate).format('YYYY-MM-DD');
+        if (tmpProblem.closeDate) {
+            tmpProblem.closeDate = moment(tmpProblem.closeDate).format('YYYY-MM-DD');
 
-          }
+        }
+      
+        var problemToUnmarkAsError = new PatientProblem();
+        Object.assign(problemToUnmarkAsError, tmpProblem);
+
+        HCService.agregarAlHistorial(function(){
+          return $q(function(resolve, reject){
+            console.log("Entra a la función de deshacer marcado de error de un problema");
+            problemToUnmarkAsError.$delete(function(){
+              console.log('Supuestamente pudo borrar problema marcado como error');
+              problemToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
+                console.log('Supuestamente pudo volver a crear el problema que se habia marcado como error');
+              },  console.error);
+              resolve();
+            },  function(err){
+              console.error(err);
+              reject();
+            });
+          })
+        });
         
-          var problemToUnmarkAsError = new PatientProblem();
-          Object.assign(problemToUnmarkAsError, tmpProblem);
+        tmpProblem.state = PatientProblem.stateChoices.STATE_ERROR;
 
-          HCService.agregarAlHistorial(function(){
-            return $q(function(resolve, reject){
-              console.log("Entra a la función de deshacer marcado de error de un problema");
-              problemToUnmarkAsError.$delete(function(){
-                console.log('Supuestamente pudo borrar problema marcado como error');
-                problemToUnmarkAsError.$save({pacienteId:HCService.currentPacienteId}, function(){
-                  console.log('Supuestamente pudo volver a crear el problema que se habia marcado como error');
-                },  console.error);
-                resolve();
-              },  function(err){
-                console.error(err);
-                reject();
-              });
-            })
-          });
-          
-      		tmpProblem.state = PatientProblem.stateChoices.STATE_ERROR;
+        PatientProblem.update(tmpProblem, function (response) {
+          HCService.markAsDirty();
+          toastr.success('Problema marcado como error');
+          $uibModalInstance.close('markedError');
+          HCService.getCurrentEvolution();
+        }, function (err) {
+            console.error(err);            
+            toastr.error('Ocurrio un error');
+        });
+      }
 
-      		PatientProblem.update(tmpProblem, function (response) {
-            HCService.markAsDirty();
-          	toastr.success('Problema marcado como error');
-            $uibModalInstance.close('markedError');
-            HCService.getCurrentEvolution();
-      		}, function (err) {
-              console.error(err);            
-		          toastr.error('Ocurrio un error');
-      		});
-      	}
+      function getProblems($viewValue) {
+        if($viewValue.includes(";")){
+          toastr.warning("No se permite el uso de \';\' en el buscador");
+          return;
+        }
+        if(vm.loading==false){
+          toastr.info('Cargando..');
+          vm.loading = true;
+          $timeout(
+            function() {
+              vm.loading = false;
+            }, 1500);
+        }
+
+        var filters = {
+          name : $viewValue
+        };
+
+        return Problem.getFullActiveList(filters, function(problems){
+          vm.problems = problems;
+          vm.loading = false;
+          if (problems.length <= 0 && !vm.waitingToShowError){
+            toastr.warning('No se han encontrado resultados');
+            vm.waitingToShowError = true;
+            $timeout(
+              function() {
+                vm.waitingToShowError = false;
+              }, 1500);
+          }
+        }, displayComunicationError).$promise;
+
+      }        
+      
 
       function canEdit() {
         return vm.problem.profesional.id == SessionService.currentUser.id && moment().diff(moment(vm.problem.createdOn), 'hours') <= 8;
@@ -184,7 +225,14 @@
           vm.startDateCalendarPopup.options.maxDate = new Date();
         }
       }
-
+    
+      function displayComunicationError(loading){
+        if(!toastr.active()){
+          toastr.warning('Ocurrió un error en la comunicación, por favor intente nuevamente.');
+        }
+        if(loading){
+        }
+      }
 
     }
 })();

@@ -22,6 +22,7 @@
       vm.canEdit = canEdit;
       vm.activeProblems = [];
       vm.uneditedPatientMedication = patientMedication;
+      vm.roundNumber = roundNumber;
       vm.applicationDateCalendar = {
         opened: false,
         altInputFormats: ['d!-M!-yyyy'],
@@ -223,6 +224,10 @@
 
       function cancel() {
         $uibModalInstance.dismiss('cancel');
+      }
+
+      function roundNumber(number) {
+        return (Math.round(number*10)/10);
       }
 
       function showError(error) {
