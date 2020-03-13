@@ -219,28 +219,28 @@
       }
 
 
-    function openPacientePersonalInfoModal(selectedPaciente) {
-      var modalInstance = $uibModal.open({
-          backdrop: 'static',
-        templateUrl: 'app/views/patient/patientPersonalInfo.html',
-        size: 'lg',
-        controller: 'PatientPersonalInfoCtrl',
-        controllerAs: 'PacienteCtrl',
-        resolve: {
-          paciente: function () {
-            return selectedPaciente;
+      function openPacientePersonalInfoModal(selectedPaciente) {
+        var modalInstance = $uibModal.open({
+            backdrop: 'static',
+          templateUrl: 'app/views/patient/patientPersonalInfo.html',
+          size: 'lg',
+          controller: 'PatientPersonalInfoCtrl',
+          controllerAs: 'PacienteCtrl',
+          resolve: {
+            paciente: function () {
+              return selectedPaciente;
+            }
           }
-        }
-      });
-    }
+        });
+      }
 
-    function newPatient() {
-      $state.go('app.newPatient');
-    }
+      function newPatient() {
+        $state.go('app.newPatient');
+      }
 
       function openPatient(patient) {
           if(HCService.canOpenPatient(patient)){
-            $state.go('app.patientHCE.evolutions',{patientId: patient.id});
+            $state.go('app.patientHCE.evolutions',{patientId: patient.id, profesionalId: SessionService.currentUser.id});
           }else{
             vm.changePacientModal.show(patient);
           }
