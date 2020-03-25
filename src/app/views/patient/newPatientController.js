@@ -80,6 +80,7 @@
             }, function(){displayComunicationError('app');});
 
             vm.paciente.consent = 'Not asked';
+            vm.paciente.protocol = (vm.paciente.protocol?vm.paciente.protocol:null);
         }
 
         function confirm () {
