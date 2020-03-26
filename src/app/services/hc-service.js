@@ -118,9 +118,6 @@
             if(isDirty()){
                 return false;
             }
-            if(srv.currentEvolution && srv.currentPaciente && srv.currentPaciente.id != patient.id){
-                return false;
-            }
             return true;
         }
 
