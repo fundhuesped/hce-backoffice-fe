@@ -12,7 +12,7 @@
             'content': {
               templateUrl: 'app/views/patient/patientSearch.html',
               controller: 'PatientSearchController',
-              controllerAs: 'PSCtrl'         
+              controllerAs: 'PatientSearchController'         
             }
           }
       })
